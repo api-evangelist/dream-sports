@@ -1,0 +1,91 @@
+generated: '2026-08-04'
+method: probed
+source: https://auth.dream11.com/.well-known/openid-configuration
+docs: https://guardianhq.io/docs/
+note: >-
+  The mechanical derivation from openapi/ produced nothing — none of the eight published Dream Sports
+  specifications declares an oauth2 securityScheme, so there are no scopes in-spec. The real scope
+  surface is live: the "Login with Dream11" issuer publishes an OpenID Connect discovery document
+  listing scopes_supported and claims_supported, and the Guardian OpenAPI exposes scope
+  administration endpoints (GET/POST /scopes, PUT/DELETE /scopes/{name}, and per-client scope
+  assignment at /v1/admin/client/{client_id}/scope) so a self-hosted deployment defines its own set.
+  The scopes below are the ones the Dream11 production issuer actually advertises.
+schemes:
+- name: Login with Dream11 (OpenID Connect)
+  type: openIdConnect
+  issuer: https://auth.dream11.com
+  discovery: https://auth.dream11.com/.well-known/openid-configuration
+  jwks_uri: https://auth.dream11.com/certs
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://auth.dream11.com/authorize
+    tokenUrl: https://auth.dream11.com/token
+    revocationUrl: https://auth.dream11.com/revokeToken
+    userinfoUrl: https://auth.dream11.com/userinfo
+  grant_types_supported:
+  - authorization_code
+  - refresh_token
+  response_types_supported:
+  - code
+  id_token_signing_alg_values_supported:
+  - RS256
+  subject_types_supported:
+  - public
+scopes:
+- scope: openid
+  description: Required OpenID Connect scope; requests an ID token for the signed-in Dream11 user.
+  flows: [authorizationCode]
+  source: https://auth.dream11.com/.well-known/openid-configuration
+- scope: profile
+  description: Basic profile claims for the Dream11 user (including picture).
+  flows: [authorizationCode]
+  source: https://auth.dream11.com/.well-known/openid-configuration
+- scope: email
+  description: The user's email address.
+  flows: [authorizationCode]
+  source: https://auth.dream11.com/.well-known/openid-configuration
+- scope: phone
+  description: The user's phone number.
+  flows: [authorizationCode]
+  source: https://auth.dream11.com/.well-known/openid-configuration
+- scope: masked_phone_number
+  description: A masked form of the user's phone number, for apps that need to display but not hold the number.
+  flows: [authorizationCode]
+  source: https://auth.dream11.com/.well-known/openid-configuration
+- scope: pan_verified
+  description: >-
+    Whether the user's PAN (Indian permanent account number) has been verified — a KYC signal specific
+    to the Indian real-money gaming and fintech context Dream Sports operates in.
+  flows: [authorizationCode]
+  source: https://auth.dream11.com/.well-known/openid-configuration
+- scope: team_name
+  description: The user's Dream11 team name — the identity handle other Dream11 users see.
+  flows: [authorizationCode]
+  source: https://auth.dream11.com/.well-known/openid-configuration
+claims_supported:
+- sub
+- email
+- phone_number
+- masked_phone_number
+- pan_verified
+- picture
+- team_name
+scope_administration:
+  note: >-
+    Guardian (the open-source engine) lets an operator define scopes per tenant rather than shipping a
+    fixed catalogue.
+  operations:
+  - 'GET /scopes — list scopes'
+  - 'POST /scopes — create a scope'
+  - 'PUT /scopes/{name} — update a scope'
+  - 'DELETE /scopes/{name} — delete a scope'
+  - 'POST /v1/admin/client/{client_id}/scope — assign scopes to a client'
+  - 'GET /v1/admin/client/{client_id}/scope — list a client''s scopes'
+  - 'DELETE /v1/admin/client/{client_id}/scope — unassign a scope (idempotent: succeeds if not assigned)'
+  source: openapi/dream-sports-guardian-openapi.yml
+x-evidence:
+  fetched: '2026-08-04'
+  url: https://auth.dream11.com/.well-known/openid-configuration
+  http_status: 200
+  content_type: application/json
+  file: well-known/dream-sports-openid-configuration.json

@@ -1,0 +1,105 @@
+generated: '2026-08-04'
+method: derived
+source: >-
+  the eight OpenAPI documents in openapi/, the live OIDC discovery document at
+  https://auth.dream11.com/.well-known/openid-configuration, the Guardian docs, and the odin protos
+standards:
+- id: openapi-3
+  conforms: true
+  evidence: >-
+    Eight documents published, OpenAPI 3.0.0 / 3.0.1 / 3.0.3 / 3.1.0 across Guardian, Checkmate,
+    Raven Journey, Raven Thunder (api + admin), Delivr OTA and DOTA.
+- id: oauth2
+  conforms: true
+  evidence: >-
+    Guardian implements the authorization endpoint (/authorize), token endpoint (/token), token
+    revocation (/token/revoke) and a code-token exchange, and the live Dream11 issuer advertises
+    grant_types_supported [authorization_code, refresh_token] and response_types_supported [code].
+- id: oidc-core
+  conforms: true
+  evidence: >-
+    /userinfo (GET and POST), /certs (JWKS), an ID token signed RS256, subject_types_supported
+    [public], and a published claims_supported set.
+- id: oidc-discovery
+  conforms: true
+  evidence: >-
+    https://auth.dream11.com/.well-known/openid-configuration returns HTTP 200 application/json with
+    issuer, authorization_endpoint, token_endpoint, userinfo_endpoint, revocation_endpoint, jwks_uri,
+    scopes_supported and claims_supported. Saved to well-known/dream-sports-openid-configuration.json.
+- id: rfc7517-jwks
+  conforms: true
+  evidence: 'https://auth.dream11.com/certs returns an RS512-signed JWKS key set (HTTP 200).'
+- id: rfc7636-pkce
+  conforms: true
+  evidence: 'Guardian documentation states PKCE support for the authorization code flow.'
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: false
+  evidence: >-
+    /.well-known/oauth-authorization-server returns HTTP 418 on api.dream11.com and 502 on
+    auth.dream11.com. Only the OIDC discovery document is served.
+- id: rfc9728-oauth-protected-resource-metadata
+  conforms: false
+  evidence: /.well-known/oauth-protected-resource returns HTTP 418.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    No specification uses application/problem+json. Five distinct vendor JSON error envelopes are in
+    use across the eight specs — see errors/dream-sports-problem-types.yml.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: No /.well-known/security.txt on any Dream Sports host (see well-known/).
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header support and no deprecated operations declared.
+- id: rfc8615-well-known-agent-card
+  conforms: false
+  evidence: >-
+    No A2A agent card at /.well-known/agent-card.json or /.well-known/agent.json on any host. The
+    HTTP 200 responses from fancode.com are an SPA catch-all serving HTML, not a card.
+- id: mcp
+  conforms: true
+  evidence: >-
+    Two first-party MCP servers — odin-mcp (stdio, 45 tools, built on @modelcontextprotocol/sdk) and
+    the hosted guardian-auth server at https://mcp.guardianhq.io/sse (3 tools, HTTP 503 at probe time).
+- id: llms-txt
+  conforms: true
+  evidence: 'https://dreamhorizon.org/llms.txt returns HTTP 200 text/plain; saved to llms/.'
+- id: grpc
+  conforms: true
+  evidence: >-
+    proto3 service definitions published for Odin (ServiceService, EnvironmentService, TierService,
+    CatalogueService, AuthService, LogsService, SchemaHydrationService, InsightsService,
+    ProviderAccountService), including grpc.health.v1 health checking.
+- id: json-schema
+  conforms: partial
+  evidence: 206 component schemas declared across the eight specifications (OpenAPI Schema Object dialect).
+- id: pagination
+  conforms: partial
+  evidence: >-
+    Page-number pagination on three surfaces (page/pageSize, page/page_size, pageNumber/pageSize).
+    Inconsistent parameter naming across products; no cursor pagination, no Link header.
+- id: idempotency
+  conforms: partial
+  evidence: >-
+    No idempotency-key header in any spec. Guardian documents one operation as idempotent by
+    semantics (unassigning a scope that is not assigned succeeds), and odin-mcp guards destructive
+    tools with a type_to_confirm replay check. There is no retry-safety contract for writes.
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    No AsyncAPI document and no documented webhook catalogue on any published surface. The event
+    plumbing Dream Sports open-sources (Kafka consumer library, message-kit for SQS, MQTT for React
+    Native) is library code, not a published event contract.
+- id: openapi-overlay
+  conforms: false
+  evidence: No provider-published overlays. The overlays/ in this repo are API Evangelist enhancements.
+compliance_program:
+  published: false
+  certifications: []
+  trust_center: null
+  note: >-
+    No trust center, no SOC 2 / ISO 27001 / PCI DSS / HIPAA claim, and no compliance page was found on
+    dreamsports.group, dream11.com, fancode.com or dreamhorizon.org. Guardian's docs mention
+    "compliance" as a product capability (SSO/federation for regulated deployments), which is a
+    feature claim about the software, not a certification Dream Sports holds. No Compliance pointer is
+    emitted, because there is no published compliance program to point at.

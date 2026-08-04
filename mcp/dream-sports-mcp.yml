@@ -1,0 +1,248 @@
+generated: '2026-08-04'
+method: searched
+status: published
+source: https://github.com/dream-horizon-org/odin-mcp
+servers_summary: >-
+  Dream Sports publishes two first-party MCP servers, both from Dream Horizon: odin-mcp (stdio, the
+  Odin developer platform, documented in detail below) and the hosted Guardian MCP server (SSE, a
+  documentation/contract server for the Guardian auth API).
+server:
+  name: odin-mcp
+  transport: stdio
+  url: null
+  runtime: Node.js 18+
+  entrypoint: dist/index.js
+  publisher: Dream Horizon (Dream Sports open-source initiative)
+  sdk: "@modelcontextprotocol/sdk"
+additional_servers:
+- name: guardian-auth
+  transport: sse
+  url: https://mcp.guardianhq.io/sse
+  status: published
+  method: searched
+  source: https://guardianhq.io/docs/mcp-server
+  hosted: true
+  install: >-
+    No install — the docs instruct adding {"guardian-auth": {"url": "https://mcp.guardianhq.io/sse",
+    "transport": "sse"}} to ~/.cursor/mcp.json or claude_desktop_config.json.
+  purpose: >-
+    Exposes Guardian's own API documentation and OpenAPI contracts to a coding agent, rather than
+    calling the Guardian API. It is a contract-discovery server, not a control-plane server.
+  tools:
+  - name: list_endpoints
+    description: Lists all available Guardian API endpoints organized by category (42+ endpoints).
+  - name: get_endpoint_details
+    description: >-
+      Returns the full contract for an endpoint — request schema, response schemas per status code,
+      required headers and examples.
+  - name: search_docs
+    description: Searches the Guardian documentation for a topic and returns the relevant sections.
+  live_probe:
+    probed: '2026-08-04'
+    tools_list_http_status: 503
+    sse_http_status: 503
+    result: >-
+      The hosted endpoint answered HTTP 503 Service Temporarily Unavailable on every probe (GET /sse,
+      POST /mcp and POST /sse with a tools/list JSON-RPC body, and all three /.well-known/* paths), so
+      the live tool schemas could not be introspected. The tool list above is transcribed from the
+      provider's own documentation page, not from the server.
+description: >-
+  First-party Model Context Protocol server that exposes Odin — Dream Sports' internal developer
+  platform — to agents. It is a thin adapter: business logic stays in the Java services, and the
+  server calls odin-deployer-ent over REST (default port 9000) and gRPC (default 8080), odin-scout-ent
+  over REST (8080), and user-auth over REST (8081). Protos are loaded at runtime from the repo's
+  proto/ directory, mirroring odin-deployer-ent's src/main/proto.
+discovery:
+  note: >-
+    stdio transport only — there is no hosted/remote endpoint to introspect, so a live tools/list
+    probe is not possible. The tool set below is transcribed from the "Tools <-> REST mapping" and
+    "Tools <-> gRPC mapping" tables the provider publishes in the odin-mcp README. Input schemas are
+    not published as JSON Schema; the argument names named below are the ones the README documents.
+  tools_list_probed: false
+  reason: stdio-only server; requires local install and a valid Authorization token
+authentication:
+  scheme: bearer
+  env:
+  - name: ODIN_DEPLOYER_AUTH_TOKEN
+    required_for: protected tools
+    note: sent as REST Authorization header and gRPC Authorization metadata
+  - name: ODIN_SCOUT_AUTH_TOKEN
+    required: false
+    note: overrides the token for Scout REST calls only
+  org_scoping: >-
+    user-auth team/org routes require an X-Org-Id header; the MCP server fills it from the tool's
+    org_id argument or from the orgid claim of an org-scoped JWT.
+safety:
+  destructive_tool_guard: type_to_confirm
+  note: >-
+    Destructive / high-risk user-auth tools require a type_to_confirm argument that must repeat the
+    team name, member email or org id, so the server can reject mistaken or automated calls.
+    Environment create/delete, service undeploy and operate are server-streaming and flagged
+    destructive in the README.
+tool_counts:
+  total: 45
+  rest_backed: 28
+  grpc_backed: 17
+tools:
+- name: deployer_health
+  description: Deployer health check
+  binding: rest
+  rest: GET /healthcheck
+- name: deployer_operation_schemas_list
+  binding: rest
+  rest: GET /v1/operation-schemas/{component_type}/{deployment_type}
+- name: deployer_operation_schema_get
+  binding: rest
+  rest: GET /v1/operation-schemas/.../{operation_name}
+- name: deployer_component_catalogue
+  binding: rest
+  rest: GET /v1/component-catalogue
+- name: deployer_component_operations
+  binding: rest
+  rest: GET /v1/component-operations
+- name: deployer_operate_component
+  binding: rest
+  rest: POST .../operate
+- name: deployer_operate_status
+  binding: rest
+  rest: GET /v1/operate/status/{service_task_id}
+- name: scout_accounts_list
+  binding: rest
+  rest: GET /accounts
+- name: scout_account_details_get
+  binding: rest
+  rest: GET /account-details?accountName=
+- name: user_auth_health
+  binding: rest
+  rest: GET /healthcheck
+- name: user_auth_orgs_list
+  binding: rest
+  rest: GET /api/v1/orgs
+- name: user_auth_org_get
+  binding: rest
+  rest: GET /api/v1/orgs/{org_id}
+- name: user_auth_org_update
+  binding: rest
+  rest: PUT /api/v1/orgs/{org_id}
+- name: user_auth_org_delete
+  binding: rest
+  rest: DELETE /api/v1/orgs/{org_id}
+  destructive: true
+- name: user_auth_org_members_list
+  binding: rest
+  rest: GET /api/v1/orgs/{org_id}/members
+- name: user_auth_org_invite_members
+  binding: rest
+  rest: POST /api/v1/orgs/{org_id}/members
+- name: user_auth_org_member_promote_admin
+  binding: rest
+  rest: PUT /api/v1/orgs/{org_id}/members/{email}/admin
+  destructive: true
+- name: user_auth_org_member_set_role
+  binding: rest
+  rest: PUT .../members/{email}/role
+  destructive: true
+- name: user_auth_org_member_remove
+  binding: rest
+  rest: DELETE /api/v1/orgs/{org_id}/members/{email}
+  destructive: true
+- name: user_auth_teams_list
+  binding: rest
+  rest: GET /api/v1/teams
+- name: user_auth_team_get
+  binding: rest
+  rest: GET /api/v1/teams/{team_name}
+- name: user_auth_team_create
+  binding: rest
+  rest: POST /api/v1/teams
+- name: user_auth_team_update
+  binding: rest
+  rest: PUT /api/v1/teams/{team_name}
+- name: user_auth_team_delete
+  binding: rest
+  rest: DELETE /api/v1/teams/{team_name}
+  destructive: true
+- name: user_auth_team_transfer_owner
+  binding: rest
+  rest: PUT .../teams/{team_name}/owner
+  destructive: true
+- name: user_auth_team_members_list
+  binding: rest
+  rest: GET /api/v1/teams/{team_name}/members
+- name: user_auth_team_add_members
+  binding: rest
+  rest: POST .../teams/{team_name}/members
+- name: user_auth_team_remove_member
+  binding: rest
+  rest: DELETE .../teams/{team_name}/members/{email}
+  destructive: true
+- name: user_auth_user_get
+  binding: rest
+  rest: GET /api/v1/users/{user_id}
+- name: user_auth_user_orgs
+  binding: rest
+  rest: GET /api/v1/users/orgs
+- name: deployer_grpc_health
+  binding: grpc
+  rpc: grpc.health.v1.Health/Check
+- name: deployer_grpc_list_tiers
+  binding: grpc
+  rpc: TierService/ListTiers
+- name: deployer_grpc_list_environment
+  binding: grpc
+  rpc: EnvironmentService/ListEnvironment
+- name: deployer_grpc_describe_environment
+  binding: grpc
+  rpc: EnvironmentService/DescribeEnvironment
+- name: deployer_grpc_create_environment
+  binding: grpc
+  rpc: EnvironmentService/CreateEnvironment
+  streaming: server
+  destructive: true
+- name: deployer_grpc_delete_environment
+  binding: grpc
+  rpc: EnvironmentService/DeleteEnvironment
+  streaming: server
+  destructive: true
+- name: deployer_grpc_status_environment
+  binding: grpc
+  rpc: EnvironmentService/StatusEnvironment
+  streaming: server
+- name: deployer_grpc_list_services
+  binding: grpc
+  rpc: ServiceService/ListServices
+- name: deployer_grpc_describe_service
+  binding: grpc
+  rpc: ServiceService/DescribeService
+- name: deployer_grpc_deploy_service
+  binding: grpc
+  rpc: ServiceService/DeployService
+  streaming: server
+- name: deployer_grpc_operate_service
+  binding: grpc
+  rpc: ServiceService/OperateService
+  streaming: server
+- name: deployer_grpc_undeploy_service
+  binding: grpc
+  rpc: ServiceService/UndeployService
+  streaming: server
+  destructive: true
+- name: deployer_grpc_operate_component_diff
+  binding: grpc
+  rpc: ServiceService/OperateComponentDiff
+- name: deployer_grpc_list_service_versions
+  binding: grpc
+  rpc: ServiceService/ListServiceVersions
+- name: deployer_grpc_release_service
+  binding: grpc
+  rpc: ServiceService/ReleaseService
+- name: deployer_grpc_check_service_release_name_unique
+  binding: grpc
+  rpc: ServiceService/CheckServiceReleaseNameUnique
+- name: deployer_grpc_export_service
+  binding: grpc
+  rpc: ServiceService/ExportService
+x-evidence:
+  fetched: '2026-08-04'
+  url: https://raw.githubusercontent.com/dream-horizon-org/odin-mcp/main/README.md
+  http_status: 200

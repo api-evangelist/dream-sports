@@ -1,0 +1,2782 @@
+openapi: 3.0.3
+info:
+  title: Raven Journey API
+  description: |
+    Journey module APIs for Journey management, behaviour tags, events, and SDK operations.
+
+    ## Authentication
+    TENANT-ID and PROJECT-ID headers are required on all endpoints (auth routes use TENANT-ID only) via the global `TenantIdHeader` security scheme.
+    The `/healthcheck` endpoint is exempted. Some endpoints also require `USER-ID`.
+
+    ## Timestamps
+    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).
+  version: 1.0.0
+  contact:
+    name: Raven Team
+
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+
+security:
+  - TenantIdHeader: []
+
+tags:
+  - name: Health
+    description: Health check endpoints
+  - name: Journeys
+    description: Journey management operations — create, read, update, and delete journeys
+  - name: Journey Lifecycle
+    description: |
+      Journey lifecycle status transitions.
+      Journeys move through states: DRAFT -> SCHEDULED -> LIVE -> PAUSED -> CONCLUDED/TERMINATED.
+      Each status transition has its own dedicated endpoint.
+  - name: Journey Test
+    description: Test journey operations — create and remove test journeys for validating behaviour before going live
+  - name: Journey Behaviour
+    description: Journey behaviour tag management — define and manage behaviour tags linked to journeys
+  - name: Events Catalog
+    description: Event schema management — create, update, and manage event definitions and their properties
+  - name: Nudge Preview
+    description: Nudge preview management — create, update, and retrieve nudge preview templates with TTL configuration
+  - name: Client SDK
+    description: Client SDK operations — endpoints consumed by the SDK for active journeys and state machine snapshots
+  - name: Auth
+    description: Authentication operations — Google login and token refresh
+  - name: Console Users
+    description: Console user management via Firebase Admin SDK
+  - name: Admin - Console Users
+    description: |
+      Admin-only console user operations — user onboarding and updates that include project IDs
+      (stored in Firebase custom claims). Requires appropriate admin authorization at the gateway.
+
+paths:
+  /healthcheck:
+    get:
+      tags:
+        - Health
+      summary: Health Check
+      operationId: healthCheck
+      security: []
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+
+  /thunder/filters/:
+    get:
+      tags:
+        - Journeys
+      summary: Get Filter Options
+      description: Returns available filter options for journey listing
+      operationId: getFilters
+      responses:
+        '200':
+          description: Filter options retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /thunder/ctas:
+    get:
+      tags:
+        - Journeys
+      summary: List Journeys
+      description: Retrieves a paginated list of journeys
+      operationId: listJourneys
+      parameters:
+        - name: pageNumber
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: status
+          in: query
+          description: Filter by journey status
+          schema:
+            type: string
+            enum: [DRAFT, SCHEDULED, LIVE, PAUSED, CONCLUDED, TERMINATED]
+        - name: team
+          in: query
+          schema:
+            type: string
+        - name: tags
+          in: query
+          schema:
+            type: string
+        - name: searchName
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Journeys retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      tags:
+        - Journeys
+      summary: Create Journey
+      description: |
+        Creates a new journey in DRAFT status.
+
+        **Important**:
+        - `startTime` and `endTime` must be future timestamps (milliseconds)
+        - `stateMachineTTL` must be a future timestamp
+        - Use `cohortEligibility: { includes: ["all"], excludes: [] }`
+      operationId: createJourney
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JourneyRequest'
+            example:
+              name: "Welcome Notification"
+              tags: ["growth", "notifications"]
+              description: "Welcome nudge for new users"
+              team: "marketing"
+              startTime: 2082758400000
+              endTime: 2114294400000
+              rule:
+                cohortEligibility:
+                  includes: ["all"]
+                  excludes: []
+                stateToAction:
+                  "1": "actionId1"
+                contextParams: ["mode"]
+                stateTransition:
+                  AppLaunch:
+                    "0":
+                      - transitionTo: "1"
+                        filters:
+                          operator: "AND"
+                          filter: []
+                priority: 1
+                stateMachineTTL: 2082758400000
+                actions:
+                  - actionId1:
+                      type: "BottomSheet"
+                      nudgeId: "5"
+                frequency:
+                  session:
+                    limit: 1
+                  window:
+                    limit: 1
+                    unit: "days"
+                    value: 2
+      responses:
+        '200':
+          description: Journey created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+              example:
+                success: true
+                data: 12345
+                statusCode: 200
+        '400':
+          description: Invalid request body or validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /thunder/ctas/{ctaId}:
+    get:
+      tags:
+        - Journeys
+      summary: Get Journey by ID
+      operationId: getJourney
+      parameters:
+        - name: ctaId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Journey retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Journey not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      tags:
+        - Journeys
+      summary: Update Journey
+      operationId: updateJourney
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+        - name: ctaId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JourneyUpdateRequest'
+            example:
+              tags: ["growth", "updated"]
+              description: "Updated description"
+              team: "marketing"
+              startTime: 2082758400000
+              endTime: 2114294400000
+              rule:
+                cohortEligibility:
+                  includes: ["all"]
+                  excludes: []
+                stateToAction:
+                  "1": "actionId1"
+                contextParams: ["mode"]
+                stateTransition:
+                  AppLaunch:
+                    "0":
+                      - transitionTo: "1"
+                        filters:
+                          operator: "AND"
+                          filter: []
+                priority: 1
+                stateMachineTTL: 2082758400000
+                actions:
+                  - actionId1:
+                      type: "BottomSheet"
+                      nudgeId: "5"
+                frequency:
+                  session:
+                    limit: 1
+                  window:
+                    limit: 1
+                    unit: "days"
+                    value: 2
+      responses:
+        '200':
+          description: Journey updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request body or validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Journey not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /thunder/ctas/{id}/live:
+    put:
+      tags:
+        - Journey Lifecycle
+      summary: Activate Journey
+      description: Changes the journey status to LIVE. The journey must be in SCHEDULED or PAUSED status.
+      operationId: activateJourney
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 12345
+      responses:
+        '200':
+          description: Journey activated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Journey cannot be activated from current status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Journey not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /thunder/ctas/{id}/pause:
+    put:
+      tags:
+        - Journey Lifecycle
+      summary: Pause Journey
+      description: Changes the journey status to PAUSED. The journey must be in LIVE status.
+      operationId: pauseJourney
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 12345
+      responses:
+        '200':
+          description: Journey paused successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Journey cannot be paused from current status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Journey not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /thunder/ctas/{id}/schedule:
+    put:
+      tags:
+        - Journey Lifecycle
+      summary: Schedule Journey
+      description: Changes the journey status to SCHEDULED. The journey must be in DRAFT status.
+      operationId: scheduleJourney
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 12345
+      responses:
+        '200':
+          description: Journey scheduled successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Journey cannot be scheduled from current status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Journey not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /thunder/ctas/{id}/conclude:
+    put:
+      tags:
+        - Journey Lifecycle
+      summary: Conclude Journey
+      description: Changes the journey status to CONCLUDED. The journey must be in LIVE or PAUSED status.
+      operationId: concludeJourney
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 12345
+      responses:
+        '200':
+          description: Journey concluded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Journey cannot be concluded from current status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Journey not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /thunder/ctas/{id}/terminate:
+    put:
+      tags:
+        - Journey Lifecycle
+      summary: Terminate Journey
+      description: Changes the journey status to TERMINATED. The journey must be in DRAFT, SCHEDULED, LIVE, or PAUSED status.
+      operationId: terminateJourney
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 12345
+      responses:
+        '200':
+          description: Journey terminated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Journey cannot be terminated from current status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Journey not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /thunder/ctas/test/create:
+    post:
+      tags:
+        - Journey Test
+      summary: Create Test Journey
+      description: Creates a test journey for specific users. If previousCtaId is provided, the old test journey is deleted first.
+      operationId: createTestJourney
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestJourneyRequest'
+            example:
+              rule:
+                cohortEligibility:
+                  includes: ["all"]
+                  excludes: []
+              previousCtaId: null
+              expiresInMinutes: 30
+              userIds: [123456, 789012]
+      responses:
+        '201':
+          description: Test journey created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request body or validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /thunder/ctas/test/{ctaId}:
+    delete:
+      tags:
+        - Journey Test
+      summary: Remove Test Journey
+      description: Deletes a test journey by its ID.
+      operationId: removeTestJourney
+      parameters:
+        - name: ctaId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 12345
+      responses:
+        '200':
+          description: Test journey removed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Test journey not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /thunder/behaviour-tags/:
+    get:
+      tags:
+        - Journey Behaviour
+      summary: List Behaviour Tags
+      operationId: listBehaviourTags
+      responses:
+        '200':
+          description: Behaviour tags retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      tags:
+        - Journey Behaviour
+      summary: Create Behaviour Tag
+      operationId: createBehaviourTag
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BehaviourTagRequest'
+            example:
+              behaviourTagName: "first_purchase"
+              description: "Tag for users who made first purchase"
+              exposureRule:
+                session:
+                  limit: 1
+                window:
+                  limit: 3
+                  unit: "days"
+                  value: 7
+                lifespan:
+                  limit: 10
+              linkedCtas: []
+      responses:
+        '200':
+          description: Behaviour tag created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request body or validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /thunder/behaviour-tags/{behaviourTagName}:
+    get:
+      tags:
+        - Journey Behaviour
+      summary: Get Behaviour Tag
+      operationId: getBehaviourTag
+      parameters:
+        - name: behaviourTagName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Behaviour tag retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Behaviour tag not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      tags:
+        - Journey Behaviour
+      summary: Update Behaviour Tag
+      operationId: updateBehaviourTag
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+        - name: behaviourTagName
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BehaviourTagUpdateRequest'
+            example:
+              description: "Updated description"
+              exposureRule:
+                session:
+                  limit: 2
+                window:
+                  limit: 5
+                  unit: "days"
+                  value: 7
+                lifespan:
+                  limit: 20
+              linkedCtas: []
+      responses:
+        '200':
+          description: Behaviour tag updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request body or validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Behaviour tag not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      tags:
+        - Journey Behaviour
+      summary: Delete Behaviour Tag
+      operationId: deleteBehaviourTag
+      parameters:
+        - name: behaviourTagName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Behaviour tag deleted
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Behaviour tag not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /thunder/events:
+    get:
+      tags:
+        - Events Catalog
+      summary: List Events
+      operationId: listEvents
+      responses:
+        '200':
+          description: Events retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      tags:
+        - Events Catalog
+      summary: Create or Update Events
+      description: |
+        Creates new events or updates existing events. Accepts an array of EventInput objects.
+        Each event includes a name and a list of properties with types, expected values, and mandatory flags.
+      operationId: upsertEvents
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/EventInput'
+            example:
+              - eventName: "AppLaunch"
+                properties:
+                  - propertyName: "mode"
+                    type: "string"
+                    isMandatory: true
+                    description: "App launch mode"
+      responses:
+        '200':
+          description: Event created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request body or validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /thunder/events/list/names:
+    get:
+      tags:
+        - Events Catalog
+      summary: Get All Event Names
+      description: Retrieves a list of all event names for the project (lightweight, no property details).
+      operationId: getAllEventNames
+      responses:
+        '200':
+          description: Event names retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /thunder/events/{event-name}:
+    get:
+      tags:
+        - Events Catalog
+      summary: Get Event by Name
+      description: Retrieves a specific event by its name, including all property definitions.
+      operationId: getEvent
+      parameters:
+        - name: event-name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Event retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Event not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      tags:
+        - Events Catalog
+      summary: Update Event Properties
+      description: Updates the properties of an existing event.
+      operationId: patchEvent
+      parameters:
+        - name: event-name
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/EventInput'
+      responses:
+        '200':
+          description: Event updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request body or validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Event not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      tags:
+        - Events Catalog
+      summary: Delete Event
+      operationId: deleteEvent
+      parameters:
+        - name: event-name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Event deleted
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Event not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /thunder/nudge/preview/:
+    post:
+      tags:
+        - Nudge Preview
+      summary: Create or Update Nudge Preview
+      description: |
+        Creates a new nudge preview or updates an existing one. Nudge previews store UI templates
+        with a TTL (time-to-live) that controls how long the preview is available.
+      operationId: createOrUpdateNudgePreview
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NudgePreview'
+            example:
+              id: "preview_001"
+              template: '{"type":"BottomSheet","testId":"nudge_container_bottom_sheet"}'
+              ttl: 3600
+      responses:
+        '200':
+          description: Nudge preview created or updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request — id or template is empty
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    get:
+      tags:
+        - Nudge Preview
+      summary: Get Nudge Preview (Admin)
+      description: Retrieves a nudge preview by its ID using a query parameter.
+      operationId: getNudgePreviewAdmin
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          example: preview_001
+      responses:
+        '200':
+          description: Nudge preview retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Nudge preview not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Project not authorised for this resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /sdk/nudge/preview/{id}:
+    get:
+      tags:
+        - Client SDK
+      summary: Get Nudge Preview (SDK)
+      description: |
+        Retrieves a nudge preview by its ID via path parameter. Used by the client SDK to fetch nudge templates.
+        Route rename: `/cta/nudge/preview/{id}` is renamed to `/sdk/nudge/preview/{id}`.
+      operationId: getNudgePreviewSdk
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "5"
+      responses:
+        '200':
+          description: Nudge preview retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Nudge preview not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Project not authorised for this resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /sdk/journeys/active:
+    post:
+      tags:
+        - Client SDK
+      summary: Get Active Journeys for User
+      description: |
+        Returns active journeys and behaviour tags for a user.
+        Route rename: `/cta/active/state-machines/` is renamed to `/sdk/journeys/active`.
+        SDK metadata headers are part of the contract and are marked required here.
+        Note: server-side enforcement for these metadata headers is not implemented yet.
+      operationId: getActiveJourneysSdk
+      parameters:
+        - $ref: '#/components/parameters/SdkUserId'
+        - $ref: '#/components/parameters/SdkPlatform'
+        - $ref: '#/components/parameters/SdkFramework'
+        - $ref: '#/components/parameters/SdkVersion'
+        - $ref: '#/components/parameters/SdkPackage'
+        - $ref: '#/components/parameters/SdkAppVersion'
+        - $ref: '#/components/parameters/SdkAppBuild'
+        - $ref: '#/components/parameters/SdkOs'
+        - $ref: '#/components/parameters/SdkOsVersion'
+        - $ref: '#/components/parameters/SdkOsApiLevel'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JourneySnapshotRequest'
+            example:
+              ctas: []
+              behaviourTags: []
+      responses:
+        '200':
+          description: Active journeys retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request body or missing userId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /sdk/journeys/sync:
+    post:
+      tags:
+        - Client SDK
+      summary: Sync Journey State Delta
+      description: |
+        Saves user's state machine snapshot delta.
+        Route rename: `/cta/state-machines/snapshot/delta/` is renamed to `/sdk/journeys/sync`.
+        SDK metadata headers are part of the contract and are marked required here.
+        Note: server-side enforcement for these metadata headers is not implemented yet.
+      operationId: syncJourneyState
+      parameters:
+        - $ref: '#/components/parameters/SdkUserId'
+        - $ref: '#/components/parameters/SdkPlatform'
+        - $ref: '#/components/parameters/SdkFramework'
+        - $ref: '#/components/parameters/SdkVersion'
+        - $ref: '#/components/parameters/SdkPackage'
+        - $ref: '#/components/parameters/SdkAppVersion'
+        - $ref: '#/components/parameters/SdkAppBuild'
+        - $ref: '#/components/parameters/SdkOs'
+        - $ref: '#/components/parameters/SdkOsVersion'
+        - $ref: '#/components/parameters/SdkOsApiLevel'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JourneySnapshotRequest'
+            example:
+              ctas:
+                - ctaId: "12345"
+                  activeStateMachines: {}
+                  resetAt: []
+                  actionDoneAt: []
+              behaviourTags: []
+      responses:
+        '200':
+          description: Snapshot saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request body or missing userId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /sdk/user/identify:
+    post:
+      tags:
+        - Client SDK
+      summary: SDK User Identify
+      description: |
+        Creates or updates user profile details from SDK identity flow.
+        Route rename chain: `/user-profile/sdk/login` -> `/sdk/login` -> `/sdk/user/identify`.
+        SDK metadata headers are part of the contract and are marked required here.
+        Note: server-side enforcement for these metadata headers is not implemented yet.
+      operationId: sdkUserIdentify
+      parameters:
+        - $ref: '#/components/parameters/SdkUserId'
+        - $ref: '#/components/parameters/SdkPlatform'
+        - $ref: '#/components/parameters/SdkFramework'
+        - $ref: '#/components/parameters/SdkVersion'
+        - $ref: '#/components/parameters/SdkPackage'
+        - $ref: '#/components/parameters/SdkAppVersion'
+        - $ref: '#/components/parameters/SdkAppBuild'
+        - $ref: '#/components/parameters/SdkOs'
+        - $ref: '#/components/parameters/SdkOsVersion'
+        - $ref: '#/components/parameters/SdkOsApiLevel'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SdkUserProfileLoginRequest'
+            example:
+              userId: "135162489"
+              firstName: "Khagesh"
+              lastName: "Kumar"
+              email: "khagesh.kumar@example.com"
+              phone: "+919999999999"
+              city: "Mumbai"
+              country: "India"
+              language: "en"
+              timezone: "Asia/Kolkata"
+              custom:
+                acquisitionSource: "app"
+      responses:
+        '204':
+          description: User profile upserted successfully
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /sdk/device-token/register:
+    post:
+      tags:
+        - Client SDK
+      summary: SDK Token Registration
+      description: |
+        Registers or updates an SDK device push token for a user.
+        Route rename chain: `/user-profile/sdk/register/token` -> `/sdk/register/token` -> `/sdk/device-token/register`.
+        SDK metadata headers are part of the contract and are marked required here.
+        Note: server-side enforcement for these metadata headers is not implemented yet.
+      operationId: sdkDeviceTokenRegister
+      parameters:
+        - $ref: '#/components/parameters/SdkUserId'
+        - $ref: '#/components/parameters/SdkPlatform'
+        - $ref: '#/components/parameters/SdkFramework'
+        - $ref: '#/components/parameters/SdkVersion'
+        - $ref: '#/components/parameters/SdkPackage'
+        - $ref: '#/components/parameters/SdkAppVersion'
+        - $ref: '#/components/parameters/SdkAppBuild'
+        - $ref: '#/components/parameters/SdkOs'
+        - $ref: '#/components/parameters/SdkOsVersion'
+        - $ref: '#/components/parameters/SdkOsApiLevel'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SdkTokenRegisterRequest'
+            example:
+              userId: "135162489"
+              token: "fcm_token_ABC123"
+              deviceId: "device_001"
+              tokenType: "FCM"
+              os: "android"
+              osVersion: "14"
+              appPackageName: "com.dream11.app"
+              appVersion: "25.2.0.v1"
+      responses:
+        '204':
+          description: Token registered successfully
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /sdk/user/preferences:
+    put:
+      tags:
+        - Client SDK
+      summary: SDK Preferences Upsert
+      description: |
+        Upserts user notification preferences from SDK.
+        Route rename chain: `/user-profile/sdk/preferences` -> `/sdk/preferences` -> `/sdk/user/preferences`.
+        SDK metadata headers are part of the contract and are marked required here.
+        Note: server-side enforcement for these metadata headers is not implemented yet.
+      operationId: sdkUserPreferencesUpsert
+      parameters:
+        - $ref: '#/components/parameters/SdkUserId'
+        - $ref: '#/components/parameters/SdkPlatform'
+        - $ref: '#/components/parameters/SdkFramework'
+        - $ref: '#/components/parameters/SdkVersion'
+        - $ref: '#/components/parameters/SdkPackage'
+        - $ref: '#/components/parameters/SdkAppVersion'
+        - $ref: '#/components/parameters/SdkAppBuild'
+        - $ref: '#/components/parameters/SdkOs'
+        - $ref: '#/components/parameters/SdkOsVersion'
+        - $ref: '#/components/parameters/SdkOsApiLevel'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SdkUpsertPreferencesRequest'
+            example:
+              userId: "135162489"
+              items:
+                - channel: push
+                  subcategory: contest
+                  value: true
+      responses:
+        '200':
+          description: Preferences updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SdkUpsertPreferencesApiResponse'
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v1/auth/google-login:
+    post:
+      tags:
+        - Auth
+      summary: Google login
+      operationId: googleLogin
+      description: |
+        Login flow (no signInWithIdp):
+        1) Verify Google ID token with Google tokeninfo.
+        2) Validate issuer/audience/expiry/email_verified.
+           - If auth.googleAllowedAudience is configured, aud must match it.
+        3) Resolve existing Firebase user by google sub (provider mapping).
+        4) If not found, fallback to email lookup.
+           - If google provider already exists on email match -> fail.
+           - If google provider missing -> link google.com provider with verified sub.
+        5) Mint custom token and exchange via signInWithCustomToken.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthLoginRequest'
+            example:
+              google_id_token: "{{GOOGLE_ID_TOKEN_RAW}}"
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokenApiResponse'
+              example:
+                success: true
+                data:
+                  access_token: "{{FIREBASE_ID_TOKEN_RAW}}"
+                  refresh_token: "{{FIREBASE_REFRESH_TOKEN_RAW}}"
+                  expires_in: 3600
+                  token_type: "Bearer"
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Invalid credentials or TENANT-ID header is missing/invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: User not onboarded for tenant or email-matched user already linked to Google provider
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Authentication downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v1/auth/refresh:
+    post:
+      tags:
+        - Auth
+      summary: Refresh access token
+      operationId: refreshToken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRefreshRequest'
+            example:
+              refresh_token: "{{FIREBASE_REFRESH_TOKEN_RAW}}"
+      responses:
+        '200':
+          description: Token refresh successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokenApiResponse'
+              example:
+                success: true
+                data:
+                  access_token: "{{FIREBASE_ID_TOKEN_RAW}}"
+                  refresh_token: "{{FIREBASE_REFRESH_TOKEN_RAW}}"
+                  expires_in: 3600
+                  token_type: "Bearer"
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Refresh token invalid/revoked or TENANT-ID header is missing/invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Authentication downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v1/console-users:
+    get:
+      tags:
+        - Console Users
+      summary: List console users
+      operationId: listConsoleUsers
+      description: |
+        Returns console users with cursor-based pagination (Firebase native).
+        Use pageToken from the previous response's nextPageToken to fetch the next page.
+        When neither pageSize nor pageToken is provided (and no id/email filters),
+        all users for the tenant are returned in a single response.
+        When id/email filters are provided, all matching users are returned in a single response
+        with recordCount (filter sets are bounded).
+        Repeated query params are supported:
+        - id={id1}&id={id2}
+        - email={email1}&email={email2}
+        Filter semantics when both id and email are provided: UNION.
+      parameters:
+        - name: pageSize
+          in: query
+          required: false
+          description: Number of users per page (1-100). When omitted along with pageToken, all users are returned.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+        - name: pageToken
+          in: query
+          required: false
+          description: Cursor token returned as nextPageToken from a previous response. Omit for the first page.
+          schema:
+            type: string
+        - name: id
+          in: query
+          required: false
+          description: "Repeat this param to pass multiple ids. Example: ?id=id1&id=id2"
+          schema:
+            type: array
+            items:
+              type: string
+            example:
+              - id1
+              - id2
+          style: form
+          explode: true
+        - name: email
+          in: query
+          required: false
+          description: "Repeat this param to pass multiple emails. Example: ?email=a@x.com&email=b@y.com"
+          schema:
+            type: array
+            items:
+              type: string
+              format: email
+            example:
+              - user1@dream11.com
+              - user2@dream11.com
+          style: form
+          explode: true
+      responses:
+        '200':
+          description: Console users retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsoleUserListApiResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - Console Users
+      summary: Create console user
+      operationId: createConsoleUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsoleUserCreateRequest'
+      responses:
+        '201':
+          description: Console user created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsoleUserIdApiResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: User already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v1/console-users/uid/{uid}:
+    get:
+      tags:
+        - Console Users
+      summary: Get console user by uid
+      operationId: getConsoleUserByUid
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Console user retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsoleUserRecordApiResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      tags:
+        - Console Users
+      summary: Update console user by uid
+      description: Profile fields only (displayName, photoUrl, etc.). To change project IDs, use the admin PATCH endpoint.
+      operationId: updateConsoleUserByUid
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsoleUserUpdateRequest'
+      responses:
+        '204':
+          description: Console user updated
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - Console Users
+      summary: Delete console user by uid
+      operationId: deleteConsoleUserByUid
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Console user deleted
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v1/console-users/email/{email}:
+    get:
+      tags:
+        - Console Users
+      summary: Get console user by email
+      operationId: getConsoleUserByEmail
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: URL-encoded email value (for example khagesh.kumar%40dream11.com)
+          schema:
+            type: string
+            format: email
+      responses:
+        '200':
+          description: Console user retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsoleUserRecordApiResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      tags:
+        - Console Users
+      summary: Update console user by email
+      description: Profile fields only. To change project IDs, use the admin PATCH endpoint.
+      operationId: updateConsoleUserByEmail
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: URL-encoded email value (for example khagesh.kumar%40dream11.com)
+          schema:
+            type: string
+            format: email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsoleUserUpdateRequest'
+      responses:
+        '204':
+          description: Console user updated
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - Console Users
+      summary: Delete console user by email
+      operationId: deleteConsoleUserByEmail
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: URL-encoded email value (for example khagesh.kumar%40dream11.com)
+          schema:
+            type: string
+            format: email
+      responses:
+        '204':
+          description: Console user deleted
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v1/admin/console-users/onboard:
+    post:
+      tags:
+        - Admin - Console Users
+      summary: Onboard console user (admin)
+      description: |
+        Creates the user in Firebase, optionally sets validated project IDs on the user (Firebase),
+        and records email-to-tenant mapping in Postgres. Project IDs must belong to the tenant.
+      operationId: adminOnboardConsoleUser
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsoleUserOnboardRequest'
+      responses:
+        '201':
+          description: Console user onboarded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsoleUserIdApiResponse'
+        '400':
+          description: Invalid request or project IDs not valid for tenant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: User already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v1/admin/console-users/uid/{uid}:
+    patch:
+      tags:
+        - Admin - Console Users
+      summary: Update console user by uid (admin, includes projectIds)
+      description: |
+        Same profile fields as the standard PATCH, plus optional projectIds for Firebase custom claims.
+        Omit projectIds to leave them unchanged; pass an empty array to clear them.
+      operationId: adminUpdateConsoleUserByUid
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - name: uid
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminConsoleUserUpdateRequest'
+      responses:
+        '204':
+          description: Console user updated
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v1/admin/console-users/email/{email}:
+    patch:
+      tags:
+        - Admin - Console Users
+      summary: Update console user by email (admin, includes projectIds)
+      description: |
+        Same as admin update by uid; resolves user by email first.
+      operationId: adminUpdateConsoleUserByEmail
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - name: email
+          in: path
+          required: true
+          description: URL-encoded email value
+          schema:
+            type: string
+            format: email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminConsoleUserUpdateRequest'
+      responses:
+        '204':
+          description: Console user updated
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  parameters:
+    UserId:
+      name: USER-ID
+      in: header
+      required: true
+      schema:
+        type: string
+      example: admin
+
+    SdkUserId:
+      name: user-id
+      in: header
+      required: true
+      schema:
+        type: integer
+        format: int64
+      example: 135162489
+
+    SdkPlatform:
+      name: platform
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - android-mobile
+          - android-tv
+          - ios
+          - tvos
+      example: android-mobile
+
+    SdkFramework:
+      name: framework
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - native
+          - react-native
+          - flutter
+      example: react-native
+
+    SdkVersion:
+      name: sdk-version
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: '^[A-Za-z0-9._-]{1,64}$'
+      example: 1.5.0
+
+    SdkPackage:
+      name: package
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: '^[A-Za-z0-9._-]{3,128}$'
+      example: com.dream11.app
+
+    SdkAppVersion:
+      name: app-version
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: '^[A-Za-z0-9._-]{1,64}$'
+      description: Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).
+      example: 25.2.0
+
+    SdkAppBuild:
+      name: app-build
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: '^[A-Za-z0-9._-]{1,64}$'
+      example: 250200123
+
+    SdkOs:
+      name: os
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - android
+          - ios
+          - tvos
+      example: android
+
+    SdkOsVersion:
+      name: os-version
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: '^[A-Za-z0-9._-]{1,32}$'
+      example: "14"
+
+    SdkOsApiLevel:
+      name: os-api-level
+      in: header
+      required: true
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+      example: 34
+
+  securitySchemes:
+    TenantIdHeader:
+      type: apiKey
+      in: header
+      name: TENANT-ID
+
+  schemas:
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        statusCode:
+          type: integer
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
+
+    AuthLoginRequest:
+      type: object
+      required:
+        - google_id_token
+      properties:
+        google_id_token:
+          type: string
+          description: Raw Google ID token (JWT)
+          example: "{{GOOGLE_ID_TOKEN_RAW}}"
+
+    AuthRefreshRequest:
+      type: object
+      required:
+        - refresh_token
+      properties:
+        refresh_token:
+          type: string
+          description: Raw Firebase refresh token
+          example: "{{FIREBASE_REFRESH_TOKEN_RAW}}"
+
+    AuthTokenData:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: Raw Firebase ID token (JWT)
+          example: "{{FIREBASE_ID_TOKEN_RAW}}"
+        refresh_token:
+          type: string
+          description: Raw Firebase refresh token
+          example: "{{FIREBASE_REFRESH_TOKEN_RAW}}"
+        expires_in:
+          type: integer
+          format: int64
+          example: 3600
+        token_type:
+          type: string
+          example: "Bearer"
+
+    AuthTokenApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/AuthTokenData'
+
+    ConsoleUserCreateRequest:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+        displayName:
+          type: string
+        photoUrl:
+          type: string
+        emailVerified:
+          type: boolean
+        disabled:
+          type: boolean
+
+    ConsoleUserUpdateRequest:
+      type: object
+      description: Profile fields only (no projectIds). Use admin update to change project IDs.
+      properties:
+        displayName:
+          type: string
+        photoUrl:
+          type: string
+        emailVerified:
+          type: boolean
+        disabled:
+          type: boolean
+
+    ConsoleUserOnboardRequest:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+        projectIds:
+          type: array
+          items:
+            type: string
+          description: Optional; must be a subset of the tenant's projects when non-empty.
+
+    AdminConsoleUserUpdateRequest:
+      type: object
+      properties:
+        displayName:
+          type: string
+        photoUrl:
+          type: string
+        emailVerified:
+          type: boolean
+        disabled:
+          type: boolean
+        projectIds:
+          type: array
+          items:
+            type: string
+          description: |
+            Optional. When set, replaces Firebase custom-claim project IDs. Empty array clears them.
+            When omitted, existing project IDs are unchanged.
+
+    ConsoleUserRecord:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        displayName:
+          type: string
+        photoUrl:
+          type: string
+        emailVerified:
+          type: boolean
+        disabled:
+          type: boolean
+        projectIds:
+          type: array
+          items:
+            type: string
+          description: Project IDs from Firebase custom claims (allowedProjectIds). Omitted or empty when none set.
+        createdAt:
+          type: string
+          format: date-time
+          nullable: true
+        lastLoginAt:
+          type: string
+          format: date-time
+          nullable: true
+        lastRefreshAt:
+          type: string
+          format: date-time
+          nullable: true
+
+    ConsoleUserPagination:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+        recordCount:
+          type: integer
+          nullable: true
+          description: Total matching records. Present only when id/email filters are used.
+        nextPageToken:
+          type: string
+          nullable: true
+          description: Cursor for fetching the next page. Null when there are no more results.
+
+    ConsoleUserListData:
+      type: object
+      properties:
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsoleUserRecord'
+        pagination:
+          $ref: '#/components/schemas/ConsoleUserPagination'
+
+    ConsoleUserIdData:
+      type: object
+      properties:
+        id:
+          type: string
+
+    ConsoleUserListApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/ConsoleUserListData'
+
+    ConsoleUserRecordApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/ConsoleUserRecord'
+
+    ConsoleUserIdApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/ConsoleUserIdData'
+
+    JourneyRequest:
+      type: object
+      required:
+        - name
+        - team
+        - rule
+      properties:
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        team:
+          type: string
+        startTime:
+          type: integer
+          format: int64
+          description: Future epoch timestamp in milliseconds
+        endTime:
+          type: integer
+          format: int64
+          description: Future epoch timestamp in milliseconds
+        rule:
+          $ref: '#/components/schemas/RuleRequest'
+
+    JourneyUpdateRequest:
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        team:
+          type: string
+        startTime:
+          type: integer
+          format: int64
+        endTime:
+          type: integer
+          format: int64
+        rule:
+          $ref: '#/components/schemas/RuleRequest'
+
+    RuleRequest:
+      type: object
+      required:
+        - cohortEligibility
+        - stateToAction
+        - stateTransition
+        - priority
+        - stateMachineTTL
+        - actions
+        - frequency
+      properties:
+        cohortEligibility:
+          type: object
+          properties:
+            includes:
+              type: array
+              items:
+                type: string
+            excludes:
+              type: array
+              items:
+                type: string
+        stateToAction:
+          type: object
+          additionalProperties:
+            type: string
+        resetStates:
+          type: array
+          items:
+            type: string
+        contextParams:
+          type: array
+          items:
+            type: string
+        stateTransition:
+          type: object
+        groupByConfig:
+          type: object
+        priority:
+          type: integer
+        stateMachineTTL:
+          type: integer
+          format: int64
+          description: Future epoch timestamp in milliseconds
+        actions:
+          type: array
+          items:
+            type: object
+        frequency:
+          type: object
+          properties:
+            session:
+              type: object
+              properties:
+                limit:
+                  type: integer
+            window:
+              type: object
+              properties:
+                limit:
+                  type: integer
+                unit:
+                  type: string
+                value:
+                  type: integer
+
+    BehaviourTagRequest:
+      type: object
+      required:
+        - behaviourTagName
+      properties:
+        behaviourTagName:
+          type: string
+        description:
+          type: string
+        exposureRule:
+          type: object
+          properties:
+            session:
+              type: object
+              properties:
+                limit:
+                  type: integer
+            window:
+              type: object
+              properties:
+                limit:
+                  type: integer
+                unit:
+                  type: string
+                value:
+                  type: integer
+            lifespan:
+              type: object
+              properties:
+                limit:
+                  type: integer
+        linkedCtas:
+          type: array
+          items:
+            type: string
+
+    BehaviourTagUpdateRequest:
+      type: object
+      properties:
+        description:
+          type: string
+        exposureRule:
+          type: object
+        linkedCtas:
+          type: array
+          items:
+            type: string
+
+    EventInput:
+      type: object
+      required:
+        - eventName
+        - properties
+      properties:
+        eventName:
+          type: string
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventPropertyInput'
+
+    EventPropertyInput:
+      type: object
+      required:
+        - propertyName
+        - type
+        - isMandatory
+      properties:
+        propertyName:
+          type: string
+        type:
+          type: string
+        expectedValue:
+          type: string
+        isMandatory:
+          type: boolean
+        description:
+          type: string
+
+    NudgePreview:
+      type: object
+      required:
+        - id
+        - template
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the nudge preview
+        template:
+          type: string
+          description: JSON string containing the nudge UI template configuration
+        projectId:
+          type: string
+          description: Project identifier (set by server)
+        ttl:
+          type: integer
+          format: int32
+          description: Time-to-live in seconds for the preview record (default 3600)
+
+    TestJourneyRequest:
+      type: object
+      description: Request to create a test journey for validating journey behaviour before going live
+      properties:
+        userIds:
+          type: array
+          items:
+            type: string
+          description: List of user IDs to test the journey with
+
+    JourneySnapshotRequest:
+      type: object
+      properties:
+        ctas:
+          type: array
+          items:
+            type: object
+        behaviourTags:
+          type: array
+          items:
+            type: object
+
+    SdkUserProfileLoginRequest:
+      type: object
+      required:
+        - userId
+      properties:
+        userId:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        birthdate:
+          type: string
+        gender:
+          type: string
+        city:
+          type: string
+        locality:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+        language:
+          type: string
+        timezone:
+          type: string
+        custom:
+          type: object
+          additionalProperties: true
+
+    SdkTokenRegisterRequest:
+      type: object
+      required:
+        - userId
+        - token
+        - deviceId
+        - tokenType
+      properties:
+        userId:
+          type: string
+        token:
+          type: string
+        deviceId:
+          type: string
+        tokenType:
+          type: string
+          enum:
+            - FCM
+            - APNS
+        os:
+          type: string
+        osVersion:
+          type: string
+        appPackageName:
+          type: string
+        appVersion:
+          type: string
+
+    PreferenceItem:
+      type: object
+      required:
+        - channel
+        - subcategory
+        - value
+      properties:
+        channel:
+          type: string
+        subcategory:
+          type: string
+        value:
+          type: boolean
+
+    SdkUpsertPreferencesRequest:
+      type: object
+      required:
+        - userId
+        - items
+      properties:
+        userId:
+          type: string
+        items:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/PreferenceItem'
+
+    SdkUpsertPreferencesResponse:
+      type: object
+      properties:
+        updated:
+          type: integer
+        preferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreferenceItem'
+
+    SdkUpsertPreferencesApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/SdkUpsertPreferencesResponse'

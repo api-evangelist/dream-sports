@@ -1,0 +1,904 @@
+generated: '2026-08-04'
+method: derived
+source: schema $ref graph + id-reference fields across the eight OpenAPI documents in openapi/
+note: Derived mechanically. Dream Sports publishes eight independent product specifications, not one object graph
+  — entities are grouped by the product domain that declares them, and relationships are only recorded inside a
+  single specification. No cross-product relationship is asserted, because none is declared anywhere the provider
+  publishes.
+domains:
+- domain: test-management
+  product: checkmate
+  source: openapi/dream-sports-checkmate-openapi.yml
+  entity_count: 16
+  entities_with_relationships: 12
+  entities:
+  - name: Error
+    fields: 2
+  - name: SuccessResponse
+    fields: 2
+  - name: Project
+    fields: 6
+    relationships:
+    - type: belongs_to
+      target: Project
+      via: projectId
+  - name: Test
+    fields: 19
+    relationships:
+    - type: belongs_to
+      target: Test
+      via: testId
+    - type: belongs_to
+      target: Section
+      via: sectionId
+    - type: belongs_to
+      target: Project
+      via: projectId
+    - type: belongs_to
+      target: Squad
+      via: squadId
+    - type: belongs_to
+      target: Priority
+      via: priorityId
+    - type: belongs_to
+      target: Type
+      via: typeId
+    - type: belongs_to
+      target: AutomationStatus
+      via: automationStatusId
+    - type: belongs_to
+      target: TestCoveredBy
+      via: testCoveredById
+    - type: belongs_to
+      target: Platform
+      via: platformId
+  - name: Run
+    fields: 6
+    relationships:
+    - type: belongs_to
+      target: Run
+      via: runId
+    - type: belongs_to
+      target: Project
+      via: projectId
+  - name: TestStatus
+    fields: 0
+  - name: Label
+    fields: 3
+    relationships:
+    - type: belongs_to
+      target: Label
+      via: labelId
+    - type: belongs_to
+      target: Project
+      via: projectId
+  - name: Squad
+    fields: 3
+    relationships:
+    - type: belongs_to
+      target: Squad
+      via: squadId
+    - type: belongs_to
+      target: Project
+      via: projectId
+  - name: Section
+    fields: 4
+    relationships:
+    - type: belongs_to
+      target: Section
+      via: sectionId
+    - type: belongs_to
+      target: Project
+      via: projectId
+  - name: Priority
+    fields: 2
+    relationships:
+    - type: belongs_to
+      target: Priority
+      via: priorityId
+  - name: AutomationStatus
+    fields: 2
+    relationships:
+    - type: belongs_to
+      target: AutomationStatus
+      via: automationStatusId
+  - name: Platform
+    fields: 2
+    relationships:
+    - type: belongs_to
+      target: Platform
+      via: platformId
+  - name: TestCoveredBy
+    fields: 2
+    relationships:
+    - type: belongs_to
+      target: TestCoveredBy
+      via: testCoveredById
+  - name: Type
+    fields: 2
+    relationships:
+    - type: belongs_to
+      target: Type
+      via: typeId
+  - name: Organization
+    fields: 4
+  - name: User
+    fields: 4
+    relationships:
+    - type: belongs_to
+      target: User
+      via: userId
+- domain: release
+  product: delivr-ota
+  source: openapi/dream-sports-delivr-ota-openapi.yml
+  entity_count: 21
+  entities_with_relationships: 4
+  entities:
+  - name: Account
+    fields: 3
+  - name: AccountCreate
+    fields: 5
+  - name: AccountStorage
+    fields: 7
+  - name: TermsStatus
+    fields: 8
+    relationships:
+    - type: belongs_to
+      target: Account
+      via: accountId
+  - name: TermsAcceptance
+    fields: 5
+    relationships:
+    - type: belongs_to
+      target: Account
+      via: accountId
+  - name: AccessKey
+    fields: 8
+  - name: AccessKeyRequest
+    fields: 4
+  - name: Organization
+    fields: 5
+  - name: App
+    fields: 4
+    relationships:
+    - type: has_one
+      target: CollaboratorMap
+      via: collaborators
+  - name: AppCreationRequest
+    fields: 0
+  - name: CollaboratorMap
+    fields: 0
+  - name: CollaboratorProperties
+    fields: 2
+  - name: Deployment
+    fields: 3
+    relationships:
+    - type: has_one
+      target: Package
+      via: package
+  - name: PackageInfo
+    fields: 6
+  - name: Package
+    fields: 0
+  - name: UpdateCheckResponse
+    fields: 0
+  - name: DeploymentStatusReport
+    fields: 7
+  - name: DownloadReport
+    fields: 3
+  - name: DeploymentMetrics
+    fields: 0
+  - name: UpdateMetrics
+    fields: 4
+  - name: Error
+    fields: 2
+- domain: release
+  product: dota
+  source: openapi/dream-sports-dota-openapi.yml
+  entity_count: 8
+  entities_with_relationships: 2
+  entities:
+  - name: Account
+    fields: 4
+  - name: AccessKey
+    fields: 8
+  - name: App
+    fields: 5
+  - name: Deployment
+    fields: 5
+    relationships:
+    - type: has_one
+      target: Package
+      via: package
+  - name: Package
+    fields: 8
+  - name: Collaborator
+    fields: 3
+    relationships:
+    - type: belongs_to
+      target: Account
+      via: accountId
+  - name: Organization
+    fields: 3
+  - name: Metrics
+    fields: 0
+- domain: identity
+  product: guardian-integrations
+  source: openapi/dream-sports-guardian-integrations-openapi.yml
+  entity_count: 8
+  entities_with_relationships: 2
+  entities:
+  - name: errorResponse
+    fields: 1
+  - name: EmptyUserResponse
+    fields: 0
+  - name: CreateUserRequest
+    fields: 9
+    relationships:
+    - type: has_one
+      target: ProviderData
+      via: provider
+  - name: ProviderData
+    fields: 4
+  - name: AddProviderDetailsRequest
+    fields: 2
+    relationships:
+    - type: belongs_to
+      target: User
+      via: userId
+    - type: has_one
+      target: ProviderData
+      via: provider
+  - name: User
+    fields: 5
+  - name: AuthenticateUserRequest
+    fields: 2
+  - name: SendMessageRequest
+    fields: 4
+- domain: identity
+  product: guardian
+  source: openapi/dream-sports-guardian-openapi.yml
+  entity_count: 65
+  entities_with_relationships: 18
+  entities:
+  - name: ErrorResponse
+    fields: 1
+  - name: UserRefreshTokenItem
+    fields: 6
+  - name: UserRefreshTokensResponse
+    fields: 2
+    relationships:
+    - type: has_many
+      target: UserRefreshTokenItem
+      via: refresh_tokens
+  - name: MetaInfo
+    fields: 4
+  - name: Template
+    fields: 2
+  - name: Contact
+    fields: 3
+    relationships:
+    - type: has_one
+      target: Template
+      via: template
+  - name: V1PasswordlessInitRequestBody
+    fields: 5
+    relationships:
+    - type: has_many
+      target: Contact
+      via: contacts
+    - type: has_one
+      target: MetaInfo
+      via: metaInfo
+  - name: V2PasswordlessInitRequestBody
+    fields: 7
+    relationships:
+    - type: has_many
+      target: Contact
+      via: contacts
+    - type: has_one
+      target: MetaInfo
+      via: meta_info
+  - name: V2PasswordlessInitResponse
+    fields: 7
+  - name: V1PasswordlessCompleteRequestBody
+    fields: 2
+  - name: V1SignupRequestBody
+    fields: 4
+    relationships:
+    - type: has_one
+      target: MetaInfo
+      via: metaInfo
+  - name: V1SigninRequestBody
+    fields: 4
+    relationships:
+    - type: has_one
+      target: MetaInfo
+      via: metaInfo
+  - name: V2SignInUpRequestBody
+    fields: 9
+    relationships:
+    - type: has_one
+      target: MetaInfo
+      via: meta_info
+  - name: V1AuthGoogleRequestBody
+    fields: 4
+    relationships:
+    - type: has_one
+      target: MetaInfo
+      via: metaInfo
+  - name: V1AuthFbRequestBody
+    fields: 4
+    relationships:
+    - type: has_one
+      target: MetaInfo
+      via: metaInfo
+  - name: V2AuthGoogleRequestBody
+    fields: 6
+    relationships:
+    - type: has_one
+      target: MetaInfo
+      via: meta_info
+  - name: V2AuthFbRequestBody
+    fields: 6
+    relationships:
+    - type: has_one
+      target: MetaInfo
+      via: meta_info
+  - name: V2RefreshTokenRequestBody
+    fields: 2
+  - name: V2RefreshTokenResponse
+    fields: 3
+  - name: V2LogoutRequestBody
+    fields: 3
+  - name: V1RefreshTokenRequestBody
+    fields: 1
+  - name: V1LogoutRequestBody
+    fields: 2
+  - name: IdpConnectRequestBody
+    fields: 8
+    relationships:
+    - type: has_one
+      target: MetaInfo
+      via: metaInfo
+  - name: V2IdpConnectRequestBody
+    fields: 10
+    relationships:
+    - type: has_one
+      target: MetaInfo
+      via: meta_info
+  - name: IdpConnectResponse
+    fields: 8
+  - name: V2IdpConnectResponse
+    fields: 8
+  - name: V1CodeTokenExchangeRequestBody
+    fields: 1
+  - name: V1AdminLogoutRequestBody
+    fields: 1
+  - name: RevocationsResponse
+    fields: 4
+  - name: State
+    fields: 7
+  - name: TokenResponse
+    fields: 6
+  - name: V2TokenResponse
+    fields: 7
+  - name: BiometricChallengeRequest
+    fields: 3
+    relationships:
+    - type: has_one
+      target: DeviceMetadata
+      via: device_metadata
+  - name: DeviceMetadata
+    fields: 6
+  - name: BiometricChallengeResponse
+    fields: 3
+  - name: BiometricCompleteRequest
+    fields: 6
+    relationships:
+    - type: has_one
+      target: DeviceMetadata
+      via: device_metadata
+  - name: BiometricLoginErrorResponse
+    fields: 3
+  - name: RefreshToken
+    fields: 3
+  - name: V1OtpSendRequestBody
+    fields: 2
+    relationships:
+    - type: has_one
+      target: Contact
+      via: contact
+  - name: V1OtpVerifyRequestBody
+    fields: 2
+  - name: V1OtpSendResponse
+    fields: 6
+  - name: JsonWebKey
+    fields: 6
+  - name: V1BlockUserFlowRequestBody
+    fields: 4
+  - name: V1UnblockUserFlowRequestBody
+    fields: 2
+  - name: V1UserBlockedFlowsResponse
+    fields: 3
+  - name: ScopeResponse
+    fields: 6
+  - name: ScopeListResponse
+    fields: 1
+    relationships:
+    - type: has_many
+      target: ScopeResponse
+      via: scopes
+  - name: CreateScopeRequest
+    fields: 6
+  - name: V1GuestLoginRequestBody
+    fields: 3
+  - name: GuestLoginResponse
+    fields: 3
+  - name: UpdateScopeRequest
+    fields: 5
+  - name: OIDCDiscoveryResponse
+    fields: 13
+  - name: LoginAcceptRequestBody
+    fields: 2
+  - name: ConsentAcceptRequestBody
+    fields: 3
+  - name: TokenRequestBody
+    fields: 8
+  - name: OidcTokenResponse
+    fields: 6
+  - name: UserInfoResponse
+    fields: 11
+  - name: CreateClientRequestBody
+    fields: 9
+  - name: UpdateClientRequestBody
+    fields: 9
+  - name: ClientResponse
+    fields: 11
+  - name: ClientListResponse
+    fields: 3
+    relationships:
+    - type: has_many
+      target: ClientResponse
+      via: clients
+  - name: ClientSecretResponse
+    fields: 1
+  - name: CreateClientScopeRequestBody
+    fields: 1
+  - name: ClientScopeResponse
+    fields: 1
+  - name: UserConsentResponse
+    fields: 4
+- domain: engagement
+  product: raven-journey
+  source: openapi/dream-sports-raven-journey-openapi.yml
+  entity_count: 33
+  entities_with_relationships: 11
+  entities:
+  - name: ApiResponse
+    fields: 3
+  - name: ErrorResponse
+    fields: 1
+  - name: AuthLoginRequest
+    fields: 1
+  - name: AuthRefreshRequest
+    fields: 1
+  - name: AuthTokenData
+    fields: 4
+  - name: AuthTokenApiResponse
+    fields: 2
+    relationships:
+    - type: has_one
+      target: AuthTokenData
+      via: data
+  - name: ConsoleUserCreateRequest
+    fields: 5
+  - name: ConsoleUserUpdateRequest
+    fields: 4
+  - name: ConsoleUserOnboardRequest
+    fields: 2
+  - name: AdminConsoleUserUpdateRequest
+    fields: 5
+  - name: ConsoleUserRecord
+    fields: 10
+  - name: ConsoleUserPagination
+    fields: 3
+  - name: ConsoleUserListData
+    fields: 2
+    relationships:
+    - type: has_many
+      target: ConsoleUserRecord
+      via: records
+    - type: has_one
+      target: ConsoleUserPagination
+      via: pagination
+  - name: ConsoleUserIdData
+    fields: 1
+  - name: ConsoleUserListApiResponse
+    fields: 2
+    relationships:
+    - type: has_one
+      target: ConsoleUserListData
+      via: data
+  - name: ConsoleUserRecordApiResponse
+    fields: 2
+    relationships:
+    - type: has_one
+      target: ConsoleUserRecord
+      via: data
+  - name: ConsoleUserIdApiResponse
+    fields: 2
+    relationships:
+    - type: has_one
+      target: ConsoleUserIdData
+      via: data
+  - name: JourneyRequest
+    fields: 7
+    relationships:
+    - type: has_one
+      target: RuleRequest
+      via: rule
+  - name: JourneyUpdateRequest
+    fields: 6
+    relationships:
+    - type: has_one
+      target: RuleRequest
+      via: rule
+  - name: RuleRequest
+    fields: 10
+  - name: BehaviourTagRequest
+    fields: 4
+  - name: BehaviourTagUpdateRequest
+    fields: 3
+  - name: EventInput
+    fields: 2
+    relationships:
+    - type: has_many
+      target: EventPropertyInput
+      via: properties
+  - name: EventPropertyInput
+    fields: 5
+  - name: NudgePreview
+    fields: 4
+  - name: TestJourneyRequest
+    fields: 1
+  - name: JourneySnapshotRequest
+    fields: 2
+  - name: SdkUserProfileLoginRequest
+    fields: 14
+  - name: SdkTokenRegisterRequest
+    fields: 8
+  - name: PreferenceItem
+    fields: 3
+  - name: SdkUpsertPreferencesRequest
+    fields: 2
+    relationships:
+    - type: has_many
+      target: PreferenceItem
+      via: items
+  - name: SdkUpsertPreferencesResponse
+    fields: 2
+    relationships:
+    - type: has_many
+      target: PreferenceItem
+      via: preferences
+  - name: SdkUpsertPreferencesApiResponse
+    fields: 2
+    relationships:
+    - type: has_one
+      target: SdkUpsertPreferencesResponse
+      via: data
+- domain: engagement
+  product: thunder-admin
+  source: openapi/dream-sports-thunder-admin-openapi.yml
+  entity_count: 32
+  entities_with_relationships: 19
+  entities:
+  - name: BehaviourTag
+    fields: 10
+    relationships:
+    - type: has_one
+      target: ExposureRule
+      via: exposureRule
+    - type: has_one
+      target: CTARelation
+      via: ctaRelation
+  - name: BehaviourTagCreateRequest
+    fields: 5
+    relationships:
+    - type: has_one
+      target: ExposureRule
+      via: exposureRule
+    - type: has_one
+      target: CTARelation
+      via: ctaRelation
+  - name: BehaviourTagPutRequest
+    fields: 4
+    relationships:
+    - type: has_one
+      target: ExposureRule
+      via: exposureRule
+    - type: has_one
+      target: CTARelation
+      via: ctaRelation
+  - name: BehaviourTagsResponse
+    fields: 1
+    relationships:
+    - type: has_many
+      target: BehaviourTag
+      via: behaviourTags
+  - name: CTA
+    fields: 15
+    relationships:
+    - type: has_one
+      target: Rule
+      via: rule
+    - type: has_one
+      target: CTAStatus
+      via: ctaStatus
+  - name: CTAListResponse
+    fields: 6
+    relationships:
+    - type: has_many
+      target: CTA
+      via: ctas
+    - type: has_one
+      target: StatusWiseCount
+      via: statusWiseCount
+  - name: CTARelation
+    fields: 2
+    relationships:
+    - type: has_one
+      target: CtaRelationRule
+      via: shownCta
+    - type: has_one
+      target: CtaRelationRule
+      via: hideCta
+  - name: CTARequest
+    fields: 7
+    relationships:
+    - type: has_one
+      target: RuleRequest
+      via: rule
+  - name: CTAStatus
+    fields: 0
+  - name: CTAUpdateRequest
+    fields: 6
+    relationships:
+    - type: has_one
+      target: RuleRequest
+      via: rule
+  - name: CohortEligibility
+    fields: 2
+  - name: CtaRelationRule
+    fields: 2
+    relationships:
+    - type: has_one
+      target: CtaRelationRuleTypes
+      via: rule
+  - name: CtaRelationRuleTypes
+    fields: 0
+  - name: EventInput
+    fields: 2
+    relationships:
+    - type: has_many
+      target: EventPropertyInput
+      via: properties
+  - name: EventPatchRequest
+    fields: 1
+    relationships:
+    - type: has_many
+      target: EventPropertyInput
+      via: properties
+  - name: EventPropertyInput
+    fields: 5
+  - name: EventsUpsertRequest
+    fields: 1
+    relationships:
+    - type: has_many
+      target: EventInput
+      via: events
+  - name: ExposureRule
+    fields: 3
+    relationships:
+    - type: has_one
+      target: SessionFrequency
+      via: session
+    - type: has_one
+      target: WindowFrequency
+      via: window
+    - type: has_one
+      target: LifespanFrequency
+      via: lifespan
+  - name: FilterResponse
+    fields: 4
+  - name: Filters
+    fields: 2
+  - name: Frequency
+    fields: 3
+    relationships:
+    - type: has_one
+      target: SessionFrequency
+      via: session
+    - type: has_one
+      target: WindowFrequency
+      via: window
+    - type: has_one
+      target: LifespanFrequency
+      via: lifeSpan
+  - name: GroupByConfig
+    fields: 2
+  - name: JsonObject
+    fields: 0
+  - name: LifespanFrequency
+    fields: 1
+  - name: NudgePreview
+    fields: 4
+  - name: Rule
+    fields: 12
+    relationships:
+    - type: has_one
+      target: CohortEligibility
+      via: cohortEligibility
+    - type: has_one
+      target: GroupByConfig
+      via: groupByConfig
+    - type: has_one
+      target: Frequency
+      via: frequency
+  - name: RuleRequest
+    fields: 11
+    relationships:
+    - type: has_one
+      target: CohortEligibility
+      via: cohortEligibility
+    - type: has_one
+      target: GroupByConfig
+      via: groupByConfig
+    - type: has_one
+      target: Frequency
+      via: frequency
+  - name: SessionFrequency
+    fields: 1
+  - name: StateTransitionCondition
+    fields: 2
+    relationships:
+    - type: has_one
+      target: Filters
+      via: filters
+  - name: StatusWiseCount
+    fields: 6
+  - name: WindowFrequency
+    fields: 3
+    relationships:
+    - type: has_one
+      target: WindowFrequencyUnit
+      via: unit
+  - name: WindowFrequencyUnit
+    fields: 0
+- domain: engagement
+  product: thunder-api
+  source: openapi/dream-sports-thunder-api-openapi.yml
+  entity_count: 23
+  entities_with_relationships: 11
+  entities:
+  - name: BehaviourExposureRule
+    fields: 4
+    relationships:
+    - type: has_one
+      target: SessionFrequency
+      via: session
+    - type: has_one
+      target: LifespanFrequency
+      via: lifespan
+    - type: has_one
+      target: WindowFrequency
+      via: window
+    - type: has_many
+      target: CTAReset
+      via: ctasResetAt
+  - name: BehaviourTagSnapshot
+    fields: 3
+    relationships:
+    - type: has_one
+      target: BehaviourExposureRule
+      via: exposureRule
+    - type: has_one
+      target: CTARelationSnapshot
+      via: ctaRelation
+  - name: CTARelationSnapshot
+    fields: 3
+    relationships:
+    - type: has_one
+      target: CtaRelationRule
+      via: shownCta
+    - type: has_one
+      target: CtaRelationRule
+      via: hideCta
+  - name: CTAReset
+    fields: 2
+  - name: CTAResponse
+    fields: 2
+    relationships:
+    - type: has_many
+      target: UserCTAAndStateMachineResponse
+      via: ctas
+    - type: has_many
+      target: BehaviourTagSnapshot
+      via: behaviourTags
+  - name: CTASnapshotRequest
+    fields: 2
+    relationships:
+    - type: has_many
+      target: StateMachineSnapshot
+      via: ctas
+    - type: has_many
+      target: BehaviourTagSnapshot
+      via: behaviourTags
+  - name: CohortEligibility
+    fields: 2
+  - name: CtaRelationRule
+    fields: 2
+    relationships:
+    - type: has_one
+      target: CtaRelationRuleTypes
+      via: rule
+  - name: CtaRelationRuleTypes
+    fields: 0
+  - name: Filters
+    fields: 2
+  - name: Frequency
+    fields: 3
+    relationships:
+    - type: has_one
+      target: SessionFrequency
+      via: session
+    - type: has_one
+      target: WindowFrequency
+      via: window
+    - type: has_one
+      target: LifespanFrequency
+      via: lifeSpan
+  - name: GroupByConfig
+    fields: 2
+  - name: JsonObject
+    fields: 0
+  - name: LifespanFrequency
+    fields: 1
+  - name: NudgePreview
+    fields: 4
+  - name: RuleResponse
+    fields: 11
+    relationships:
+    - type: has_one
+      target: GroupByConfig
+      via: groupByConfig
+    - type: has_one
+      target: Frequency
+      via: frequency
+  - name: SessionFrequency
+    fields: 1
+  - name: StateMachine
+    fields: 5
+  - name: StateMachineSnapshot
+    fields: 4
+  - name: StateTransitionCondition
+    fields: 2
+    relationships:
+    - type: has_one
+      target: Filters
+      via: filters
+  - name: UserCTAAndStateMachineResponse
+    fields: 6
+    relationships:
+    - type: has_one
+      target: RuleResponse
+      via: rule
+  - name: WindowFrequency
+    fields: 3
+    relationships:
+    - type: has_one
+      target: WindowFrequencyUnit
+      via: unit
+  - name: WindowFrequencyUnit
+    fields: 0

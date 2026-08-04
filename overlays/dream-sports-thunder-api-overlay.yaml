@@ -1,0 +1,32 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Raven Thunder client API
+  version: 1.0.0
+extends: openapi/dream-sports-thunder-api-openapi.yml
+x-generated: '2026-08-04'
+x-method: generated
+x-source: openapi/ + apis.yml + repo artifacts (this overlay never mutates the harvested spec)
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: dream-sports
+    x-apievangelist-provider-name: Dream Sports
+    x-apievangelist-program: Dream Horizon (HorizonOS) open source
+    x-apievangelist-tags:
+    - in-app-messaging
+    - mobile
+    x-apievangelist-artifacts:
+      authentication: authentication/dream-sports-authentication.yml
+      conventions: conventions/dream-sports-conventions.yml
+      errors: errors/dream-sports-problem-types.yml
+      lifecycle: lifecycle/dream-sports-lifecycle.yml
+      data_model: data-model/dream-sports-data-model.yml
+      conformance: conformance/dream-sports-conformance.yml
+    x-apievangelist-gaps:
+      operations_without_operationId: 4
+      servers_declared: true
+      servers_localhost_only: true
+- target: $.servers
+  description: The published spec declares only local/self-hosted server URLs. This is expected for a self-hosted
+    open-source component; no production host is asserted here.
+  update: {}

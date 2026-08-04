@@ -1,0 +1,140 @@
+generated: '2026-08-04'
+method: derived
+source: >-
+  the eight OpenAPI documents in openapi/, the live OIDC discovery document, the odin-mcp README, and
+  the Guardian docs at https://guardianhq.io/docs/
+docs: https://guardianhq.io/docs/
+scope_note: >-
+  Dream Sports publishes eight independent product APIs from the Dream Horizon open-source
+  initiative, not one house style. The conventions below are recorded per surface where they differ,
+  and only where the provider actually declares them.
+authentication:
+  styles:
+  - style: bearer
+    header: Authorization
+    format: 'Bearer <token>'
+    surfaces: [checkmate, delivr-ota, dota, guardian, odin-mcp]
+  - style: cookie-session
+    cookie: user_session
+    surfaces: [checkmate]
+    note: session cookie set after Google OAuth sign-in at /login
+  - style: openid-connect
+    issuer: https://auth.dream11.com
+    surfaces: [login-with-dream11]
+  - style: access-key
+    header: accesskeyname
+    surfaces: [delivr-ota]
+  detail: authentication/dream-sports-authentication.yml
+multi_tenancy:
+  header: x-tenant-id
+  occurrences: 25
+  surfaces: [raven-journey, thunder-api, thunder-admin]
+  variants:
+  - {header: 'TENANT-ID', surface: raven-journey, note: declared as the TenantIdHeader apiKey scheme}
+  - {header: tenant, surface: delivr-ota}
+  - {header: 'X-Org-Id', surface: odin user-auth, note: 'MCP fills it from the org_id argument or the JWT orgid claim'}
+  note: >-
+    Tenant scoping by header is the single most consistent convention across the Dream Horizon stack —
+    every product is built to be run once and serve many tenants, which is how Dream11 ran them.
+idempotency:
+  supported: partial
+  mechanism: semantic
+  header: null
+  evidence:
+  - >-
+    Guardian documents idempotent semantics for scope unassignment explicitly: "If the scope is not
+    assigned, the operation succeeds (idempotent)" — openapi/dream-sports-guardian-openapi.yml,
+    DELETE /v1/admin/client/{client_id}/scope.
+  - >-
+    odin-mcp requires a type_to_confirm argument on every destructive user-auth tool (team delete,
+    owner transfer, member removal, org delete, role change). The argument must repeat the exact team
+    name, member email or org id, which makes an accidental or automated repeat call fail closed
+    rather than re-execute. This is a replay guard, not a retry key.
+  - >-
+    Delivr's OTA release flow is promotion/rollback based (promote, rollback, release history) rather
+    than retry-keyed.
+  gaps:
+  - No Idempotency-Key (or equivalent) request header is declared in any of the eight specifications.
+  - >-
+    Write operations are not safe to blind-retry: creating a team, inviting members, or creating a
+    release will duplicate on retry. Agents should read-back before retrying a write.
+pagination:
+  styles:
+  - style: page-number
+    params: [page, pageSize]
+    surfaces: [checkmate]
+  - style: page-number
+    params: [page, page_size]
+    surfaces: [guardian]
+    note: 'Guardian returns 400 "invalid page or page_size" on out-of-range values'
+  - style: page-number
+    params: [pageNumber, pageSize]
+    surfaces: [raven-journey]
+  response_fields:
+    raven-journey: ConsoleUserPagination (declared component schema wrapping list responses)
+  note: >-
+    All three paginated surfaces are offset/page-number based. No cursor pagination and no Link
+    header is declared anywhere.
+filtering_and_search:
+  params: [textSearch, searchName, status, runStatus, label, priority, squad, platform, section, tags]
+  surfaces: [checkmate, raven-journey, thunder-admin]
+  note: Plain query-parameter filtering; no filter DSL, no sparse-fieldsets, no field expansion is declared.
+field_expansion:
+  supported: false
+metadata:
+  supported: partial
+  note: Guardian declares a MetaInfo component schema carried on auth requests/responses.
+request_tracing:
+  request_id_header: null
+  observed_context_headers: [x-source, user, auth-userid, api_version, app_version, package_name, codepush_version]
+  note: >-
+    No correlation/request-id header is declared in any spec. Thunder and DOTA instead carry client
+    context headers (app version, package name, CodePush version) used for targeting, not tracing.
+    Dream Sports does publish its own observability stack (Pulse, LogWise, OpenTelemetry-based iOS and
+    Android SDKs) but that is instrumentation, not an API convention.
+versioning:
+  scheme: uri-path
+  patterns:
+  - '/v1/... and /v2/... side by side (Guardian: /v1/passwordless/init and /v2/passwordless/init)'
+  - '/api/v1/... (Checkmate, Odin user-auth)'
+  - unversioned OAuth2 endpoints at the root (/authorize, /token, /userinfo, /certs)
+  header_version_negotiation:
+    surface: thunder-api
+    header: api_version
+  detail: lifecycle/dream-sports-lifecycle.yml
+error_envelope:
+  format: vendor-json
+  shapes:
+  - {surface: guardian, schema: ErrorResponse, properties: [error]}
+  - {surface: guardian-integrations, schema: errorResponse, properties: [error]}
+  - {surface: raven-journey, schema: ErrorResponse, properties: [error]}
+  - {surface: checkmate, schema: Error, properties: [error, status]}
+  - {surface: delivr-ota, schema: Error, properties: [message, code]}
+  rfc9457: false
+  note: No surface uses application/problem+json.
+  detail: errors/dream-sports-problem-types.yml
+rate_limiting:
+  declared_in_spec: partial
+  evidence:
+  - 'Delivr OTA declares a 429 response on its upload/release path.'
+  - 'Guardian describes 400 responses covering "various validation and rate limiting errors".'
+  headers: null
+  note: >-
+    No RateLimit / X-RateLimit response headers or Retry-After are declared in any specification.
+    Dream Sports publishes a Kong rate-limiting plugin (kong-scalable-rate-limiter on LuaRocks) that
+    an operator deploys at the gateway, so the limit is a deployment choice rather than a published
+    API contract.
+streaming:
+  grpc_server_streaming:
+    surfaces: [odin]
+    rpcs: [CreateEnvironment, DeleteEnvironment, StatusEnvironment, DeployService, OperateService, UndeployService, GetLogs]
+    note: >-
+      odin-mcp exposes a stream_completion argument (full | first_progress) so an agent can return
+      after the first chunk while the operation continues server-side.
+cross_links:
+  authentication: authentication/dream-sports-authentication.yml
+  scopes: scopes/dream-sports-scopes.yml
+  errors: errors/dream-sports-problem-types.yml
+  lifecycle: lifecycle/dream-sports-lifecycle.yml
+  data_model: data-model/dream-sports-data-model.yml
+  conformance: conformance/dream-sports-conformance.yml

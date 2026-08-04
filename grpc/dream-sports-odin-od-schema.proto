@@ -1,0 +1,41 @@
+syntax = "proto3";
+package dream11.od.schema.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/struct.proto";
+
+option java_multiple_files = true;
+option java_package = "com.dream11.odin.grpc.schema";
+
+service SchemaHydrationService {
+  rpc HydrateSchemas(HydrateSchemasRequest) returns (HydrateSchemasResponse) {
+    option (google.api.http) = {
+      post: "/v1/schemas/hydrate"
+      body: "*"
+    };
+  }
+}
+
+message SchemaRecord {
+  string schema_type = 1 [json_name = "schemaType"];
+  string component_type = 2 [json_name = "componentType"];
+  string deployment_type = 3 [json_name = "deploymentType"];
+  string operation_name = 4 [json_name = "operationName"];
+  string group_name = 5 [json_name = "groupName"];
+  string display_name = 6 [json_name = "displayName"];
+  string description = 7;
+  string icon = 8;
+  string flavour_label = 9 [json_name = "flavourLabel"];
+  google.protobuf.Struct defaults = 10;
+  google.protobuf.Struct schema = 11;
+  string component_version = 12 [json_name = "componentVersion"];
+}
+
+message HydrateSchemasRequest {
+  repeated SchemaRecord schemas = 1;
+  repeated string component_types = 2 [json_name = "componentTypes"];
+}
+
+message HydrateSchemasResponse {
+  int32 count = 1;
+}

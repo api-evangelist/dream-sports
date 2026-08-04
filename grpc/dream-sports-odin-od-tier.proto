@@ -1,0 +1,32 @@
+syntax = "proto3";
+package dream11.od.tier.v1;
+
+option java_multiple_files = true;
+option java_package = "com.dream11.odin.grpc.tier";
+
+service TierService {
+  rpc CreateTier(CreateTierRequest) returns (CreateTierResponse) {}
+  rpc ListTiers(ListTiersRequest) returns (ListTiersResponse) {}
+}
+
+message CreateTierRequest {
+  string tier_name = 1;
+}
+
+message CreateTierResponse {
+  int32 tier_id = 1;
+  string tier_name = 2;
+  int64 org_id = 3;
+}
+
+message ListTiersRequest {}
+
+message ListTiersResponse {
+  repeated Tier tiers = 1;
+}
+
+message Tier {
+  int32 tier_id = 1;
+  string tier_name = 2;
+  int64 org_id = 3;
+}

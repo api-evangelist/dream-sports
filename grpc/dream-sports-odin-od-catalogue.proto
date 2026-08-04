@@ -1,0 +1,144 @@
+syntax = "proto3";
+package dream11.od.catalogue.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/struct.proto";
+
+option java_multiple_files = true;
+option java_package = "com.dream11.odin.grpc.catalogue";
+
+service CatalogueService {
+  rpc ListComponentCatalogue(ListComponentCatalogueRequest) returns (ListComponentCatalogueResponse) {
+    option (google.api.http) = {get: "/v1/component-catalogue"};
+  }
+
+  rpc GetComponentCatalogueDetail(GetComponentCatalogueDetailRequest) returns (GetComponentCatalogueDetailResponse) {
+    option (google.api.http) = {get: "/v1/component-catalogue/{component_type}"};
+  }
+
+  rpc ListComponentOperations(ListComponentOperationsRequest) returns (ListComponentOperationsResponse) {
+    option (google.api.http) = {get: "/v1/component-operations"};
+  }
+
+  rpc ListOperationSchemas(ListOperationSchemasRequest) returns (ListOperationSchemasResponse) {
+    option (google.api.http) = {get: "/v1/operation-schemas/{component_type}/{deployment_type}"};
+  }
+
+  rpc GetOperationSchema(GetOperationSchemaRequest) returns (GetOperationSchemaResponse) {
+    option (google.api.http) = {get: "/v1/operation-schemas/{component_type}/{deployment_type}/{operation_name}"};
+  }
+
+  rpc GetComponentVersions(GetComponentVersionsRequest) returns (GetComponentVersionsResponse) {
+    option (google.api.http) = {get: "/v1/component-versions"};
+  }
+}
+
+// --- Catalogue messages ---
+
+message ListComponentCatalogueRequest {}
+
+message ListComponentCatalogueResponse {
+  repeated CatalogueEntry components = 1;
+}
+
+message GetComponentCatalogueDetailRequest {
+  string component_type = 1 [json_name = "componentType"];
+  // When unset, STABLE pointer semantics; when set, selects that version label (DAO wiring in follow-up).
+  optional string component_version = 2 [json_name = "componentVersion"];
+}
+
+message GetComponentCatalogueDetailResponse {
+  repeated CatalogueEntry components = 1;
+}
+
+message CatalogueEntry {
+  string id = 1;
+  string name = 2;
+  string group = 3;
+  string description = 4;
+  string version_label = 5 [json_name = "versionLabel"];
+  string icon = 6;
+  bool verified = 7;
+  string status_tag = 8 [json_name = "statusTag"];
+  repeated VersionEntry versions = 9;
+  google.protobuf.Struct service_definition_schema = 10 [json_name = "serviceDefinitionSchema"];
+  google.protobuf.Struct definition_defaults = 11 [json_name = "definitionDefaults"];
+}
+
+message VersionEntry {
+  string id = 1;
+  string label = 2;
+  repeated RequiredKey required_keys = 3 [json_name = "requiredKeys"];
+  google.protobuf.Struct params_schema = 4 [json_name = "paramsSchema"];
+  google.protobuf.Struct defaults = 5;
+}
+
+message RequiredKey {
+  string key = 1;
+  string description = 2;
+}
+
+// --- Component Operations messages ---
+
+message ListComponentOperationsRequest {
+  string component_type = 1 [json_name = "componentType"];
+  string deployment_type = 2 [json_name = "deploymentType"];
+}
+
+message ListComponentOperationsResponse {
+  repeated ComponentOperationEntry components = 1;
+}
+
+message ComponentOperationEntry {
+  string component_type = 1 [json_name = "componentType"];
+  string deployment_type = 2 [json_name = "deploymentType"];
+  repeated string operations = 3;
+}
+
+// --- Operation Schemas messages ---
+
+message ListOperationSchemasRequest {
+  string component_type = 1 [json_name = "componentType"];
+  string deployment_type = 2 [json_name = "deploymentType"];
+  // When unset, STABLE pointer semantics; when set, selects that version label (DAO wiring in follow-up).
+  optional string component_version = 3 [json_name = "componentVersion"];
+}
+
+message ListOperationSchemasResponse {
+  repeated OperationSchemaEntry operations = 1;
+}
+
+message GetOperationSchemaRequest {
+  string component_type = 1 [json_name = "componentType"];
+  string deployment_type = 2 [json_name = "deploymentType"];
+  string operation_name = 3 [json_name = "operationName"];
+  // When unset, STABLE pointer semantics; when set, selects that version label (DAO wiring in follow-up).
+  optional string component_version = 4 [json_name = "componentVersion"];
+}
+
+message GetOperationSchemaResponse {
+  OperationSchemaEntry operation = 1;
+}
+
+message OperationSchemaEntry {
+  string component_type = 1 [json_name = "componentType"];
+  string deployment_type = 2 [json_name = "deploymentType"];
+  string operation_name = 3 [json_name = "operationName"];
+  google.protobuf.Struct schema = 4;
+  google.protobuf.Struct defaults = 5;
+}
+
+// --- Component Versions messages ---
+
+message GetComponentVersionsRequest {
+  string component_type = 1 [json_name = "componentType"];
+}
+
+message GetComponentVersionsResponse {
+  repeated ComponentVersion versions = 1;
+}
+
+message ComponentVersion {
+  string component_type = 1 [json_name = "componentType"];
+  string version = 2;
+}

@@ -1,0 +1,49 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/dream-sports-guardian-integrations-openapi.yml
+spec_type: Webhooks
+asyncapi_published: false
+asyncapi_note: >-
+  Dream Sports publishes no AsyncAPI document. Probes for /asyncapi.yaml, an event catalog and a
+  webhook reference across dreamsports.group, dream11.com, fancode.com, dreamhorizon.org and the
+  dream-horizon-org GitHub organization all came back empty (a filename:asyncapi code search over the
+  108-repository org returns 0 results). The event infrastructure Dream Sports open-sources — a Kafka
+  consumer library, message-kit for Amazon SQS, an MQTT client for React Native, Raven's event catalog
+  — is library and product code, not a published event contract. No AsyncAPI is fabricated here.
+surface_note: >-
+  The one machine-readable outbound-call contract Dream Sports publishes is Guardian's integration
+  specification. Its direction is the webhook direction — Guardian calls out over HTTP to endpoints
+  the integrator hosts — but it is an inbound-integration contract rather than an event feed: the
+  integrator implements these six endpoints and Guardian invokes them synchronously during an auth
+  flow. Recorded as such, deliberately not dressed up as an event-driven surface.
+callbacks:
+  contract: openapi/dream-sports-guardian-integrations-openapi.yml
+  title: Guardian integration endpoints
+  openapi_version: 3.0.1
+  description: Endpoints required to integrate with Guardian (implemented by the integrator, called by Guardian).
+  direction: guardian-to-integrator
+  transport: http
+  endpoints:
+  - {method: GET, path: /user, summary: Get user details, purpose: 'Guardian looks a user up in your own user service during sign-in.'}
+  - {method: POST, path: /user, summary: Create a new user, purpose: 'Guardian asks your service to provision a user on first sign-up.'}
+  - {method: POST, path: /provider, summary: Update identity provider details for a user, purpose: 'Guardian pushes social/OIDC provider linkage back to your service.'}
+  - {method: POST, path: /user/authenticate, operationId: authenticateUser, summary: Authenticate user, purpose: 'Guardian delegates credential verification to your service.'}
+  - {method: POST, path: /sendEmail, summary: Send email, purpose: 'Guardian asks your email service to deliver an OTP or auth message.'}
+  - {method: POST, path: /sendSms, summary: Send SMS, purpose: 'Guardian asks your SMS service to deliver an OTP.'}
+  schemas: [errorResponse, EmptyUserResponse, CreateUserRequest, ProviderData, AddProviderDetailsRequest,
+    User, AuthenticateUserRequest, SendMessageRequest]
+  security:
+    declared: false
+    note: >-
+      No securityScheme is declared on the integration contract, and no signing scheme, shared secret
+      or timestamp/replay guard is documented for these callbacks. An integrator must decide how to
+      authenticate calls arriving from Guardian; the published specification does not say.
+  docs:
+  - https://guardianhq.io/docs/guides/integrate-your-own-user-service
+  - https://guardianhq.io/docs/guides/integrate-your-own-otp-service
+consumer_event_webhooks:
+  published: false
+  note: >-
+    Neither Dream11 nor FanCode publishes consumer-facing webhooks, and none of the eight OpenAPI
+    documents declares a `webhooks:` block or a callbacks object. Raven's event catalog
+    (upsertEvents / getAllEvents) is an internal targeting vocabulary, not an outbound event feed.

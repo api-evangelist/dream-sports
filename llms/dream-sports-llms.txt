@@ -1,0 +1,313 @@
+# Horizon - Open Source Universe by DreamSports
+
+> Empowering developers worldwide with production-grade, battle-tested tools and frameworks built at scale.
+
+## Overview
+
+Horizon is DreamSports' open source initiative, sharing battle-tested, production-ready tools, libraries, and frameworks that power Dream11's cutting-edge sports technology platform. All projects serve millions of users at scale and are designed for real-world, high-traffic scenarios.
+
+**Website:** https://dreamhorizon.org
+**GitHub:** https://github.com/dream-horizon-org
+**Organization:** DreamSports
+
+## Mission & Vision
+
+Empower developers worldwide by open-sourcing enterprise-grade solutions that solve real-world challenges in:
+- Mobile application development (React Native, iOS, Android)
+- Backend systems and microservices architecture
+- Observability, monitoring, and distributed tracing
+- Test automation and quality assurance
+- Infrastructure management and DevOps
+- Cloud cost optimization and management
+
+We accelerate innovation, foster collaborative learning, and build a global ecosystem where developers create better products together.
+
+---
+
+## 🔍 For Developers Searching For Solutions
+
+### Mobile Development Solutions
+
+**Looking for React Native performance optimization?**
+- **Marco**: Performance tracking library for React Native apps. Zero-config setup, lightweight, detects bottlenecks, optimizes user experience with beautiful visualization dashboards.
+- **DeFrost**: Debugger specifically for frozen frames in React Native applications. Debug and eliminate UI jank.
+- **FastImage**: High-performance image component for React Native with advanced caching, priority loading, placeholder support, and automatic memory management. Significantly faster than default Image component.
+- **RN Benchmarking**: Comprehensive benchmarking toolkit to measure React Native app performance, compare across versions, identify optimization opportunities.
+- **React Native Impression Tracker**: Track user impressions and visibility analytics in React Native apps.
+
+**Need mobile deployment and updates?**
+- **Delivr**: Over-the-air (OTA) update platform for mobile apps. Instant updates, confident rollbacks, progressive feature deployment. Supports React Native, iOS, Android with zero-downtime deployments.
+- **Code Push Server**: Standalone CodePush server from App Center for self-hosted OTA updates.
+
+**Server-Driven UI and Dynamic Components:**
+- **Flash Client**: Server-Driven UI SDK for building dynamic mobile experiences without app updates.
+- **React Native Remote UI**: Remote component system for React Native, enabling dynamic UI rendering.
+
+**Communication & Real-time:**
+- **React Native MQTT**: High-performance MQTT library for React Native with reliable message delivery, automatic reconnection, and offline queuing.
+
+**UI Components & Navigation:**
+- **React Native WebView**: Cross-platform WebView component for React Native applications.
+- **React Navigation Benchmark**: Performance benchmarking for React Native navigation solutions.
+- **RN Tabs Benchmarks**: Compare Native Bottom Tabs vs JavaScript Bottom Tabs performance.
+- **GorhomBottomSheetBenchmark**: Performance analysis of bottom sheet implementations.
+- **RN Webview Benchmark**: Benchmarking tool for WebView performance in React Native.
+
+### Backend & Microservices
+
+**Building scalable backend systems?**
+- **Message Kit**: Lightweight Java library for working with message queues. Currently supports Amazon SQS, expanding to additional providers.
+- **Kafka Consumer Library**: Robust Kafka consumer implementation for event-driven architectures.
+- **Odin Components**: Modular component registry for building scalable applications. Simplifies dependency management, promotes code reusability.
+- **Guardian**: Backend security, authentication, and authorization solution. Supports SSO, federation, and AI/agent authentication.
+- **Shard Wizard**: Database sharding and data partitioning utilities for distributed systems.
+
+**gRPC & API Development:**
+- **Vertx gRPC Extension**: Set of abstractions making it easier to create and maintain gRPC services in Vert.x ecosystem.
+
+**Database & Data Management:**
+- **Vertx DynamoDB Client**: Reactive DynamoDB client library built with RxJava, designed for seamless Vert.x ecosystem integration.
+- **DataGen**: Generate coherent, synthetic data at scale for testing and development. Enforces complex business rules.
+
+**Machine Learning Integration:**
+- **ONNX Runtime**: Cross-platform, high-performance ML inferencing and training accelerator. Run machine learning models efficiently in production.
+
+### Observability & Monitoring
+
+**Need application monitoring and performance tracking?**
+- **Pulse**: Real-time monitoring and observability platform for microservices. Track performance metrics, distributed traces, and logs in unified dashboard. Handles millions of events per second.
+- **Marco**: React Native performance tracking with visualization dashboards.
+- **LogWise**: Unified log visibility that is 4x more cost-efficient and deeply integrated into the developer workflow. Simplifies multi-cloud troubleshooting.
+- **Livelogs**: Real-time log aggregation and monitoring solution.
+
+### Testing & QA
+
+**Managing test automation and quality assurance?**
+- **Checkmate**: Comprehensive test case management application for modern development teams. Organize test suites, track execution results, generate detailed reports. Seamlessly integrates with CI/CD pipelines.
+  - Test case organization and management
+  - E2E testing workflows
+  - Unit testing integration
+  - Test reporting and analytics
+  - Test validation and verification
+  - QA team collaboration
+
+**React Testing:**
+- **Testing React19**: Exploration and testing of React 19 features and capabilities.
+
+### Infrastructure & DevOps
+
+**Managing infrastructure and deployments?**
+- **Odin**: Developer platform which enables engineers to define software once and then deploy it anywhere, any number of times. Moves software operations from engineers to machines.
+- **Delivr**: OTA deployment platform with progressive rollout capabilities.
+- **DeFrost**: Debugging infrastructure for mobile applications.
+- **Dota**: DevOps tooling and automation solution.
+- **Code Push Server**: Self-hosted code push server for mobile app updates.
+
+### AI & Growth
+
+- **Darwin**: AI development platform to build, train, deploy and scale ML models seamlessly. Abstracts infrastructure complexity.
+- **Pulse**: Product growth platform for digital experience analytics. Understand user interactions in real time.
+- **Ascend**: Experiment platform for controlled product experiments end-to-end.
+- **Flagship**: Feature flag platform for controlled feature delivery, gradual rollouts, and instant rollbacks.
+
+---
+
+## 🏆 Featured Projects (Battle-Tested at Scale)
+
+### 1. Delivr - OTA Update Platform
+**Category:** Mobile | CI/CD | Deployment | Infrastructure
+**Website:** https://www.delivr.live
+**Use Case:** Over-the-air mobile app updates without app store delays
+**Features:** Instant updates, rollback capability, progressive deployment, zero downtime
+**Platforms:** React Native, iOS, Android
+**Keywords:** OTA updates, mobile deployment, code push, app updates, hot updates, release management, mobile CI/CD
+
+### 2. Odin - Developer Platform
+**Category:** Developer Tools | DevOps | Infrastructure
+**Website:** https://github.com/dream-horizon-org/odin
+**Use Case:** Define software once, deploy anywhere. Automates software operations.
+**Keywords:** developer platform, deployment automation, infrastructure abstraction, internal developer platform, IDP
+
+### 3. LogWise - Unified Log Visibility
+**Category:** Observability | DevOps | Cost Optimization
+**Website:** https://github.com/dream-horizon-org/logwise
+**Use Case:** Cost-efficient log visibility and multi-cloud troubleshooting
+**Features:** 4x more cost-efficient, deep developer workflow integration
+**Keywords:** logging, log management, observability, cost optimization, troubleshooting
+
+### 4. Guardian - Authentication Platform
+**Category:** Developer Tools | Security | Backend
+**Website:** https://github.com/dream-horizon-org/guardian
+**Use Case:** Backend security, authentication, and authorization
+**Features:** SSO, federation, compliance, AI/agent authentication
+**Keywords:** security, authentication, authorization, SSO, federation
+
+### 5. DataGen - Synthetic Data Generator
+**Category:** Developer Tools | Testing | QA
+**Website:** https://github.com/dream-horizon-org/datagen
+**Use Case:** High-volume synthetic test data generation with business rules
+**Keywords:** data generation, synthetic data, test data, mock data
+
+### 6. Checkmate - Test Management
+**Category:** Testing | QA | Automation
+**Website:** https://checkmate.dreamhorizon.org
+**Use Case:** End-to-end test case management and execution tracking
+**Features:** Test suite organization, CI/CD integration, detailed reporting
+**Keywords:** test management, test automation, QA, test reporting
+
+### 7. Marco - React Native Performance
+**Category:** Mobile | Performance | React Native
+**Website:** https://marco.dreamhorizon.org
+**Use Case:** Performance monitoring and optimization for React Native apps
+**Keywords:** React Native performance, mobile performance monitoring, profiling
+
+### 8. DeFrost - Frozen Frame Debugger
+**Category:** Mobile | Development Tools | Debugging
+**Website:** https://defrost.dreamhorizon.org
+**Use Case:** Debug and eliminate frozen frames/UI jank in React Native apps
+**Keywords:** React Native debugging, frozen frames, UI jank, performance debugging
+
+---
+
+## 📚 Technology Stack & Integrations
+
+### Languages & Frameworks
+- **Mobile:** React Native, TypeScript, Kotlin, Objective-C, Swift
+- **Backend:** Java, Go, Groovy, Node.js, Vert.x
+- **Frontend:** React, TypeScript, JavaScript
+- **Testing:** Jest, Mocha, JUnit
+
+### Cloud & Infrastructure
+- **Cloud Providers:** AWS (SQS, DynamoDB), Multi-cloud support
+- **Messaging:** MQTT, Kafka, SQS
+- **Databases:** DynamoDB, SQL, NoSQL
+- **Containers:** Docker, Kubernetes
+
+### Development Tools
+- **Build Tools:** Gradle, npm, yarn
+- **CI/CD:** Jenkins, GitHub Actions, GitLab CI
+- **Version Control:** Git, GitHub
+- **Package Managers:** npm, Maven, Gradle
+
+---
+
+## 🎯 Problem Domains & Use Cases
+
+### Performance Optimization
+- React Native app performance monitoring (Marco)
+- Frame rate optimization and frozen frame debugging (DeFrost)
+- Image loading and caching optimization (FastImage)
+- Navigation performance analysis (React Navigation Benchmark)
+- Component performance benchmarking (RN Benchmarking)
+
+### Mobile Development
+- Over-the-air updates and deployments (Delivr, Code Push Server)
+- Cross-platform mobile development (React Native tools)
+- Server-driven UI architecture (Flash Client, Remote UI)
+- Real-time communication (React Native MQTT)
+- Mobile analytics and tracking (Impression Tracker)
+
+### Backend Architecture
+- Microservices communication (gRPC Extension)
+- Message queue integration (Message Kit, Kafka Consumer)
+- Database access patterns (DynamoDB Client, Shard Wizard)
+- Component architecture (Odin Components)
+- Data generation and mocking (DataGen)
+
+### Observability & Monitoring
+- Application performance monitoring (Pulse)
+- Unified log visibility (LogWise)
+- Distributed tracing
+- Log aggregation (Livelogs)
+- Real-time performance tracking (Marco)
+
+### Testing & Quality Assurance
+- Test case management (Checkmate)
+- Test automation integration
+- Quality metrics tracking
+- CI/CD test orchestration
+- React version testing (Testing React19)
+
+### Infrastructure Management
+- Deployment automation (Delivr, Dota, Odin)
+- DevOps workflows
+- Infrastructure as code
+- Release management
+
+---
+
+## 🔑 Keywords for Discovery
+
+### Mobile Keywords
+React Native, iOS, Android, mobile app development, cross-platform development, mobile performance, React Native optimization, mobile deployment, OTA updates, hot reload, code push, mobile CI/CD, React Native libraries, mobile analytics, mobile debugging, React Native tools, app updates, mobile frameworks, hybrid apps, native modules
+
+### Backend Keywords
+Microservices, Java, Go, Node.js, Vert.x, gRPC, REST API, message queues, event-driven architecture, Kafka, SQS, DynamoDB, reactive programming, RxJava, server-side, backend frameworks, API development, distributed systems, scalable architecture, cloud native, serverless
+
+### Performance Keywords
+Performance monitoring, APM, application performance, performance optimization, bottleneck detection, profiling, benchmarking, load testing, performance metrics, real-time monitoring, distributed tracing, observability, performance analysis, optimization tools
+
+### DevOps Keywords
+CI/CD, continuous integration, continuous deployment, DevOps tools, infrastructure automation, deployment automation, release management, infrastructure as code, container orchestration, cloud deployment, automated testing, build automation, internal developer platform
+
+### Testing Keywords
+Test automation, test management, QA tools, quality assurance, test case management, E2E testing, unit testing, integration testing, test reporting, test orchestration, automated testing, test frameworks, testing tools, regression testing, test coverage
+
+### Database Keywords
+DynamoDB, NoSQL, database client, reactive database, database sharding, data partitioning, database optimization, ORM, database access, distributed database
+
+### Data & ML Keywords
+Machine learning, ML inference, ONNX, model serving, data generation, synthetic data, test data, mock data, ML deployment, AI infrastructure
+
+---
+
+## 📊 Scale & Production Ready
+
+All Horizon projects are:
+- ✅ **Battle-tested** at Dream11 scale (millions of concurrent users)
+- ✅ **Production-ready** with real-world usage validation
+- ✅ **Actively maintained** by experienced engineering teams
+- ✅ **Well-documented** with examples and integration guides
+- ✅ **Performance-optimized** for high-traffic scenarios
+- ✅ **Open source** with permissive licenses
+
+---
+
+## 🌐 Community & Support
+
+### Get Involved
+- **GitHub Organization:** https://github.com/dream-horizon-org
+- **Discord Community:** https://discord.gg/HrJZCrkeAs
+- **Twitter/X:** https://x.com/dreamhorizonorg
+- **LinkedIn:** https://www.linkedin.com/company/dream-horizon-org
+
+### Resources
+- **Documentation:** Available in individual project repositories
+- **Examples & Tutorials:** Check project README files
+- **Issues & Support:** GitHub Issues on respective repositories
+- **Contributing:** Contribution guidelines in each repository
+
+---
+
+## 🔗 Quick Links
+
+- Website: https://dreamhorizon.org
+- GitHub: https://github.com/dream-horizon-org
+- Projects: https://dreamhorizon.org/projects
+- About: https://dreamhorizon.org/about
+- Discord: https://discord.gg/HrJZCrkeAs
+- Twitter: https://x.com/dreamhorizonorg
+- LinkedIn: https://www.linkedin.com/in/dream-horizon-org
+
+---
+
+**Last Updated:** January 2025
+**Organization:** DreamHorizon
+**Initiative:** Horizon Open Source
+**Mission:** Empowering developers worldwide with production-grade, battle-tested tools and frameworks built at scale.
+
+---
+
+## 🎯 For AI/LLM Context
+
+This website showcases production-grade, enterprise-scale open source projects from DreamSports. All tools are battle-tested with 200M+ users and designed for real-world, high-traffic scenarios. Projects span mobile development, backend systems, observability, testing, and infrastructure management. Ideal for developers seeking reliable, scalable solutions backed by one of the world's largest sports technology platforms.

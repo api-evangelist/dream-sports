@@ -1,0 +1,173 @@
+generated: '2026-08-04'
+method: searched
+source: >-
+  npm registry search + registry metadata for the @d11 scope (publisher "dreamsportslabs"),
+  luarocks.org/modules/dream11, and the dream11 / dream-horizon-org / ds-horizon / dream-sports-labs
+  GitHub organizations
+notes: >-
+  Dream Sports does not publish a consumer/product API SDK — there is no public Dream11 or FanCode
+  developer API to write a client for. What it does publish is first-party client libraries and
+  platform components from the Dream Horizon (HorizonOS) open-source initiative: React Native SDKs,
+  the "Login with Dream11" auth SDKs that speak to the auth.dream11.com OIDC surface, a Delivr OTA
+  CLI, and Kong/Lua gateway plugins on LuaRocks. official:true is set only where the publishing
+  account or repository is demonstrably a Dream Sports account (npm publisher "dreamsportslabs" /
+  scope @d11, or a repo under github.com/dream11, /dream-horizon-org, /ds-horizon, /dream-sports-labs).
+packages:
+- language: javascript
+  registry: npm
+  name: "@d11/dream-auth-login"
+  version: 0.4.8
+  url: https://www.npmjs.com/package/@d11/dream-auth-login
+  install: npm install @d11/dream-auth-login
+  repository: https://github.com/dream11/dream-auth-login
+  license: MIT
+  official: true
+  description: Consumer-side SDK for signing a user in through a provider app ("Login with Dream11").
+- language: javascript
+  registry: npm
+  name: "@d11/dream-auth-login-provider"
+  version: 0.2.4
+  url: https://www.npmjs.com/package/@d11/dream-auth-login-provider
+  install: npm install @d11/dream-auth-login-provider
+  repository: https://github.com/dream11/dream-auth-login-provider
+  license: MIT
+  official: true
+  description: Provider-side authentication utilities for integrating user login through the Dream11 SDK.
+- language: javascript
+  registry: npm
+  name: "@d11/delivr-cli"
+  version: 0.0.6
+  url: https://www.npmjs.com/package/@d11/delivr-cli
+  install: npm install -g @d11/delivr-cli
+  repository: https://github.com/ds-horizon/delivr-cli
+  license: MIT
+  official: true
+  description: Management CLI for Delivr — deploy mobile app updates over the air. Command surface captured in cli/.
+- language: javascript
+  registry: npm
+  name: "@d11/dota"
+  version: 1.3.0
+  url: https://www.npmjs.com/package/@d11/dota
+  install: npm install @d11/dota
+  repository: https://github.com/ds-horizon/delivr-sdk-ota
+  license: MIT
+  official: true
+  description: React Native client for the DOTA / CodePush-compatible OTA service.
+- language: javascript
+  registry: npm
+  name: "@d11/marco"
+  version: 0.0.16
+  url: https://www.npmjs.com/package/@d11/marco
+  install: npm install @d11/marco
+  repository: https://github.com/dream-sports-labs/marco
+  license: MIT AND Apache-2.0
+  official: true
+  description: React Native performance tracking library with a visualization dashboard.
+- language: javascript
+  registry: npm
+  name: "@d11/de-frost"
+  version: 2.2.0
+  url: https://www.npmjs.com/package/@d11/de-frost
+  install: npm install @d11/de-frost
+  repository: https://github.com/dream11/de-frost
+  license: MIT
+  official: true
+  description: Detect and analyze frozen frames / UI jank in React Native applications.
+- language: javascript
+  registry: npm
+  name: "@d11/react-native-mqtt"
+  version: 0.0.5
+  url: https://www.npmjs.com/package/@d11/react-native-mqtt
+  install: npm install @d11/react-native-mqtt
+  repository: https://github.com/dream-sports-labs/d11-react-native-mqtt
+  license: MIT
+  official: true
+  description: MQTT client for React Native with reconnection and offline queuing.
+- language: javascript
+  registry: npm
+  name: "@d11/flagship-rn-sdk"
+  version: 0.3.0
+  url: https://www.npmjs.com/package/@d11/flagship-rn-sdk
+  install: npm install @d11/flagship-rn-sdk
+  repository: https://github.com/ds-horizon/flagship-sdks
+  license: MIT
+  official: true
+  description: React Native SDK for the Flagship feature-flag platform.
+- language: javascript
+  registry: npm
+  name: "@d11/flagship-feature-flag"
+  version: 0.1.2
+  url: https://www.npmjs.com/package/@d11/flagship-feature-flag
+  install: npm install @d11/flagship-feature-flag
+  repository: https://github.com/dream11/flagship-sdk
+  license: MIT
+  official: true
+  description: Feature-flag service client.
+- language: javascript
+  registry: npm
+  name: "@d11/react-native-fast-image"
+  version: 8.13.0
+  url: https://www.npmjs.com/package/@d11/react-native-fast-image
+  install: npm install @d11/react-native-fast-image
+  repository: https://github.com/ds-horizon/react-native-fast-image
+  license: MIT AND Apache-2.0
+  official: true
+  description: Dream Sports-maintained fork of FastImage, a performant React Native image component.
+- language: lua
+  registry: luarocks
+  name: kong-circuit-breaker
+  version: 2.2.0-1
+  url: https://luarocks.org/modules/dream11/kong-circuit-breaker
+  install: luarocks install kong-circuit-breaker
+  repository: https://github.com/dream11/kong-circuit-breaker
+  official: true
+  description: Kong plugin that wraps proxy calls with a circuit breaker at the route level.
+- language: lua
+  registry: luarocks
+  name: lua-circuit-breaker
+  version: 1.0.2-1
+  url: https://luarocks.org/modules/dream11/lua-circuit-breaker
+  install: luarocks install lua-circuit-breaker
+  repository: https://github.com/dream11/lua-circuit-breaker
+  official: true
+  description: Circuit-breaker pattern implementation in Lua.
+- language: lua
+  registry: luarocks
+  name: kong-scalable-rate-limiter
+  version: 1.1.0-1
+  url: https://luarocks.org/modules/dream11/kong-scalable-rate-limiter
+  install: luarocks install kong-scalable-rate-limiter
+  repository: https://github.com/dream11/kong-scalable-rate-limiter
+  official: true
+  description: Kong plugin for rate limiting at high throughput with batched counters and clustered Redis.
+- language: lua
+  registry: luarocks
+  name: kong-advanced-router
+  version: 0.2.1-1
+  url: https://luarocks.org/modules/dream11/kong-advanced-router
+  install: luarocks install kong-advanced-router
+  repository: https://github.com/dream11/kong-advanced-router
+  official: true
+  description: Kong plugin that makes an intermediate HTTP call to decide upstream routing.
+- language: shell
+  registry: homebrew
+  name: dream11/tools
+  url: https://github.com/dream11/homebrew-tools
+  install: brew tap dream11/tools
+  official: true
+  description: Homebrew tap carrying Dream11's public tool formulae (Odin CLI and friends).
+not_found:
+- registry: pypi
+  query: dream11 / dreamsports / d11
+  result: no first-party package
+- registry: maven-central
+  query: in.dream11 / com.dream11
+  result: no first-party artifact located from the docs or repos probed
+- registry: nuget
+  result: none
+- registry: rubygems
+  result: none
+- registry: crates.io
+  result: none
+- registry: packagist
+  result: none

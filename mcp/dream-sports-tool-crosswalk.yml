@@ -1,0 +1,247 @@
+generated: '2026-08-04'
+method: derived
+source: >-
+  mcp/dream-sports-mcp.yml (transcribed from the odin-mcp README tool tables) bound against
+  grpc/dream-sports-odin-*.proto (saved verbatim from dream-horizon-org/odin-mcp proto/) and against
+  the REST method+path each tool documents
+summary: >-
+  Dream Sports' MCP surface and its OpenAPI surface do not overlap. The one first-party MCP server
+  (odin-mcp) fronts the Odin developer platform — odin-deployer-ent, odin-scout-ent and user-auth —
+  none of which publishes an OpenAPI document, so no MCP tool can be bound to an operationId. What
+  the provider does publish for the Odin surface is protobuf: every one of the 17 gRPC-backed tools
+  binds to a real, verified rpc in the saved .proto files, which is the strongest available contract
+  for those tools. Conversely, all 254 operations across the five published OpenAPIs (Guardian,
+  Checkmate, Raven/Thunder, Delivr, DOTA) have no MCP tool at all. This is a genuine surface
+  divergence, recorded rather than papered over.
+surfaces:
+  openapi:
+  - file: openapi/dream-sports-guardian-openapi.yml
+    operations: 54
+    mcp_tools: 0
+  - file: openapi/dream-sports-guardian-integrations-openapi.yml
+    operations: 6
+    mcp_tools: 0
+  - file: openapi/dream-sports-checkmate-openapi.yml
+    operations: 49
+    mcp_tools: 0
+  - file: openapi/dream-sports-raven-journey-openapi.yml
+    operations: 45
+    mcp_tools: 0
+  - file: openapi/dream-sports-thunder-api-openapi.yml
+    operations: 7
+    mcp_tools: 0
+  - file: openapi/dream-sports-thunder-admin-openapi.yml
+    operations: 26
+    mcp_tools: 0
+  - file: openapi/dream-sports-delivr-ota-openapi.yml
+    operations: 50
+    mcp_tools: 0
+  - file: openapi/dream-sports-dota-openapi.yml
+    operations: 24
+    mcp_tools: 0
+  grpc:
+    protos: grpc/dream-sports-odin-*.proto
+    source: https://github.com/dream-horizon-org/odin-mcp/tree/main/proto
+    gated: false
+    note: proto files are published in-repo and loaded by the MCP server at runtime
+  graphql: null
+  mcp:
+    server: odin-mcp
+    transport: stdio
+    gated: true
+    note: >-
+      stdio-only, so tools/list cannot be probed remotely; tool names, bindings and argument names
+      come from the provider's published README tables. Protected tools additionally require a
+      bearer token, so live inputSchema introspection needs an authenticated local install.
+crosswalk:
+- tool: deployer_grpc_health
+  category: health
+  grpc: grpc.health.v1.Health/Check
+  binding: grpc
+  confidence: high
+  note: standard gRPC health protocol; proto vendored at proto/grpc/health/v1/health.proto
+- tool: deployer_grpc_list_tiers
+  category: tiers
+  grpc: TierService/ListTiers
+  proto: grpc/dream-sports-odin-od-tier.proto
+  binding: grpc
+  confidence: high
+- tool: deployer_grpc_list_environment
+  category: environments
+  grpc: EnvironmentService/ListEnvironment
+  proto: grpc/dream-sports-odin-od-environment.proto
+  binding: grpc
+  confidence: high
+- tool: deployer_grpc_describe_environment
+  category: environments
+  grpc: EnvironmentService/DescribeEnvironment
+  proto: grpc/dream-sports-odin-od-environment.proto
+  binding: grpc
+  confidence: high
+- tool: deployer_grpc_create_environment
+  category: environments
+  grpc: EnvironmentService/CreateEnvironment
+  proto: grpc/dream-sports-odin-od-environment.proto
+  binding: grpc
+  confidence: high
+  note: server-streaming; tool adds a stream_completion argument (full | first_progress)
+- tool: deployer_grpc_delete_environment
+  category: environments
+  grpc: EnvironmentService/DeleteEnvironment
+  proto: grpc/dream-sports-odin-od-environment.proto
+  binding: grpc
+  confidence: high
+  note: server-streaming; destructive
+- tool: deployer_grpc_status_environment
+  category: environments
+  grpc: EnvironmentService/StatusEnvironment
+  proto: grpc/dream-sports-odin-od-environment.proto
+  binding: grpc
+  confidence: high
+- tool: deployer_grpc_list_services
+  category: services
+  grpc: ServiceService/ListServices
+  proto: grpc/dream-sports-odin-od-service.proto
+  binding: grpc
+  confidence: high
+- tool: deployer_grpc_describe_service
+  category: services
+  grpc: ServiceService/DescribeService
+  proto: grpc/dream-sports-odin-od-service.proto
+  binding: grpc
+  confidence: high
+- tool: deployer_grpc_deploy_service
+  category: services
+  grpc: ServiceService/DeployService
+  proto: grpc/dream-sports-odin-od-service.proto
+  binding: grpc
+  confidence: high
+  note: server-streaming
+- tool: deployer_grpc_operate_service
+  category: services
+  grpc: ServiceService/OperateService
+  proto: grpc/dream-sports-odin-od-service.proto
+  binding: grpc
+  confidence: high
+  note: server-streaming
+- tool: deployer_grpc_undeploy_service
+  category: services
+  grpc: ServiceService/UndeployService
+  proto: grpc/dream-sports-odin-od-service.proto
+  binding: grpc
+  confidence: high
+  note: server-streaming; destructive
+- tool: deployer_grpc_operate_component_diff
+  category: services
+  grpc: ServiceService/OperateComponentDiff
+  proto: grpc/dream-sports-odin-od-service.proto
+  binding: grpc
+  confidence: high
+- tool: deployer_grpc_list_service_versions
+  category: services
+  grpc: ServiceService/ListServiceVersions
+  proto: grpc/dream-sports-odin-od-service.proto
+  binding: grpc
+  confidence: high
+- tool: deployer_grpc_release_service
+  category: services
+  grpc: ServiceService/ReleaseService
+  proto: grpc/dream-sports-odin-od-service.proto
+  binding: grpc
+  confidence: high
+- tool: deployer_grpc_check_service_release_name_unique
+  category: services
+  grpc: ServiceService/CheckServiceReleaseNameUnique
+  proto: grpc/dream-sports-odin-od-service.proto
+  binding: grpc
+  confidence: high
+- tool: deployer_grpc_export_service
+  category: services
+  grpc: ServiceService/ExportService
+  proto: grpc/dream-sports-odin-od-service.proto
+  binding: grpc
+  confidence: high
+rest_documented_no_spec:
+  note: >-
+    These 28 tools call documented REST endpoints on odin-deployer-ent, odin-scout-ent and user-auth.
+    Those three services publish no OpenAPI, so there is no operationId to bind and no machine-readable
+    inputSchema to inherit — only the method+path the README states. confidence is medium where the
+    catalogue/schema protos describe the same capability, low where nothing but the README covers it.
+  tools:
+  - {tool: deployer_health, rest: 'GET /healthcheck', confidence: medium}
+  - {tool: deployer_operation_schemas_list, rest: 'GET /v1/operation-schemas/{component_type}/{deployment_type}', confidence: medium, note: 'mirrors CatalogueService/ListOperationSchemas'}
+  - {tool: deployer_operation_schema_get, rest: 'GET /v1/operation-schemas/.../{operation_name}', confidence: medium, note: 'mirrors CatalogueService/GetOperationSchema'}
+  - {tool: deployer_component_catalogue, rest: 'GET /v1/component-catalogue', confidence: medium, note: 'mirrors CatalogueService/ListComponentCatalogue'}
+  - {tool: deployer_component_operations, rest: 'GET /v1/component-operations', confidence: medium, note: 'mirrors CatalogueService/ListComponentOperations'}
+  - {tool: deployer_operate_component, rest: 'POST .../operate', confidence: low}
+  - {tool: deployer_operate_status, rest: 'GET /v1/operate/status/{service_task_id}', confidence: low}
+  - {tool: scout_accounts_list, rest: 'GET /accounts', confidence: low}
+  - {tool: scout_account_details_get, rest: 'GET /account-details?accountName=', confidence: low}
+  - {tool: user_auth_health, rest: 'GET /healthcheck', confidence: low}
+  - {tool: user_auth_orgs_list, rest: 'GET /api/v1/orgs', confidence: low}
+  - {tool: user_auth_org_get, rest: 'GET /api/v1/orgs/{org_id}', confidence: low}
+  - {tool: user_auth_org_update, rest: 'PUT /api/v1/orgs/{org_id}', confidence: low}
+  - {tool: user_auth_org_delete, rest: 'DELETE /api/v1/orgs/{org_id}', confidence: low, destructive: true}
+  - {tool: user_auth_org_members_list, rest: 'GET /api/v1/orgs/{org_id}/members', confidence: low}
+  - {tool: user_auth_org_invite_members, rest: 'POST /api/v1/orgs/{org_id}/members', confidence: low}
+  - {tool: user_auth_org_member_promote_admin, rest: 'PUT /api/v1/orgs/{org_id}/members/{email}/admin', confidence: low, destructive: true}
+  - {tool: user_auth_org_member_set_role, rest: 'PUT .../members/{email}/role', confidence: low, destructive: true}
+  - {tool: user_auth_org_member_remove, rest: 'DELETE /api/v1/orgs/{org_id}/members/{email}', confidence: low, destructive: true}
+  - {tool: user_auth_teams_list, rest: 'GET /api/v1/teams', confidence: low}
+  - {tool: user_auth_team_get, rest: 'GET /api/v1/teams/{team_name}', confidence: low}
+  - {tool: user_auth_team_create, rest: 'POST /api/v1/teams', confidence: low}
+  - {tool: user_auth_team_update, rest: 'PUT /api/v1/teams/{team_name}', confidence: low}
+  - {tool: user_auth_team_delete, rest: 'DELETE /api/v1/teams/{team_name}', confidence: low, destructive: true}
+  - {tool: user_auth_team_transfer_owner, rest: 'PUT .../teams/{team_name}/owner', confidence: low, destructive: true}
+  - {tool: user_auth_team_members_list, rest: 'GET /api/v1/teams/{team_name}/members', confidence: low}
+  - {tool: user_auth_team_add_members, rest: 'POST .../teams/{team_name}/members', confidence: low}
+  - {tool: user_auth_team_remove_member, rest: 'DELETE .../teams/{team_name}/members/{email}', confidence: low, destructive: true}
+mcp_only:
+- tool: deployer_operate_component
+  reason: >-
+    The operate flow is exposed over REST by the deployer and has no counterpart rpc in the published
+    protos and no OpenAPI operation.
+- tool: scout_accounts_list
+  reason: odin-scout-ent publishes neither an OpenAPI nor a proto in the public org.
+- tool: scout_account_details_get
+  reason: odin-scout-ent publishes neither an OpenAPI nor a proto in the public org.
+- tool: user_auth_org_delete
+  reason: >-
+    The user-auth service (orgs, teams, members, invites) has no public contract of any kind — its
+    18 tools exist only as MCP tools plus README prose.
+rest_only:
+- surface: Guardian Authentication & Authorization API
+  file: openapi/dream-sports-guardian-openapi.yml
+  operations: 54
+  capabilities: [passwordless/OTP sign-in, signup/signin, social + IdP connect, biometric, guest login, refresh/logout, token revocation, OAuth2 authorize/token/userinfo, admin client management, scope management]
+- surface: Guardian integration endpoints
+  file: openapi/dream-sports-guardian-integrations-openapi.yml
+  operations: 6
+  capabilities: [user lookup/create, provider details, authenticate user, send message]
+- surface: Checkmate Test Management API
+  file: openapi/dream-sports-checkmate-openapi.yml
+  operations: 49
+  capabilities: [projects, tests, runs, sections, labels, squads, platforms, priorities, users, tokens, reporting]
+- surface: Raven Journey API
+  file: openapi/dream-sports-raven-journey-openapi.yml
+  operations: 45
+  capabilities: [journeys, triggers, events, cohorts, templates, console users, tenants, analytics]
+- surface: Raven Thunder (client + admin)
+  files: [openapi/dream-sports-thunder-api-openapi.yml, openapi/dream-sports-thunder-admin-openapi.yml]
+  operations: 33
+  capabilities: [app launch, nudge preview, snapshot deltas, behaviour tags, CTAs, nudges, tenants]
+- surface: Delivr OTA server
+  file: openapi/dream-sports-delivr-ota-openapi.yml
+  operations: 50
+  capabilities: [accounts, access keys, apps, collaborators, deployments, releases, promote, rollback, metrics, update check]
+- surface: DOTA
+  file: openapi/dream-sports-dota-openapi.yml
+  operations: 24
+  capabilities: [acquisition, apps, deployments, packages, collaborators, organizations, metrics, authentication]
+coverage:
+  tools_named: 45
+  tools_bound_to_a_published_contract: 17
+  tools_rest_documented_without_spec: 28
+  mcp_only: 4
+  rest_operations_total: 261
+  rest_operations_with_a_tool: 0

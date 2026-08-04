@@ -1,0 +1,58 @@
+generated: '2026-08-04'
+method: searched
+source: >-
+  the eight OpenAPI documents in openapi/, GitHub releases on the dream-horizon-org repositories, the
+  Guardian docs at https://guardianhq.io/docs/, and live probes for a status page
+versioning:
+  scheme: uri-path
+  detail: >-
+    Guardian runs /v1 and /v2 of the same flows side by side (passwordless init/complete, signin,
+    social auth, IdP connect, refresh-token, logout, plus /v2-only biometric challenge/complete),
+    which is a parallel-version strategy rather than a cutover. Checkmate and the Odin user-auth
+    service use /api/v1. The OAuth2/OIDC endpoints (/authorize, /token, /userinfo, /certs) are
+    unversioned by design, as the OIDC spec requires.
+  current:
+    guardian: v2 (v1 still published and documented)
+    checkmate: v1
+    raven-journey: v1
+    delivr-ota: v1
+    dota: v1
+    thunder: v1
+  header_negotiation:
+    surface: thunder-api
+    header: api_version
+    note: client-supplied API version used for snapshot/delta compatibility
+release_versioning:
+  scheme: semver (per component, via GitHub releases)
+  note: >-
+    Each Dream Horizon component versions independently. Guardian is still pre-1.0 (v0.0.9-x),
+    Checkmate has shipped v1.0.x, LogWise and DataGen are on early 0.x lines. Nothing in the stack
+    presents a single platform version number.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecated_operations: []
+  note: >-
+    No deprecation policy, no Sunset/Deprecation header support (RFC 8594), and not one operation in
+    any of the eight specifications carries deprecated: true. Guardian's v1 endpoints are the clearest
+    deprecation candidates in the stack — v2 supersedes them functionally — but they are published
+    without any deprecation marker, sunset date or migration note, so a consumer has no machine- or
+    human-readable signal that v1 is on its way out.
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    These are self-hosted open-source components; the operator sets the SLO. Dream Sports publishes no
+    SLA for any of them, and none is applicable to the source distribution.
+status_page: null
+status_page_note: >-
+  No status page exists. status.dream11.com, status.dreamsports.group, status.dreamhorizon.org and
+  status.fancode.com all fail to resolve (probed 2026-08-04). The one live Dream Sports API host,
+  auth.dream11.com, has no published status surface — during this pass the related
+  www.dream11.com/security/rvdp page was returning HTTP 502 with a "Server down!" page and there was
+  nowhere to check whether that was expected.
+support:
+  channel: https://discord.gg/HrJZCrkeAs
+  issues: https://github.com/dream-horizon-org (per-repository GitHub issues)
+changelog: changelog/dream-sports-changelog.yml

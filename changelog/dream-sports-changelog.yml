@@ -1,0 +1,100 @@
+generated: '2026-08-04'
+method: searched
+source: GitHub Releases on the dream-horizon-org repositories
+docs: https://github.com/dream-horizon-org
+scheme: semver, per component (there is no single platform version or one aggregated changelog)
+note: >-
+  Dream Sports publishes no dated product changelog page. The only dated, structured change record it
+  publishes is GitHub Releases on the individual Dream Horizon repositories, so that is what is
+  captured here — the recent window per API-bearing component. Several repositories that ship an
+  OpenAPI (Delivr, Raven, Raven Thunder, DOTA, Odin) publish no releases at all, so their APIs change
+  with no versioned announcement.
+components:
+- component: Guardian
+  repository: https://github.com/dream-horizon-org/guardian
+  releases: https://github.com/dream-horizon-org/guardian/releases
+  current_version: v0.0.9-7
+  api: openapi/dream-sports-guardian-openapi.yml
+  entries:
+  - version: v0.0.9-7
+    date: '2026-01-07'
+    breaking: false
+    highlights:
+    - Fixed remaining dream-sports-labs references after the move to the dream-horizon-org organization
+    - Added an index for the SSO token table query
+  - version: v0.0.9-6
+    date: '2025-10-16'
+    breaking: false
+    highlights:
+    - Added identifier type validation
+  - version: v0.0.9-5
+    date: '2025-10-14'
+    breaking: false
+    highlights:
+    - Fixed handling of meta info during token creation
+  - version: v0.0.9-4
+    date: '2025-10-13'
+    breaking: false
+    highlights:
+    - Fixed a config parsing issue
+    - Graceful handling of kill signals
+- component: Checkmate
+  repository: https://github.com/dream-horizon-org/checkmate
+  releases: https://github.com/dream-horizon-org/checkmate/releases
+  current_version: v1.0.1
+  api: openapi/dream-sports-checkmate-openapi.yml
+  entries:
+  - version: v1.0.1
+    date: '2025-03-27'
+    breaking: false
+    highlights:
+    - Updated issue templates
+    - Fixed project-name update on soft delete
+  - version: v1.0.0
+    date: '2025-02-24'
+    breaking: false
+    highlights:
+    - First stable release
+- component: LogWise
+  repository: https://github.com/dream-horizon-org/logwise
+  releases: https://github.com/dream-horizon-org/logwise/releases
+  current_version: v0.0.3
+  entries:
+  - version: v0.0.3
+    date: '2026-01-27'
+    breaking: false
+    highlights:
+    - Documentation updates and small fixes
+  - version: v0.0.2
+    date: '2026-01-21'
+    breaking: false
+    highlights:
+    - Kubernetes deployment support
+    - Auto-scaling and infrastructure improvements
+  - version: v0.0.1
+    date: '2025-11-27'
+    breaking: false
+    highlights:
+    - First release of the unified log collection, processing, storage and query platform
+- component: DataGen
+  repository: https://github.com/dream-horizon-org/datagen
+  releases: https://github.com/dream-horizon-org/datagen/releases
+  current_version: 0.2.0
+  entries:
+  - version: 0.2.0
+    date: '2025-12-10'
+    breaking: false
+    highlights:
+    - Added a Postgres sink; data can be loaded into Postgres in batches
+  - version: 0.1.0
+    date: '2025-12-03'
+    breaking: false
+    highlights:
+    - Initial pre-release of the synthetic-data DSL toolkit
+components_without_releases:
+- {component: Delivr, api: openapi/dream-sports-delivr-ota-openapi.yml, repository: https://github.com/dream-horizon-org/delivr}
+- {component: Raven, api: openapi/dream-sports-raven-journey-openapi.yml, repository: https://github.com/dream-horizon-org/raven}
+- {component: Raven Thunder, api: openapi/dream-sports-thunder-api-openapi.yml, repository: https://github.com/dream-horizon-org/raven-thunder}
+- {component: DOTA, api: openapi/dream-sports-dota-openapi.yml, repository: https://github.com/dream-horizon-org/dota}
+- {component: Odin, repository: https://github.com/dream-horizon-org/odin}
+- {component: odin-mcp, repository: https://github.com/dream-horizon-org/odin-mcp}

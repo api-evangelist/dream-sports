@@ -1,0 +1,84 @@
+generated: '2026-08-04'
+method: searched
+source: >-
+  https://dream-horizon-org.github.io/odin/docs/cli/reference and
+  https://github.com/ds-horizon/delivr-cli (README), plus the npm and Homebrew distribution channels
+note: >-
+  Dream Sports ships two first-party CLIs, both from the Dream Horizon open-source stack. Neither is a
+  client for a Dream11 or FanCode consumer API — there is no such public API — they drive the
+  self-hosted platform components. The binaries themselves are catalogued in
+  packages/dream-sports-packages.yml.
+clis:
+- name: odin
+  purpose: >-
+    Command-line interface to Odin, Dream Sports' internal developer platform: define software once
+    and deploy it to any environment. The same surface the odin-mcp server exposes to agents.
+  docs: https://dream-horizon-org.github.io/odin/docs/cli/reference
+  repository: https://github.com/dream-horizon-org/odin-cli
+  language: Go
+  license: LGPL-3.0
+  install:
+  - method: homebrew
+    command: brew tap dream11/tools
+    source: https://github.com/dream11/homebrew-tools
+    note: Dream11's public Homebrew tap; verify the formula name in the tap before installing.
+  - method: source
+    command: git clone https://github.com/dream-horizon-org/odin-cli
+  commands:
+  - group: configuration
+    commands:
+    - {command: 'odin configure', description: Configure Odin locally and authenticate with the backend}
+  - group: environment
+    commands:
+    - {command: 'odin create env', description: Create a new environment, grpc: EnvironmentService/CreateEnvironment}
+    - {command: 'odin delete env', description: Delete an existing environment, grpc: EnvironmentService/DeleteEnvironment}
+    - {command: 'odin list env', description: List all accessible environments, grpc: EnvironmentService/ListEnvironment}
+    - {command: 'odin describe env', description: Get detailed environment information, grpc: EnvironmentService/DescribeEnvironment}
+    - {command: 'odin status env', description: Check deployment status, grpc: EnvironmentService/StatusEnvironment}
+  - group: service
+    commands:
+    - {command: 'odin deploy service', description: Deploy a service to an environment, grpc: ServiceService/DeployService}
+    - {command: 'odin undeploy service', description: Remove a service from an environment, grpc: ServiceService/UndeployService}
+    - {command: 'odin operate service', description: 'Execute operations on a service (redeploy, add/remove components)', grpc: ServiceService/OperateService}
+  - group: component
+    commands:
+    - {command: 'odin operate component', description: 'Execute operations on components (scale, restart, update config)'}
+  global_flags:
+  - {flag: '-p, --profile', description: named configuration profile}
+  - {flag: '-o, --output', description: 'output format: text or json'}
+  - {flag: '-v, --verbose', description: verbose output}
+  agent_surface: mcp/dream-sports-mcp.yml
+  protos: grpc/dream-sports-odin-od-service.proto, grpc/dream-sports-odin-od-environment.proto
+- name: code-push-standalone (Delivr CLI)
+  purpose: Deploy and manage over-the-air updates for React Native applications against a Delivr OTA server.
+  package: "@d11/delivr-cli"
+  binary: code-push-standalone
+  docs: https://github.com/ds-horizon/delivr-cli
+  repository: https://github.com/ds-horizon/delivr-cli
+  language: Node.js
+  license: MIT
+  install:
+  - {method: npm-global, command: npm install -g @d11/delivr-cli}
+  - {method: npm-dev, command: npm install --save-dev @d11/delivr-cli}
+  - {method: yarn, command: yarn add --dev @d11/delivr-cli}
+  - {method: npx, command: npx code-push-standalone <command>}
+  authentication:
+    style: access-key
+    commands:
+    - 'code-push-standalone login --accessKey <key> <server-url>'
+    - 'code-push-standalone whoami'
+    - 'code-push-standalone logout'
+    key_source: Delivr web panel → Settings → Generate New Token
+  commands:
+  - group: auth
+    commands:
+    - {command: login, description: Authenticate against a Delivr OTA server with an access key}
+    - {command: whoami, description: Show the current login}
+    - {command: logout, description: Clear the stored access key}
+  - group: release
+    commands:
+    - command: 'release <appName> <updateContents> <targetBinaryVersion>'
+      description: >-
+        Release a full bundle or a patch (diff-only) update. Flags include --deploymentName,
+        --description and --disabled.
+  backing_api: openapi/dream-sports-delivr-ota-openapi.yml

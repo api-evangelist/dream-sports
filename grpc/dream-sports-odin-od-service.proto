@@ -1,0 +1,213 @@
+syntax = "proto3";
+package dream11.od.service.v1;
+
+import "dream11/od/dto/v1/service.proto";
+import "google/protobuf/struct.proto";
+
+option java_multiple_files = true;
+option java_package = "com.dream11.odin.grpc.service";
+
+service ServiceService {
+  rpc DeployService(DeployServiceRequest) returns (stream DeployServiceResponse) {}
+  rpc OperateService(OperateServiceRequest) returns (stream OperateServiceResponse) {}
+  rpc UndeployService(UndeployServiceRequest) returns (stream UndeployServiceResponse) {}
+  rpc OperateComponentDiff(OperateComponentDiffRequest) returns (OperateComponentDiffResponse) {}
+  rpc ListServices(ListServicesRequest) returns (ListServicesResponse) {}
+  rpc ListServiceVersions(ListServiceVersionsRequest) returns (ListServiceVersionsResponse) {}
+  rpc DescribeService(DescribeServiceRequest) returns (DescribeServiceResponse) {}
+  rpc ReleaseService(ReleaseServiceRequest) returns (ReleaseServiceResponse) {}
+  rpc CheckServiceReleaseNameUnique(CheckServiceReleaseNameUniqueRequest) returns (CheckServiceReleaseNameUniqueResponse) {}
+  rpc ExportService(ExportServiceRequest) returns (ExportServiceResponse) {}
+}
+
+message DeployServiceRequest {
+  string env_name = 1;
+  dto.v1.ServiceDefinition service_definition = 2;
+  dto.v1.ProvisioningConfig provisioning_config = 3;
+  optional string service_name = 4;
+  optional string version = 5;
+  optional string provisioning_type = 6;
+}
+
+message ServiceResponse {
+  ServiceStatus service_status = 1;
+  repeated ComponentStatus components_status = 2;
+  string message = 3;
+  string name = 4;
+  string version = 5;
+}
+
+message ServiceIdentifier {
+  string service_name = 1;
+  string service_version = 2;
+  string tags = 3;
+  bool force_deploy = 4;
+}
+
+message DeployServiceResponse {
+  ServiceResponse service_response = 1;
+  string trace_id = 2;
+}
+
+message ServiceStatus {
+  string service_status = 1;
+  string service_action = 2;
+  string error = 3;
+}
+
+message ComponentStatus {
+  string component_name = 1;
+  string component_status = 2;
+  string component_action = 3;
+  string error = 4;
+}
+
+message OperateServiceRequest {
+  string env_name = 1;
+  string service_name = 2;
+  string component_name = 3;
+  bool is_component_operation = 4;
+  string operation = 5;
+  optional google.protobuf.Struct config = 6;
+  reserved 7;
+  reserved "release_agent";
+}
+
+message OperateServiceResponse {
+  ServiceResponse service_response = 1;
+  string trace_id = 2;
+}
+
+message UndeployServiceRequest {
+  string env_name = 1;
+  string service_name = 2;
+}
+
+message UndeployServiceResponse {
+  ServiceResponse service_response = 1;
+  string trace_id = 2;
+}
+
+message OperateComponentDiffRequest {
+  string env_name = 1;
+  string service_name = 2;
+  string component_name = 3;
+  string operation_name = 4;
+  optional google.protobuf.Struct config = 5;
+}
+
+message OperateComponentDiffResponse {
+  google.protobuf.Struct old_values = 1;
+  google.protobuf.Struct new_values = 2;
+}
+
+message ListServicesRequest {
+  optional int32 page = 1;
+  optional int32 page_size = 2;
+  // Deprecated: no-op. The server ignores this field; total count is always computed when listing.
+  optional bool include_total_count = 3 [deprecated = true];
+  // Optional name filter. The server trims leading/trailing whitespace. If the trimmed value has
+  // length < 3, listing is unfiltered by name (same as unset or empty). Otherwise the value is split
+  // on whitespace; empty segments are dropped; a distinct service name matches if any non-empty
+  // token is a case-insensitive substring of the name (OR across tokens). Implemented server-side
+  // with bound LIKE predicates per token.
+  optional string name_query = 4;
+  reserved 5;
+  reserved "created_by";
+}
+
+message ComponentSummary {
+  string component_name = 1;
+  string component_type = 2;
+}
+
+message OwnerTeam {
+  int64 team_id = 1;
+  string team_name = 2;
+}
+
+message ServiceSummary {
+  string service_name = 1;
+  string latest_version = 2;
+  // Resolved via user-auth user profile (email), same semantics as list environments' created_by.
+  // Falls back to the stored user id when lookup fails.
+  optional string owner_user_id = 3;
+  string description = 4;
+  repeated ComponentSummary component_summaries = 5;
+  repeated OwnerTeam owner_teams = 6;
+  // Resolved via user-auth user profile (email) for service_releases.created_by.
+  // Falls back to the stored user id when lookup fails.
+  optional string created_by = 7;
+}
+
+message ListServicesResponse {
+  repeated ServiceSummary services = 1;
+  bool has_more = 2;
+  // On successful ListServices responses, populated by default with COUNT(DISTINCT name) for the
+  // caller's org under the same name filter as this page (before LIMIT/OFFSET).
+  optional int64 total_count = 3;
+}
+
+message ListServiceVersionsRequest {
+  string service_name = 1;
+}
+
+message ListServiceVersionsResponse {
+  repeated string versions = 1;
+}
+
+message DescribeServiceRequest {
+  string service_name = 1;
+  optional string env_name = 2;
+  optional string version = 3;
+}
+
+message DescribeServiceResponse {
+  optional string deployed_version = 1;
+  optional dto.v1.ServiceDefinition service_definition = 2;
+  map<string, string> provisioning_configs_by_name = 3;
+  optional string release_notes = 4;
+}
+
+message ReleaseServiceRequest {
+  dto.v1.ServiceDefinition service_definition = 1;
+  map<string, dto.v1.ProvisioningConfig> provisioning_configs_by_name = 2;
+  optional string release_notes = 3;
+  // When true, the release is treated as the first catalogue entry for this service name in the
+  // org: the name must not already exist in service_releases (any version). When false or unset,
+  // behaviour is unchanged (new version must be greater than the latest existing version).
+  optional bool is_create_service_release = 4;
+}
+
+message ReleaseServiceResponse {
+  string service_name = 1;
+  string version = 2;
+  bool success = 3;
+}
+
+message CheckServiceReleaseNameUniqueRequest {
+  string service_name = 1;
+}
+
+message CheckServiceReleaseNameUniqueResponse {
+  // True when no service_releases row exists for this org and service name (name is free for a new
+  // catalogue service / first release).
+  bool is_unique = 1;
+}
+
+message ExportServiceRequest {
+  string service_name = 1;
+  optional string version = 2;
+}
+
+message ExportServiceResponse {
+  string service_name = 1;
+  string version = 2;
+  string service_definition = 3;
+  repeated ServiceProvisioningFile provisioning_files = 4;
+}
+
+message ServiceProvisioningFile {
+  string name = 1;
+  string content = 2;
+}

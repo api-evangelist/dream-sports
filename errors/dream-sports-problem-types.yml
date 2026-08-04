@@ -1,0 +1,170 @@
+generated: '2026-08-04'
+method: derived
+source: the eight OpenAPI documents in openapi/ (4xx/5xx responses and error schemas)
+format: vendor-json
+format_note: No Dream Sports specification uses RFC 9457 application/problem+json. Every error surface returns a
+  vendor JSON envelope declared as application/json. Error titles below are the response descriptions the provider
+  wrote in the spec, deduplicated by status code.
+envelopes:
+- source: openapi/dream-sports-checkmate-openapi.yml
+  schema: Error
+  properties:
+  - error
+  - status
+- source: openapi/dream-sports-delivr-ota-openapi.yml
+  schema: Error
+  properties:
+  - message
+  - code
+- source: openapi/dream-sports-guardian-integrations-openapi.yml
+  schema: errorResponse
+  properties:
+  - error
+- source: openapi/dream-sports-guardian-openapi.yml
+  schema: ErrorResponse
+  properties:
+  - error
+- source: openapi/dream-sports-raven-journey-openapi.yml
+  schema: ErrorResponse
+  properties:
+  - error
+problems:
+- status: 400
+  occurrences: 113
+  titles:
+  - Bad Request (e.g. missing client_id, invalid page or page_size)
+  - Bad Request - Invalid authorization request
+  - Bad Request - Invalid input
+  - Bad Request - Invalid input parameters
+  - Bad Request - Invalid tenant-id header
+  - Bad Request - Validation errors, invalid OTP, invalid state, or retries exhausted
+  - Bad Request - Various validation and rate limiting errors
+  - Bad Request due to invalid data
+  media_types:
+  - application/json
+  source_specs:
+  - dream-sports-checkmate-openapi.yml
+  - dream-sports-delivr-ota-openapi.yml
+  - dream-sports-guardian-integrations-openapi.yml
+  - dream-sports-guardian-openapi.yml
+  - dream-sports-raven-journey-openapi.yml
+  - dream-sports-thunder-admin-openapi.yml
+  - dream-sports-thunder-api-openapi.yml
+- status: 401
+  occurrences: 64
+  titles:
+  - Invalid credentials or TENANT-ID header is missing/invalid
+  - PROJECT-ID or TENANT-ID header is missing or invalid
+  - Refresh token invalid/revoked or TENANT-ID header is missing/invalid
+  - Unauthorized
+  - Unauthorized (invalid/expired token or client_id mismatch)
+  - Unauthorized - Admin privileges required
+  - Unauthorized - Invalid client credentials or code
+  - Unauthorized - Invalid client credentials or token
+  media_types:
+  - application/json
+  source_specs:
+  - dream-sports-checkmate-openapi.yml
+  - dream-sports-delivr-ota-openapi.yml
+  - dream-sports-guardian-openapi.yml
+  - dream-sports-raven-journey-openapi.yml
+- status: 403
+  occurrences: 21
+  titles:
+  - Forbidden
+  - Forbidden - Admin access required
+  - Forbidden - User's flow is blocked due to too many failed attempts
+  - Project not authorised for this resource
+  - Registration is disabled
+  - User not onboarded for tenant or email-matched user already linked to Google provider
+  media_types:
+  - application/json
+  source_specs:
+  - dream-sports-checkmate-openapi.yml
+  - dream-sports-delivr-ota-openapi.yml
+  - dream-sports-guardian-openapi.yml
+  - dream-sports-raven-journey-openapi.yml
+- status: 404
+  occurrences: 65
+  titles:
+  - Behaviour Tag not found
+  - Behaviour tag not found
+  - CTA not found
+  - Client not found
+  - Event not found
+  - Journey not found
+  - Not Found - Credential not found
+  - Nudge Preview not found
+  media_types:
+  - application/json
+  source_specs:
+  - dream-sports-delivr-ota-openapi.yml
+  - dream-sports-guardian-openapi.yml
+  - dream-sports-raven-journey-openapi.yml
+  - dream-sports-thunder-admin-openapi.yml
+  - dream-sports-thunder-api-openapi.yml
+- status: 409
+  occurrences: 13
+  titles:
+  - Client already exists
+  - Conflict
+  - Conflict - Connection already exists for this provider
+  - Conflict - Scope with the same name already exists
+  - User already exists
+  media_types:
+  - application/json
+  source_specs:
+  - dream-sports-delivr-ota-openapi.yml
+  - dream-sports-guardian-openapi.yml
+  - dream-sports-raven-journey-openapi.yml
+- status: 413
+  occurrences: 1
+  titles:
+  - Package too large
+  media_types:
+  - (none declared)
+  source_specs:
+  - dream-sports-delivr-ota-openapi.yml
+- status: 422
+  occurrences: 2
+  titles:
+  - Unprocessable Entity - Provider validation failed
+  media_types:
+  - application/json
+  source_specs:
+  - dream-sports-guardian-openapi.yml
+- status: 429
+  occurrences: 3
+  titles: []
+  media_types:
+  - (none declared)
+  source_specs:
+  - dream-sports-delivr-ota-openapi.yml
+- status: 500
+  occurrences: 61
+  titles:
+  - Internal Server Error
+  - Internal Server Error - Service failures
+  media_types:
+  - application/json
+  source_specs:
+  - dream-sports-delivr-ota-openapi.yml
+  - dream-sports-guardian-integrations-openapi.yml
+  - dream-sports-guardian-openapi.yml
+- status: 502
+  occurrences: 13
+  titles:
+  - Authentication downstream failure
+  - Downstream failure
+  media_types:
+  - application/json
+  source_specs:
+  - dream-sports-raven-journey-openapi.yml
+- status: 504
+  occurrences: 11
+  titles:
+  - Downstream timeout
+  media_types:
+  - application/json
+  source_specs:
+  - dream-sports-raven-journey-openapi.yml

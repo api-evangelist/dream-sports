@@ -1,0 +1,113 @@
+generated: '2026-08-04'
+method: probed
+source: live GET of /.well-known/* on every Dream Sports host in apis.yml + OpenAPI servers
+notes: >-
+  Only one Dream Sports host publishes a real /.well-known document: api.dream11.com (and its issuer
+  auth.dream11.com) serve an OpenID Connect discovery document for "Login with Dream11". Every other
+  path on that host answers HTTP 418 with {"error":"I'm a teapot."} — a deliberate catch-all, not a
+  document. www.fancode.com and fancode.com answer HTTP 200 with an HTML single-page-app shell for
+  every /.well-known/* path probed, including /.well-known/agent-card.json and /.well-known/agent.json;
+  those are rejected as false positives (body is <!DOCTYPE html>, not JSON). No security.txt, no
+  api-catalog, no ai-plugin.json and no A2A agent card was found on any host.
+hosts:
+- host: https://api.dream11.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    file: dream-sports-openid-configuration.json
+  - path: /.well-known/security.txt
+    status: 418
+  - path: /.well-known/oauth-authorization-server
+    status: 418
+  - path: /.well-known/oauth-protected-resource
+    status: 418
+  - path: /.well-known/api-catalog
+    status: 418
+  - path: /.well-known/ai-plugin.json
+    status: 418
+  - path: /.well-known/agent-card.json
+    status: 418
+  - path: /.well-known/agent.json
+    status: 418
+- host: https://auth.dream11.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    note: identical body to api.dream11.com; this is the declared issuer
+  - path: /.well-known/oauth-authorization-server
+    status: 502
+  - path: /.well-known/security.txt
+    status: 502
+  - path: /certs
+    status: 200
+    content_type: application/json
+    note: JWKS (RS512 signing keys) referenced by jwks_uri; not saved (rotating key material)
+- host: https://www.dreamsports.group
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://www.dream11.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://www.fancode.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    rejected: true
+    reason: SPA catch-all returns text/html for every path; not a security.txt
+  - path: /.well-known/agent-card.json
+    status: 200
+    rejected: true
+    reason: SPA catch-all returns text/html; body is not a JSON AgentCard object
+  - path: /.well-known/agent.json
+    status: 200
+    rejected: true
+    reason: SPA catch-all returns text/html; body is not a JSON AgentCard object
+- host: https://dreamhorizon.org
+  documents:
+  - path: /llms.txt
+    status: 200
+    content_type: text/plain
+    file: ../llms/dream-sports-llms.txt
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://checkmate.dreamhorizon.org
+  documents:
+  - path: /openapi.yaml
+    status: 200
+    content_type: text/yaml
+    file: ../openapi/dream-sports-checkmate-openapi.yml
+    note: byte-identical to the openapi.yaml committed in dream-horizon-org/checkmate
+  - path: /.well-known/agent-card.json
+    status: 404
+- host: https://tech.dream11.in
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /llms.txt
+    status: 404

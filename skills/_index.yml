@@ -1,0 +1,52 @@
+generated: '2026-08-04'
+method: generated
+source: >-
+  openapi/ (operationIds grepped from the published specs), well-known/ (live OIDC discovery),
+  mcp/dream-sports-mcp.yml, conventions/ and errors/
+note: >-
+  Four skills, one per marquee Dream Sports flow that is actually groundable. Raven Journey and Raven
+  Thunder Admin are the only published specifications that declare operationIds (45 and 22), so they
+  carry the two REST skills. Guardian, Checkmate, Delivr and DOTA declare none — 182 operations with
+  no operationId — so no skill is written against them rather than inventing identifiers. The
+  identity skill is grounded in the live OIDC discovery document and the MCP skill in the provider's
+  own published tool tables.
+skills:
+- file: dream-sports-launch-an-in-app-journey.md
+  name: Launch an in-app journey with Raven
+  api: openapi/dream-sports-raven-journey-openapi.yml
+  operations: [healthCheck, googleLogin, refreshToken, getFilters, listJourneys, createJourney,
+    getJourney, updateJourney, scheduleJourney, activateJourney, pauseJourney, concludeJourney,
+    terminateJourney, createTestJourney, removeTestJourney]
+- file: dream-sports-manage-thunder-ctas-and-events.md
+  name: Manage Raven Thunder CTAs, behaviour tags and the event catalog
+  api: openapi/dream-sports-thunder-admin-openapi.yml
+  operations: [getAllEventNames, getAllEvents, getEvent, upsertEvents, patchEvent, deleteEvent,
+    listBehaviourTags, getBehaviourTag, createBehaviourTag, updateBehaviourTag, getFilters, listCTAs,
+    getCTA, createCTA, updateCTA, scheduleCTA, activateCTA, pauseCTA, concludeCTA, terminateCTA,
+    getNudgePreview, createOrUpdateNudgePreview, appLaunch, mergeSnapshotDelta]
+- file: dream-sports-sign-in-with-dream11.md
+  name: Sign a user in with "Login with Dream11" (OpenID Connect)
+  api: well-known/dream-sports-openid-configuration.json
+  operations: ['GET /authorize', 'POST /token', 'GET /userinfo', 'GET /certs', 'POST /revokeToken']
+- file: dream-sports-operate-odin-via-mcp.md
+  name: Deploy and operate services on Odin through the MCP server
+  api: mcp/dream-sports-mcp.yml
+  operations: [deployer_health, deployer_grpc_health, deployer_component_catalogue,
+    deployer_component_operations, deployer_operation_schemas_list, deployer_operation_schema_get,
+    deployer_grpc_list_environment, deployer_grpc_describe_environment,
+    deployer_grpc_status_environment, deployer_grpc_list_services, deployer_grpc_describe_service,
+    deployer_grpc_list_service_versions, deployer_grpc_operate_component_diff,
+    deployer_grpc_deploy_service, deployer_grpc_operate_service, deployer_operate_component,
+    deployer_operate_status, deployer_grpc_release_service,
+    deployer_grpc_check_service_release_name_unique, deployer_grpc_export_service,
+    scout_accounts_list, scout_account_details_get, user_auth_orgs_list, user_auth_teams_list,
+    user_auth_team_members_list]
+not_written:
+- api: openapi/dream-sports-guardian-openapi.yml
+  reason: 54 operations, none with an operationId — nothing stable to ground steps in.
+- api: openapi/dream-sports-checkmate-openapi.yml
+  reason: 49 operations, none with an operationId.
+- api: openapi/dream-sports-delivr-ota-openapi.yml
+  reason: 50 operations, none with an operationId.
+- api: openapi/dream-sports-dota-openapi.yml
+  reason: 24 operations, none with an operationId.
