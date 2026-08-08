@@ -69,7 +69,7 @@ apis:
     url: https://github.com/dream-horizon-org/guardian
   - type: OpenIDConnect
     url: https://auth.dream11.com/.well-known/openid-configuration
-  - type: MCP
+  - type: MCPServer
     url: https://mcp.guardianhq.io/sse
   - type: Webhooks
     url: asyncapi/dream-sports-webhooks.yml
