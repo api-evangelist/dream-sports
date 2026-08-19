@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "DOTA Access Keys API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AccessKeys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all access keys for the user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/accessKeys"
+          },
+          "docs": "List all access keys for the user"
+        },
+        {
+          "info": {
+            "name": "Create a new access key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:3000/accessKeys",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new access key"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

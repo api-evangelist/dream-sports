@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Guardian User Flow Block API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User Flow Block",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Block user flows",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/user/flow/block",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "API to block specific authentication flows for a user identifier (email/phone/username). \nThis prevents the user from using the specified authentication methods.\n\nSupported flow types:\n- passwordless: Blocks passwordless authentication flows\n- password: Blocks username/password authentication flows  \n- social_auth: Blocks social authentication flows (Facebook, Google)\n- otp_verify: Blocks OTP verification flows\n"
+        },
+        {
+          "info": {
+            "name": "Unblock user flows",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/user/flow/unblock",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "API to unblock previously blocked authentication flows for a user identifier.\nThis allows the user to use the specified authentication methods again.\nFor password/PIN block (wrong attempts from signin or MFA signin), use unblockFlows\n[\"password\"] and/or [\"pin\"] to unblock. user_identifier must be the username, email, or\nphone number (the identifier used when signing in) for password/PIN blocks. Lifts the\nblock before the block interval expires (e.g. after reset).\n"
+        },
+        {
+          "info": {
+            "name": "Get blocked flows for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/user/flow/blocked",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "userIdentifier",
+                "value": "",
+                "type": "query",
+                "description": "User identifier (email, phone number, username)"
+              }
+            ]
+          },
+          "docs": "API to retrieve all currently blocked authentication flows for a specific user identifier.\nReturns the list of flow types that are currently blocked for the user.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

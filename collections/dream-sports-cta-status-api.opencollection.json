@@ -1,0 +1,143 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Thunder Admin CTA Status API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CTA Status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Conclude CTA",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8081/thunder/ctas/:id/conclude",
+            "headers": [
+              {
+                "name": "x-tenant-id",
+                "value": "tenant1"
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "12345",
+                "type": "path",
+                "description": "Unique identifier of the CTA to conclude"
+              }
+            ]
+          },
+          "docs": "Changes the CTA status to CONCLUDED. The CTA must be in LIVE or PAUSED status. Concluded CTAs have completed their lifecycle and are no longer available to end users."
+        },
+        {
+          "info": {
+            "name": "Activate CTA",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8081/thunder/ctas/:id/live",
+            "headers": [
+              {
+                "name": "x-tenant-id",
+                "value": "tenant1"
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "12345",
+                "type": "path",
+                "description": "Unique identifier of the CTA to activate"
+              }
+            ]
+          },
+          "docs": "Changes the CTA status to LIVE. The CTA must be in SCHEDULED or PAUSED status. Once LIVE, the CTA will be available to end users through the SDK APIs."
+        },
+        {
+          "info": {
+            "name": "Pause CTA",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8081/thunder/ctas/:id/pause",
+            "headers": [
+              {
+                "name": "x-tenant-id",
+                "value": "tenant1"
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "12345",
+                "type": "path",
+                "description": "Unique identifier of the CTA to pause"
+              }
+            ]
+          },
+          "docs": "Changes the CTA status to PAUSED. The CTA must be in LIVE status. Paused CTAs are not available to end users but can be reactivated later."
+        },
+        {
+          "info": {
+            "name": "Schedule CTA",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8081/thunder/ctas/:id/schedule",
+            "headers": [
+              {
+                "name": "x-tenant-id",
+                "value": "tenant1"
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "12345",
+                "type": "path",
+                "description": "Unique identifier of the CTA to schedule"
+              }
+            ]
+          },
+          "docs": "Changes the CTA status to SCHEDULED. The CTA must be in DRAFT status. Scheduled CTAs will become LIVE automatically based on their startTime configuration."
+        },
+        {
+          "info": {
+            "name": "Terminate CTA",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8081/thunder/ctas/:id/terminate",
+            "headers": [
+              {
+                "name": "x-tenant-id",
+                "value": "tenant1"
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "12345",
+                "type": "path",
+                "description": "Unique identifier of the CTA to terminate"
+              }
+            ]
+          },
+          "docs": "Changes the CTA status to TERMINATED. The CTA must be in DRAFT, SCHEDULED, LIVE, or PAUSED status. Terminated CTAs are permanently stopped and cannot be reactivated."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

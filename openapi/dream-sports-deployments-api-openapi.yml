@@ -1,0 +1,290 @@
+openapi: 3.2.0
+info:
+  title: Delivr OTA Server Deployments API
+  description: "Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.) \ndirectly to end users' devices without going through app store review processes.\n\n## Features\n- Deploy over-the-air updates to React Native applications\n- Manage apps, deployments, and releases\n- Gradual rollouts and A/B testing\n- Rollback capabilities\n- Deployment metrics and analytics\n- Multi-platform support\n"
+tags:
+- name: Deployments
+paths:
+  /apps/{appName}/deployments:
+    get:
+      tags:
+      - Deployments
+      summary: List deployments
+      description: Returns all deployments for an app
+      parameters:
+      - $ref: '#/components/parameters/AppName'
+      - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '200':
+          description: List of deployments
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deployments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Deployment'
+    post:
+      tags:
+      - Deployments
+      summary: Create deployment
+      description: Creates a new deployment environment (requires Owner permission)
+      parameters:
+      - $ref: '#/components/parameters/AppName'
+      - $ref: '#/components/parameters/TenantHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                deployment:
+                  type: object
+                  required:
+                  - name
+                  properties:
+                    name:
+                      type: string
+                      example: Staging
+                    key:
+                      type: string
+                      description: Optional custom deployment key
+      responses:
+        '201':
+          description: Deployment created
+          headers:
+            Location:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deployment:
+                    $ref: '#/components/schemas/Deployment'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /apps/{appName}/deployments/{deploymentName}:
+    get:
+      tags:
+      - Deployments
+      summary: Get deployment
+      description: Returns details of a specific deployment
+      parameters:
+      - $ref: '#/components/parameters/AppName'
+      - $ref: '#/components/parameters/DeploymentName'
+      - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '200':
+          description: Deployment details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deployment:
+                    $ref: '#/components/schemas/Deployment'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags:
+      - Deployments
+      summary: Update deployment
+      description: Updates deployment properties (requires Owner permission)
+      parameters:
+      - $ref: '#/components/parameters/AppName'
+      - $ref: '#/components/parameters/DeploymentName'
+      - $ref: '#/components/parameters/TenantHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                deployment:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: New deployment name
+      responses:
+        '200':
+          description: Deployment updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deployment:
+                    $ref: '#/components/schemas/Deployment'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+    delete:
+      tags:
+      - Deployments
+      summary: Delete deployment
+      description: Removes a deployment (requires Owner permission)
+      parameters:
+      - $ref: '#/components/parameters/AppName'
+      - $ref: '#/components/parameters/DeploymentName'
+      - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '204':
+          description: Deployment deleted
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflict - resource already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    PackageInfo:
+      type: object
+      properties:
+        appVersion:
+          type: string
+          description: Semver or semver range
+          example: 1.0.0
+        description:
+          type: string
+          example: Bug fixes and performance improvements
+        isDisabled:
+          type: boolean
+          default: false
+        isMandatory:
+          type: boolean
+          default: false
+          description: Whether update is mandatory
+        rollout:
+          type: integer
+          minimum: 1
+          maximum: 100
+          description: Percentage of users to receive update
+          example: 50
+        label:
+          type: string
+          description: Generated release label
+          example: v23
+    Package:
+      allOf:
+      - $ref: '#/components/schemas/PackageInfo'
+      - type: object
+        properties:
+          blobUrl:
+            type: string
+            format: uri
+            description: URL to download package
+          packageHash:
+            type: string
+            description: SHA256 hash of package
+          size:
+            type: integer
+            format: int64
+            description: Package size in bytes
+          uploadTime:
+            type: integer
+            format: int64
+            description: Upload timestamp
+          releasedBy:
+            type: string
+            description: Email of user who released
+          releaseMethod:
+            type: string
+            enum:
+            - Upload
+            - Promote
+            - Rollback
+          originalLabel:
+            type: string
+            description: Label of promoted/rolled back release
+          originalDeployment:
+            type: string
+            description: Name of source deployment for promotions
+          diffPackageMap:
+            type: object
+            additionalProperties:
+              type: object
+              properties:
+                url:
+                  type: string
+                size:
+                  type: integer
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    Deployment:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          example: Production
+        key:
+          type: string
+          description: Deployment key used by clients
+          example: deployment-key-abc123
+        package:
+          $ref: '#/components/schemas/Package'
+  parameters:
+    AppName:
+      name: appName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Application name (or 'owner:appName' for disambiguation)
+      example: MyApp-iOS
+    DeploymentName:
+      name: deploymentName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Deployment environment name
+      example: Production
+    TenantHeader:
+      name: tenant
+      in: header
+      schema:
+        type: string
+      description: Organization/tenant ID filter
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: AccessKey
+      description: Access key or session token obtained from OAuth authentication

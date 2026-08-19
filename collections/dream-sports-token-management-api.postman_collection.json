@@ -1,0 +1,222 @@
+{
+  "item": [
+    {
+      "id": "94ed4b4b-a9b0-4bc2-a695-ba9f827a97c5",
+      "name": "Token Management",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d8420c0f-3cb8-4eba-825d-89536608a43f",
+          "name": "Get token revocation list",
+          "request": {
+            "name": "Get token revocation list",
+            "description": {
+              "content": "Retrieve the list of revoked tokens for the tenant within a time range.\n\nThis endpoint provides information about tokens that have been revoked\nbetween the specified time range. If no 'from' timestamp is provided,\nit defaults to current time minus access token expiry duration.\n\n**Time Range Logic:**\n- The endpoint automatically calculates the 'to' timestamp as the current time\n- If 'from' is not provided, it defaults to current time minus access token expiry\n- If 'from' is before the allowed range, it gets adjusted to the minimum allowed time\n- If 'from' is in the future, an error is returned\n\n**Response:**\n- Returns a list of revoked token identifiers (strings)\n- Includes the actual time range used for the query\n- Includes the access token expiry duration for reference\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "revocations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<long>",
+                  "description": "Start timestamp (epoch seconds). If not provided, defaults to current time minus access token expiry"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fa47dd1a-9311-4cb7-b42b-db056c74f3a5",
+              "name": "Revocation list retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "revocations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "1640995200"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"revocations\": [\n    \"token123\",\n    \"token456\",\n    \"token789\"\n  ],\n  \"from\": 1640995200,\n  \"to\": 1641081600,\n  \"expiry\": 3600\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "325b2faa-2f0e-4574-8ed5-f4b758a6f466",
+              "name": "Bad Request due to invalid timestamp parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "revocations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "1640995200"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Invalid timestamp\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba494d04-1d39-48a9-ae2e-200a34ea5c02",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "revocations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "1640995200"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2313e72e-db11-4360-b79a-302ebddbcf0b",
+    "name": "Guardian Token Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

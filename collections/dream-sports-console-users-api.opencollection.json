@@ -1,0 +1,197 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Raven Journey Console Users API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "TENANT-ID",
+      "value": "{{TENANT-ID}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Console Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List console users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/console-users",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of users per page (1-100). When omitted along with pageToken, all users are returned."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Cursor token returned as nextPageToken from a previous response. Omit for the first page."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Repeat this param to pass multiple ids. Example: ?id=id1&id=id2"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Repeat this param to pass multiple emails. Example: ?email=a@x.com&email=b@y.com"
+              }
+            ]
+          },
+          "docs": "Returns console users with cursor-based pagination (Firebase native).\nUse pageToken from the previous response's nextPageToken to fetch the next page.\nWhen neither pageSize nor pageToken is provided (and no id/email filters),\nall users for the tenant are returned in a single response.\nWhen id/email filters are provided, all matching users are returned in a single response\nwith recordCount (filter sets are bounded).\nRepeated query params are supported:\n- id={id1}&id={id2}\n- email={email1}&email={"
+        },
+        {
+          "info": {
+            "name": "Create console user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/console-users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create console user"
+        },
+        {
+          "info": {
+            "name": "Get console user by uid",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/console-users/uid/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get console user by uid"
+        },
+        {
+          "info": {
+            "name": "Update console user by uid",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://localhost:8080/v1/console-users/uid/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Profile fields only (displayName, photoUrl, etc.). To change project IDs, use the admin PATCH endpoint."
+        },
+        {
+          "info": {
+            "name": "Delete console user by uid",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/v1/console-users/uid/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete console user by uid"
+        },
+        {
+          "info": {
+            "name": "Get console user by email",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/console-users/email/:email",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "path",
+                "description": "URL-encoded email value (for example khagesh.kumar%40dream11.com)"
+              }
+            ]
+          },
+          "docs": "Get console user by email"
+        },
+        {
+          "info": {
+            "name": "Update console user by email",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://localhost:8080/v1/console-users/email/:email",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "path",
+                "description": "URL-encoded email value (for example khagesh.kumar%40dream11.com)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Profile fields only. To change project IDs, use the admin PATCH endpoint."
+        },
+        {
+          "info": {
+            "name": "Delete console user by email",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/v1/console-users/email/:email",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "path",
+                "description": "URL-encoded email value (for example khagesh.kumar%40dream11.com)"
+              }
+            ]
+          },
+          "docs": "Delete console user by email"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,28 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dream Sports Openapi API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Openapi",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /openapi",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8081/openapi"
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,65 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Raven Journey Journey Test API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "TENANT-ID",
+      "value": "{{TENANT-ID}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Journey Test",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Test Journey",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/thunder/ctas/test/create",
+            "headers": [
+              {
+                "name": "USER-ID",
+                "value": "admin"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a test journey for specific users. If previousCtaId is provided, the old test journey is deleted first."
+        },
+        {
+          "info": {
+            "name": "Remove Test Journey",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/thunder/ctas/test/:ctaId",
+            "params": [
+              {
+                "name": "ctaId",
+                "value": "12345",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a test journey by its ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

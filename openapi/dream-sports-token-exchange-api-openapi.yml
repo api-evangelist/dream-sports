@@ -1,0 +1,118 @@
+openapi: 3.2.0
+info:
+  title: Guardian Token Exchange API
+  version: 1.0.0
+tags:
+- name: Token Exchange
+paths:
+  /v1/code-token-exchange:
+    post:
+      tags:
+      - Token Exchange
+      summary: Exchange authorization code for tokens
+      description: 'Exchange an authorization code for access and refresh tokens.
+
+
+        This endpoint is used in the OAuth 2.0 authorization code flow to
+
+        exchange the authorization code received from the authorization endpoint
+
+        for access and refresh tokens.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TenantIdHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V1CodeTokenExchangeRequestBody'
+      responses:
+        '200':
+          description: Token exchange successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '400':
+          description: Bad Request due to missing parameters or invalid data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - Invalid client credentials or code
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
+    V1CodeTokenExchangeRequestBody:
+      type: object
+      description: Request body for exchanging authorization code for tokens
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          description: Authorization code received from authorization endpoint
+          example: auth_code_abc123
+          minLength: 1
+      example:
+        code: auth_code_abc123
+    TokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: accesstoken
+          description: Short lived Bearer JWT token to access APIs.
+        refreshToken:
+          type: string
+          example: refreshToken
+          description: Long Lived token used to refresh access token.
+        idToken:
+          type: string
+          example: idToken
+          description: OpenID Connect ID token
+        tokenType:
+          type: string
+          example: Bearer
+          description: type of token. Only supports Bearer for now.
+        expiresIn:
+          type: integer
+          example: 3600
+          description: expiry of the access token in seconds
+        isNewUser:
+          type: boolean
+          description: Indicates if the user is new
+          example: false
+  parameters:
+    TenantIdHeader:
+      name: tenant-id
+      in: header
+      description: tenant-id of the client integrating with guardian
+      required: true
+      schema:
+        type: string

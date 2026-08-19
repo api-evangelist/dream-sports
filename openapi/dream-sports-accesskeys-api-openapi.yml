@@ -1,0 +1,83 @@
+openapi: 3.2.0
+info:
+  title: DOTA Access Keys API
+  version: 1.0.0
+  description: API documentation for DOTA backend acquisition, management and authentication endpoints.
+servers:
+- url: http://localhost:3000
+  description: Local server
+security:
+- BearerAuth: []
+tags:
+- name: AccessKeys
+paths:
+  /accessKeys:
+    get:
+      summary: List all access keys for the user
+      responses:
+        '200':
+          description: List of access keys
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessKeys:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AccessKey'
+      tags:
+      - AccessKeys
+    post:
+      summary: Create a new access key
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                ttl:
+                  type: integer
+      responses:
+        '201':
+          description: Created access key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessKey:
+                    $ref: '#/components/schemas/AccessKey'
+      tags:
+      - AccessKeys
+components:
+  schemas:
+    AccessKey:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        friendlyName:
+          type: string
+        description:
+          type: string
+        createdBy:
+          type: string
+        createdTime:
+          type: integer
+        expires:
+          type: integer
+        scope:
+          type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

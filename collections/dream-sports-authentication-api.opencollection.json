@@ -1,0 +1,156 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Delivr OTA Server Authentication API"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Display login page",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/auth/login",
+            "params": [
+              {
+                "name": "hostname",
+                "value": "",
+                "type": "query",
+                "description": "Server hostname for callback"
+              }
+            ]
+          },
+          "docs": "Shows OAuth provider selection for login"
+        },
+        {
+          "info": {
+            "name": "Display registration page",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/auth/register",
+            "params": [
+              {
+                "name": "hostname",
+                "value": "",
+                "type": "query",
+                "description": "Server hostname for callback"
+              }
+            ]
+          },
+          "docs": "Shows OAuth provider selection for account registration"
+        },
+        {
+          "info": {
+            "name": "Link additional OAuth provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/auth/link",
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Current access token"
+              }
+            ]
+          },
+          "docs": "Shows OAuth provider selection to link additional authentication providers"
+        },
+        {
+          "info": {
+            "name": "Initiate OAuth login",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/auth/login/:provider",
+            "params": [
+              {
+                "name": "provider",
+                "value": "",
+                "type": "path",
+                "description": "OAuth provider name"
+              }
+            ]
+          },
+          "docs": "Redirects to OAuth provider for authentication"
+        },
+        {
+          "info": {
+            "name": "Initiate OAuth registration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/auth/register/:provider",
+            "params": [
+              {
+                "name": "provider",
+                "value": "",
+                "type": "path",
+                "description": "OAuth provider name"
+              }
+            ]
+          },
+          "docs": "Redirects to OAuth provider to create a new account"
+        },
+        {
+          "info": {
+            "name": "Link OAuth provider to account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/auth/link/:provider",
+            "params": [
+              {
+                "name": "provider",
+                "value": "",
+                "type": "path",
+                "description": "OAuth provider name"
+              }
+            ]
+          },
+          "docs": "Links an additional OAuth provider to existing account"
+        },
+        {
+          "info": {
+            "name": "OAuth callback endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/auth/callback/:provider",
+            "params": [
+              {
+                "name": "provider",
+                "value": "",
+                "type": "path",
+                "description": "OAuth provider name"
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "query",
+                "description": "OAuth authorization code"
+              }
+            ]
+          },
+          "docs": "Handles OAuth provider callback after authentication"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

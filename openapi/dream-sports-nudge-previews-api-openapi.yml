@@ -1,0 +1,104 @@
+openapi: 3.2.0
+info:
+  description: Thunder Admin - Management endpoints
+  title: Thunder Admin Nudge Previews API
+  version: 1.0.0
+servers:
+- url: http://localhost:8081
+  description: Thunder Admin Server (Management endpoints)
+tags:
+- name: Nudge Previews
+  description: APIs for managing Nudge Previews. Nudge Previews are used to preview nudge templates before they are used in CTAs. The preview includes the nudge template and TTL (time-to-live) configuration.
+paths:
+  /thunder/nudge/preview:
+    get:
+      summary: Get Nudge Preview
+      description: Retrieves a Nudge Preview by its ID. Returns the preview template and TTL configuration.
+      operationId: getNudgePreview
+      tags:
+      - Nudge Previews
+      parameters:
+      - description: Unique identifier of the Nudge Preview
+        example: preview_001
+        name: id
+        required: true
+        schema:
+          type: string
+        in: query
+      - description: Tenant identifier
+        example: default
+        name: x-tenant-id
+        required: false
+        in: header
+        schema:
+          type: string
+          default: default
+      responses:
+        '200':
+          description: Nudge Preview retrieved successfully
+          content:
+            application/json:
+              examples:
+                Nudge Preview Response:
+                  summary: Nudge Preview with template and TTL
+                  value:
+                    success: true
+                    data:
+                      id: preview_001
+                      template: '{"type":"BottomSheet"}'
+                      ttl: 9999999
+                    statusCode: 200
+              schema:
+                $ref: '#/components/schemas/NudgePreview'
+        '404':
+          description: Nudge Preview not found
+    post:
+      summary: Create or Update Nudge Preview
+      description: Creates a new Nudge Preview or updates an existing one if it already exists. Nudge Previews are used to preview nudge templates before they are used in CTAs. The preview includes the nudge template and TTL (time-to-live) configuration.
+      operationId: createOrUpdateNudgePreview
+      tags:
+      - Nudge Previews
+      parameters:
+      - description: Tenant identifier
+        example: default
+        name: x-tenant-id
+        required: false
+        in: header
+        schema:
+          type: string
+          default: default
+      requestBody:
+        description: Nudge Preview definition with id, template, and TTL
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NudgePreview'
+        required: true
+      responses:
+        '200':
+          description: Nudge Preview created or updated successfully
+          content:
+            application/json:
+              examples:
+                Success Response:
+                  summary: Nudge Preview created/updated
+                  value:
+                    success: true
+                    data: null
+                    statusCode: 200
+        '400':
+          description: Invalid request data or validation failed
+components:
+  schemas:
+    NudgePreview:
+      type: object
+      properties:
+        id:
+          type: string
+        template:
+          type: string
+        tenantId:
+          type: string
+        ttl:
+          type: integer
+          format: int32

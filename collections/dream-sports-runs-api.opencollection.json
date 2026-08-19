@@ -1,0 +1,295 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Checkmate Test Management Runs API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "user_session",
+      "value": "{{user_session}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Runs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all runs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/runs",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "textSearch",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "runStatus",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of test runs for a project"
+        },
+        {
+          "info": {
+            "name": "Create a test run",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:3000/api/v1/run/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new test run with selected tests"
+        },
+        {
+          "info": {
+            "name": "Update a run",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/v1/run/edit",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update run name or add/remove tests"
+        },
+        {
+          "info": {
+            "name": "Delete a run",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:3000/api/v1/run/delete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete a test run by ID"
+        },
+        {
+          "info": {
+            "name": "Get run details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/run/detail",
+            "params": [
+              {
+                "name": "runId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about a specific run"
+        },
+        {
+          "info": {
+            "name": "Get run tests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/run/tests",
+            "params": [
+              {
+                "name": "runId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "textSearch",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by test status"
+              }
+            ]
+          },
+          "docs": "Retrieve all tests in a run with their status"
+        },
+        {
+          "info": {
+            "name": "Get run state details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/run/state-detail",
+            "params": [
+              {
+                "name": "runId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get aggregated status counts for a run"
+        },
+        {
+          "info": {
+            "name": "Update test status in run",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/v1/run/update-test-status",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the execution status of tests in a run"
+        },
+        {
+          "info": {
+            "name": "Lock/unlock a run",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/v1/run/lock",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Lock or unlock a test run"
+        },
+        {
+          "info": {
+            "name": "Reset run status",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/v1/run/reset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reset all Passed tests to Retest status"
+        },
+        {
+          "info": {
+            "name": "Remove tests from run",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/v1/run/remove-tests",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove specific tests from a run"
+        },
+        {
+          "info": {
+            "name": "Get test status in run",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/run/test-status",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "runId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "testId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get the current status of a test in a run"
+        },
+        {
+          "info": {
+            "name": "Get test status history in run",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/run/test-status-history",
+            "params": [
+              {
+                "name": "runId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "testId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get the status change history of a test within a run"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

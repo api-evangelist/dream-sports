@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Guardian Token Exchange API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Token Exchange",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Exchange authorization code for tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/code-token-exchange",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Exchange an authorization code for access and refresh tokens.\n\nThis endpoint is used in the OAuth 2.0 authorization code flow to\nexchange the authorization code received from the authorization endpoint\nfor access and refresh tokens.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

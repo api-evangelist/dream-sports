@@ -1,0 +1,116 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Raven Journey Journey Lifecycle API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "TENANT-ID",
+      "value": "{{TENANT-ID}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Journey Lifecycle",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Activate Journey",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/thunder/ctas/:id/live",
+            "params": [
+              {
+                "name": "id",
+                "value": "12345",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Changes the journey status to LIVE. The journey must be in SCHEDULED or PAUSED status."
+        },
+        {
+          "info": {
+            "name": "Pause Journey",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/thunder/ctas/:id/pause",
+            "params": [
+              {
+                "name": "id",
+                "value": "12345",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Changes the journey status to PAUSED. The journey must be in LIVE status."
+        },
+        {
+          "info": {
+            "name": "Schedule Journey",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/thunder/ctas/:id/schedule",
+            "params": [
+              {
+                "name": "id",
+                "value": "12345",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Changes the journey status to SCHEDULED. The journey must be in DRAFT status."
+        },
+        {
+          "info": {
+            "name": "Conclude Journey",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/thunder/ctas/:id/conclude",
+            "params": [
+              {
+                "name": "id",
+                "value": "12345",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Changes the journey status to CONCLUDED. The journey must be in LIVE or PAUSED status."
+        },
+        {
+          "info": {
+            "name": "Terminate Journey",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/thunder/ctas/:id/terminate",
+            "params": [
+              {
+                "name": "id",
+                "value": "12345",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Changes the journey status to TERMINATED. The journey must be in DRAFT, SCHEDULED, LIVE, or PAUSED status."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

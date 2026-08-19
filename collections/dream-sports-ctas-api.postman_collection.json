@@ -1,0 +1,783 @@
+{
+  "item": [
+    {
+      "id": "e8d61b7b-dcea-4940-af0a-16fa568d835a",
+      "name": "CTAs",
+      "description": {
+        "content": "APIs for managing Call-to-Actions (CTAs). Includes CRUD operations for creating, updating, retrieving, and listing CTAs with filtering and pagination support.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1cd60b87-559a-4336-8fc9-7d592ccc9b01",
+          "name": "List CTAs",
+          "request": {
+            "name": "List CTAs",
+            "description": {
+              "content": "Retrieves a paginated list of CTAs matching the specified filters. All query parameters are optional. Results are sorted by creation date (newest first). Use pagination parameters to control page size and navigation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "ctas"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "behaviourTag",
+                  "value": "<string>",
+                  "description": "Filter by behaviour tag name"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdBy",
+                  "value": "<string>",
+                  "description": "Filter by creator user ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Filter by exact CTA name (case-sensitive)"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "0",
+                  "description": "Page number (0-indexed). Default is 0."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "10",
+                  "description": "Number of items per page. Default is 10, maximum is 100."
+                },
+                {
+                  "disabled": false,
+                  "key": "searchName",
+                  "value": "<string>",
+                  "description": "Search CTA names (partial match)"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by CTA status"
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>",
+                  "description": "Comma-separated list of tags to filter by"
+                },
+                {
+                  "disabled": false,
+                  "key": "teams",
+                  "value": "<string>",
+                  "description": "Comma-separated list of teams to filter by"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Tenant identifier",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "274ef476-8672-446f-9442-46d7bb610057",
+              "name": "List of CTAs retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "behaviourTag",
+                      "value": "new_user"
+                    },
+                    {
+                      "key": "createdBy",
+                      "value": "admin@example.com"
+                    },
+                    {
+                      "key": "name",
+                      "value": "Welcome Bonus"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "10"
+                    },
+                    {
+                      "key": "searchName",
+                      "value": "welcome"
+                    },
+                    {
+                      "key": "status",
+                      "value": "LIVE"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "promotion,signup"
+                    },
+                    {
+                      "key": "teams",
+                      "value": "marketing,growth"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"ctas\": [\n      {\n        \"id\": 12345,\n        \"name\": \"Welcome Bonus\",\n        \"tags\": [\n          \"growth\",\n          \"notifications\"\n        ],\n        \"team\": \"marketing\",\n        \"ctaStatus\": \"LIVE\",\n        \"createdBy\": \"admin@example.com\",\n        \"createdAt\": 1609459200000\n      }\n    ],\n    \"totalCount\": 1,\n    \"pageNumber\": 0,\n    \"pageSize\": 10\n  },\n  \"statusCode\": 200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d2d7d7c1-e286-481d-9ca2-d31f3a5a70f2",
+          "name": "Create CTA",
+          "request": {
+            "name": "Create CTA",
+            "description": {
+              "content": "Creates a new Call-to-Action (CTA) with the provided details. The CTA will be created in DRAFT status and can be activated later using status update endpoints. Includes rule configuration, state machine setup, actions, and frequency controls. IMPORTANT: rule.cohortEligibility must use includes: [\"all\"] and excludes: [] since user-cohorts system is not currently supported.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "ctas"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) User ID of the person creating the CTA",
+                "key": "user",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Tenant identifier for multi-tenancy support",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"team\": \"<string>\",\n  \"rule\": {\n    \"cohortEligibility\": {\n      \"includes\": [\n        \"<string>\"\n      ],\n      \"excludes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"stateToAction\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"stateTransition\": {\n      \"key_0\": {\n        \"key_0\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"key_1\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      \"key_1\": {\n        \"key_0\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    },\n    \"priority\": \"<integer>\",\n    \"stateMachineTTL\": \"<long>\",\n    \"actions\": [\n      {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      },\n      {\n        \"key_0\": {}\n      }\n    ],\n    \"frequency\": {\n      \"session\": {\n        \"limit\": \"<integer>\"\n      },\n      \"window\": {\n        \"limit\": \"<integer>\",\n        \"unit\": \"<string>\",\n        \"value\": \"<integer>\"\n      },\n      \"lifeSpan\": {\n        \"limit\": \"<integer>\"\n      }\n    },\n    \"resetStates\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"resetCTAonFirstLaunch\": \"<boolean>\",\n    \"contextParams\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"groupByConfig\": {\n      \"maxActiveStateMachineCount\": \"<integer>\",\n      \"groupByKeys\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"startTime\": \"<long>\",\n  \"endTime\": \"<long>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7084c338-b5c3-4dfa-90bc-11cb97a30707",
+              "name": "CTA created successfully. Returns the new CTA ID.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) User ID of the person creating the CTA",
+                    "key": "user",
+                    "value": "admin@example.com"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier for multi-tenancy support",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"team\": \"<string>\",\n  \"rule\": {\n    \"cohortEligibility\": {\n      \"includes\": [\n        \"<string>\"\n      ],\n      \"excludes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"stateToAction\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"stateTransition\": {\n      \"key_0\": {\n        \"key_0\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"key_1\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"key_2\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      \"key_1\": {\n        \"key_0\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"key_1\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"key_2\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    },\n    \"priority\": \"<integer>\",\n    \"stateMachineTTL\": \"<long>\",\n    \"actions\": [\n      {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {},\n        \"key_3\": {}\n      },\n      {\n        \"key_0\": {},\n        \"key_1\": {}\n      }\n    ],\n    \"frequency\": {\n      \"session\": {\n        \"limit\": \"<integer>\"\n      },\n      \"window\": {\n        \"limit\": \"<integer>\",\n        \"unit\": \"<string>\",\n        \"value\": \"<integer>\"\n      },\n      \"lifeSpan\": {\n        \"limit\": \"<integer>\"\n      }\n    },\n    \"resetStates\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"resetCTAonFirstLaunch\": \"<boolean>\",\n    \"contextParams\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"groupByConfig\": {\n      \"maxActiveStateMachineCount\": \"<integer>\",\n      \"groupByKeys\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"startTime\": \"<long>\",\n  \"endTime\": \"<long>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": 12345,\n  \"statusCode\": 200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9ca301a-ca54-4b06-9ea1-885a7a304381",
+              "name": "Invalid request data or validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) User ID of the person creating the CTA",
+                    "key": "user",
+                    "value": "admin@example.com"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier for multi-tenancy support",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"team\": \"<string>\",\n  \"rule\": {\n    \"cohortEligibility\": {\n      \"includes\": [\n        \"<string>\"\n      ],\n      \"excludes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"stateToAction\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"stateTransition\": {\n      \"key_0\": {\n        \"key_0\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"key_1\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"key_2\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      \"key_1\": {\n        \"key_0\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"key_1\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"key_2\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    },\n    \"priority\": \"<integer>\",\n    \"stateMachineTTL\": \"<long>\",\n    \"actions\": [\n      {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {},\n        \"key_3\": {}\n      },\n      {\n        \"key_0\": {},\n        \"key_1\": {}\n      }\n    ],\n    \"frequency\": {\n      \"session\": {\n        \"limit\": \"<integer>\"\n      },\n      \"window\": {\n        \"limit\": \"<integer>\",\n        \"unit\": \"<string>\",\n        \"value\": \"<integer>\"\n      },\n      \"lifeSpan\": {\n        \"limit\": \"<integer>\"\n      }\n    },\n    \"resetStates\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"resetCTAonFirstLaunch\": \"<boolean>\",\n    \"contextParams\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"groupByConfig\": {\n      \"maxActiveStateMachineCount\": \"<integer>\",\n      \"groupByKeys\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"startTime\": \"<long>\",\n  \"endTime\": \"<long>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aad19c22-8374-4707-8bf5-70b45f2e944e",
+          "name": "Update CTA",
+          "request": {
+            "name": "Update CTA",
+            "description": {
+              "content": "Updates an existing CTA. Only the fields provided in the request will be updated. Can update rule configuration, state machine setup, actions, and frequency controls. IMPORTANT: If updating rule.cohortEligibility, must use includes: [\"all\"] and excludes: [] since user-cohorts system is not currently supported.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "ctas",
+                ":ctaId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "ctaId",
+                  "description": "(Required) Unique identifier of the CTA to update"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) User ID of the person updating the CTA",
+                "key": "user",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Tenant identifier",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"team\": \"<string>\",\n  \"startTime\": \"<long>\",\n  \"endTime\": \"<long>\",\n  \"rule\": {\n    \"cohortEligibility\": {\n      \"includes\": [\n        \"<string>\"\n      ],\n      \"excludes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"stateToAction\": {\n      \"key_0\": \"<string>\"\n    },\n    \"stateTransition\": {\n      \"key_0\": {\n        \"key_0\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      \"key_1\": {\n        \"key_0\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    },\n    \"priority\": \"<integer>\",\n    \"stateMachineTTL\": \"<long>\",\n    \"actions\": [\n      {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {},\n        \"key_3\": {}\n      },\n      {\n        \"key_0\": {},\n        \"key_1\": {}\n      }\n    ],\n    \"frequency\": {\n      \"session\": {\n        \"limit\": \"<integer>\"\n      },\n      \"window\": {\n        \"limit\": \"<integer>\",\n        \"unit\": \"<string>\",\n        \"value\": \"<integer>\"\n      },\n      \"lifeSpan\": {\n        \"limit\": \"<integer>\"\n      }\n    },\n    \"resetStates\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"resetCTAonFirstLaunch\": \"<boolean>\",\n    \"contextParams\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"groupByConfig\": {\n      \"maxActiveStateMachineCount\": \"<integer>\",\n      \"groupByKeys\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0b5a4dd8-6df6-4b26-9c79-d2b92951e618",
+              "name": "CTA updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":ctaId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ctaId",
+                      "description": "(Required) Unique identifier of the CTA to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) User ID of the person updating the CTA",
+                    "key": "user",
+                    "value": "admin@example.com"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"team\": \"<string>\",\n  \"startTime\": \"<long>\",\n  \"endTime\": \"<long>\",\n  \"rule\": {\n    \"cohortEligibility\": {\n      \"includes\": [\n        \"<string>\"\n      ],\n      \"excludes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"stateToAction\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"stateTransition\": {\n      \"key_0\": {\n        \"key_0\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"key_1\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      \"key_1\": {\n        \"key_0\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      \"key_2\": {\n        \"key_0\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    },\n    \"priority\": \"<integer>\",\n    \"stateMachineTTL\": \"<long>\",\n    \"actions\": [\n      {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      },\n      {\n        \"key_0\": {},\n        \"key_1\": {}\n      }\n    ],\n    \"frequency\": {\n      \"session\": {\n        \"limit\": \"<integer>\"\n      },\n      \"window\": {\n        \"limit\": \"<integer>\",\n        \"unit\": \"<string>\",\n        \"value\": \"<integer>\"\n      },\n      \"lifeSpan\": {\n        \"limit\": \"<integer>\"\n      }\n    },\n    \"resetStates\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"resetCTAonFirstLaunch\": \"<boolean>\",\n    \"contextParams\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"groupByConfig\": {\n      \"maxActiveStateMachineCount\": \"<integer>\",\n      \"groupByKeys\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": null,\n  \"statusCode\": 200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a45d071-1977-458b-bd85-6c5fd0542ee9",
+              "name": "Invalid request data or validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":ctaId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ctaId",
+                      "description": "(Required) Unique identifier of the CTA to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) User ID of the person updating the CTA",
+                    "key": "user",
+                    "value": "admin@example.com"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"team\": \"<string>\",\n  \"startTime\": \"<long>\",\n  \"endTime\": \"<long>\",\n  \"rule\": {\n    \"cohortEligibility\": {\n      \"includes\": [\n        \"<string>\"\n      ],\n      \"excludes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"stateToAction\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"stateTransition\": {\n      \"key_0\": {\n        \"key_0\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"key_1\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      \"key_1\": {\n        \"key_0\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      \"key_2\": {\n        \"key_0\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    },\n    \"priority\": \"<integer>\",\n    \"stateMachineTTL\": \"<long>\",\n    \"actions\": [\n      {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      },\n      {\n        \"key_0\": {},\n        \"key_1\": {}\n      }\n    ],\n    \"frequency\": {\n      \"session\": {\n        \"limit\": \"<integer>\"\n      },\n      \"window\": {\n        \"limit\": \"<integer>\",\n        \"unit\": \"<string>\",\n        \"value\": \"<integer>\"\n      },\n      \"lifeSpan\": {\n        \"limit\": \"<integer>\"\n      }\n    },\n    \"resetStates\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"resetCTAonFirstLaunch\": \"<boolean>\",\n    \"contextParams\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"groupByConfig\": {\n      \"maxActiveStateMachineCount\": \"<integer>\",\n      \"groupByKeys\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1b93b24e-2bb6-45b7-951c-f85ea3022b22",
+              "name": "CTA not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":ctaId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ctaId",
+                      "description": "(Required) Unique identifier of the CTA to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) User ID of the person updating the CTA",
+                    "key": "user",
+                    "value": "admin@example.com"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"team\": \"<string>\",\n  \"startTime\": \"<long>\",\n  \"endTime\": \"<long>\",\n  \"rule\": {\n    \"cohortEligibility\": {\n      \"includes\": [\n        \"<string>\"\n      ],\n      \"excludes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"stateToAction\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"stateTransition\": {\n      \"key_0\": {\n        \"key_0\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"key_1\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      \"key_1\": {\n        \"key_0\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      \"key_2\": {\n        \"key_0\": [\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"transitionTo\": \"<string>\",\n            \"filters\": {\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"filter\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    },\n    \"priority\": \"<integer>\",\n    \"stateMachineTTL\": \"<long>\",\n    \"actions\": [\n      {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      },\n      {\n        \"key_0\": {},\n        \"key_1\": {}\n      }\n    ],\n    \"frequency\": {\n      \"session\": {\n        \"limit\": \"<integer>\"\n      },\n      \"window\": {\n        \"limit\": \"<integer>\",\n        \"unit\": \"<string>\",\n        \"value\": \"<integer>\"\n      },\n      \"lifeSpan\": {\n        \"limit\": \"<integer>\"\n      }\n    },\n    \"resetStates\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"resetCTAonFirstLaunch\": \"<boolean>\",\n    \"contextParams\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"groupByConfig\": {\n      \"maxActiveStateMachineCount\": \"<integer>\",\n      \"groupByKeys\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ba7dc0fb-fcc8-4a3b-bc0d-e74966ba87b8",
+          "name": "Get CTA by ID",
+          "request": {
+            "name": "Get CTA by ID",
+            "description": {
+              "content": "Retrieves a specific CTA by its unique identifier. Returns the complete CTA object including all metadata, rules, status, and configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "ctas",
+                ":ctaId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "ctaId",
+                  "description": "(Required) Unique identifier of the CTA"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Tenant identifier",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3ed0332e-8337-4ba7-88a9-d450322b3067",
+              "name": "CTA retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":ctaId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ctaId",
+                      "description": "(Required) Unique identifier of the CTA"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": 12345,\n    \"name\": \"Welcome Bonus\",\n    \"description\": \"Bottom sheet to prompt enabling notifications when lineups are out\",\n    \"tags\": [\n      \"growth\",\n      \"notifications\"\n    ],\n    \"team\": \"marketing\",\n    \"ctaStatus\": \"LIVE\",\n    \"startTime\": null,\n    \"endTime\": null,\n    \"createdAt\": 1609459200000,\n    \"createdBy\": \"admin@example.com\",\n    \"lastUpdatedAt\": 1609459200000,\n    \"lastUpdatedBy\": \"admin@example.com\",\n    \"tenantId\": \"tenant1\",\n    \"behaviourTags\": []\n  },\n  \"statusCode\": 200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec3adec5-cdd1-4f62-8166-b010d8816a02",
+              "name": "CTA not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":ctaId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ctaId",
+                      "description": "(Required) Unique identifier of the CTA"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8081",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d6ed7297-7244-489e-8f39-ae71415e9ee5",
+    "name": "Thunder Admin CT As API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Thunder Admin - Management endpoints",
+      "type": "text/plain"
+    }
+  }
+}

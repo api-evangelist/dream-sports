@@ -1,0 +1,329 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Raven Journey Client SDK API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "TENANT-ID",
+      "value": "{{TENANT-ID}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Client SDK",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Nudge Preview (SDK)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/sdk/nudge/preview/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "5",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves a nudge preview by its ID via path parameter. Used by the client SDK to fetch nudge templates.\nRoute rename: `/cta/nudge/preview/{id}` is renamed to `/sdk/nudge/preview/{id}`.\n"
+        },
+        {
+          "info": {
+            "name": "Get Active Journeys for User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/sdk/journeys/active",
+            "headers": [
+              {
+                "name": "user-id",
+                "value": "135162489"
+              },
+              {
+                "name": "platform",
+                "value": "android-mobile"
+              },
+              {
+                "name": "framework",
+                "value": "react-native"
+              },
+              {
+                "name": "sdk-version",
+                "value": "1.5.0"
+              },
+              {
+                "name": "package",
+                "value": "com.dream11.app"
+              },
+              {
+                "name": "app-version",
+                "value": "25.2.0"
+              },
+              {
+                "name": "app-build",
+                "value": "250200123"
+              },
+              {
+                "name": "os",
+                "value": "android"
+              },
+              {
+                "name": "os-version",
+                "value": "14"
+              },
+              {
+                "name": "os-api-level",
+                "value": "34"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns active journeys and behaviour tags for a user.\nRoute rename: `/cta/active/state-machines/` is renamed to `/sdk/journeys/active`.\nSDK metadata headers are part of the contract and are marked required here.\nNote: server-side enforcement for these metadata headers is not implemented yet.\n"
+        },
+        {
+          "info": {
+            "name": "Sync Journey State Delta",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/sdk/journeys/sync",
+            "headers": [
+              {
+                "name": "user-id",
+                "value": "135162489"
+              },
+              {
+                "name": "platform",
+                "value": "android-mobile"
+              },
+              {
+                "name": "framework",
+                "value": "react-native"
+              },
+              {
+                "name": "sdk-version",
+                "value": "1.5.0"
+              },
+              {
+                "name": "package",
+                "value": "com.dream11.app"
+              },
+              {
+                "name": "app-version",
+                "value": "25.2.0"
+              },
+              {
+                "name": "app-build",
+                "value": "250200123"
+              },
+              {
+                "name": "os",
+                "value": "android"
+              },
+              {
+                "name": "os-version",
+                "value": "14"
+              },
+              {
+                "name": "os-api-level",
+                "value": "34"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Saves user's state machine snapshot delta.\nRoute rename: `/cta/state-machines/snapshot/delta/` is renamed to `/sdk/journeys/sync`.\nSDK metadata headers are part of the contract and are marked required here.\nNote: server-side enforcement for these metadata headers is not implemented yet.\n"
+        },
+        {
+          "info": {
+            "name": "SDK User Identify",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/sdk/user/identify",
+            "headers": [
+              {
+                "name": "user-id",
+                "value": "135162489"
+              },
+              {
+                "name": "platform",
+                "value": "android-mobile"
+              },
+              {
+                "name": "framework",
+                "value": "react-native"
+              },
+              {
+                "name": "sdk-version",
+                "value": "1.5.0"
+              },
+              {
+                "name": "package",
+                "value": "com.dream11.app"
+              },
+              {
+                "name": "app-version",
+                "value": "25.2.0"
+              },
+              {
+                "name": "app-build",
+                "value": "250200123"
+              },
+              {
+                "name": "os",
+                "value": "android"
+              },
+              {
+                "name": "os-version",
+                "value": "14"
+              },
+              {
+                "name": "os-api-level",
+                "value": "34"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or updates user profile details from SDK identity flow.\nRoute rename chain: `/user-profile/sdk/login` -> `/sdk/login` -> `/sdk/user/identify`.\nSDK metadata headers are part of the contract and are marked required here.\nNote: server-side enforcement for these metadata headers is not implemented yet.\n"
+        },
+        {
+          "info": {
+            "name": "SDK Token Registration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/sdk/device-token/register",
+            "headers": [
+              {
+                "name": "user-id",
+                "value": "135162489"
+              },
+              {
+                "name": "platform",
+                "value": "android-mobile"
+              },
+              {
+                "name": "framework",
+                "value": "react-native"
+              },
+              {
+                "name": "sdk-version",
+                "value": "1.5.0"
+              },
+              {
+                "name": "package",
+                "value": "com.dream11.app"
+              },
+              {
+                "name": "app-version",
+                "value": "25.2.0"
+              },
+              {
+                "name": "app-build",
+                "value": "250200123"
+              },
+              {
+                "name": "os",
+                "value": "android"
+              },
+              {
+                "name": "os-version",
+                "value": "14"
+              },
+              {
+                "name": "os-api-level",
+                "value": "34"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Registers or updates an SDK device push token for a user.\nRoute rename chain: `/user-profile/sdk/register/token` -> `/sdk/register/token` -> `/sdk/device-token/register`.\nSDK metadata headers are part of the contract and are marked required here.\nNote: server-side enforcement for these metadata headers is not implemented yet.\n"
+        },
+        {
+          "info": {
+            "name": "SDK Preferences Upsert",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/sdk/user/preferences",
+            "headers": [
+              {
+                "name": "user-id",
+                "value": "135162489"
+              },
+              {
+                "name": "platform",
+                "value": "android-mobile"
+              },
+              {
+                "name": "framework",
+                "value": "react-native"
+              },
+              {
+                "name": "sdk-version",
+                "value": "1.5.0"
+              },
+              {
+                "name": "package",
+                "value": "com.dream11.app"
+              },
+              {
+                "name": "app-version",
+                "value": "25.2.0"
+              },
+              {
+                "name": "app-build",
+                "value": "250200123"
+              },
+              {
+                "name": "os",
+                "value": "android"
+              },
+              {
+                "name": "os-version",
+                "value": "14"
+              },
+              {
+                "name": "os-api-level",
+                "value": "34"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upserts user notification preferences from SDK.\nRoute rename chain: `/user-profile/sdk/preferences` -> `/sdk/preferences` -> `/sdk/user/preferences`.\nSDK metadata headers are part of the contract and are marked required here.\nNote: server-side enforcement for these metadata headers is not implemented yet.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

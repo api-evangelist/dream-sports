@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Guardian OIDC Discovery API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OIDC Discovery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get OpenID Connect Discovery Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/.well-known/openid-configuration",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns the OpenID Connect discovery configuration for the tenant.\n\nThis endpoint provides metadata about the OpenID Connect implementation,\nincluding supported endpoints, grant types, response types, scopes, and claims.\n\nThe configuration follows the OpenID Connect Discovery 1.0 specification\n(https://openid.net/specs/openid-connect-discovery-1_0.html).\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

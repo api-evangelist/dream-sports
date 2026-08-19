@@ -1,0 +1,154 @@
+openapi: 3.2.0
+info:
+  title: Raven Journey Journey Test API
+  description: 'Journey module APIs for Journey management, behaviour tags, events, and SDK operations.
+
+
+    ## Authentication
+
+    TENANT-ID and PROJECT-ID headers are required on all endpoints (auth routes use TENANT-ID only) via the global `TenantIdHeader` security scheme.
+
+    The `/healthcheck` endpoint is exempted. Some endpoints also require `USER-ID`.
+
+
+    ## Timestamps
+
+    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).
+
+    '
+  version: 1.0.0
+  contact:
+    name: Raven Team
+servers:
+- url: http://localhost:8080
+  description: Local development server
+security:
+- TenantIdHeader: []
+tags:
+- name: Journey Test
+  description: Test journey operations — create and remove test journeys for validating behaviour before going live
+paths:
+  /thunder/ctas/test/create:
+    post:
+      tags:
+      - Journey Test
+      summary: Create Test Journey
+      description: Creates a test journey for specific users. If previousCtaId is provided, the old test journey is deleted first.
+      operationId: createTestJourney
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestJourneyRequest'
+            example:
+              rule:
+                cohortEligibility:
+                  includes:
+                  - all
+                  excludes: []
+              previousCtaId: null
+              expiresInMinutes: 30
+              userIds:
+              - 123456
+              - 789012
+      responses:
+        '201':
+          description: Test journey created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request body or validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /thunder/ctas/test/{ctaId}:
+    delete:
+      tags:
+      - Journey Test
+      summary: Remove Test Journey
+      description: Deletes a test journey by its ID.
+      operationId: removeTestJourney
+      parameters:
+      - name: ctaId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 12345
+      responses:
+        '200':
+          description: Test journey removed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Test journey not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        statusCode:
+          type: integer
+    TestJourneyRequest:
+      type: object
+      description: Request to create a test journey for validating journey behaviour before going live
+      properties:
+        userIds:
+          type: array
+          items:
+            type: string
+          description: List of user IDs to test the journey with
+  parameters:
+    UserId:
+      name: USER-ID
+      in: header
+      required: true
+      schema:
+        type: string
+      example: admin
+  securitySchemes:
+    TenantIdHeader:
+      type: apiKey
+      in: header
+      name: TENANT-ID

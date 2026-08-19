@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Guardian Guest Authentication API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Guest Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Login Guest User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/guest/login",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initializes a guest session using a shared secret key encrypted identifier(encryption is optional). Uses AES (Advanced Encryption Standard) algorithm for encryption and decryption of user identifier.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,102 @@
+{
+  "item": [
+    {
+      "id": "8bae51bb-8b87-4e7d-93c6-ecee041e750f",
+      "name": "Openapi.{type}",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b4a365fa-ad65-44f4-8eeb-7806f04e1a51",
+          "name": "/openapi.{{type}}",
+          "request": {
+            "name": "/openapi.{{type}}",
+            "description": {},
+            "url": {
+              "path": [
+                "openapi.{{type}}"
+              ],
+              "host": [
+                "{{openapi.type-Url}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ab328cc1-3a87-4895-b1ea-2e364a747564",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openapi.{{type}}"
+                  ],
+                  "host": [
+                    "{{openapi.type-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8081",
+      "key": "baseUrl"
+    },
+    {
+      "type": "string",
+      "value": "http://localhost:8081",
+      "key": "openapi.type-Url"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) ",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "type"
+    }
+  ],
+  "info": {
+    "_postman_id": "a75a7ed5-631b-459d-9f07-2da324503ee9",
+    "name": "Dream Sports Openapi.{type} Openapi.{type} API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Operations tagged Openapi.{type} across 2 of this provider's published API definitions: dream-sports-thunder-admin-openapi.yml, dream-sports-thunder-api-openapi.yml. Each path carries the servers of the definition it was published in.",
+      "type": "text/plain"
+    }
+  }
+}

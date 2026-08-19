@@ -1,0 +1,212 @@
+{
+  "item": [
+    {
+      "id": "0b718f53-11c9-4555-9b57-fe35f941ee81",
+      "name": "AccessKeys",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "292355a2-efb2-4d03-89f1-23d4dc84d2ee",
+          "name": "List all access keys for the user",
+          "request": {
+            "name": "List all access keys for the user",
+            "description": {},
+            "url": {
+              "path": [
+                "accessKeys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "98cd8c7f-dab3-4341-bcd2-49bb8a550396",
+              "name": "List of access keys",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accessKeys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accessKeys\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"friendlyName\": \"string\",\n      \"description\": \"string\",\n      \"createdBy\": \"string\",\n      \"createdTime\": 3603,\n      \"expires\": 4236,\n      \"scope\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"friendlyName\": \"string\",\n      \"description\": \"string\",\n      \"createdBy\": \"string\",\n      \"createdTime\": 1469,\n      \"expires\": 5042,\n      \"scope\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7b9b8888-9d32-4537-8810-0973ced2b952",
+          "name": "Create a new access key",
+          "request": {
+            "name": "Create a new access key",
+            "description": {},
+            "url": {
+              "path": [
+                "accessKeys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"ttl\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e7f5eeeb-0720-454e-a70a-6fa03fea41c4",
+              "name": "Created access key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accessKeys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"ttl\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accessKey\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"friendlyName\": \"string\",\n    \"description\": \"string\",\n    \"createdBy\": \"string\",\n    \"createdTime\": 6625,\n    \"expires\": 7186,\n    \"scope\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:3000",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "98f028bb-e2a1-4efe-ac60-0f819f16e0cd",
+    "name": "DOTA Access Keys API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API documentation for DOTA backend acquisition, management and authentication endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,593 @@
+openapi: 3.2.0
+info:
+  title: Raven Journey Client SDK API
+  description: 'Journey module APIs for Journey management, behaviour tags, events, and SDK operations.
+
+
+    ## Authentication
+
+    TENANT-ID and PROJECT-ID headers are required on all endpoints (auth routes use TENANT-ID only) via the global `TenantIdHeader` security scheme.
+
+    The `/healthcheck` endpoint is exempted. Some endpoints also require `USER-ID`.
+
+
+    ## Timestamps
+
+    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).
+
+    '
+  version: 1.0.0
+  contact:
+    name: Raven Team
+servers:
+- url: http://localhost:8080
+  description: Local development server
+security:
+- TenantIdHeader: []
+tags:
+- name: Client SDK
+  description: Client SDK operations — endpoints consumed by the SDK for active journeys and state machine snapshots
+paths:
+  /sdk/nudge/preview/{id}:
+    get:
+      tags:
+      - Client SDK
+      summary: Get Nudge Preview (SDK)
+      description: 'Retrieves a nudge preview by its ID via path parameter. Used by the client SDK to fetch nudge templates.
+
+        Route rename: `/cta/nudge/preview/{id}` is renamed to `/sdk/nudge/preview/{id}`.
+
+        '
+      operationId: getNudgePreviewSdk
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '5'
+      responses:
+        '200':
+          description: Nudge preview retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Nudge preview not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Project not authorised for this resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /sdk/journeys/active:
+    post:
+      tags:
+      - Client SDK
+      summary: Get Active Journeys for User
+      description: 'Returns active journeys and behaviour tags for a user.
+
+        Route rename: `/cta/active/state-machines/` is renamed to `/sdk/journeys/active`.
+
+        SDK metadata headers are part of the contract and are marked required here.
+
+        Note: server-side enforcement for these metadata headers is not implemented yet.
+
+        '
+      operationId: getActiveJourneysSdk
+      parameters:
+      - $ref: '#/components/parameters/SdkUserId'
+      - $ref: '#/components/parameters/SdkPlatform'
+      - $ref: '#/components/parameters/SdkFramework'
+      - $ref: '#/components/parameters/SdkVersion'
+      - $ref: '#/components/parameters/SdkPackage'
+      - $ref: '#/components/parameters/SdkAppVersion'
+      - $ref: '#/components/parameters/SdkAppBuild'
+      - $ref: '#/components/parameters/SdkOs'
+      - $ref: '#/components/parameters/SdkOsVersion'
+      - $ref: '#/components/parameters/SdkOsApiLevel'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JourneySnapshotRequest'
+            example:
+              ctas: []
+              behaviourTags: []
+      responses:
+        '200':
+          description: Active journeys retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request body or missing userId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /sdk/journeys/sync:
+    post:
+      tags:
+      - Client SDK
+      summary: Sync Journey State Delta
+      description: 'Saves user''s state machine snapshot delta.
+
+        Route rename: `/cta/state-machines/snapshot/delta/` is renamed to `/sdk/journeys/sync`.
+
+        SDK metadata headers are part of the contract and are marked required here.
+
+        Note: server-side enforcement for these metadata headers is not implemented yet.
+
+        '
+      operationId: syncJourneyState
+      parameters:
+      - $ref: '#/components/parameters/SdkUserId'
+      - $ref: '#/components/parameters/SdkPlatform'
+      - $ref: '#/components/parameters/SdkFramework'
+      - $ref: '#/components/parameters/SdkVersion'
+      - $ref: '#/components/parameters/SdkPackage'
+      - $ref: '#/components/parameters/SdkAppVersion'
+      - $ref: '#/components/parameters/SdkAppBuild'
+      - $ref: '#/components/parameters/SdkOs'
+      - $ref: '#/components/parameters/SdkOsVersion'
+      - $ref: '#/components/parameters/SdkOsApiLevel'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JourneySnapshotRequest'
+            example:
+              ctas:
+              - ctaId: '12345'
+                activeStateMachines: {}
+                resetAt: []
+                actionDoneAt: []
+              behaviourTags: []
+      responses:
+        '200':
+          description: Snapshot saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request body or missing userId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /sdk/user/identify:
+    post:
+      tags:
+      - Client SDK
+      summary: SDK User Identify
+      description: 'Creates or updates user profile details from SDK identity flow.
+
+        Route rename chain: `/user-profile/sdk/login` -> `/sdk/login` -> `/sdk/user/identify`.
+
+        SDK metadata headers are part of the contract and are marked required here.
+
+        Note: server-side enforcement for these metadata headers is not implemented yet.
+
+        '
+      operationId: sdkUserIdentify
+      parameters:
+      - $ref: '#/components/parameters/SdkUserId'
+      - $ref: '#/components/parameters/SdkPlatform'
+      - $ref: '#/components/parameters/SdkFramework'
+      - $ref: '#/components/parameters/SdkVersion'
+      - $ref: '#/components/parameters/SdkPackage'
+      - $ref: '#/components/parameters/SdkAppVersion'
+      - $ref: '#/components/parameters/SdkAppBuild'
+      - $ref: '#/components/parameters/SdkOs'
+      - $ref: '#/components/parameters/SdkOsVersion'
+      - $ref: '#/components/parameters/SdkOsApiLevel'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SdkUserProfileLoginRequest'
+            example:
+              userId: '135162489'
+              firstName: Khagesh
+              lastName: Kumar
+              email: khagesh.kumar@example.com
+              phone: '+919999999999'
+              city: Mumbai
+              country: India
+              language: en
+              timezone: Asia/Kolkata
+              custom:
+                acquisitionSource: app
+      responses:
+        '204':
+          description: User profile upserted successfully
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /sdk/device-token/register:
+    post:
+      tags:
+      - Client SDK
+      summary: SDK Token Registration
+      description: 'Registers or updates an SDK device push token for a user.
+
+        Route rename chain: `/user-profile/sdk/register/token` -> `/sdk/register/token` -> `/sdk/device-token/register`.
+
+        SDK metadata headers are part of the contract and are marked required here.
+
+        Note: server-side enforcement for these metadata headers is not implemented yet.
+
+        '
+      operationId: sdkDeviceTokenRegister
+      parameters:
+      - $ref: '#/components/parameters/SdkUserId'
+      - $ref: '#/components/parameters/SdkPlatform'
+      - $ref: '#/components/parameters/SdkFramework'
+      - $ref: '#/components/parameters/SdkVersion'
+      - $ref: '#/components/parameters/SdkPackage'
+      - $ref: '#/components/parameters/SdkAppVersion'
+      - $ref: '#/components/parameters/SdkAppBuild'
+      - $ref: '#/components/parameters/SdkOs'
+      - $ref: '#/components/parameters/SdkOsVersion'
+      - $ref: '#/components/parameters/SdkOsApiLevel'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SdkTokenRegisterRequest'
+            example:
+              userId: '135162489'
+              token: fcm_token_ABC123
+              deviceId: device_001
+              tokenType: FCM
+              os: android
+              osVersion: '14'
+              appPackageName: com.dream11.app
+              appVersion: 25.2.0.v1
+      responses:
+        '204':
+          description: Token registered successfully
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /sdk/user/preferences:
+    put:
+      tags:
+      - Client SDK
+      summary: SDK Preferences Upsert
+      description: 'Upserts user notification preferences from SDK.
+
+        Route rename chain: `/user-profile/sdk/preferences` -> `/sdk/preferences` -> `/sdk/user/preferences`.
+
+        SDK metadata headers are part of the contract and are marked required here.
+
+        Note: server-side enforcement for these metadata headers is not implemented yet.
+
+        '
+      operationId: sdkUserPreferencesUpsert
+      parameters:
+      - $ref: '#/components/parameters/SdkUserId'
+      - $ref: '#/components/parameters/SdkPlatform'
+      - $ref: '#/components/parameters/SdkFramework'
+      - $ref: '#/components/parameters/SdkVersion'
+      - $ref: '#/components/parameters/SdkPackage'
+      - $ref: '#/components/parameters/SdkAppVersion'
+      - $ref: '#/components/parameters/SdkAppBuild'
+      - $ref: '#/components/parameters/SdkOs'
+      - $ref: '#/components/parameters/SdkOsVersion'
+      - $ref: '#/components/parameters/SdkOsApiLevel'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SdkUpsertPreferencesRequest'
+            example:
+              userId: '135162489'
+              items:
+              - channel: push
+                subcategory: contest
+                value: true
+      responses:
+        '200':
+          description: Preferences updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SdkUpsertPreferencesApiResponse'
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    PreferenceItem:
+      type: object
+      required:
+      - channel
+      - subcategory
+      - value
+      properties:
+        channel:
+          type: string
+        subcategory:
+          type: string
+        value:
+          type: boolean
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        statusCode:
+          type: integer
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
+    SdkTokenRegisterRequest:
+      type: object
+      required:
+      - userId
+      - token
+      - deviceId
+      - tokenType
+      properties:
+        userId:
+          type: string
+        token:
+          type: string
+        deviceId:
+          type: string
+        tokenType:
+          type: string
+          enum:
+          - FCM
+          - APNS
+        os:
+          type: string
+        osVersion:
+          type: string
+        appPackageName:
+          type: string
+        appVersion:
+          type: string
+    SdkUserProfileLoginRequest:
+      type: object
+      required:
+      - userId
+      properties:
+        userId:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        birthdate:
+          type: string
+        gender:
+          type: string
+        city:
+          type: string
+        locality:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+        language:
+          type: string
+        timezone:
+          type: string
+        custom:
+          type: object
+          additionalProperties: true
+    SdkUpsertPreferencesResponse:
+      type: object
+      properties:
+        updated:
+          type: integer
+        preferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreferenceItem'
+    SdkUpsertPreferencesRequest:
+      type: object
+      required:
+      - userId
+      - items
+      properties:
+        userId:
+          type: string
+        items:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/PreferenceItem'
+    JourneySnapshotRequest:
+      type: object
+      properties:
+        ctas:
+          type: array
+          items:
+            type: object
+        behaviourTags:
+          type: array
+          items:
+            type: object
+    SdkUpsertPreferencesApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/SdkUpsertPreferencesResponse'
+  parameters:
+    SdkPackage:
+      name: package
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^[A-Za-z0-9._-]{3,128}$
+      example: com.dream11.app
+    SdkOsApiLevel:
+      name: os-api-level
+      in: header
+      required: true
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+      example: 34
+    SdkOs:
+      name: os
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+        - android
+        - ios
+        - tvos
+      example: android
+    SdkFramework:
+      name: framework
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+        - native
+        - react-native
+        - flutter
+      example: react-native
+    SdkVersion:
+      name: sdk-version
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^[A-Za-z0-9._-]{1,64}$
+      example: 1.5.0
+    SdkOsVersion:
+      name: os-version
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^[A-Za-z0-9._-]{1,32}$
+      example: '14'
+    SdkAppVersion:
+      name: app-version
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^[A-Za-z0-9._-]{1,64}$
+      description: Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).
+      example: 25.2.0
+    SdkAppBuild:
+      name: app-build
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^[A-Za-z0-9._-]{1,64}$
+      example: 250200123
+    SdkUserId:
+      name: user-id
+      in: header
+      required: true
+      schema:
+        type: integer
+        format: int64
+      example: 135162489
+    SdkPlatform:
+      name: platform
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+        - android-mobile
+        - android-tv
+        - ios
+        - tvos
+      example: android-mobile
+  securitySchemes:
+    TenantIdHeader:
+      type: apiKey
+      in: header
+      name: TENANT-ID

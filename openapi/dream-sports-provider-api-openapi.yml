@@ -1,0 +1,102 @@
+openapi: 3.2.0
+info:
+  title: Guardian integration endpoints Provider API
+  description: Endpoints required to integrate with Guardian.
+  version: 1.0.0
+tags:
+- name: Provider
+paths:
+  /provider:
+    post:
+      tags:
+      - Provider
+      summary: Update identity provider details for a user
+      description: 'API to update provider details of an user
+
+
+        A valid request must have the following fields in the request-
+
+        - userId
+
+        - provider
+
+
+        Provider details are included in the provider object.
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddProviderDetailsRequest'
+        required: true
+      responses:
+        '200':
+          description: Returns user details after registering
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request due to missing parameters or invalid data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+          example: 9999999999
+        email:
+          type: string
+          example: abcdef@gmail.com
+        name:
+          type: string
+          example: John Doe
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+    ProviderData:
+      type: object
+      properties:
+        name:
+          type: string
+          example: google
+        providerUserId:
+          type: string
+          example: '1234'
+        data:
+          type: object
+        credentials:
+          type: object
+    errorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              example: Something went wrong.
+    AddProviderDetailsRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 1234
+        provider:
+          $ref: '#/components/schemas/ProviderData'

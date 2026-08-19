@@ -1,0 +1,310 @@
+openapi: 3.2.0
+info:
+  title: Delivr OTA Server Acquisition API
+  description: "Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.) \ndirectly to end users' devices without going through app store review processes.\n\n## Features\n- Deploy over-the-air updates to React Native applications\n- Manage apps, deployments, and releases\n- Gradual rollouts and A/B testing\n- Rollback capabilities\n- Deployment metrics and analytics\n- Multi-platform support\n"
+tags:
+- name: Acquisition
+paths:
+  /updateCheck:
+    get:
+      tags:
+      - Acquisition
+      summary: Check for updates
+      description: 'Client SDK endpoint to check for available updates.
+
+        This endpoint does not require authentication - it uses deployment keys.
+
+        '
+      security: []
+      parameters:
+      - name: deploymentKey
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Deployment key from app configuration
+      - name: appVersion
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Current app version (semver format)
+        example: 1.0.0
+      - name: packageHash
+        in: query
+        schema:
+          type: string
+        description: Hash of currently installed package
+      - name: label
+        in: query
+        schema:
+          type: string
+        description: Label of currently installed release
+      - name: clientUniqueId
+        in: query
+        schema:
+          type: string
+        description: Unique device/client identifier for rollout targeting
+      - name: isCompanion
+        in: query
+        schema:
+          type: boolean
+        description: Whether this is a companion app request
+      responses:
+        '200':
+          description: Update check response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  updateInfo:
+                    $ref: '#/components/schemas/UpdateCheckResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /v0.1/public/codepush/update_check:
+    get:
+      tags:
+      - Acquisition
+      summary: Check for updates (v0.1 API)
+      description: Legacy API endpoint for update checks with snake_case parameters
+      security: []
+      parameters:
+      - name: deployment_key
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: app_version
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: package_hash
+        in: query
+        schema:
+          type: string
+      - name: label
+        in: query
+        schema:
+          type: string
+      - name: client_unique_id
+        in: query
+        schema:
+          type: string
+      - name: is_companion
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Update check response (snake_case format)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  update_info:
+                    $ref: '#/components/schemas/UpdateCheckResponse'
+  /reportStatus/deploy:
+    post:
+      tags:
+      - Acquisition
+      summary: Report deployment status
+      description: 'Client SDK reports installation success/failure for metrics tracking.
+
+        This endpoint does not require authentication.
+
+        '
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeploymentStatusReport'
+      responses:
+        '200':
+          description: Status recorded
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /v0.1/public/codepush/report_status/deploy:
+    post:
+      tags:
+      - Acquisition
+      summary: Report deployment status (v0.1 API)
+      description: Legacy API endpoint for deployment status reporting
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeploymentStatusReport'
+      responses:
+        '200':
+          description: Status recorded
+  /reportStatus/download:
+    post:
+      tags:
+      - Acquisition
+      summary: Report download
+      description: 'Client SDK reports package download for metrics tracking.
+
+        This endpoint does not require authentication.
+
+        '
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DownloadReport'
+      responses:
+        '200':
+          description: Download recorded
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /v0.1/public/codepush/report_status/download:
+    post:
+      tags:
+      - Acquisition
+      summary: Report download (v0.1 API)
+      description: Legacy API endpoint for download reporting
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DownloadReport'
+      responses:
+        '200':
+          description: Download recorded
+components:
+  schemas:
+    PackageInfo:
+      type: object
+      properties:
+        appVersion:
+          type: string
+          description: Semver or semver range
+          example: 1.0.0
+        description:
+          type: string
+          example: Bug fixes and performance improvements
+        isDisabled:
+          type: boolean
+          default: false
+        isMandatory:
+          type: boolean
+          default: false
+          description: Whether update is mandatory
+        rollout:
+          type: integer
+          minimum: 1
+          maximum: 100
+          description: Percentage of users to receive update
+          example: 50
+        label:
+          type: string
+          description: Generated release label
+          example: v23
+    UpdateCheckResponse:
+      allOf:
+      - $ref: '#/components/schemas/PackageInfo'
+      - type: object
+        required:
+        - isAvailable
+        properties:
+          isAvailable:
+            type: boolean
+            description: Whether an update is available
+          downloadURL:
+            type: string
+            format: uri
+            description: URL to download the update
+          packageSize:
+            type: integer
+            description: Size of update package in bytes
+          shouldRunBinaryVersion:
+            type: boolean
+            description: Whether to revert to binary version
+          updateAppVersion:
+            type: boolean
+            description: Whether app version changed
+          target_binary_range:
+            type: string
+            description: Target binary version range
+    DownloadReport:
+      type: object
+      required:
+      - deploymentKey
+      - label
+      properties:
+        deploymentKey:
+          type: string
+          description: Deployment key (can use snake_case deployment_key)
+        label:
+          type: string
+          description: Release label
+        clientUniqueId:
+          type: string
+          description: Unique device identifier (can use snake_case client_unique_id)
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    DeploymentStatusReport:
+      type: object
+      required:
+      - deploymentKey
+      - appVersion
+      properties:
+        deploymentKey:
+          type: string
+          description: Deployment key (can use snake_case deployment_key)
+        appVersion:
+          type: string
+          description: App version (can use snake_case app_version)
+        clientUniqueId:
+          type: string
+          description: Unique device identifier (can use snake_case client_unique_id)
+        label:
+          type: string
+          description: Release label
+        status:
+          type: string
+          enum:
+          - DeploymentSucceeded
+          - DeploymentFailed
+        previousDeploymentKey:
+          type: string
+          description: Previous deployment key (can use snake_case previous_deployment_key)
+        previousLabelOrAppVersion:
+          type: string
+          description: Previous label or version (can use snake_case previous_label_or_app_version)
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/Error'
+            - type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: AccessKey
+      description: Access key or session token obtained from OAuth authentication

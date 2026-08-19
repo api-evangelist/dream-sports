@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Raven Journey Auth API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "TENANT-ID",
+      "value": "{{TENANT-ID}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Google login",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/auth/google-login",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Login flow (no signInWithIdp):\n1) Verify Google ID token with Google tokeninfo.\n2) Validate issuer/audience/expiry/email_verified.\n   - If auth.googleAllowedAudience is configured, aud must match it.\n3) Resolve existing Firebase user by google sub (provider mapping).\n4) If not found, fallback to email lookup.\n   - If google provider already exists on email match -> fail.\n   - If google provider missing -> link google.com provider with verified sub.\n5) Mint custom token and exchange via signInWit"
+        },
+        {
+          "info": {
+            "name": "Refresh access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/auth/refresh",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Refresh access token"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,33 @@
+openapi: 3.2.0
+info:
+  title: Dream Sports Openapi.{type} Openapi.{type} API
+  version: 1.0.0
+  description: 'Operations tagged Openapi.{type} across 2 of this provider''s published API definitions: dream-sports-thunder-admin-openapi.yml, dream-sports-thunder-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: http://localhost:8081
+  description: Thunder Admin Server (Management endpoints)
+- url: http://localhost:8080
+  description: Thunder API Server (SDK & Debug endpoints)
+tags:
+- name: Openapi.{type}
+paths:
+  /openapi.{type}:
+    servers:
+    - url: http://localhost:8081
+      description: Thunder Admin Server (Management endpoints)
+    get:
+      parameters:
+      - name: type
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: json|yaml
+      responses:
+        '200':
+          description: OK
+      tags:
+      - Openapi.{type}
+x-refined-from:
+- dream-sports-thunder-admin-openapi.yml
+- dream-sports-thunder-api-openapi.yml

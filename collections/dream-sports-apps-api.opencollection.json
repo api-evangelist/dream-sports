@@ -1,0 +1,548 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dream Sports Apps API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Apps",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List apps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/apps",
+            "headers": [
+              {
+                "name": "tenant",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns all apps accessible by the authenticated account"
+        },
+        {
+          "info": {
+            "name": "Create app",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:3000/apps",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new application"
+        },
+        {
+          "info": {
+            "name": "Get app",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/apps/:appName",
+            "headers": [
+              {
+                "name": "tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "appName",
+                "value": "MyApp-iOS",
+                "type": "path",
+                "description": "Application name (or 'owner:appName' for disambiguation)"
+              }
+            ]
+          },
+          "docs": "Returns details of a specific app"
+        },
+        {
+          "info": {
+            "name": "Update app",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://localhost:3000/apps/:appName",
+            "params": [
+              {
+                "name": "appName",
+                "value": "MyApp-iOS",
+                "type": "path",
+                "description": "Application name (or 'owner:appName' for disambiguation)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates app properties (requires Owner permission)"
+        },
+        {
+          "info": {
+            "name": "Delete app",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:3000/apps/:appName",
+            "headers": [
+              {
+                "name": "tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "appName",
+                "value": "MyApp-iOS",
+                "type": "path",
+                "description": "Application name (or 'owner:appName' for disambiguation)"
+              }
+            ]
+          },
+          "docs": "Removes an app and all its deployments (requires Owner permission)"
+        },
+        {
+          "info": {
+            "name": "Transfer app ownership",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:3000/apps/:appName/transfer/:email",
+            "headers": [
+              {
+                "name": "tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "appName",
+                "value": "MyApp-iOS",
+                "type": "path",
+                "description": "Application name (or 'owner:appName' for disambiguation)"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "path",
+                "description": "Email of the new owner"
+              }
+            ]
+          },
+          "docs": "Transfers app ownership to another user (requires Owner permission)"
+        },
+        {
+          "info": {
+            "name": "List collaborators for an app",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/apps/:appName/collaborators",
+            "params": [
+              {
+                "name": "appName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List collaborators for an app"
+        },
+        {
+          "info": {
+            "name": "Add a collaborator",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:3000/apps/:appName/collaborators/:email",
+            "params": [
+              {
+                "name": "appName",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Add a collaborator"
+        },
+        {
+          "info": {
+            "name": "Update collaborator role",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://localhost:3000/apps/:appName/collaborators/:email",
+            "params": [
+              {
+                "name": "appName",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update collaborator role"
+        },
+        {
+          "info": {
+            "name": "Remove a collaborator",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:3000/apps/:appName/collaborators/:email",
+            "params": [
+              {
+                "name": "appName",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Remove a collaborator"
+        },
+        {
+          "info": {
+            "name": "List deployments for an app",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/apps/:appName/deployments",
+            "params": [
+              {
+                "name": "appName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List deployments for an app"
+        },
+        {
+          "info": {
+            "name": "Create a deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:3000/apps/:appName/deployments",
+            "params": [
+              {
+                "name": "appName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a deployment"
+        },
+        {
+          "info": {
+            "name": "Get deployment details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/apps/:appName/deployments/:deploymentName",
+            "params": [
+              {
+                "name": "appName",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "deploymentName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get deployment details"
+        },
+        {
+          "info": {
+            "name": "Update deployment metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://localhost:3000/apps/:appName/deployments/:deploymentName",
+            "params": [
+              {
+                "name": "appName",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "deploymentName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update deployment metadata"
+        },
+        {
+          "info": {
+            "name": "Delete a deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:3000/apps/:appName/deployments/:deploymentName",
+            "params": [
+              {
+                "name": "appName",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "deploymentName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a deployment"
+        },
+        {
+          "info": {
+            "name": "Release a new update",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:3000/apps/:appName/deployments/:deploymentName/release",
+            "params": [
+              {
+                "name": "appName",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "deploymentName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "package",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "packageInfo",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Release a new update"
+        },
+        {
+          "info": {
+            "name": "Patch latest release metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://localhost:3000/apps/:appName/deployments/:deploymentName/release",
+            "params": [
+              {
+                "name": "appName",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "deploymentName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Patch latest release metadata"
+        },
+        {
+          "info": {
+            "name": "Get release history",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/apps/:appName/deployments/:deploymentName/history",
+            "params": [
+              {
+                "name": "appName",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "deploymentName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get release history"
+        },
+        {
+          "info": {
+            "name": "Clear release history",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:3000/apps/:appName/deployments/:deploymentName/history",
+            "params": [
+              {
+                "name": "appName",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "deploymentName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Clear release history"
+        },
+        {
+          "info": {
+            "name": "Get deployment metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/apps/:appName/deployments/:deploymentName/metrics",
+            "params": [
+              {
+                "name": "appName",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "deploymentName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get deployment metrics"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,86 @@
+openapi: 3.2.0
+info:
+  title: Dream Sports Tenants API
+  version: '1.0'
+  description: 'Operations tagged Tenants across 2 of this provider''s published API definitions: dream-sports-delivr-ota-openapi.yml, dream-sports-dota-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: http://localhost:3000
+  description: Local server
+tags:
+- name: Tenants
+paths:
+  /tenants:
+    get:
+      tags:
+      - Tenants
+      summary: List organizations
+      description: Returns all organizations/tenants for the authenticated account
+      responses:
+        '200':
+          description: List of organizations
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  organisations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Organization'
+  /tenants/{tenantId}:
+    delete:
+      tags:
+      - Tenants
+      summary: Remove organization
+      description: Removes an organization/tenant from the account
+      parameters:
+      - name: tenantId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Organization/tenant ID
+      responses:
+        '201':
+          description: Organization deleted
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    Organization:
+      type: object
+      properties:
+        id:
+          type: string
+        displayName:
+          type: string
+        createdBy:
+          type: string
+        createdTime:
+          type: integer
+          format: int64
+        role:
+          type: string
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: AccessKey
+      description: Access key or session token obtained from OAuth authentication
+x-refined-from:
+- dream-sports-delivr-ota-openapi.yml
+- dream-sports-dota-openapi.yml

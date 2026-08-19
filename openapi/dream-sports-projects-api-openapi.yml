@@ -1,0 +1,371 @@
+openapi: 3.2.0
+info:
+  title: Checkmate Test Management Projects API
+  description: 'Comprehensive API documentation for Checkmate - a modern test case management system built with Remix, MySQL, and Drizzle ORM.
+
+
+    ## Features
+
+    - Project and Test Management
+
+    - Test Run Execution
+
+    - Role-Based Access Control (RBAC)
+
+    - Google OAuth Authentication
+
+    - Test Status Tracking and History
+
+
+    ## Authentication
+
+    All endpoints require authentication via session cookies. Users must be logged in through Google OAuth.
+
+
+    ## Authorization
+
+    Access to resources is controlled via Casbin RBAC with three role levels:
+
+    - **Admin**: Full access to all resources
+
+    - **User**: Can create, read, update resources
+
+    - **Reader**: Read-only access
+
+    '
+  version: 1.0.0
+  contact:
+    name: Checkmate API Support
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: http://localhost:3000
+  description: Local development server (default port 3000, configurable via PORT env var)
+- url: https://your-production-domain.com
+  description: Production server (replace with your actual production URL)
+security:
+- cookieAuth: []
+- bearerAuth: []
+tags:
+- name: Projects
+  description: Project management endpoints
+paths:
+  /api/v1/projects:
+    get:
+      tags:
+      - Projects
+      summary: Get all projects
+      description: Retrieve a paginated list of projects for an organization
+      parameters:
+      - name: orgId
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: Organization ID
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+        description: Page number for pagination
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          default: 100
+        description: Number of items per page
+      - name: textSearch
+        in: query
+        schema:
+          type: string
+        description: Text search filter
+      - name: projectDescription
+        in: query
+        schema:
+          type: string
+        description: Filter by project description
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      projects:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Project'
+                      org:
+                        $ref: '#/components/schemas/Organization'
+                  status:
+                    type: integer
+                    example: 200
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/v1/project/create:
+    post:
+      tags:
+      - Projects
+      summary: Create a new project
+      description: Create a new project in an organization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - projectName
+              - orgId
+              properties:
+                projectName:
+                  type: string
+                  minLength: 3
+                  maxLength: 100
+                  description: Project name
+                projectDescription:
+                  type:
+                  - string
+                  - 'null'
+                  description: Project description
+                orgId:
+                  type: integer
+                  description: Organization ID
+      responses:
+        '200':
+          description: Project created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      projectId:
+                        type: integer
+                      message:
+                        type: string
+                  status:
+                    type: integer
+                    example: 200
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/project/edit:
+    put:
+      tags:
+      - Projects
+      summary: Update a project
+      description: Update project details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - projectId
+              - projectName
+              properties:
+                projectId:
+                  type: integer
+                  description: Project ID
+                projectName:
+                  type: string
+                  minLength: 3
+                  maxLength: 100
+                  description: Project name
+                projectDescription:
+                  type:
+                  - string
+                  - 'null'
+                  description: Project description
+      responses:
+        '200':
+          description: Project updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: Bad request
+  /api/v1/project/update-status:
+    put:
+      tags:
+      - Projects
+      summary: Update project status
+      description: Archive or activate a project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - projectId
+              - projectStatus
+              properties:
+                projectId:
+                  type: integer
+                projectStatus:
+                  type: string
+                  enum:
+                  - Active
+                  - Archived
+      responses:
+        '200':
+          description: Project status updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+  /api/v1/project/detail:
+    get:
+      tags:
+      - Projects
+      summary: Get project details
+      description: Retrieve detailed information about a specific project
+      parameters:
+      - name: projectId
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: Project ID
+      responses:
+        '200':
+          description: Project details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Project'
+                  status:
+                    type: integer
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+        status:
+          type: integer
+          description: HTTP status code
+      required:
+      - error
+      - status
+    SuccessResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          description: Response data
+        status:
+          type: integer
+          description: HTTP status code
+          example: 200
+    Organization:
+      type: object
+      properties:
+        orgId:
+          type: integer
+        orgName:
+          type: string
+        createdBy:
+          type: integer
+        createdOn:
+          type: string
+          format: date-time
+    Project:
+      type: object
+      properties:
+        projectId:
+          type: integer
+          description: Unique project identifier
+        projectName:
+          type: string
+          description: Name of the project
+        projectDescription:
+          type:
+          - string
+          - 'null'
+          description: Project description
+        createdOn:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        createdBy:
+          type: string
+          description: User who created the project
+        orgId:
+          type: integer
+          description: Organization ID
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: user_session
+      description: 'Session cookie from Google OAuth authentication.
+
+
+        **How to get:**
+
+        1. Navigate to /login
+
+        2. Authenticate with Google
+
+        3. Cookie is automatically set
+
+
+        **Usage:**
+
+        - Browsers automatically include this cookie
+
+        - cURL: Use `-b cookies.txt` or `-H "Cookie: user_session=value"`
+
+        '
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Token
+      description: 'API token authentication for programmatic access.
+
+
+        **How to get:**
+
+        1. Login via web interface
+
+        2. Call POST /api/v1/token/generate with your userId
+
+        3. Copy the returned token
+
+
+        **Usage:**
+
+        - Include in Authorization header: `Bearer your_token_here`
+
+        - Example: `Authorization: Bearer abc123xyz`
+
+        '

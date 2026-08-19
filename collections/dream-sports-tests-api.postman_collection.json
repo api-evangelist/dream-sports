@@ -1,0 +1,1129 @@
+{
+  "item": [
+    {
+      "id": "de6ff0ac-b8f4-4bc4-99d3-61e3be96a7f9",
+      "name": "Tests",
+      "description": {
+        "content": "Test case management endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c5b7492d-afb2-43d8-8f57-1d694b39a517",
+          "name": "Get all tests",
+          "request": {
+            "name": "Get all tests",
+            "description": {
+              "content": "Retrieve a paginated and filtered list of tests for a project",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "project",
+                "tests"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "projectId",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "100"
+                },
+                {
+                  "disabled": false,
+                  "key": "textSearch",
+                  "value": "<string>",
+                  "description": "Search by title or test ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "priority",
+                  "value": "<string>",
+                  "description": "Filter by priority (comma-separated IDs)"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by automation status (comma-separated IDs)"
+                },
+                {
+                  "disabled": false,
+                  "key": "squad",
+                  "value": "<string>",
+                  "description": "Filter by squad (comma-separated IDs)"
+                },
+                {
+                  "disabled": false,
+                  "key": "label",
+                  "value": "<string>",
+                  "description": "Filter by labels (comma-separated IDs)"
+                },
+                {
+                  "disabled": false,
+                  "key": "platform",
+                  "value": "<string>",
+                  "description": "Filter by platform (comma-separated IDs)"
+                },
+                {
+                  "disabled": false,
+                  "key": "section",
+                  "value": "<string>",
+                  "description": "Filter by section (comma-separated IDs)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "76a86b0a-9865-434e-8e77-6f4635193e2c",
+              "name": "List of tests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "project",
+                    "tests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "projectId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "100"
+                    },
+                    {
+                      "key": "textSearch",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "priority",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "squad",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "label",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "platform",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "section",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "user_session",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"tests\": [\n      {\n        \"testId\": 7308,\n        \"title\": \"strin\",\n        \"description\": null,\n        \"sectionId\": 5254,\n        \"projectId\": 1135,\n        \"squadId\": 1210,\n        \"preConditions\": \"string\",\n        \"steps\": null,\n        \"expectedResult\": null,\n        \"priorityId\": 2900,\n        \"typeId\": null,\n        \"automationStatusId\": 889,\n        \"testCoveredById\": null,\n        \"platformId\": null,\n        \"labelIds\": [\n          6980,\n          500\n        ],\n        \"jiraTicket\": null,\n        \"defects\": \"string\",\n        \"automationId\": \"string\",\n        \"additionalGroups\": null\n      },\n      {\n        \"testId\": 545,\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"sectionId\": null,\n        \"projectId\": 1554,\n        \"squadId\": null,\n        \"preConditions\": \"string\",\n        \"steps\": \"string\",\n        \"expectedResult\": \"string\",\n        \"priorityId\": 4674,\n        \"typeId\": null,\n        \"automationStatusId\": 7112,\n        \"testCoveredById\": 1930,\n        \"platformId\": null,\n        \"labelIds\": [\n          7584,\n          5863\n        ],\n        \"jiraTicket\": \"string\",\n        \"defects\": null,\n        \"automationId\": null,\n        \"additionalGroups\": null\n      }\n    ],\n    \"totalCount\": 6286\n  },\n  \"status\": 1281\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "84d752ab-5b17-4694-88a3-f51904662944",
+          "name": "Create a test case",
+          "request": {
+            "name": "Create a test case",
+            "description": {
+              "content": "Create a new test case in a project",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "test",
+                "create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"projectId\": \"<integer>\",\n  \"priorityId\": \"<integer>\",\n  \"automationStatusId\": \"<integer>\",\n  \"labelIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"sectionId\": \"<integer,null>\",\n  \"new_section\": \"<string,null>\",\n  \"squadId\": \"<integer,null>\",\n  \"new_squad\": \"<string,null>\",\n  \"preConditions\": \"<string,null>\",\n  \"steps\": \"<string,null>\",\n  \"expectedResult\": \"<string,null>\",\n  \"typeId\": \"<integer,null>\",\n  \"testCoveredById\": \"<integer,null>\",\n  \"platformId\": \"<integer,null>\",\n  \"jiraTicket\": \"<string,null>\",\n  \"defects\": \"<string,null>\",\n  \"automationId\": \"<string,null>\",\n  \"additionalGroups\": \"<string,null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "16a2346c-766a-48ce-a143-a929310c3bc9",
+              "name": "Test created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "test",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "user_session",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"projectId\": \"<integer>\",\n  \"priorityId\": \"<integer>\",\n  \"automationStatusId\": \"<integer>\",\n  \"labelIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"sectionId\": \"<integer,null>\",\n  \"new_section\": \"<string,null>\",\n  \"squadId\": \"<integer,null>\",\n  \"new_squad\": \"<string,null>\",\n  \"preConditions\": \"<string,null>\",\n  \"steps\": \"<string,null>\",\n  \"expectedResult\": \"<string,null>\",\n  \"typeId\": \"<integer,null>\",\n  \"testCoveredById\": \"<integer,null>\",\n  \"platformId\": \"<integer,null>\",\n  \"jiraTicket\": \"<string,null>\",\n  \"defects\": \"<string,null>\",\n  \"automationId\": \"<string,null>\",\n  \"additionalGroups\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"testId\": 1937,\n    \"testTitle\": \"string\",\n    \"message\": \"string\"\n  },\n  \"status\": 7792\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7a532ab9-3eaf-4c4c-95ef-3f625dec89b2",
+          "name": "Update a test case",
+          "request": {
+            "name": "Update a test case",
+            "description": {
+              "content": "Update an existing test case",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "test",
+                "update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"testId\": \"<integer>\",\n  \"title\": \"<string>\",\n  \"projectId\": \"<integer>\",\n  \"priorityId\": \"<integer>\",\n  \"automationStatusId\": \"<integer>\",\n  \"labelIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"sectionId\": \"<integer,null>\",\n  \"new_section\": \"<string,null>\",\n  \"squadId\": \"<integer,null>\",\n  \"new_squad\": \"<string,null>\",\n  \"preConditions\": \"<string,null>\",\n  \"steps\": \"<string,null>\",\n  \"expectedResult\": \"<string,null>\",\n  \"typeId\": \"<integer,null>\",\n  \"testCoveredById\": \"<integer,null>\",\n  \"platformId\": \"<integer,null>\",\n  \"jiraTicket\": \"<string,null>\",\n  \"defects\": \"<string,null>\",\n  \"automationId\": \"<string,null>\",\n  \"additionalGroups\": \"<string,null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b9e6f99c-c11f-4f49-a783-9e25b539a086",
+              "name": "Test updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "test",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "user_session",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"testId\": \"<integer>\",\n  \"title\": \"<string>\",\n  \"projectId\": \"<integer>\",\n  \"priorityId\": \"<integer>\",\n  \"automationStatusId\": \"<integer>\",\n  \"labelIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"sectionId\": \"<integer,null>\",\n  \"new_section\": \"<string,null>\",\n  \"squadId\": \"<integer,null>\",\n  \"new_squad\": \"<string,null>\",\n  \"preConditions\": \"<string,null>\",\n  \"steps\": \"<string,null>\",\n  \"expectedResult\": \"<string,null>\",\n  \"typeId\": \"<integer,null>\",\n  \"testCoveredById\": \"<integer,null>\",\n  \"platformId\": \"<integer,null>\",\n  \"jiraTicket\": \"<string,null>\",\n  \"defects\": \"<string,null>\",\n  \"automationId\": \"<string,null>\",\n  \"additionalGroups\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e870cfaa-e9ee-4ba7-a4fe-c46591d5c4af",
+          "name": "Delete a test case",
+          "request": {
+            "name": "Delete a test case",
+            "description": {
+              "content": "Delete a test case by ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "test",
+                "delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"testId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "84c5cf1b-a855-49ed-9a41-cd8cda0e45c9",
+              "name": "Test deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "test",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "user_session",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"testId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"message\": \"string\"\n  },\n  \"status\": 2359\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fc5be999-b32d-402a-a06d-c657cf38e507",
+          "name": "Bulk create tests",
+          "request": {
+            "name": "Bulk create tests",
+            "description": {
+              "content": "Create multiple test cases at once",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "test",
+                "bulk-add"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tests\": [\n    {\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"sectionId\": \"<integer>\",\n      \"priorityId\": \"<integer>\",\n      \"automationStatusId\": \"<integer>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"sectionId\": \"<integer>\",\n      \"priorityId\": \"<integer>\",\n      \"automationStatusId\": \"<integer>\"\n    }\n  ],\n  \"projectId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "39a5ed70-3693-4347-bf5f-b603e9c19be6",
+              "name": "Tests created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "test",
+                    "bulk-add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "user_session",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tests\": [\n    {\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"sectionId\": \"<integer>\",\n      \"priorityId\": \"<integer>\",\n      \"automationStatusId\": \"<integer>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"sectionId\": \"<integer>\",\n      \"priorityId\": \"<integer>\",\n      \"automationStatusId\": \"<integer>\"\n    }\n  ],\n  \"projectId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8b967313-afa7-417f-9271-8c54d86b4270",
+          "name": "Bulk delete tests",
+          "request": {
+            "name": "Bulk delete tests",
+            "description": {
+              "content": "Delete multiple test cases at once",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "test",
+                "bulk-delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"testIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0629d973-6905-497e-ad37-e41e7d21008b",
+              "name": "Tests deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "test",
+                    "bulk-delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "user_session",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"testIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6991a295-ae8e-4743-ba8f-885fd08702d6",
+          "name": "Bulk update tests",
+          "request": {
+            "name": "Bulk update tests",
+            "description": {
+              "content": "Update multiple test cases at once",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "test",
+                "bulk-update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"testIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectId\": \"<integer>\",\n  \"priorityId\": \"<integer,null>\",\n  \"squadId\": \"<integer,null>\",\n  \"automationStatusId\": \"<integer,null>\",\n  \"labelIds\": \"<array,null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fd8fe275-d36a-4947-9919-0d45ee7b0e44",
+              "name": "Tests updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "test",
+                    "bulk-update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "user_session",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"testIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectId\": \"<integer>\",\n  \"priorityId\": \"<integer,null>\",\n  \"squadId\": \"<integer,null>\",\n  \"automationStatusId\": \"<integer,null>\",\n  \"labelIds\": \"<array,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9b6aeb8c-7bcf-4d92-931d-79b04ba53a34",
+          "name": "Get test details",
+          "request": {
+            "name": "Get test details",
+            "description": {
+              "content": "Retrieve detailed information about a specific test",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "test",
+                "details"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "projectId",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "testId",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "df582ec5-709c-4936-b82f-73d2c1a22f4f",
+              "name": "Test details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "test",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "projectId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "testId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "user_session",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"testId\": 361,\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"sectionId\": 8197,\n    \"projectId\": 6266,\n    \"squadId\": 5162,\n    \"preConditions\": \"string\",\n    \"steps\": \"string\",\n    \"expectedResult\": \"string\",\n    \"priorityId\": 151,\n    \"typeId\": null,\n    \"automationStatusId\": 6798,\n    \"testCoveredById\": 4661,\n    \"platformId\": null,\n    \"labelIds\": [\n      4718,\n      7825\n    ],\n    \"jiraTicket\": \"string\",\n    \"defects\": null,\n    \"automationId\": \"string\",\n    \"additionalGroups\": null\n  },\n  \"status\": 2117\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "614f43b3-3401-4a1a-8cf7-54f60263117c",
+          "name": "Get tests count",
+          "request": {
+            "name": "Get tests count",
+            "description": {
+              "content": "Get total count of tests in a project",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "project",
+                "tests-count"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "projectId",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b3555a07-c5b5-4bf7-8a70-60d6cae381e4",
+              "name": "Test count",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "project",
+                    "tests-count"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "projectId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "user_session",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"count\": 5234\n  },\n  \"status\": 5250\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "052bb021-3900-445d-a6fb-b83df29cb947",
+          "name": "Get test status history",
+          "request": {
+            "name": "Get test status history",
+            "description": {
+              "content": "Retrieve the status change history for a test",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "test",
+                "test-status-history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "testId",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "94eb8765-69a4-4cb8-85d2-dcd802f0fff4",
+              "name": "Test status history",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "test",
+                    "test-status-history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "testId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "user_session",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"status\": \"InProgress\",\n      \"changedBy\": \"string\",\n      \"changedOn\": \"1997-04-17T07:27:11.026Z\",\n      \"comment\": \"string\"\n    },\n    {\n      \"status\": \"InProgress\",\n      \"changedBy\": \"string\",\n      \"changedOn\": \"1983-03-19T09:46:06.604Z\",\n      \"comment\": \"string\"\n    }\n  ],\n  \"status\": 9954\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:3000",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "user_session"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "cc3df1a3-8988-40cd-ad73-cdc2c46aab0a",
+    "name": "Checkmate Test Management Tests API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Comprehensive API documentation for Checkmate - a modern test case management system built with Remix, MySQL, and Drizzle ORM.\n\n## Features\n- Project and Test Management\n- Test Run Execution\n- Role-Based Access Control (RBAC)\n- Google OAuth Authentication\n- Test Status Tracking and History\n\n## Authentication\nAll endpoints require authentication via session cookies. Users must be logged in through Google OAuth.\n\n## Authorization\nAccess to resources is controlled via Casbin RBAC with three role levels:\n- **Admin**: Full access to all resources\n- **User**: Can create, read, update resources\n- **Reader**: Read-only access\n\n\nContact Support:\n Name: Checkmate API Support",
+      "type": "text/plain"
+    }
+  }
+}

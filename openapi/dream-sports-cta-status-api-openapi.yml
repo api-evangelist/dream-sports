@@ -1,0 +1,212 @@
+openapi: 3.2.0
+info:
+  description: Thunder Admin - Management endpoints
+  title: Thunder Admin CTA Status API
+  version: 1.0.0
+servers:
+- url: http://localhost:8081
+  description: Thunder Admin Server (Management endpoints)
+tags:
+- name: CTA Status
+  description: 'APIs for managing CTA lifecycle status transitions. CTAs move through states: DRAFT → SCHEDULED → LIVE → PAUSED → CONCLUDED/TERMINATED.'
+paths:
+  /thunder/ctas/{id}/conclude:
+    put:
+      summary: Conclude CTA
+      description: Changes the CTA status to CONCLUDED. The CTA must be in LIVE or PAUSED status. Concluded CTAs have completed their lifecycle and are no longer available to end users.
+      operationId: concludeCTA
+      tags:
+      - CTA Status
+      parameters:
+      - description: Unique identifier of the CTA to conclude
+        example: 12345
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        in: path
+      - description: Tenant identifier
+        example: tenant1
+        name: x-tenant-id
+        required: false
+        in: header
+        schema:
+          type: string
+          default: default
+      responses:
+        '200':
+          description: CTA concluded successfully
+          content:
+            application/json:
+              examples:
+                Success Response:
+                  summary: CTA concluded
+                  value:
+                    success: true
+                    data: null
+                    statusCode: 200
+        '400':
+          description: CTA cannot be concluded from current status. Only LIVE or PAUSED CTAs can be concluded.
+        '404':
+          description: CTA not found
+  /thunder/ctas/{id}/live:
+    put:
+      summary: Activate CTA
+      description: Changes the CTA status to LIVE. The CTA must be in SCHEDULED or PAUSED status. Once LIVE, the CTA will be available to end users through the SDK APIs.
+      operationId: activateCTA
+      tags:
+      - CTA Status
+      parameters:
+      - description: Unique identifier of the CTA to activate
+        example: 12345
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        in: path
+      - description: Tenant identifier
+        example: tenant1
+        name: x-tenant-id
+        required: false
+        in: header
+        schema:
+          type: string
+          default: default
+      responses:
+        '200':
+          description: CTA activated successfully
+          content:
+            application/json:
+              examples:
+                Success Response:
+                  summary: CTA activated
+                  value:
+                    success: true
+                    data: null
+                    statusCode: 200
+        '400':
+          description: CTA cannot be activated from current status. Only SCHEDULED or PAUSED CTAs can be activated.
+        '404':
+          description: CTA not found
+  /thunder/ctas/{id}/pause:
+    put:
+      summary: Pause CTA
+      description: Changes the CTA status to PAUSED. The CTA must be in LIVE status. Paused CTAs are not available to end users but can be reactivated later.
+      operationId: pauseCTA
+      tags:
+      - CTA Status
+      parameters:
+      - description: Unique identifier of the CTA to pause
+        example: 12345
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        in: path
+      - description: Tenant identifier
+        example: tenant1
+        name: x-tenant-id
+        required: false
+        in: header
+        schema:
+          type: string
+          default: default
+      responses:
+        '200':
+          description: CTA paused successfully
+          content:
+            application/json:
+              examples:
+                Success Response:
+                  summary: CTA paused
+                  value:
+                    success: true
+                    data: null
+                    statusCode: 200
+        '400':
+          description: CTA cannot be paused from current status. Only LIVE CTAs can be paused.
+        '404':
+          description: CTA not found
+  /thunder/ctas/{id}/schedule:
+    put:
+      summary: Schedule CTA
+      description: Changes the CTA status to SCHEDULED. The CTA must be in DRAFT status. Scheduled CTAs will become LIVE automatically based on their startTime configuration.
+      operationId: scheduleCTA
+      tags:
+      - CTA Status
+      parameters:
+      - description: Unique identifier of the CTA to schedule
+        example: 12345
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        in: path
+      - description: Tenant identifier
+        example: tenant1
+        name: x-tenant-id
+        required: false
+        in: header
+        schema:
+          type: string
+          default: default
+      responses:
+        '200':
+          description: CTA scheduled successfully
+          content:
+            application/json:
+              examples:
+                Success Response:
+                  summary: CTA scheduled
+                  value:
+                    success: true
+                    data: null
+                    statusCode: 200
+        '400':
+          description: CTA cannot be scheduled from current status. Only DRAFT CTAs can be scheduled.
+        '404':
+          description: CTA not found
+  /thunder/ctas/{id}/terminate:
+    put:
+      summary: Terminate CTA
+      description: Changes the CTA status to TERMINATED. The CTA must be in DRAFT, SCHEDULED, LIVE, or PAUSED status. Terminated CTAs are permanently stopped and cannot be reactivated.
+      operationId: terminateCTA
+      tags:
+      - CTA Status
+      parameters:
+      - description: Unique identifier of the CTA to terminate
+        example: 12345
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        in: path
+      - description: Tenant identifier
+        example: tenant1
+        name: x-tenant-id
+        required: false
+        in: header
+        schema:
+          type: string
+          default: default
+      responses:
+        '200':
+          description: CTA terminated successfully
+          content:
+            application/json:
+              examples:
+                Success Response:
+                  summary: CTA terminated
+                  value:
+                    success: true
+                    data: null
+                    statusCode: 200
+        '400':
+          description: CTA cannot be terminated from current status. Only DRAFT, SCHEDULED, LIVE, or PAUSED CTAs can be terminated.
+        '404':
+          description: CTA not found

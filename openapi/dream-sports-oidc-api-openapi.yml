@@ -1,0 +1,1088 @@
+openapi: 3.2.0
+info:
+  title: Guardian OIDC API
+  version: 1.0.0
+tags:
+- name: OIDC
+paths:
+  /authorize:
+    get:
+      tags:
+      - OIDC
+      summary: OAuth 2.0 Authorization Endpoint
+      description: 'OAuth 2.0 Authorization endpoint that initiates the authorization flow.
+
+
+        This endpoint follows the OAuth 2.0 Authorization Code flow as specified in
+
+        RFC 6749 (https://tools.ietf.org/html/rfc6749) and OpenID Connect Core 1.0
+
+        (https://openid.net/specs/openid-connect-core-1_0.html).
+
+
+        **Flow:**
+
+        1. Client redirects user to this endpoint with authorization parameters
+
+        2. Server validates the request and creates an authorization session
+
+        3. User is redirected to the login page with a login challenge
+
+        4. After authentication, user is redirected back to client with authorization code
+
+
+        **Required Parameters:**
+
+        - `response_type`: Must be "code" for authorization code flow
+
+        - `client_id`: The registered client identifier
+
+        - `scope`: Space-separated list of scopes (must include "openid")
+
+        - `redirect_uri`: The registered redirect URI
+
+
+        **Optional Parameters:**
+
+        - `state`: Opaque value to maintain state between request and callback
+
+        - `nonce`: String value to associate client session with ID token
+
+        - `code_challenge`: PKCE code challenge (RFC 7636)
+
+        - `code_challenge_method`: PKCE code challenge method ("S256" or "plain")
+
+        - `prompt`: Space-separated list of prompts ("login", "consent", "select_account")
+
+        - `login_hint`: Hint about the login identifier
+
+
+        **Security:**
+
+        - All redirect URIs must be pre-registered with the client
+
+        - Scope validation ensures only authorized scopes are requested
+
+        - PKCE support for public clients (RFC 7636)
+
+        - Multi-tenant isolation via tenant-id header
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TenantIdHeader'
+      - name: response_type
+        in: query
+        required: true
+        description: OAuth 2.0 response type
+        schema:
+          type: string
+          enum:
+          - code
+          example: code
+      - name: client_id
+        in: query
+        required: true
+        description: OAuth 2.0 client identifier
+        schema:
+          type: string
+          minLength: 1
+          example: my-client-id
+      - name: scope
+        in: query
+        required: true
+        description: Space-separated list of scopes (must include "openid")
+        schema:
+          type: string
+          pattern: ^.*\bopenid\b.*$
+          example: openid email profile
+      - name: redirect_uri
+        in: query
+        required: true
+        description: Registered redirect URI
+        schema:
+          type: string
+          format: uri
+          example: https://myapp.com/callback
+      - name: state
+        in: query
+        required: false
+        description: Opaque value to maintain state between request and callback
+        schema:
+          type: string
+          example: xyz123
+      - name: nonce
+        in: query
+        required: false
+        description: String value to associate client session with ID token
+        schema:
+          type: string
+          example: abc456
+      - name: code_challenge
+        in: query
+        required: false
+        description: PKCE code challenge (RFC 7636)
+        schema:
+          type: string
+          minLength: 43
+          maxLength: 128
+          example: E9Melhoa2OwvFrEMTJguCHaBkNVHYeP552O7hfQYVWU
+      - name: code_challenge_method
+        in: query
+        required: false
+        description: PKCE code challenge method
+        schema:
+          type: string
+          enum:
+          - S256
+          - plain
+          example: S256
+      - name: prompt
+        in: query
+        required: false
+        description: Space-separated list of prompts
+        schema:
+          type: string
+          enum:
+          - login
+          - consent
+          - select_account
+          example: login
+      - name: login_hint
+        in: query
+        required: false
+        description: Hint about the login identifier
+        schema:
+          type: string
+          example: user@example.com
+      responses:
+        '302':
+          description: Redirect to login page with authorization session
+          headers:
+            Location:
+              description: Redirect URL with login challenge and state
+              schema:
+                type: string
+                example: https://login.example.com?login_challenge=abc123&state=xyz123
+        '400':
+          description: Bad Request - Invalid authorization request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                invalid_client:
+                  summary: Invalid Client ID
+                  value:
+                    error: invalid_request
+                    message: Invalid client_id
+                invalid_redirect_uri:
+                  summary: Invalid Redirect URI
+                  value:
+                    error: invalid_request
+                    message: Invalid redirect_uri
+                missing_openid_scope:
+                  summary: Missing OpenID Scope
+                  value:
+                    error: invalid_scope
+                    message: scope must contain 'openid'
+                unsupported_response_type:
+                  summary: Unsupported Response Type
+                  value:
+                    error: unsupported_response_type
+                    message: Unsupported response_type
+                invalid_pkce:
+                  summary: Invalid PKCE Parameters
+                  value:
+                    error: invalid_request
+                    message: code_challenge and code_challenge_method must be provided together
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /login-accept:
+    post:
+      tags:
+      - OIDC
+      summary: Accept login challenge
+      description: 'API to accept a login challenge and proceed with the OAuth 2.0 authorization flow.
+
+
+        This endpoint is called after the user has been authenticated through the login page.
+
+        It validates the login challenge and either redirects to the consent page (if consent is required)
+
+        or directly to the client''s redirect URI with an authorization code.
+
+
+        **Flow:**
+
+        1. User submits login credentials on the login page
+
+        2. Login page calls this endpoint with the login challenge and refresh token
+
+        3. Server validates the login challenge and refresh token
+
+        4. If consent is required, user is redirected to consent page
+
+        5. If no consent is required, user is redirected to client with authorization code
+
+
+        **Authentication:**
+
+        - Requires a valid refresh token (from request body or cookie)
+
+        - Refresh token must match the user associated with the login challenge
+
+
+        **Response Types:**
+
+        - `302 Found`: Redirect to consent page or client redirect URI
+
+        - `400 Bad Request`: Invalid request parameters
+
+        - `401 Unauthorized`: Invalid login challenge or refresh token
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TenantIdHeader'
+      - name: RT
+        in: cookie
+        required: false
+        description: Refresh token cookie (alternative to request body)
+        schema:
+          type: string
+          example: refresh_token_value
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginAcceptRequestBody'
+        required: true
+      responses:
+        '302':
+          description: Redirect to consent page or client redirect URI
+          headers:
+            Location:
+              description: Redirect URI with consent challenge or authorization code
+              schema:
+                type: string
+                example: https://consent.example.com?consent_challenge=xyz789
+        '400':
+          description: Bad Request due to missing parameters or invalid data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - Invalid login challenge or refresh token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /user-consent:
+    get:
+      tags:
+      - OIDC
+      summary: Get user consent information
+      description: 'API to retrieve user consent information for a specific client during the OAuth 2.0 authorization flow.
+
+
+        This endpoint is used on the consent page to decide on what scopes to ask consent for based on the providers implementation.
+
+
+        **Flow:**
+
+        1. User is redirected to consent page with consent challenge
+
+        2. Consent page calls this endpoint with the consent challenge
+
+        3. Server validates the consent challenge and refresh token
+
+        4. Returns client information and scope details (requested vs already consented)
+
+
+        **Authentication:**
+
+        - Requires a valid refresh token (from cookie or request body)
+
+        - Refresh token must match the user associated with the consent challenge
+
+
+        **Response Information:**
+
+        - Client details (name, URI, logo, etc.)
+
+        - List of scopes being requested by the client
+
+        - List of scopes the user has already consented to
+
+        - User subject (user ID)
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TenantIdHeader'
+      - name: consent_challenge
+        in: query
+        required: true
+        description: The consent challenge identifier from the authorization flow
+        schema:
+          type: string
+          example: consent_challenge_xyz123
+      - name: RT
+        in: cookie
+        required: false
+        description: Refresh token cookie (alternative to request body)
+        schema:
+          type: string
+          example: refresh_token_value
+      responses:
+        '200':
+          description: User consent information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserConsentResponse'
+              example:
+                client:
+                  clientId: my-client-app
+                  clientName: My Application
+                  clientUri: https://myapp.example.com
+                  logoUri: https://myapp.example.com/logo.png
+                  policyUri: https://myapp.example.com/privacy
+                requested_scopes:
+                - openid
+                - email
+                - profile
+                - phone
+                consented_scopes:
+                - openid
+                - email
+                subject: user123
+        '400':
+          description: Bad Request due to missing or invalid consent challenge
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                missing_consent_challenge:
+                  summary: Missing consent challenge
+                  value:
+                    error:
+                      code: invalid_request
+                      message: consent_challenge is required
+        '401':
+          description: Unauthorized - Invalid or mismatched refresh token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                invalid_token:
+                  summary: Invalid refresh token
+                  value:
+                    error:
+                      code: unauthorized
+                      message: Invalid refresh token
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /consent-accept:
+    post:
+      tags:
+      - OIDC
+      summary: Accept consent challenge
+      description: 'API to accept a consent challenge and complete the OAuth 2.0 authorization flow.
+
+
+        This endpoint is called after the user has reviewed and accepted the requested scopes
+
+        on the consent page. It validates the consent challenge and redirects the user to the
+
+        client''s redirect URI with an authorization code.
+
+
+        **Flow:**
+
+        1. User reviews requested scopes on consent page
+
+        2. User accepts/denies scopes and submits the form
+
+        3. Consent page calls this endpoint with consent challenge and selected scopes
+
+        4. Server validates consent challenge and processes scope consent
+
+        5. User is redirected to client with authorization code
+
+
+        **Scope Handling:**
+
+        - User can consent to all or a subset of requested scopes
+
+        - "openid" scope is always required and automatically included
+
+        - Invalid or non-existent scopes are filtered out
+
+        - Duplicate scopes are automatically deduplicated
+
+
+        **Authentication:**
+
+        - Requires a valid refresh token (from request body or cookie)
+
+        - Refresh token must match the user associated with the consent challenge
+
+
+        **Response:**
+
+        - `302 Found`: Redirect to client redirect URI with authorization code
+
+        - `400 Bad Request`: Invalid request parameters or missing openid scope
+
+        - `401 Unauthorized`: Invalid consent challenge or refresh token
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TenantIdHeader'
+      - name: RT
+        in: cookie
+        required: false
+        description: Refresh token cookie (alternative to request body)
+        schema:
+          type: string
+          example: refresh_token_value
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsentAcceptRequestBody'
+        required: true
+      responses:
+        '302':
+          description: Redirect to client redirect URI with authorization code
+          headers:
+            Location:
+              description: Client redirect URI with authorization code and state
+              schema:
+                type: string
+                example: https://client.example.com/callback?code=abc123&state=xyz789
+        '400':
+          description: Bad Request due to missing parameters or invalid data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - Invalid consent challenge or refresh token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /token:
+    post:
+      tags:
+      - OIDC
+      summary: OAuth 2.0 Token Endpoint
+      description: 'OAuth 2.0 Token endpoint for exchanging authorization codes and refresh tokens.
+
+
+        This endpoint follows the OAuth 2.0 Token Exchange flow as specified in
+
+        RFC 6749 (https://tools.ietf.org/html/rfc6749) and OpenID Connect Core 1.0
+
+        (https://openid.net/specs/openid-connect-core-1_0.html).
+
+
+        **Supported Grant Types:**
+
+        - `authorization_code`: Exchange authorization code for access token
+
+        - `refresh_token`: Exchange refresh token for new access token
+
+        - `client_credentials`: Exchange client credentials for access token
+
+
+        **Authentication Methods:**
+
+        - Client Secret Basic: Authorization header with Base64 encoded client_id:client_secret
+
+        - Client Secret Post: client_id and client_secret in request body
+
+
+        **Security:**
+
+        - Authorization codes can only be used once
+
+        - Refresh tokens are rotated on each use
+
+        - PKCE validation for authorization code flow
+
+        - Multi-tenant isolation via tenant-id header
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TenantIdHeader'
+      - name: Authorization
+        in: header
+        required: false
+        description: Client Secret Basic authentication
+        schema:
+          type: string
+          example: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRequestBody'
+        required: true
+      responses:
+        '200':
+          description: Token exchange successful
+          headers:
+            Cache-Control:
+              description: Cache control header
+              schema:
+                type: string
+                example: no-store
+            Pragma:
+              description: Pragma header
+              schema:
+                type: string
+                example: no-cache
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OidcTokenResponse'
+        '400':
+          description: Bad Request due to missing parameters or invalid data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - Invalid client credentials or token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /userinfo:
+    get:
+      tags:
+      - OIDC
+      summary: OpenID Connect UserInfo Endpoint
+      description: 'OpenID Connect UserInfo endpoint for retrieving user claims.
+
+
+        This endpoint follows the OpenID Connect UserInfo specification
+
+        (https://openid.net/specs/openid-connect-core-1_0.html#UserInfo).
+
+
+        **Authentication:**
+
+        - Requires a valid access token in Authorization header
+
+        - Access token must have appropriate scopes for requested claims
+
+
+        **Response Formats:**
+
+        - JSON: Standard JSON response with user claims
+
+        - JWT: Signed JWT containing user claims (if requested)
+
+
+        **Supported Claims:**
+
+        - Standard OpenID Connect claims (sub, name, email, etc.)
+
+        - Custom claims based on consented scopes
+
+        - Claims are filtered based on access token scopes
+
+
+        **Security:**
+
+        - Access token validation and scope checking
+
+        - Multi-tenant isolation via tenant-id header
+
+        - CORS support for cross-origin requests
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TenantIdHeader'
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer access token
+        schema:
+          type: string
+          example: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+      responses:
+        '200':
+          description: UserInfo retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfoResponse'
+            application/jwt:
+              schema:
+                type: string
+                description: Signed JWT containing user claims
+                example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        '401':
+          description: Unauthorized - Invalid or expired access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+      - OIDC
+      summary: OpenID Connect UserInfo Endpoint (POST)
+      description: 'OpenID Connect UserInfo endpoint for retrieving user claims via POST.
+
+
+        This endpoint provides the same functionality as the GET endpoint but allows
+
+        for larger access tokens that might exceed URL length limits.
+
+
+        **Authentication:**
+
+        - Requires a valid access token in Authorization header
+
+        - Access token must have appropriate scopes for requested claims
+
+
+        **Response Formats:**
+
+        - JSON: Standard JSON response with user claims
+
+        - JWT: Signed JWT containing user claims (if requested)
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TenantIdHeader'
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer access token
+        schema:
+          type: string
+          example: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+      responses:
+        '200':
+          description: UserInfo retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfoResponse'
+            application/jwt:
+              schema:
+                type: string
+                description: Signed JWT containing user claims
+                example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        '401':
+          description: Unauthorized - Invalid or expired access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /token/revoke:
+    post:
+      tags:
+      - OIDC
+      summary: Revoke OIDC refresh token
+      description: 'Revoke an OIDC refresh token, making it invalid for future use.
+
+
+        This endpoint allows clients to explicitly revoke oidc refresh tokens when they are
+
+        no longer needed, improving security by reducing the token''s lifetime.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TenantIdHeader'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - token
+              properties:
+                token:
+                  type: string
+                  description: The refresh token to revoke
+                  example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+      responses:
+        '200':
+          description: Token revoked successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Token revoked successfully
+        '400':
+          description: Bad Request due to missing or invalid token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - Invalid token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    UserConsentResponse:
+      type: object
+      description: User consent information for OAuth 2.0 client
+      required:
+      - client
+      - requested_scopes
+      - consented_scopes
+      - subject
+      properties:
+        client:
+          type: object
+          description: Client application information (filtered for security)
+          required:
+          - client_id
+          - client_name
+          properties:
+            clientId:
+              type: string
+              description: Unique identifier for the client application
+              example: my-client-app
+            clientName:
+              type: string
+              description: Human-readable name of the client application
+              example: My Application
+            clientUri:
+              type: string
+              format: uri
+              description: URL of the client application's home page
+              example: https://myapp.example.com
+            logoUri:
+              type: string
+              format: uri
+              description: URL of the client application's logo image
+              example: https://myapp.example.com/logo.png
+            policyUri:
+              type: string
+              format: uri
+              description: URL of the client application's privacy policy
+              example: https://myapp.example.com/privacy
+        requested_scopes:
+          type: array
+          description: List of OAuth 2.0 scopes being requested by the client
+          items:
+            type: string
+          example:
+          - openid
+          - email
+          - profile
+          - phone
+        consented_scopes:
+          type: array
+          description: List of OAuth 2.0 scopes the user has already consented to
+          items:
+            type: string
+          example:
+          - openid
+          - email
+        subject:
+          type: string
+          description: User identifier (subject) associated with the consent
+          example: user123
+      example:
+        client:
+          client_id: my-client-app
+          client_name: My Application
+          client_uri: https://myapp.example.com
+          logo_uri: https://myapp.example.com/logo.png
+          policy_uri: https://myapp.example.com/privacy
+        requested_scopes:
+        - openid
+        - email
+        - profile
+        - phone
+        consented_scopes:
+        - openid
+        - email
+        subject: user123
+    TokenRequestBody:
+      type: object
+      description: Request body for OAuth 2.0 token endpoint
+      required:
+      - grant_type
+      properties:
+        grant_type:
+          type: string
+          description: OAuth 2.0 grant type
+          enum:
+          - authorization_code
+          - refresh_token
+          - client_credentials
+          example: authorization_code
+        code:
+          type: string
+          description: Authorization code (required for authorization_code grant)
+          example: auth_code_abc123
+        refresh_token:
+          type: string
+          description: Refresh token (required for refresh_token grant)
+          example: refresh_token_xyz789
+        redirect_uri:
+          type: string
+          format: uri
+          description: Redirect URI (required for authorization_code grant)
+          example: https://client.example.com/callback
+        client_id:
+          type: string
+          description: Client identifier (required for client_secret_post auth)
+          example: my_client_id
+        client_secret:
+          type: string
+          description: Client secret (required for client_secret_post auth)
+          example: my_client_secret
+        code_verifier:
+          type: string
+          description: PKCE code verifier (required if code_challenge was used)
+          example: code_verifier_abc123
+        scope:
+          type: string
+          description: Space-separated list of scopes
+          example: openid email profile
+      example:
+        grant_type: authorization_code
+        code: auth_code_abc123
+        redirect_uri: https://client.example.com/callback
+        client_id: my_client_id
+        client_secret: my_client_secret
+    OidcTokenResponse:
+      type: object
+      description: OAuth 2.0 token response
+      required:
+      - access_token
+      - token_type
+      - expires_in
+      properties:
+        access_token:
+          type: string
+          description: OAuth 2.0 access token
+          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        token_type:
+          type: string
+          description: Token type
+          enum:
+          - Bearer
+          example: Bearer
+        expires_in:
+          type: integer
+          description: Access token expiration time in seconds
+          example: 3600
+        refresh_token:
+          type: string
+          description: OAuth 2.0 refresh token
+          example: refresh_token_xyz789
+        id_token:
+          type: string
+          description: OpenID Connect ID token
+          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        scope:
+          type: string
+          description: Space-separated list of granted scopes
+          example: openid email profile
+      example:
+        access_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        token_type: Bearer
+        expires_in: 3600
+        refresh_token: refresh_token_xyz789
+        id_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        scope: openid email profile
+    UserInfoResponse:
+      type: object
+      description: OpenID Connect UserInfo response
+      required:
+      - sub
+      properties:
+        sub:
+          type: string
+          description: Subject identifier
+          example: user123
+        name:
+          type: string
+          description: Full name
+          example: John Doe
+        given_name:
+          type: string
+          description: Given name
+          example: John
+        family_name:
+          type: string
+          description: Family name
+          example: Doe
+        email:
+          type: string
+          format: email
+          description: Email address
+          example: john.doe@example.com
+        email_verified:
+          type: boolean
+          description: Whether email is verified
+          example: true
+        phone_number:
+          type: string
+          description: Phone number
+          example: '+1234567890'
+        phone_number_verified:
+          type: boolean
+          description: Whether phone number is verified
+          example: false
+        picture:
+          type: string
+          format: uri
+          description: Profile picture URL
+          example: https://example.com/avatar.jpg
+        locale:
+          type: string
+          description: Locale
+          example: en-US
+        updated_at:
+          type: integer
+          description: Last update timestamp
+          example: 1640995200
+      example:
+        sub: user123
+        name: John Doe
+        given_name: John
+        family_name: Doe
+        email: john.doe@example.com
+        email_verified: true
+        phone_number: '+1234567890'
+        phone_number_verified: false
+        picture: https://example.com/avatar.jpg
+        locale: en-US
+        updated_at: 1640995200
+    ConsentAcceptRequestBody:
+      type: object
+      description: Request body for accepting consent challenge
+      required:
+      - consent_challenge
+      - consented_scopes
+      - refresh_token
+      properties:
+        consent_challenge:
+          type: string
+          description: Consent challenge received from the consent page
+          example: consent_challenge_xyz789
+        consented_scopes:
+          type: array
+          description: List of scopes the user has consented to
+          items:
+            type: string
+          example:
+          - openid
+          - email
+          - profile
+        refresh_token:
+          type: string
+          description: Valid refresh token for the user
+          example: refresh_token_xyz789
+      example:
+        consent_challenge: consent_challenge_xyz789
+        consented_scopes:
+        - openid
+        - email
+        - profile
+        refresh_token: refresh_token_xyz789
+    LoginAcceptRequestBody:
+      type: object
+      description: Request body for accepting login challenge
+      required:
+      - login_challenge
+      - refresh_token
+      properties:
+        login_challenge:
+          type: string
+          description: Login challenge received from the login page
+          example: login_challenge_abc123
+        refresh_token:
+          type: string
+          description: Valid refresh token for the user
+          example: refresh_token_xyz789
+      example:
+        login_challenge: login_challenge_abc123
+        refresh_token: refresh_token_xyz789
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
+  parameters:
+    TenantIdHeader:
+      name: tenant-id
+      in: header
+      description: tenant-id of the client integrating with guardian
+      required: true
+      schema:
+        type: string

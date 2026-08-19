@@ -1,0 +1,614 @@
+openapi: 3.2.0
+info:
+  title: Raven Journey Console Users API
+  description: 'Journey module APIs for Journey management, behaviour tags, events, and SDK operations.
+
+
+    ## Authentication
+
+    TENANT-ID and PROJECT-ID headers are required on all endpoints (auth routes use TENANT-ID only) via the global `TenantIdHeader` security scheme.
+
+    The `/healthcheck` endpoint is exempted. Some endpoints also require `USER-ID`.
+
+
+    ## Timestamps
+
+    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).
+
+    '
+  version: 1.0.0
+  contact:
+    name: Raven Team
+servers:
+- url: http://localhost:8080
+  description: Local development server
+security:
+- TenantIdHeader: []
+tags:
+- name: Console Users
+  description: Console user management via Firebase Admin SDK
+paths:
+  /v1/console-users:
+    get:
+      tags:
+      - Console Users
+      summary: List console users
+      operationId: listConsoleUsers
+      description: 'Returns console users with cursor-based pagination (Firebase native).
+
+        Use pageToken from the previous response''s nextPageToken to fetch the next page.
+
+        When neither pageSize nor pageToken is provided (and no id/email filters),
+
+        all users for the tenant are returned in a single response.
+
+        When id/email filters are provided, all matching users are returned in a single response
+
+        with recordCount (filter sets are bounded).
+
+        Repeated query params are supported:
+
+        - id={id1}&id={id2}
+
+        - email={email1}&email={email2}
+
+        Filter semantics when both id and email are provided: UNION.
+
+        '
+      parameters:
+      - name: pageSize
+        in: query
+        required: false
+        description: Number of users per page (1-100). When omitted along with pageToken, all users are returned.
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+      - name: pageToken
+        in: query
+        required: false
+        description: Cursor token returned as nextPageToken from a previous response. Omit for the first page.
+        schema:
+          type: string
+      - name: id
+        in: query
+        required: false
+        description: 'Repeat this param to pass multiple ids. Example: ?id=id1&id=id2'
+        schema:
+          type: array
+          items:
+            type: string
+          example:
+          - id1
+          - id2
+        style: form
+        explode: true
+      - name: email
+        in: query
+        required: false
+        description: 'Repeat this param to pass multiple emails. Example: ?email=a@x.com&email=b@y.com'
+        schema:
+          type: array
+          items:
+            type: string
+            format: email
+          example:
+          - user1@dream11.com
+          - user2@dream11.com
+        style: form
+        explode: true
+      responses:
+        '200':
+          description: Console users retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsoleUserListApiResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+      - Console Users
+      summary: Create console user
+      operationId: createConsoleUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsoleUserCreateRequest'
+      responses:
+        '201':
+          description: Console user created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsoleUserIdApiResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: User already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v1/console-users/uid/{uid}:
+    get:
+      tags:
+      - Console Users
+      summary: Get console user by uid
+      operationId: getConsoleUserByUid
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Console user retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsoleUserRecordApiResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      tags:
+      - Console Users
+      summary: Update console user by uid
+      description: Profile fields only (displayName, photoUrl, etc.). To change project IDs, use the admin PATCH endpoint.
+      operationId: updateConsoleUserByUid
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsoleUserUpdateRequest'
+      responses:
+        '204':
+          description: Console user updated
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+      - Console Users
+      summary: Delete console user by uid
+      operationId: deleteConsoleUserByUid
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Console user deleted
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v1/console-users/email/{email}:
+    get:
+      tags:
+      - Console Users
+      summary: Get console user by email
+      operationId: getConsoleUserByEmail
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: URL-encoded email value (for example khagesh.kumar%40dream11.com)
+        schema:
+          type: string
+          format: email
+      responses:
+        '200':
+          description: Console user retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsoleUserRecordApiResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      tags:
+      - Console Users
+      summary: Update console user by email
+      description: Profile fields only. To change project IDs, use the admin PATCH endpoint.
+      operationId: updateConsoleUserByEmail
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: URL-encoded email value (for example khagesh.kumar%40dream11.com)
+        schema:
+          type: string
+          format: email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsoleUserUpdateRequest'
+      responses:
+        '204':
+          description: Console user updated
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+      - Console Users
+      summary: Delete console user by email
+      operationId: deleteConsoleUserByEmail
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: URL-encoded email value (for example khagesh.kumar%40dream11.com)
+        schema:
+          type: string
+          format: email
+      responses:
+        '204':
+          description: Console user deleted
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ConsoleUserIdApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/ConsoleUserIdData'
+    ConsoleUserIdData:
+      type: object
+      properties:
+        id:
+          type: string
+    ConsoleUserUpdateRequest:
+      type: object
+      description: Profile fields only (no projectIds). Use admin update to change project IDs.
+      properties:
+        displayName:
+          type: string
+        photoUrl:
+          type: string
+        emailVerified:
+          type: boolean
+        disabled:
+          type: boolean
+    ConsoleUserListData:
+      type: object
+      properties:
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsoleUserRecord'
+        pagination:
+          $ref: '#/components/schemas/ConsoleUserPagination'
+    ConsoleUserRecordApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/ConsoleUserRecord'
+    ConsoleUserCreateRequest:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          format: email
+        displayName:
+          type: string
+        photoUrl:
+          type: string
+        emailVerified:
+          type: boolean
+        disabled:
+          type: boolean
+    ConsoleUserListApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/ConsoleUserListData'
+    ConsoleUserPagination:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+        recordCount:
+          type:
+          - integer
+          - 'null'
+          description: Total matching records. Present only when id/email filters are used.
+        nextPageToken:
+          type:
+          - string
+          - 'null'
+          description: Cursor for fetching the next page. Null when there are no more results.
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
+    ConsoleUserRecord:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        displayName:
+          type: string
+        photoUrl:
+          type: string
+        emailVerified:
+          type: boolean
+        disabled:
+          type: boolean
+        projectIds:
+          type: array
+          items:
+            type: string
+          description: Project IDs from Firebase custom claims (allowedProjectIds). Omitted or empty when none set.
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastLoginAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastRefreshAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+  securitySchemes:
+    TenantIdHeader:
+      type: apiKey
+      in: header
+      name: TENANT-ID

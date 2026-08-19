@@ -1,0 +1,168 @@
+openapi: 3.2.0
+info:
+  title: Delivr OTA Server Authentication API
+  description: "Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.) \ndirectly to end users' devices without going through app store review processes.\n\n## Features\n- Deploy over-the-air updates to React Native applications\n- Manage apps, deployments, and releases\n- Gradual rollouts and A/B testing\n- Rollback capabilities\n- Deployment metrics and analytics\n- Multi-platform support\n"
+tags:
+- name: Authentication
+paths:
+  /auth/login:
+    get:
+      tags:
+      - Authentication
+      summary: Display login page
+      description: Shows OAuth provider selection for login
+      security: []
+      parameters:
+      - name: hostname
+        in: query
+        schema:
+          type: string
+        description: Server hostname for callback
+      responses:
+        '200':
+          description: Login page HTML
+          content:
+            text/html:
+              schema:
+                type: string
+  /auth/register:
+    get:
+      tags:
+      - Authentication
+      summary: Display registration page
+      description: Shows OAuth provider selection for account registration
+      security: []
+      parameters:
+      - name: hostname
+        in: query
+        schema:
+          type: string
+        description: Server hostname for callback
+      responses:
+        '200':
+          description: Registration page HTML
+          content:
+            text/html:
+              schema:
+                type: string
+  /auth/link:
+    get:
+      tags:
+      - Authentication
+      summary: Link additional OAuth provider
+      description: Shows OAuth provider selection to link additional authentication providers
+      security: []
+      parameters:
+      - name: access_token
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Current access token
+      responses:
+        '200':
+          description: Link provider page HTML
+          content:
+            text/html:
+              schema:
+                type: string
+  /auth/login/{provider}:
+    get:
+      tags:
+      - Authentication
+      summary: Initiate OAuth login
+      description: Redirects to OAuth provider for authentication
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/OAuthProvider'
+      responses:
+        '302':
+          description: Redirect to OAuth provider
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /auth/register/{provider}:
+    get:
+      tags:
+      - Authentication
+      summary: Initiate OAuth registration
+      description: Redirects to OAuth provider to create a new account
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/OAuthProvider'
+      responses:
+        '302':
+          description: Redirect to OAuth provider
+        '403':
+          description: Registration is disabled
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /auth/link/{provider}:
+    get:
+      tags:
+      - Authentication
+      summary: Link OAuth provider to account
+      description: Links an additional OAuth provider to existing account
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/OAuthProvider'
+      responses:
+        '302':
+          description: Redirect to OAuth provider
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /auth/callback/{provider}:
+    get:
+      tags:
+      - Authentication
+      summary: OAuth callback endpoint
+      description: Handles OAuth provider callback after authentication
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/OAuthProvider'
+      - name: code
+        in: query
+        schema:
+          type: string
+        description: OAuth authorization code
+      responses:
+        '200':
+          description: Authentication successful, returns access key
+          content:
+            text/html:
+              schema:
+                type: string
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+  responses:
+    TooManyRequests:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    OAuthProvider:
+      name: provider
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - github
+        - microsoft
+        - azure-ad
+        - google
+      description: OAuth provider name
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: AccessKey
+      description: Access key or session token obtained from OAuth authentication

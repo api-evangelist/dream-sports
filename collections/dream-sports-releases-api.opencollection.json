@@ -1,0 +1,236 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Delivr OTA Server Releases API"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Releases",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Release update",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/apps/:appName/deployments/:deploymentName/release",
+            "headers": [
+              {
+                "name": "tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "appName",
+                "value": "MyApp-iOS",
+                "type": "path",
+                "description": "Application name (or 'owner:appName' for disambiguation)"
+              },
+              {
+                "name": "deploymentName",
+                "value": "Production",
+                "type": "path",
+                "description": "Deployment environment name"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "packageInfo",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "package",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Uploads and releases a new package to a deployment"
+        },
+        {
+          "info": {
+            "name": "Patch release metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/apps/:appName/deployments/:deploymentName/release",
+            "headers": [
+              {
+                "name": "tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "appName",
+                "value": "MyApp-iOS",
+                "type": "path",
+                "description": "Application name (or 'owner:appName' for disambiguation)"
+              },
+              {
+                "name": "deploymentName",
+                "value": "Production",
+                "type": "path",
+                "description": "Deployment environment name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates properties of an existing release without uploading new package"
+        },
+        {
+          "info": {
+            "name": "Promote release",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/apps/:appName/deployments/:deploymentName/promote/:destDeploymentName",
+            "headers": [
+              {
+                "name": "tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "appName",
+                "value": "MyApp-iOS",
+                "type": "path",
+                "description": "Application name (or 'owner:appName' for disambiguation)"
+              },
+              {
+                "name": "deploymentName",
+                "value": "Production",
+                "type": "path",
+                "description": "Deployment environment name"
+              },
+              {
+                "name": "destDeploymentName",
+                "value": "",
+                "type": "path",
+                "description": "Destination deployment name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Promotes a release from one deployment to another"
+        },
+        {
+          "info": {
+            "name": "Rollback deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/apps/:appName/deployments/:deploymentName/rollback",
+            "headers": [
+              {
+                "name": "tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "appName",
+                "value": "MyApp-iOS",
+                "type": "path",
+                "description": "Application name (or 'owner:appName' for disambiguation)"
+              },
+              {
+                "name": "deploymentName",
+                "value": "Production",
+                "type": "path",
+                "description": "Deployment environment name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rolls back to a previous release"
+        },
+        {
+          "info": {
+            "name": "Get release history",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/apps/:appName/deployments/:deploymentName/history",
+            "headers": [
+              {
+                "name": "tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "appName",
+                "value": "MyApp-iOS",
+                "type": "path",
+                "description": "Application name (or 'owner:appName' for disambiguation)"
+              },
+              {
+                "name": "deploymentName",
+                "value": "Production",
+                "type": "path",
+                "description": "Deployment environment name"
+              }
+            ]
+          },
+          "docs": "Returns the release history for a deployment"
+        },
+        {
+          "info": {
+            "name": "Clear release history",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/apps/:appName/deployments/:deploymentName/history",
+            "headers": [
+              {
+                "name": "tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "appName",
+                "value": "MyApp-iOS",
+                "type": "path",
+                "description": "Application name (or 'owner:appName' for disambiguation)"
+              },
+              {
+                "name": "deploymentName",
+                "value": "Production",
+                "type": "path",
+                "description": "Deployment environment name"
+              }
+            ]
+          },
+          "docs": "Clears the release history for a deployment (requires Owner permission)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,257 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Guardian OIDC API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OIDC",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "OAuth 2.0 Authorization Endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/authorize",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "response_type",
+                "value": "",
+                "type": "query",
+                "description": "OAuth 2.0 response type"
+              },
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query",
+                "description": "OAuth 2.0 client identifier"
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "Space-separated list of scopes (must include \"openid\")"
+              },
+              {
+                "name": "redirect_uri",
+                "value": "",
+                "type": "query",
+                "description": "Registered redirect URI"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Opaque value to maintain state between request and callback"
+              },
+              {
+                "name": "nonce",
+                "value": "",
+                "type": "query",
+                "description": "String value to associate client session with ID token"
+              },
+              {
+                "name": "code_challenge",
+                "value": "",
+                "type": "query",
+                "description": "PKCE code challenge (RFC 7636)"
+              },
+              {
+                "name": "code_challenge_method",
+                "value": "",
+                "type": "query",
+                "description": "PKCE code challenge method"
+              },
+              {
+                "name": "prompt",
+                "value": "",
+                "type": "query",
+                "description": "Space-separated list of prompts"
+              },
+              {
+                "name": "login_hint",
+                "value": "",
+                "type": "query",
+                "description": "Hint about the login identifier"
+              }
+            ]
+          },
+          "docs": "OAuth 2.0 Authorization endpoint that initiates the authorization flow.\n\nThis endpoint follows the OAuth 2.0 Authorization Code flow as specified in\nRFC 6749 (https://tools.ietf.org/html/rfc6749) and OpenID Connect Core 1.0\n(https://openid.net/specs/openid-connect-core-1_0.html).\n\n**Flow:**\n1. Client redirects user to this endpoint with authorization parameters\n2. Server validates the request and creates an authorization session\n3. User is redirected to the login page with a login challenge\n4. A"
+        },
+        {
+          "info": {
+            "name": "Accept login challenge",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/login-accept",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "API to accept a login challenge and proceed with the OAuth 2.0 authorization flow.\n\nThis endpoint is called after the user has been authenticated through the login page.\nIt validates the login challenge and either redirects to the consent page (if consent is required)\nor directly to the client's redirect URI with an authorization code.\n\n**Flow:**\n1. User submits login credentials on the login page\n2. Login page calls this endpoint with the login challenge and refresh token\n3. Server validates th"
+        },
+        {
+          "info": {
+            "name": "Get user consent information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/user-consent",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "consent_challenge",
+                "value": "",
+                "type": "query",
+                "description": "The consent challenge identifier from the authorization flow"
+              }
+            ]
+          },
+          "docs": "API to retrieve user consent information for a specific client during the OAuth 2.0 authorization flow.\n\nThis endpoint is used on the consent page to decide on what scopes to ask consent for based on the providers implementation.\n\n**Flow:**\n1. User is redirected to consent page with consent challenge\n2. Consent page calls this endpoint with the consent challenge\n3. Server validates the consent challenge and refresh token\n4. Returns client information and scope details (requested vs already conse"
+        },
+        {
+          "info": {
+            "name": "Accept consent challenge",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/consent-accept",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "API to accept a consent challenge and complete the OAuth 2.0 authorization flow.\n\nThis endpoint is called after the user has reviewed and accepted the requested scopes\non the consent page. It validates the consent challenge and redirects the user to the\nclient's redirect URI with an authorization code.\n\n**Flow:**\n1. User reviews requested scopes on consent page\n2. User accepts/denies scopes and submits the form\n3. Consent page calls this endpoint with consent challenge and selected scopes\n4. Ser"
+        },
+        {
+          "info": {
+            "name": "OAuth 2.0 Token Endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/token",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "OAuth 2.0 Token endpoint for exchanging authorization codes and refresh tokens.\n\nThis endpoint follows the OAuth 2.0 Token Exchange flow as specified in\nRFC 6749 (https://tools.ietf.org/html/rfc6749) and OpenID Connect Core 1.0\n(https://openid.net/specs/openid-connect-core-1_0.html).\n\n**Supported Grant Types:**\n- `authorization_code`: Exchange authorization code for access token\n- `refresh_token`: Exchange refresh token for new access token\n- `client_credentials`: Exchange client credentials for"
+        },
+        {
+          "info": {
+            "name": "OpenID Connect UserInfo Endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/userinfo",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "OpenID Connect UserInfo endpoint for retrieving user claims.\n\nThis endpoint follows the OpenID Connect UserInfo specification\n(https://openid.net/specs/openid-connect-core-1_0.html#UserInfo).\n\n**Authentication:**\n- Requires a valid access token in Authorization header\n- Access token must have appropriate scopes for requested claims\n\n**Response Formats:**\n- JSON: Standard JSON response with user claims\n- JWT: Signed JWT containing user claims (if requested)\n\n**Supported Claims:**\n- Standard OpenI"
+        },
+        {
+          "info": {
+            "name": "OpenID Connect UserInfo Endpoint (POST)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/userinfo",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "OpenID Connect UserInfo endpoint for retrieving user claims via POST.\n\nThis endpoint provides the same functionality as the GET endpoint but allows\nfor larger access tokens that might exceed URL length limits.\n\n**Authentication:**\n- Requires a valid access token in Authorization header\n- Access token must have appropriate scopes for requested claims\n\n**Response Formats:**\n- JSON: Standard JSON response with user claims\n- JWT: Signed JWT containing user claims (if requested)\n"
+        },
+        {
+          "info": {
+            "name": "Revoke OIDC refresh token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/token/revoke",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "token",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Revoke an OIDC refresh token, making it invalid for future use.\n\nThis endpoint allows clients to explicitly revoke oidc refresh tokens when they are\nno longer needed, improving security by reducing the token's lifetime.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

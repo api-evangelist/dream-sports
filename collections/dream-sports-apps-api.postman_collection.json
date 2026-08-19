@@ -1,0 +1,2940 @@
+{
+  "item": [
+    {
+      "id": "83941cf8-f5b1-4924-bd7b-b90989349a23",
+      "name": "Apps",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4ea9f0a4-f2ab-41cc-a5fb-25defaac966c",
+          "name": "List apps",
+          "request": {
+            "name": "List apps",
+            "description": {
+              "content": "Returns all apps accessible by the authenticated account",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Filter apps by tenant/organization ID",
+                "key": "tenant",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c27739c8-3793-4ad4-9fa9-8e3f63c9f7a7",
+              "name": "List of apps",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Filter apps by tenant/organization ID",
+                    "key": "tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apps\": [\n    {\n      \"name\": \"MyApp-iOS\",\n      \"collaborators\": {\n        \"user@example.com\": {\n          \"permission\": \"Owner\",\n          \"isCurrentAccount\": true\n        }\n      },\n      \"deployments\": [\n        \"Production\",\n        \"Staging\"\n      ],\n      \"organisation\": {\n        \"orgId\": \"string\",\n        \"orgName\": \"string\"\n      }\n    },\n    {\n      \"name\": \"MyApp-iOS\",\n      \"collaborators\": {\n        \"user@example.com\": {\n          \"permission\": \"Owner\",\n          \"isCurrentAccount\": true\n        }\n      },\n      \"deployments\": [\n        \"Production\",\n        \"Staging\"\n      ],\n      \"organisation\": {\n        \"orgId\": \"string\",\n        \"orgName\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8bd3edeb-df4c-4592-ad24-cde41291e646",
+          "name": "Create app",
+          "request": {
+            "name": "Create app",
+            "description": {
+              "content": "Creates a new application",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"app\": {\n    \"name\": \"<string>\",\n    \"collaborators\": {\n      \"key_0\": {\n        \"permission\": \"<string>\",\n        \"isCurrentAccount\": \"<boolean>\"\n      }\n    },\n    \"deployments\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"organisation\": {\n      \"orgId\": \"<string>\",\n      \"orgName\": \"<string>\"\n    },\n    \"manuallyProvisionDeployments\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ade578ac-b923-46b7-ac37-7387f715508d",
+              "name": "App created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"app\": {\n    \"name\": \"MyApp-iOS\",\n    \"collaborators\": {\n      \"user@example.com\": {\n        \"permission\": \"Owner\",\n        \"isCurrentAccount\": true\n      }\n    },\n    \"deployments\": [\n      \"Production\",\n      \"Staging\"\n    ],\n    \"organisation\": {\n      \"orgId\": \"<string>\",\n      \"orgName\": \"<string>\"\n    },\n    \"manuallyProvisionDeployments\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "URL of the created app",
+                  "key": "Location",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"app\": {\n    \"name\": \"MyApp-iOS\",\n    \"collaborators\": {\n      \"user@example.com\": {\n        \"permission\": \"Owner\",\n        \"isCurrentAccount\": true\n      }\n    },\n    \"deployments\": [\n      \"Production\",\n      \"Staging\"\n    ],\n    \"organisation\": {\n      \"orgId\": \"<string>\",\n      \"orgName\": \"<string>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "574f978a-eff6-4ea6-b6a4-dc2c9da62894",
+              "name": "Bad request - invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"app\": {\n    \"name\": \"MyApp-iOS\",\n    \"collaborators\": {\n      \"user@example.com\": {\n        \"permission\": \"Owner\",\n        \"isCurrentAccount\": true\n      }\n    },\n    \"deployments\": [\n      \"Production\",\n      \"Staging\"\n    ],\n    \"organisation\": {\n      \"orgId\": \"<string>\",\n      \"orgName\": \"<string>\"\n    },\n    \"manuallyProvisionDeployments\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed654ec6-d6ea-4faa-9c52-67b9eaf0a817",
+              "name": "Conflict - resource already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"app\": {\n    \"name\": \"MyApp-iOS\",\n    \"collaborators\": {\n      \"user@example.com\": {\n        \"permission\": \"Owner\",\n        \"isCurrentAccount\": true\n      }\n    },\n    \"deployments\": [\n      \"Production\",\n      \"Staging\"\n    ],\n    \"organisation\": {\n      \"orgId\": \"<string>\",\n      \"orgName\": \"<string>\"\n    },\n    \"manuallyProvisionDeployments\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2a081a2a-6bbf-424a-af4c-6c1e374df98d",
+          "name": "Get app",
+          "request": {
+            "name": "Get app",
+            "description": {
+              "content": "Returns details of a specific app",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apps",
+                ":appName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appName",
+                  "description": "(Required) Application name (or 'owner:appName' for disambiguation)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Organization/tenant ID filter",
+                "key": "tenant",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8e99f468-8ab8-4239-9a4d-554309ebe9fd",
+              "name": "App details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) Application name (or 'owner:appName' for disambiguation)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Organization/tenant ID filter",
+                    "key": "tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"app\": {\n    \"name\": \"MyApp-iOS\",\n    \"collaborators\": {\n      \"user@example.com\": {\n        \"permission\": \"Owner\",\n        \"isCurrentAccount\": true\n      }\n    },\n    \"deployments\": [\n      \"Production\",\n      \"Staging\"\n    ],\n    \"organisation\": {\n      \"orgId\": \"<string>\",\n      \"orgName\": \"<string>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9443685-ae70-49ee-91ec-6ff1ab025317",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) Application name (or 'owner:appName' for disambiguation)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Organization/tenant ID filter",
+                    "key": "tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "924530d7-e264-44e7-af86-0f9760e02327",
+          "name": "Update app",
+          "request": {
+            "name": "Update app",
+            "description": {
+              "content": "Updates app properties (requires Owner permission)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apps",
+                ":appName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appName",
+                  "description": "(Required) Application name (or 'owner:appName' for disambiguation)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"app\": {\n    \"name\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7d90e4f4-1640-4b46-8018-c30d2a23f553",
+              "name": "App updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) Application name (or 'owner:appName' for disambiguation)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"app\": {\n    \"name\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"app\": {\n    \"name\": \"MyApp-iOS\",\n    \"collaborators\": {\n      \"user@example.com\": {\n        \"permission\": \"Owner\",\n        \"isCurrentAccount\": true\n      }\n    },\n    \"deployments\": [\n      \"Production\",\n      \"Staging\"\n    ],\n    \"organisation\": {\n      \"orgId\": \"<string>\",\n      \"orgName\": \"<string>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13f2090f-9d97-442f-8447-6ca804a68ff2",
+              "name": "Bad request - invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) Application name (or 'owner:appName' for disambiguation)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"app\": {\n    \"name\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f094975-7827-4dc3-902a-08c5e6a1ae98",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) Application name (or 'owner:appName' for disambiguation)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"app\": {\n    \"name\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4d812c1-615c-447b-a49c-22676243d6b7",
+              "name": "Conflict - resource already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) Application name (or 'owner:appName' for disambiguation)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"app\": {\n    \"name\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "da510838-a6ac-4d4d-900c-909ffff4231c",
+          "name": "Delete app",
+          "request": {
+            "name": "Delete app",
+            "description": {
+              "content": "Removes an app and all its deployments (requires Owner permission)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apps",
+                ":appName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appName",
+                  "description": "(Required) Application name (or 'owner:appName' for disambiguation)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Organization/tenant ID filter",
+                "key": "tenant",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "35eee92f-afff-487b-9428-5da7ae174f36",
+              "name": "App deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) Application name (or 'owner:appName' for disambiguation)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Organization/tenant ID filter",
+                    "key": "tenant",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bc3c30b6-499a-4ce5-9316-ebe24ad3d762",
+              "name": "Forbidden - insufficient permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) Application name (or 'owner:appName' for disambiguation)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Organization/tenant ID filter",
+                    "key": "tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0179bc0-7664-4814-adc1-098c186dff59",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) Application name (or 'owner:appName' for disambiguation)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Organization/tenant ID filter",
+                    "key": "tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f50de1db-740b-477b-997b-534171995854",
+          "name": "Transfer app ownership",
+          "request": {
+            "name": "Transfer app ownership",
+            "description": {
+              "content": "Transfers app ownership to another user (requires Owner permission)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apps",
+                ":appName",
+                "transfer",
+                ":email"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appName",
+                  "description": "(Required) Application name (or 'owner:appName' for disambiguation)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<email>",
+                  "key": "email",
+                  "description": "(Required) Email of the new owner"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Organization/tenant ID filter",
+                "key": "tenant",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "59655ce0-9cbe-4436-a770-12f1ebc3ae11",
+              "name": "App ownership transferred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName",
+                    "transfer",
+                    ":email"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) Application name (or 'owner:appName' for disambiguation)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<email>",
+                      "key": "email",
+                      "description": "(Required) Email of the new owner"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Organization/tenant ID filter",
+                    "key": "tenant",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0876ad3f-44b7-47fa-bce1-10e55e0844ea",
+              "name": "Bad request - invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName",
+                    "transfer",
+                    ":email"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) Application name (or 'owner:appName' for disambiguation)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<email>",
+                      "key": "email",
+                      "description": "(Required) Email of the new owner"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Organization/tenant ID filter",
+                    "key": "tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cfe41af7-f2ca-4dfa-907f-b127d51f21b3",
+              "name": "Forbidden - insufficient permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName",
+                    "transfer",
+                    ":email"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) Application name (or 'owner:appName' for disambiguation)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<email>",
+                      "key": "email",
+                      "description": "(Required) Email of the new owner"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Organization/tenant ID filter",
+                    "key": "tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b435f40-3009-4987-ad15-9861644d8f04",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName",
+                    "transfer",
+                    ":email"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) Application name (or 'owner:appName' for disambiguation)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<email>",
+                      "key": "email",
+                      "description": "(Required) Email of the new owner"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Organization/tenant ID filter",
+                    "key": "tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5788b538-5db6-4f0d-8a82-aa5bcff4f22f",
+          "name": "List collaborators for an app",
+          "request": {
+            "name": "List collaborators for an app",
+            "description": {},
+            "url": {
+              "path": [
+                "apps",
+                ":appName",
+                "collaborators"
+              ],
+              "host": [
+                "{{apps-appName-collaborators-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "472f9c40-fc01-4840-89e2-152e27b9d914",
+              "name": "List of collaborators",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName",
+                    "collaborators"
+                  ],
+                  "host": [
+                    "{{apps-appName-collaborators-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"collaborators\": [\n    {\n      \"email\": \"string\",\n      \"accountId\": \"string\",\n      \"permission\": \"string\"\n    },\n    {\n      \"email\": \"string\",\n      \"accountId\": \"string\",\n      \"permission\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "14f81bc9-f37f-4a6a-a80b-bc2512a86c9f",
+          "name": "Add a collaborator",
+          "request": {
+            "name": "Add a collaborator",
+            "description": {},
+            "url": {
+              "path": [
+                "apps",
+                ":appName",
+                "collaborators",
+                ":email"
+              ],
+              "host": [
+                "{{apps-appName-collaborators-email-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appName",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "email",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "92f46d3e-3ab9-462c-8881-9858927a120a",
+              "name": "Collaborator added",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName",
+                    "collaborators",
+                    ":email"
+                  ],
+                  "host": [
+                    "{{apps-appName-collaborators-email-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "email",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4d80986d-eabe-4e3f-b276-90fb84ef4ee5",
+          "name": "Update collaborator role",
+          "request": {
+            "name": "Update collaborator role",
+            "description": {},
+            "url": {
+              "path": [
+                "apps",
+                ":appName",
+                "collaborators",
+                ":email"
+              ],
+              "host": [
+                "{{apps-appName-collaborators-email-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appName",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "email",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ad27f150-433c-4d90-a021-9fae0c69eeb6",
+              "name": "Collaborator updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName",
+                    "collaborators",
+                    ":email"
+                  ],
+                  "host": [
+                    "{{apps-appName-collaborators-email-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "email",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7afeeeba-23bb-4e36-aff7-568df9d3531b",
+          "name": "Remove a collaborator",
+          "request": {
+            "name": "Remove a collaborator",
+            "description": {},
+            "url": {
+              "path": [
+                "apps",
+                ":appName",
+                "collaborators",
+                ":email"
+              ],
+              "host": [
+                "{{apps-appName-collaborators-email-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appName",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "email",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ec1371eb-c1da-4d27-86d9-b37fffa3ae2f",
+              "name": "Collaborator removed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName",
+                    "collaborators",
+                    ":email"
+                  ],
+                  "host": [
+                    "{{apps-appName-collaborators-email-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "email",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "78527052-c9bb-4fb2-b49f-6769c2dfcd2e",
+          "name": "List deployments for an app",
+          "request": {
+            "name": "List deployments for an app",
+            "description": {},
+            "url": {
+              "path": [
+                "apps",
+                ":appName",
+                "deployments"
+              ],
+              "host": [
+                "{{apps-appName-deployments-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "81c02934-1e4b-49ab-a53e-91ba4eb2c41f",
+              "name": "List of deployments",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{apps-appName-deployments-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"deployments\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"createdTime\": 919,\n      \"package\": {\n        \"label\": \"string\",\n        \"appVersion\": \"string\",\n        \"description\": \"string\",\n        \"uploadTime\": 5174,\n        \"blobUrl\": \"string\",\n        \"size\": 2092,\n        \"isMandatory\": true,\n        \"isDisabled\": true\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"createdTime\": 5854,\n      \"package\": {\n        \"label\": \"string\",\n        \"appVersion\": \"string\",\n        \"description\": \"string\",\n        \"uploadTime\": 7345,\n        \"blobUrl\": \"string\",\n        \"size\": 3088,\n        \"isMandatory\": false,\n        \"isDisabled\": true\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "67ab806f-e722-40dd-b761-90aa24da7876",
+          "name": "Create a deployment",
+          "request": {
+            "name": "Create a deployment",
+            "description": {},
+            "url": {
+              "path": [
+                "apps",
+                ":appName",
+                "deployments"
+              ],
+              "host": [
+                "{{apps-appName-deployments-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"key\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "97b5e199-673d-426b-8dd1-2a1748b193c1",
+              "name": "Deployment created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{apps-appName-deployments-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"deployment\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"key\": \"string\",\n    \"createdTime\": 3407,\n    \"package\": {\n      \"label\": \"string\",\n      \"appVersion\": \"string\",\n      \"description\": \"string\",\n      \"uploadTime\": 6795,\n      \"blobUrl\": \"string\",\n      \"size\": 6401,\n      \"isMandatory\": true,\n      \"isDisabled\": true\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5f11cf4c-c63e-4050-a217-91fb0cb1e1f8",
+          "name": "Get deployment details",
+          "request": {
+            "name": "Get deployment details",
+            "description": {},
+            "url": {
+              "path": [
+                "apps",
+                ":appName",
+                "deployments",
+                ":deploymentName"
+              ],
+              "host": [
+                "{{apps-appName-deployments-deploymentName-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appName",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deploymentName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fe8d4d3e-b31a-41ac-b4f6-6c36a9b8d749",
+              "name": "Deployment details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName",
+                    "deployments",
+                    ":deploymentName"
+                  ],
+                  "host": [
+                    "{{apps-appName-deployments-deploymentName-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deploymentName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"deployment\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"key\": \"string\",\n    \"createdTime\": 3407,\n    \"package\": {\n      \"label\": \"string\",\n      \"appVersion\": \"string\",\n      \"description\": \"string\",\n      \"uploadTime\": 6795,\n      \"blobUrl\": \"string\",\n      \"size\": 6401,\n      \"isMandatory\": true,\n      \"isDisabled\": true\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c9df7f18-9c5c-476d-951c-68ac56f66e86",
+          "name": "Update deployment metadata",
+          "request": {
+            "name": "Update deployment metadata",
+            "description": {},
+            "url": {
+              "path": [
+                "apps",
+                ":appName",
+                "deployments",
+                ":deploymentName"
+              ],
+              "host": [
+                "{{apps-appName-deployments-deploymentName-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appName",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deploymentName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"key\": \"<string>\",\n  \"createdTime\": \"<integer>\",\n  \"package\": {\n    \"label\": \"<string>\",\n    \"appVersion\": \"<string>\",\n    \"description\": \"<string>\",\n    \"uploadTime\": \"<integer>\",\n    \"blobUrl\": \"<string>\",\n    \"size\": \"<integer>\",\n    \"isMandatory\": \"<boolean>\",\n    \"isDisabled\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a906d926-c52e-42c2-855e-efc886bfa056",
+              "name": "Deployment updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName",
+                    "deployments",
+                    ":deploymentName"
+                  ],
+                  "host": [
+                    "{{apps-appName-deployments-deploymentName-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deploymentName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"key\": \"<string>\",\n  \"createdTime\": \"<integer>\",\n  \"package\": {\n    \"label\": \"<string>\",\n    \"appVersion\": \"<string>\",\n    \"description\": \"<string>\",\n    \"uploadTime\": \"<integer>\",\n    \"blobUrl\": \"<string>\",\n    \"size\": \"<integer>\",\n    \"isMandatory\": \"<boolean>\",\n    \"isDisabled\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"deployment\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"key\": \"<string>\",\n    \"createdTime\": \"<integer>\",\n    \"package\": {\n      \"label\": \"<string>\",\n      \"appVersion\": \"<string>\",\n      \"description\": \"<string>\",\n      \"uploadTime\": \"<integer>\",\n      \"blobUrl\": \"<string>\",\n      \"size\": \"<integer>\",\n      \"isMandatory\": \"<boolean>\",\n      \"isDisabled\": \"<boolean>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d8508a85-37e3-42b1-8253-c0c05ace22e8",
+          "name": "Delete a deployment",
+          "request": {
+            "name": "Delete a deployment",
+            "description": {},
+            "url": {
+              "path": [
+                "apps",
+                ":appName",
+                "deployments",
+                ":deploymentName"
+              ],
+              "host": [
+                "{{apps-appName-deployments-deploymentName-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appName",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deploymentName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "86678fdb-2f02-4db6-bfcc-b4948e528377",
+              "name": "Deployment deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName",
+                    "deployments",
+                    ":deploymentName"
+                  ],
+                  "host": [
+                    "{{apps-appName-deployments-deploymentName-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deploymentName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0244ddaf-6008-40d7-a47a-5351fde8d069",
+          "name": "Release a new update",
+          "request": {
+            "name": "Release a new update",
+            "description": {},
+            "url": {
+              "path": [
+                "apps",
+                ":appName",
+                "deployments",
+                ":deploymentName",
+                "release"
+              ],
+              "host": [
+                "{{apps-appName-deployments-deploymentName-release-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appName",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deploymentName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "package",
+                  "type": "file",
+                  "description": ""
+                },
+                {
+                  "key": "packageInfo",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": ""
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "13b4ee20-e5b6-4dbb-a3c9-f87adee4b72d",
+              "name": "Release created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName",
+                    "deployments",
+                    ":deploymentName",
+                    "release"
+                  ],
+                  "host": [
+                    "{{apps-appName-deployments-deploymentName-release-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deploymentName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "package",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "packageInfo",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"package\": {\n    \"label\": \"<string>\",\n    \"appVersion\": \"<string>\",\n    \"description\": \"<string>\",\n    \"uploadTime\": \"<integer>\",\n    \"blobUrl\": \"<string>\",\n    \"size\": \"<integer>\",\n    \"isMandatory\": \"<boolean>\",\n    \"isDisabled\": \"<boolean>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a48f959c-e10e-42e6-a613-90509d2cda7f",
+          "name": "Patch latest release metadata",
+          "request": {
+            "name": "Patch latest release metadata",
+            "description": {},
+            "url": {
+              "path": [
+                "apps",
+                ":appName",
+                "deployments",
+                ":deploymentName",
+                "release"
+              ],
+              "host": [
+                "{{apps-appName-deployments-deploymentName-release-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appName",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deploymentName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"label\": \"<string>\",\n  \"appVersion\": \"<string>\",\n  \"description\": \"<string>\",\n  \"uploadTime\": \"<integer>\",\n  \"blobUrl\": \"<string>\",\n  \"size\": \"<integer>\",\n  \"isMandatory\": \"<boolean>\",\n  \"isDisabled\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b1e996b9-1b1b-4b56-9e73-0449aa0e6e5b",
+              "name": "Release updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName",
+                    "deployments",
+                    ":deploymentName",
+                    "release"
+                  ],
+                  "host": [
+                    "{{apps-appName-deployments-deploymentName-release-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deploymentName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"<string>\",\n  \"appVersion\": \"<string>\",\n  \"description\": \"<string>\",\n  \"uploadTime\": \"<integer>\",\n  \"blobUrl\": \"<string>\",\n  \"size\": \"<integer>\",\n  \"isMandatory\": \"<boolean>\",\n  \"isDisabled\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"package\": {\n    \"label\": \"<string>\",\n    \"appVersion\": \"<string>\",\n    \"description\": \"<string>\",\n    \"uploadTime\": \"<integer>\",\n    \"blobUrl\": \"<string>\",\n    \"size\": \"<integer>\",\n    \"isMandatory\": \"<boolean>\",\n    \"isDisabled\": \"<boolean>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5408e2b1-a915-4a54-9681-ca05ad86e919",
+          "name": "Get release history",
+          "request": {
+            "name": "Get release history",
+            "description": {},
+            "url": {
+              "path": [
+                "apps",
+                ":appName",
+                "deployments",
+                ":deploymentName",
+                "history"
+              ],
+              "host": [
+                "{{apps-appName-deployments-deploymentName-history-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appName",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deploymentName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "104e5512-a34f-4a4b-8240-1325dd066abe",
+              "name": "Release history",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName",
+                    "deployments",
+                    ":deploymentName",
+                    "history"
+                  ],
+                  "host": [
+                    "{{apps-appName-deployments-deploymentName-history-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deploymentName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"history\": [\n    {\n      \"label\": \"<string>\",\n      \"appVersion\": \"<string>\",\n      \"description\": \"<string>\",\n      \"uploadTime\": \"<integer>\",\n      \"blobUrl\": \"<string>\",\n      \"size\": \"<integer>\",\n      \"isMandatory\": \"<boolean>\",\n      \"isDisabled\": \"<boolean>\"\n    },\n    {\n      \"label\": \"<string>\",\n      \"appVersion\": \"<string>\",\n      \"description\": \"<string>\",\n      \"uploadTime\": \"<integer>\",\n      \"blobUrl\": \"<string>\",\n      \"size\": \"<integer>\",\n      \"isMandatory\": \"<boolean>\",\n      \"isDisabled\": \"<boolean>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "39976797-e636-4f70-bbdf-97bb265c212d",
+          "name": "Clear release history",
+          "request": {
+            "name": "Clear release history",
+            "description": {},
+            "url": {
+              "path": [
+                "apps",
+                ":appName",
+                "deployments",
+                ":deploymentName",
+                "history"
+              ],
+              "host": [
+                "{{apps-appName-deployments-deploymentName-history-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appName",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deploymentName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e1afdbd4-5740-454a-89b9-0e7970b13301",
+              "name": "History cleared",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName",
+                    "deployments",
+                    ":deploymentName",
+                    "history"
+                  ],
+                  "host": [
+                    "{{apps-appName-deployments-deploymentName-history-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deploymentName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "23d89ac1-ea77-4999-91c0-7d861da463fa",
+          "name": "Get deployment metrics",
+          "request": {
+            "name": "Get deployment metrics",
+            "description": {},
+            "url": {
+              "path": [
+                "apps",
+                ":appName",
+                "deployments",
+                ":deploymentName",
+                "metrics"
+              ],
+              "host": [
+                "{{apps-appName-deployments-deploymentName-metrics-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appName",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deploymentName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "871a2f27-c3a3-4f0d-8cd6-5bac2336031e",
+              "name": "Deployment metrics",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":appName",
+                    "deployments",
+                    ":deploymentName",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{apps-appName-deployments-deploymentName-metrics-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appName",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deploymentName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"metrics\": {\n    \"key_0\": {\n      \"active\": 8567,\n      \"downloaded\": 3542,\n      \"failed\": 4269,\n      \"installed\": 2804,\n      \"totalActive\": 2622\n    },\n    \"key_1\": {\n      \"active\": 5670,\n      \"downloaded\": 2130,\n      \"failed\": 4908,\n      \"installed\": 638,\n      \"totalActive\": 6008\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:3000",
+      "key": "baseUrl"
+    },
+    {
+      "type": "string",
+      "value": "http://localhost:3000",
+      "key": "apps-appName-collaborators-Url"
+    },
+    {
+      "type": "string",
+      "value": "http://localhost:3000",
+      "key": "apps-appName-collaborators-email-Url"
+    },
+    {
+      "type": "string",
+      "value": "http://localhost:3000",
+      "key": "apps-appName-deployments-Url"
+    },
+    {
+      "type": "string",
+      "value": "http://localhost:3000",
+      "key": "apps-appName-deployments-deploymentName-Url"
+    },
+    {
+      "type": "string",
+      "value": "http://localhost:3000",
+      "key": "apps-appName-deployments-deploymentName-release-Url"
+    },
+    {
+      "type": "string",
+      "value": "http://localhost:3000",
+      "key": "apps-appName-deployments-deploymentName-history-Url"
+    },
+    {
+      "type": "string",
+      "value": "http://localhost:3000",
+      "key": "apps-appName-deployments-deploymentName-metrics-Url"
+    }
+  ],
+  "info": {
+    "_postman_id": "1acd06ce-96a0-4ad7-8506-f610c6150b7b",
+    "name": "Dream Sports Apps API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Operations tagged Apps across 2 of this provider's published API definitions: dream-sports-delivr-ota-openapi.yml, dream-sports-dota-openapi.yml. Each path carries the servers of the definition it was published in.",
+      "type": "text/plain"
+    }
+  }
+}

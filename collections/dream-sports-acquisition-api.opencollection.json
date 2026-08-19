@@ -1,0 +1,169 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Delivr OTA Server Acquisition API"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Acquisition",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check for updates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/updateCheck",
+            "params": [
+              {
+                "name": "deploymentKey",
+                "value": "",
+                "type": "query",
+                "description": "Deployment key from app configuration"
+              },
+              {
+                "name": "appVersion",
+                "value": "1.0.0",
+                "type": "query",
+                "description": "Current app version (semver format)"
+              },
+              {
+                "name": "packageHash",
+                "value": "",
+                "type": "query",
+                "description": "Hash of currently installed package"
+              },
+              {
+                "name": "label",
+                "value": "",
+                "type": "query",
+                "description": "Label of currently installed release"
+              },
+              {
+                "name": "clientUniqueId",
+                "value": "",
+                "type": "query",
+                "description": "Unique device/client identifier for rollout targeting"
+              },
+              {
+                "name": "isCompanion",
+                "value": "",
+                "type": "query",
+                "description": "Whether this is a companion app request"
+              }
+            ]
+          },
+          "docs": "Client SDK endpoint to check for available updates.\nThis endpoint does not require authentication - it uses deployment keys.\n"
+        },
+        {
+          "info": {
+            "name": "Check for updates (v0.1 API)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0.1/public/codepush/update_check",
+            "params": [
+              {
+                "name": "deployment_key",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "app_version",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "package_hash",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "label",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "client_unique_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "is_companion",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Legacy API endpoint for update checks with snake_case parameters"
+        },
+        {
+          "info": {
+            "name": "Report deployment status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reportStatus/deploy",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Client SDK reports installation success/failure for metrics tracking.\nThis endpoint does not require authentication.\n"
+        },
+        {
+          "info": {
+            "name": "Report deployment status (v0.1 API)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0.1/public/codepush/report_status/deploy",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Legacy API endpoint for deployment status reporting"
+        },
+        {
+          "info": {
+            "name": "Report download",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reportStatus/download",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Client SDK reports package download for metrics tracking.\nThis endpoint does not require authentication.\n"
+        },
+        {
+          "info": {
+            "name": "Report download (v0.1 API)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0.1/public/codepush/report_status/download",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Legacy API endpoint for download reporting"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

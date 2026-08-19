@@ -1,0 +1,89 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Checkmate Test Management Users API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "user_session",
+      "value": "{{user_session}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get user details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/user/details"
+          },
+          "docs": "Get details of the currently authenticated user"
+        },
+        {
+          "info": {
+            "name": "Get all users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/all-users"
+          },
+          "docs": "Get list of all users (Admin only)"
+        },
+        {
+          "info": {
+            "name": "Update user role",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/v1/user/update-role",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a user's role (Admin only)"
+        },
+        {
+          "info": {
+            "name": "Generate API token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:3000/api/v1/token/generate"
+          },
+          "docs": "Generate a new API token for the user"
+        },
+        {
+          "info": {
+            "name": "Delete API token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:3000/api/v1/token/delete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete/revoke an API token"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

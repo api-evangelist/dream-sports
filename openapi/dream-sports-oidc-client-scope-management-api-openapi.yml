@@ -1,0 +1,231 @@
+openapi: 3.2.0
+info:
+  title: Guardian OIDC Client Scope Management API
+  version: 1.0.0
+tags:
+- name: OIDC Client Scope Management
+paths:
+  /v1/admin/client/{client_id}/scope:
+    post:
+      tags:
+      - OIDC Client Scope Management
+      summary: Add scopes to client
+      description: 'Add one or more scopes to an OAuth 2.0 client. This allows the client
+
+        to request these scopes during the authorization flow.
+
+
+        **Scope Validation:**
+
+        - All scopes must exist in the tenant
+
+        - Duplicate scopes are automatically ignored
+
+        - Invalid scopes are filtered out
+
+
+        **Batch Operation:**
+
+        - Multiple scopes can be added in a single request
+
+        - The operation is atomic - either all valid scopes are added or none
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TenantIdHeader'
+      - name: client_id
+        in: path
+        required: true
+        description: Unique identifier of the client
+        schema:
+          type: string
+          example: my-client-id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateClientScopeRequestBody'
+        required: true
+      responses:
+        '204':
+          description: Scopes added successfully
+        '400':
+          description: Bad Request due to missing scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Client not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      tags:
+      - OIDC Client Scope Management
+      summary: Get client scopes
+      description: 'Retrieve all scopes associated with an OAuth 2.0 client.
+
+
+        **Response:**
+
+        - Returns a list of scope names
+
+        - Empty list if no scopes are assigned
+
+        - Scopes are returned in alphabetical order
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TenantIdHeader'
+      - name: client_id
+        in: path
+        required: true
+        description: Unique identifier of the client
+        schema:
+          type: string
+          example: my-client-id
+      responses:
+        '200':
+          description: Client scopes retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientScopeResponse'
+        '404':
+          description: Client not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+      - OIDC Client Scope Management
+      summary: Remove scope from client
+      description: 'Remove a specific scope from an OAuth 2.0 client.
+
+
+        **Impact:**
+
+        - The client will no longer be able to request this scope
+
+        - Existing tokens with this scope remain valid until expiration
+
+        - New authorization requests will not include this scope
+
+
+        **Validation:**
+
+        - The scope must be currently assigned to the client
+
+        - If the scope is not assigned, the operation succeeds (idempotent)
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TenantIdHeader'
+      - name: client_id
+        in: path
+        required: true
+        description: Unique identifier of the client
+        schema:
+          type: string
+          example: my-client-id
+      - name: scope
+        in: query
+        required: true
+        description: Name of the scope to remove
+        schema:
+          type: string
+          example: email
+      responses:
+        '204':
+          description: Scope removed successfully
+        '404':
+          description: Client not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ClientScopeResponse:
+      type: object
+      description: Response containing client scopes
+      required:
+      - scopes
+      properties:
+        scopes:
+          type: array
+          description: List of scope names associated with the client
+          items:
+            type: string
+          example:
+          - openid
+          - email
+          - profile
+      example:
+        scopes:
+        - openid
+        - email
+        - profile
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
+    CreateClientScopeRequestBody:
+      type: object
+      description: Request body for adding scopes to a client
+      required:
+      - scopes
+      properties:
+        scopes:
+          type: array
+          description: List of scope names to add to the client
+          items:
+            type: string
+          example:
+          - openid
+          - email
+          - profile
+      example:
+        scopes:
+        - openid
+        - email
+        - profile
+  parameters:
+    TenantIdHeader:
+      name: tenant-id
+      in: header
+      description: tenant-id of the client integrating with guardian
+      required: true
+      schema:
+        type: string

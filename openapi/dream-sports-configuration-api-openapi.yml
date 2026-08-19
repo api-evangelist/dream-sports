@@ -1,0 +1,489 @@
+openapi: 3.2.0
+info:
+  title: Checkmate Test Management Configuration API
+  description: 'Comprehensive API documentation for Checkmate - a modern test case management system built with Remix, MySQL, and Drizzle ORM.
+
+
+    ## Features
+
+    - Project and Test Management
+
+    - Test Run Execution
+
+    - Role-Based Access Control (RBAC)
+
+    - Google OAuth Authentication
+
+    - Test Status Tracking and History
+
+
+    ## Authentication
+
+    All endpoints require authentication via session cookies. Users must be logged in through Google OAuth.
+
+
+    ## Authorization
+
+    Access to resources is controlled via Casbin RBAC with three role levels:
+
+    - **Admin**: Full access to all resources
+
+    - **User**: Can create, read, update resources
+
+    - **Reader**: Read-only access
+
+    '
+  version: 1.0.0
+  contact:
+    name: Checkmate API Support
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: http://localhost:3000
+  description: Local development server (default port 3000, configurable via PORT env var)
+- url: https://your-production-domain.com
+  description: Production server (replace with your actual production URL)
+security:
+- cookieAuth: []
+- bearerAuth: []
+tags:
+- name: Configuration
+  description: System configuration endpoints (labels, priorities, platforms, etc.)
+paths:
+  /api/v1/labels:
+    get:
+      tags:
+      - Configuration
+      summary: Get labels
+      description: Get all labels for a project
+      parameters:
+      - name: projectId
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: List of labels
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Label'
+                  status:
+                    type: integer
+  /api/v1/project/add-labels:
+    post:
+      tags:
+      - Configuration
+      summary: Add label
+      description: Create a new label for a project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - labelName
+              - projectId
+              properties:
+                labelName:
+                  type: string
+                projectId:
+                  type: integer
+      responses:
+        '200':
+          description: Label created successfully
+  /api/v1/project/squads:
+    get:
+      tags:
+      - Configuration
+      summary: Get squads
+      description: Get all squads for a project
+      parameters:
+      - name: projectId
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: List of squads
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Squad'
+                  status:
+                    type: integer
+  /api/v1/project/add-squads:
+    post:
+      tags:
+      - Configuration
+      summary: Add squad
+      description: Create a new squad for a project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - squadName
+              - projectId
+              properties:
+                squadName:
+                  type: string
+                projectId:
+                  type: integer
+      responses:
+        '200':
+          description: Squad created successfully
+  /api/v1/project/sections:
+    get:
+      tags:
+      - Configuration
+      summary: Get sections
+      description: Get all sections for a project (hierarchical)
+      parameters:
+      - name: projectId
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: List of sections
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Section'
+                  status:
+                    type: integer
+  /api/v1/project/add-section:
+    post:
+      tags:
+      - Configuration
+      summary: Add section
+      description: Create a new section for a project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - sectionName
+              - projectId
+              properties:
+                sectionName:
+                  type: string
+                projectId:
+                  type: integer
+                parentId:
+                  type:
+                  - integer
+                  - 'null'
+                  description: Parent section ID for nested sections
+      responses:
+        '200':
+          description: Section created successfully
+  /api/v1/project/edit-section:
+    put:
+      tags:
+      - Configuration
+      summary: Edit section
+      description: Update a section name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - sectionId
+              - sectionName
+              properties:
+                sectionId:
+                  type: integer
+                sectionName:
+                  type: string
+      responses:
+        '200':
+          description: Section updated successfully
+  /api/v1/priority:
+    get:
+      tags:
+      - Configuration
+      summary: Get priorities
+      description: Get all priorities for an organization
+      parameters:
+      - name: orgId
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: List of priorities
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Priority'
+                  status:
+                    type: integer
+  /api/v1/automation-status:
+    get:
+      tags:
+      - Configuration
+      summary: Get automation statuses
+      description: Get all automation statuses for an organization
+      parameters:
+      - name: orgId
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: List of automation statuses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AutomationStatus'
+                  status:
+                    type: integer
+  /api/v1/platform:
+    get:
+      tags:
+      - Configuration
+      summary: Get platforms
+      description: Get all platforms for an organization
+      parameters:
+      - name: orgId
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: List of platforms
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Platform'
+                  status:
+                    type: integer
+  /api/v1/test-covered-by:
+    get:
+      tags:
+      - Configuration
+      summary: Get test covered by options
+      description: Get all test coverage types for an organization
+      parameters:
+      - name: orgId
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: List of test covered by options
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TestCoveredBy'
+                  status:
+                    type: integer
+  /api/v1/type:
+    get:
+      tags:
+      - Configuration
+      summary: Get types
+      description: Get all test types for an organization
+      parameters:
+      - name: orgId
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: List of types
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Type'
+                  status:
+                    type: integer
+components:
+  schemas:
+    Platform:
+      type: object
+      properties:
+        platformId:
+          type: integer
+        platformName:
+          type: string
+    Section:
+      type: object
+      properties:
+        sectionId:
+          type: integer
+          description: Unique section identifier
+        sectionName:
+          type: string
+          description: Section name
+        parentId:
+          type:
+          - integer
+          - 'null'
+          description: Parent section ID for hierarchy
+        projectId:
+          type: integer
+          description: Project ID
+    AutomationStatus:
+      type: object
+      properties:
+        automationStatusId:
+          type: integer
+        automationStatusName:
+          type: string
+    Squad:
+      type: object
+      properties:
+        squadId:
+          type: integer
+          description: Unique squad identifier
+        squadName:
+          type: string
+          description: Squad name
+        projectId:
+          type: integer
+          description: Project ID
+    Type:
+      type: object
+      properties:
+        typeId:
+          type: integer
+        typeName:
+          type: string
+    Label:
+      type: object
+      properties:
+        labelId:
+          type: integer
+          description: Unique label identifier
+        labelName:
+          type: string
+          description: Label name
+        projectId:
+          type: integer
+          description: Project ID
+    Priority:
+      type: object
+      properties:
+        priorityId:
+          type: integer
+        priorityName:
+          type: string
+          enum:
+          - Critical
+          - High
+          - Medium
+          - Low
+          - Trivial
+    TestCoveredBy:
+      type: object
+      properties:
+        testCoveredById:
+          type: integer
+        testCoveredByName:
+          type: string
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: user_session
+      description: 'Session cookie from Google OAuth authentication.
+
+
+        **How to get:**
+
+        1. Navigate to /login
+
+        2. Authenticate with Google
+
+        3. Cookie is automatically set
+
+
+        **Usage:**
+
+        - Browsers automatically include this cookie
+
+        - cURL: Use `-b cookies.txt` or `-H "Cookie: user_session=value"`
+
+        '
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Token
+      description: 'API token authentication for programmatic access.
+
+
+        **How to get:**
+
+        1. Login via web interface
+
+        2. Call POST /api/v1/token/generate with your userId
+
+        3. Copy the returned token
+
+
+        **Usage:**
+
+        - Include in Authorization header: `Bearer your_token_here`
+
+        - Example: `Authorization: Bearer abc123xyz`
+
+        '

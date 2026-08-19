@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dream Sports Health API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Welcome endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/"
+          },
+          "docs": "Returns a welcome message"
+        },
+        {
+          "info": {
+            "name": "Health check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/healthcheck"
+          },
+          "docs": "Checks the health of storage and Redis connections"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

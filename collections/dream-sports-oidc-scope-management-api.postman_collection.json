@@ -1,0 +1,995 @@
+{
+  "item": [
+    {
+      "id": "489887e1-32da-4cdf-a4d0-f13a1a551271",
+      "name": "OIDC Scope Management",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dd0093c5-bfc9-4f1a-8e02-86bf4e1bfb20",
+          "name": "List scopes",
+          "request": {
+            "name": "List scopes",
+            "description": {
+              "content": "Retrieve a paginated list of scopes for a tenant. \nOptionally filter by scope name using partial matching.\n\n**Query Parameters:**\n- `name`: Filter scopes by name (case-insensitive partial match)\n- `page`: Page number for pagination (starts from 1)\n- `page_size`: Number of items per page (1-100, default: 10)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scopes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Filter scopes by name (partial match, case-insensitive)"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "10",
+                  "description": "Number of items per page"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e062883-dbab-4a40-a6d1-ff8084c52e96",
+              "name": "Successfully retrieved scopes",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scopes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "read"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"scopes\": [\n    {\n      \"name\": \"openid\",\n      \"display_name\": \"OpenID\",\n      \"description\": \"OpenID Connect scope\",\n      \"claims\": [\n        \"sub\"\n      ],\n      \"icon_url\": \"https://example.com/icons/openid.png\",\n      \"is_oidc\": true\n    },\n    {\n      \"name\": \"read:profile\",\n      \"display_name\": \"Read Profile\",\n      \"description\": \"Allows reading user profile information\",\n      \"claims\": [\n        \"name\",\n        \"email\",\n        \"profile\"\n      ],\n      \"icon_url\": \"https://example.com/icons/profile.png\",\n      \"is_oidc\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "66bf1d05-bd53-4d09-b45d-bcdd5dd2c704",
+              "name": "Bad Request due to invalid query parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scopes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "read"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"page value cannot be less than 1\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78c40009-9aa7-4d1a-9319-1df88e2db9cd",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scopes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "read"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0c0ec3ab-5915-43df-8368-360d98c4449e",
+          "name": "Create a new scope",
+          "request": {
+            "name": "Create a new scope",
+            "description": {
+              "content": "Create a new scope for a tenant. Scopes define permissions and claims \nthat can be granted to users and applications.\n\n**Predefined OIDC Scope Validation:**\n- `openid`: Must contain only the 'sub' claim\n- `phone`: Must contain 'phone_number' and/or 'phone_number_verified' claims (maximum 2 claims)\n- `email`: Must contain 'email' and/or 'email_verified' claims (maximum 2 claims)\n- `address`: Must contain only the 'address' claim\n\nCustom scopes can have any combination of claims.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scopes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"is_oidc\": \"<boolean>\",\n  \"display_name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"claims\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"icon_url\": \"<uri>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "986d2a41-406a-4f3f-b704-512fe5d2144f",
+              "name": "Scope created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scopes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"read:profile\",\n  \"display_name\": \"Read Profile\",\n  \"description\": \"Allows reading user profile information\",\n  \"claims\": [\n    \"name\",\n    \"email\",\n    \"profile\"\n  ],\n  \"icon_url\": \"https://example.com/icons/profile.png\",\n  \"is_oidc\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"read:profile\",\n  \"display_name\": \"Read Profile\",\n  \"description\": \"Allows reading user profile information\",\n  \"claims\": [\n    \"name\",\n    \"email\",\n    \"profile\"\n  ],\n  \"icon_url\": \"https://example.com/icons/profile.png\",\n  \"is_oidc\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9fa8720e-d7c1-412a-9676-57ff86c453b5",
+              "name": "Bad Request due to missing parameters, invalid data, or validation errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scopes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"read:profile\",\n  \"display_name\": \"Read Profile\",\n  \"description\": \"Allows reading user profile information\",\n  \"claims\": [\n    \"name\",\n    \"email\",\n    \"profile\"\n  ],\n  \"icon_url\": \"https://example.com/icons/profile.png\",\n  \"is_oidc\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"scope name is required\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "287da96f-a7d3-4539-a836-2549a152d47c",
+              "name": "Conflict - Scope with the same name already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scopes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"read:profile\",\n  \"display_name\": \"Read Profile\",\n  \"description\": \"Allows reading user profile information\",\n  \"claims\": [\n    \"name\",\n    \"email\",\n    \"profile\"\n  ],\n  \"icon_url\": \"https://example.com/icons/profile.png\",\n  \"is_oidc\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"scope_already_exists\",\n    \"message\": \"scope already exists for tenant\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a64501ae-319a-47c6-81b1-d0bdec528612",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scopes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"read:profile\",\n  \"display_name\": \"Read Profile\",\n  \"description\": \"Allows reading user profile information\",\n  \"claims\": [\n    \"name\",\n    \"email\",\n    \"profile\"\n  ],\n  \"icon_url\": \"https://example.com/icons/profile.png\",\n  \"is_oidc\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1887ad95-86b4-4402-81d2-22f417992da2",
+          "name": "Update an existing scope",
+          "request": {
+            "name": "Update an existing scope",
+            "description": {
+              "content": "Update an existing scope by name. All fields except the scope name can be updated.\nPartial updates are supported - only provided fields will be updated.\n\n**Predefined OIDC Scope Validation:**\n- `openid`: Must contain only the 'sub' claim\n- `phone`: Must contain 'phone_number' and 'phone_number_verified' claims (exactly 2 claims)\n- `email`: Must contain 'email' and 'email_verified' claims (exactly 2 claims)\n- `address`: Must contain only the 'address' claim\n\n**Note:** The scope name cannot be changed. To rename a scope, delete the old one and create a new one.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scopes",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) Name of the scope to update"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"display_name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"claims\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"icon_url\": \"<string,null-uri>\",\n  \"is_oidc\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "accd6ad8-8511-4c7f-a740-1664318ef411",
+              "name": "Scope updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scopes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the scope to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"display_name\": \"Updated Profile Reader\",\n  \"description\": \"Updated description for profile reading permissions\",\n  \"claims\": [\n    \"name\",\n    \"email\",\n    \"profile\",\n    \"picture\"\n  ],\n  \"icon_url\": \"https://example.com/icons/updated-profile.png\",\n  \"is_oidc\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"read:profile\",\n  \"display_name\": \"Updated Profile Reader\",\n  \"description\": \"Updated description for profile reading permissions\",\n  \"claims\": [\n    \"name\",\n    \"email\",\n    \"profile\",\n    \"picture\"\n  ],\n  \"icon_url\": \"https://example.com/icons/updated-profile.png\",\n  \"is_oidc\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "329ede10-929e-4eae-89ff-34ebb8960c69",
+              "name": "Bad Request due to invalid data or validation errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scopes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the scope to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"display_name\": \"Updated Profile Reader\",\n  \"description\": \"Updated description for profile reading permissions\",\n  \"claims\": [\n    \"name\",\n    \"email\",\n    \"profile\",\n    \"picture\"\n  ],\n  \"icon_url\": \"https://example.com/icons/updated-profile.png\",\n  \"is_oidc\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"openid scope must only include 'sub' claim\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7df5bb3a-8a39-4a90-a543-37576997f670",
+              "name": "Scope not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scopes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the scope to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"display_name\": \"Updated Profile Reader\",\n  \"description\": \"Updated description for profile reading permissions\",\n  \"claims\": [\n    \"name\",\n    \"email\",\n    \"profile\",\n    \"picture\"\n  ],\n  \"icon_url\": \"https://example.com/icons/updated-profile.png\",\n  \"is_oidc\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"scope_not_found\",\n    \"message\": \"Scope not found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67d10466-d2c1-4f98-983a-e5767e17d1eb",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scopes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the scope to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"display_name\": \"Updated Profile Reader\",\n  \"description\": \"Updated description for profile reading permissions\",\n  \"claims\": [\n    \"name\",\n    \"email\",\n    \"profile\",\n    \"picture\"\n  ],\n  \"icon_url\": \"https://example.com/icons/updated-profile.png\",\n  \"is_oidc\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "61087427-2347-4002-a0fb-a0f619891478",
+          "name": "Delete a scope",
+          "request": {
+            "name": "Delete a scope",
+            "description": {
+              "content": "Delete a specific scope by name. This operation is irreversible and will \nremove all associations with this scope.\n\n**Important:** Deleting a scope that is currently in use by applications \nor users may cause authentication and authorization issues.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scopes",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) Name of the scope to delete"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4679b0bd-ed63-4b20-ad5d-0ac184a2cf23",
+              "name": "Scope deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scopes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the scope to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "eb463a0e-5857-443d-a942-a7cc59f35544",
+              "name": "Scope not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scopes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the scope to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"not_found\",\n    \"message\": \"Scope not found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ca26dcb-b5d0-45df-a88f-92e5d6a48a63",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scopes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the scope to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c175d413-6a79-46ec-9554-50a1d11fa132",
+    "name": "Guardian OIDC Scope Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

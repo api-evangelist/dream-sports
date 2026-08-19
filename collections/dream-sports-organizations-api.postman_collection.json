@@ -1,0 +1,227 @@
+{
+  "item": [
+    {
+      "id": "831a5dcb-fe6e-49ee-ab17-e4b75a8c01f3",
+      "name": "Organizations",
+      "description": {
+        "content": "Organization management endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ba28d4a5-939d-488e-94ab-2cc7695abeba",
+          "name": "Get organizations",
+          "request": {
+            "name": "Get organizations",
+            "description": {
+              "content": "Get list of all organizations",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "orgs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "05505117-3a96-4f1e-bed9-2ea37c86aa7b",
+              "name": "List of organizations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "orgs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "user_session",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"orgId\": 9978,\n      \"orgName\": \"string\",\n      \"createdBy\": 801,\n      \"createdOn\": \"2002-11-23T22:27:47.306Z\"\n    },\n    {\n      \"orgId\": 9694,\n      \"orgName\": \"string\",\n      \"createdBy\": 9009,\n      \"createdOn\": \"2005-11-06T14:44:04.353Z\"\n    }\n  ],\n  \"status\": 8916\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "84010ea1-5c28-49b4-9b46-7af86950a2e2",
+          "name": "Get organization details",
+          "request": {
+            "name": "Get organization details",
+            "description": {
+              "content": "Get detailed information about an organization",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "org",
+                "detail"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "orgId",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "99fe5126-0ef2-4e19-85b8-417f314741e5",
+              "name": "Organization details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "org",
+                    "detail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "orgId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "user_session",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"orgId\": 7648,\n    \"orgName\": \"string\",\n    \"createdBy\": 8486,\n    \"createdOn\": \"1953-08-05T19:09:18.662Z\"\n  },\n  \"status\": 705\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:3000",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "user_session"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e43465c0-d428-4617-b003-f3f10dc5a650",
+    "name": "Checkmate Test Management Organizations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Comprehensive API documentation for Checkmate - a modern test case management system built with Remix, MySQL, and Drizzle ORM.\n\n## Features\n- Project and Test Management\n- Test Run Execution\n- Role-Based Access Control (RBAC)\n- Google OAuth Authentication\n- Test Status Tracking and History\n\n## Authentication\nAll endpoints require authentication via session cookies. Users must be logged in through Google OAuth.\n\n## Authorization\nAccess to resources is controlled via Casbin RBAC with three role levels:\n- **Admin**: Full access to all resources\n- **User**: Can create, read, update resources\n- **Reader**: Read-only access\n\n\nContact Support:\n Name: Checkmate API Support",
+      "type": "text/plain"
+    }
+  }
+}

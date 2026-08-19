@@ -1,0 +1,97 @@
+openapi: 3.2.0
+info:
+  title: Guardian Admin API
+  version: 1.0.0
+tags:
+- name: Admin
+paths:
+  /v1/admin/logout:
+    post:
+      tags:
+      - Admin
+      summary: Admin logout
+      description: 'Perform an administrative logout operation.
+
+
+        This endpoint allows administrators to perform logout operations
+
+        that may include additional administrative tasks beyond regular user logout.
+
+
+        **Authentication:**
+
+        - Requires Basic authentication in the Authorization header (admin credentials)
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TenantIdHeader'
+      - name: Authorization
+        in: header
+        required: true
+        description: Basic authentication (Base64 encoded admin credentials)
+        schema:
+          type: string
+          example: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V1AdminLogoutRequestBody'
+      responses:
+        '204':
+          description: Admin logout completed successfully
+        '400':
+          description: Bad Request due to missing parameters or invalid data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - Admin privileges required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    V1AdminLogoutRequestBody:
+      type: object
+      description: Request body for admin logout operation
+      required:
+      - userId
+      properties:
+        userId:
+          type: string
+          description: User ID to logout
+          example: user123
+          minLength: 1
+      example:
+        userId: user123
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
+  parameters:
+    TenantIdHeader:
+      name: tenant-id
+      in: header
+      description: tenant-id of the client integrating with guardian
+      required: true
+      schema:
+        type: string

@@ -1,0 +1,141 @@
+openapi: 3.2.0
+info:
+  title: Checkmate Test Management Reports API
+  description: 'Comprehensive API documentation for Checkmate - a modern test case management system built with Remix, MySQL, and Drizzle ORM.
+
+
+    ## Features
+
+    - Project and Test Management
+
+    - Test Run Execution
+
+    - Role-Based Access Control (RBAC)
+
+    - Google OAuth Authentication
+
+    - Test Status Tracking and History
+
+
+    ## Authentication
+
+    All endpoints require authentication via session cookies. Users must be logged in through Google OAuth.
+
+
+    ## Authorization
+
+    Access to resources is controlled via Casbin RBAC with three role levels:
+
+    - **Admin**: Full access to all resources
+
+    - **User**: Can create, read, update resources
+
+    - **Reader**: Read-only access
+
+    '
+  version: 1.0.0
+  contact:
+    name: Checkmate API Support
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: http://localhost:3000
+  description: Local development server (default port 3000, configurable via PORT env var)
+- url: https://your-production-domain.com
+  description: Production server (replace with your actual production URL)
+security:
+- cookieAuth: []
+- bearerAuth: []
+tags:
+- name: Reports
+  description: Reporting and download endpoints
+paths:
+  /api/v1/run/report-download:
+    get:
+      tags:
+      - Reports
+      summary: Download run report
+      description: Download a CSV report of test run results
+      parameters:
+      - name: runId
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: CSV file download
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+  /api/v1/tests/download:
+    get:
+      tags:
+      - Reports
+      summary: Download tests
+      description: Download tests in CSV format
+      parameters:
+      - name: projectId
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: CSV file download
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: user_session
+      description: 'Session cookie from Google OAuth authentication.
+
+
+        **How to get:**
+
+        1. Navigate to /login
+
+        2. Authenticate with Google
+
+        3. Cookie is automatically set
+
+
+        **Usage:**
+
+        - Browsers automatically include this cookie
+
+        - cURL: Use `-b cookies.txt` or `-H "Cookie: user_session=value"`
+
+        '
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Token
+      description: 'API token authentication for programmatic access.
+
+
+        **How to get:**
+
+        1. Login via web interface
+
+        2. Call POST /api/v1/token/generate with your userId
+
+        3. Copy the returned token
+
+
+        **Usage:**
+
+        - Include in Authorization header: `Bearer your_token_here`
+
+        - Example: `Authorization: Bearer abc123xyz`
+
+        '

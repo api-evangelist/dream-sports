@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Guardian Admin API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Admin",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Admin logout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/logout",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Perform an administrative logout operation.\n\nThis endpoint allows administrators to perform logout operations\nthat may include additional administrative tasks beyond regular user logout.\n\n**Authentication:**\n- Requires Basic authentication in the Authorization header (admin credentials)\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

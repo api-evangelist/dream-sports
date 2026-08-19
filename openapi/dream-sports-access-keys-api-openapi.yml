@@ -1,0 +1,218 @@
+openapi: 3.2.0
+info:
+  title: Delivr OTA Server Access Keys API
+  description: "Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.) \ndirectly to end users' devices without going through app store review processes.\n\n## Features\n- Deploy over-the-air updates to React Native applications\n- Manage apps, deployments, and releases\n- Gradual rollouts and A/B testing\n- Rollback capabilities\n- Deployment metrics and analytics\n- Multi-platform support\n"
+tags:
+- name: Access Keys
+paths:
+  /accessKeys:
+    get:
+      tags:
+      - Access Keys
+      summary: List access keys
+      description: Returns all access keys for the authenticated account
+      responses:
+        '200':
+          description: List of access keys
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessKeys:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AccessKey'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags:
+      - Access Keys
+      summary: Create access key
+      description: Creates a new access key for API authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessKeyRequest'
+      responses:
+        '201':
+          description: Access key created
+          headers:
+            Location:
+              schema:
+                type: string
+              description: URL of the created access key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessKey:
+                    $ref: '#/components/schemas/AccessKey'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /accessKeys/{accessKeyName}:
+    get:
+      tags:
+      - Access Keys
+      summary: Get access key
+      description: Returns details of a specific access key
+      parameters:
+      - $ref: '#/components/parameters/AccessKeyName'
+      responses:
+        '200':
+          description: Access key details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessKey:
+                    $ref: '#/components/schemas/AccessKey'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags:
+      - Access Keys
+      summary: Update access key
+      description: Updates an existing access key's properties
+      parameters:
+      - $ref: '#/components/parameters/AccessKeyName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessKeyRequest'
+      responses:
+        '200':
+          description: Access key updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessKey:
+                    $ref: '#/components/schemas/AccessKey'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+    delete:
+      tags:
+      - Access Keys
+      summary: Delete access key
+      description: Removes an access key
+      parameters:
+      - $ref: '#/components/parameters/AccessKeyName'
+      responses:
+        '201':
+          description: Access key deleted
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Conflict:
+      description: Conflict - resource already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request - invalid parameters
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/Error'
+            - type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+    Unauthorized:
+      description: Unauthorized - invalid or expired authentication
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: The session or access key being used is invalid, please run "code-push-standalone login" again.
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    AccessKeyRequest:
+      type: object
+      properties:
+        friendlyName:
+          type: string
+          example: CI/CD Key
+        description:
+          type: string
+        ttl:
+          type: integer
+          format: int64
+          description: Time-to-live in milliseconds
+          example: 5184000000
+        scope:
+          type: string
+    AccessKey:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Generated secure key (hidden in responses)
+          example: (hidden)
+        friendlyName:
+          type: string
+          example: VSTS Integration
+        description:
+          type: string
+          description: Legacy field, same as friendlyName
+        createdTime:
+          type: integer
+          format: int64
+        createdBy:
+          type: string
+          description: IP address or machine name
+        expires:
+          type: integer
+          format: int64
+          description: Expiration timestamp
+        isSession:
+          type: boolean
+          description: Whether this is a session token
+        scope:
+          type: string
+          description: Optional scope restriction
+  parameters:
+    AccessKeyName:
+      name: accessKeyName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Access key friendly name or generated name
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: AccessKey
+      description: Access key or session token obtained from OAuth authentication

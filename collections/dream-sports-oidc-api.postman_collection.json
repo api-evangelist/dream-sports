@@ -1,0 +1,2253 @@
+{
+  "item": [
+    {
+      "id": "08994f80-5d05-43a0-8029-3edb7edf31d9",
+      "name": "OIDC",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bc6f54c5-2847-4a65-bcbe-dfe4e72f8afc",
+          "name": "OAuth 2.0 Authorization Endpoint",
+          "request": {
+            "name": "OAuth 2.0 Authorization Endpoint",
+            "description": {
+              "content": "OAuth 2.0 Authorization endpoint that initiates the authorization flow.\n\nThis endpoint follows the OAuth 2.0 Authorization Code flow as specified in\nRFC 6749 (https://tools.ietf.org/html/rfc6749) and OpenID Connect Core 1.0\n(https://openid.net/specs/openid-connect-core-1_0.html).\n\n**Flow:**\n1. Client redirects user to this endpoint with authorization parameters\n2. Server validates the request and creates an authorization session\n3. User is redirected to the login page with a login challenge\n4. After authentication, user is redirected back to client with authorization code\n\n**Required Parameters:**\n- `response_type`: Must be \"code\" for authorization code flow\n- `client_id`: The registered client identifier\n- `scope`: Space-separated list of scopes (must include \"openid\")\n- `redirect_uri`: The registered redirect URI\n\n**Optional Parameters:**\n- `state`: Opaque value to maintain state between request and callback\n- `nonce`: String value to associate client session with ID token\n- `code_challenge`: PKCE code challenge (RFC 7636)\n- `code_challenge_method`: PKCE code challenge method (\"S256\" or \"plain\")\n- `prompt`: Space-separated list of prompts (\"login\", \"consent\", \"select_account\")\n- `login_hint`: Hint about the login identifier\n\n**Security:**\n- All redirect URIs must be pre-registered with the client\n- Scope validation ensures only authorized scopes are requested\n- PKCE support for public clients (RFC 7636)\n- Multi-tenant isolation via tenant-id header\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authorize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "response_type",
+                  "value": "<string>",
+                  "description": "(Required) OAuth 2.0 response type"
+                },
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>",
+                  "description": "(Required) OAuth 2.0 client identifier"
+                },
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>",
+                  "description": "(Required) Space-separated list of scopes (must include \"openid\")"
+                },
+                {
+                  "disabled": false,
+                  "key": "redirect_uri",
+                  "value": "<uri>",
+                  "description": "(Required) Registered redirect URI"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "Opaque value to maintain state between request and callback"
+                },
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<string>",
+                  "description": "String value to associate client session with ID token"
+                },
+                {
+                  "disabled": false,
+                  "key": "code_challenge",
+                  "value": "<string>",
+                  "description": "PKCE code challenge (RFC 7636)"
+                },
+                {
+                  "disabled": false,
+                  "key": "code_challenge_method",
+                  "value": "<string>",
+                  "description": "PKCE code challenge method"
+                },
+                {
+                  "disabled": false,
+                  "key": "prompt",
+                  "value": "<string>",
+                  "description": "Space-separated list of prompts"
+                },
+                {
+                  "disabled": false,
+                  "key": "login_hint",
+                  "value": "<string>",
+                  "description": "Hint about the login identifier"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "837d9f41-99ce-41db-aa56-a6653f48040c",
+              "name": "Redirect to login page with authorization session",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "response_type",
+                      "value": "code"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "my-client-id"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "openid email profile"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "https://myapp.com/callback"
+                    },
+                    {
+                      "key": "state",
+                      "value": "xyz123"
+                    },
+                    {
+                      "key": "nonce",
+                      "value": "abc456"
+                    },
+                    {
+                      "key": "code_challenge",
+                      "value": "E9Melhoa2OwvFrEMTJguCHaBkNVHYeP552O7hfQYVWU"
+                    },
+                    {
+                      "key": "code_challenge_method",
+                      "value": "S256"
+                    },
+                    {
+                      "key": "prompt",
+                      "value": "login"
+                    },
+                    {
+                      "key": "login_hint",
+                      "value": "user@example.com"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Redirect URL with login challenge and state",
+                  "key": "Location",
+                  "value": "https://login.example.com?login_challenge=abc123&state=xyz123"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c18877f7-6f13-497e-a7e0-7be05017bf96",
+              "name": "Bad Request - Invalid authorization request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "response_type",
+                      "value": "code"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "my-client-id"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "openid email profile"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "https://myapp.com/callback"
+                    },
+                    {
+                      "key": "state",
+                      "value": "xyz123"
+                    },
+                    {
+                      "key": "nonce",
+                      "value": "abc456"
+                    },
+                    {
+                      "key": "code_challenge",
+                      "value": "E9Melhoa2OwvFrEMTJguCHaBkNVHYeP552O7hfQYVWU"
+                    },
+                    {
+                      "key": "code_challenge_method",
+                      "value": "S256"
+                    },
+                    {
+                      "key": "prompt",
+                      "value": "login"
+                    },
+                    {
+                      "key": "login_hint",
+                      "value": "user@example.com"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"invalid_request\",\n  \"message\": \"Invalid client_id\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d50fb25-d15f-4db6-9b52-9ce5dbfd6b68",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "response_type",
+                      "value": "code"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "my-client-id"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "openid email profile"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "https://myapp.com/callback"
+                    },
+                    {
+                      "key": "state",
+                      "value": "xyz123"
+                    },
+                    {
+                      "key": "nonce",
+                      "value": "abc456"
+                    },
+                    {
+                      "key": "code_challenge",
+                      "value": "E9Melhoa2OwvFrEMTJguCHaBkNVHYeP552O7hfQYVWU"
+                    },
+                    {
+                      "key": "code_challenge_method",
+                      "value": "S256"
+                    },
+                    {
+                      "key": "prompt",
+                      "value": "login"
+                    },
+                    {
+                      "key": "login_hint",
+                      "value": "user@example.com"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "df5cb803-a7bc-45d8-9bfd-c5c6c6ef559e",
+          "name": "Accept login challenge",
+          "request": {
+            "name": "Accept login challenge",
+            "description": {
+              "content": "API to accept a login challenge and proceed with the OAuth 2.0 authorization flow.\n\nThis endpoint is called after the user has been authenticated through the login page.\nIt validates the login challenge and either redirects to the consent page (if consent is required)\nor directly to the client's redirect URI with an authorization code.\n\n**Flow:**\n1. User submits login credentials on the login page\n2. Login page calls this endpoint with the login challenge and refresh token\n3. Server validates the login challenge and refresh token\n4. If consent is required, user is redirected to consent page\n5. If no consent is required, user is redirected to client with authorization code\n\n**Authentication:**\n- Requires a valid refresh token (from request body or cookie)\n- Refresh token must match the user associated with the login challenge\n\n**Response Types:**\n- `302 Found`: Redirect to consent page or client redirect URI\n- `400 Bad Request`: Invalid request parameters\n- `401 Unauthorized`: Invalid login challenge or refresh token\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "login-accept"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"login_challenge\": \"<string>\",\n  \"refresh_token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "44e38c9f-d396-4179-833c-b7a9e15850e0",
+              "name": "Redirect to consent page or client redirect URI",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "login-accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"login_challenge\": \"login_challenge_abc123\",\n  \"refresh_token\": \"refresh_token_xyz789\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Redirect URI with consent challenge or authorization code",
+                  "key": "Location",
+                  "value": "https://consent.example.com?consent_challenge=xyz789"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3fdffaa2-bd26-4584-8742-1dd6f9270fb6",
+              "name": "Bad Request due to missing parameters or invalid data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "login-accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"login_challenge\": \"login_challenge_abc123\",\n  \"refresh_token\": \"refresh_token_xyz789\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b82aead1-88ec-4a37-b7e9-db90d775843a",
+              "name": "Unauthorized - Invalid login challenge or refresh token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "login-accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"login_challenge\": \"login_challenge_abc123\",\n  \"refresh_token\": \"refresh_token_xyz789\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bfc4d080-d3a6-4a46-8bc9-9459c5d5d0dd",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "login-accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"login_challenge\": \"login_challenge_abc123\",\n  \"refresh_token\": \"refresh_token_xyz789\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4007f4df-3853-440a-9d9e-0c173f414e0b",
+          "name": "Get user consent information",
+          "request": {
+            "name": "Get user consent information",
+            "description": {
+              "content": "API to retrieve user consent information for a specific client during the OAuth 2.0 authorization flow.\n\nThis endpoint is used on the consent page to decide on what scopes to ask consent for based on the providers implementation.\n\n**Flow:**\n1. User is redirected to consent page with consent challenge\n2. Consent page calls this endpoint with the consent challenge\n3. Server validates the consent challenge and refresh token\n4. Returns client information and scope details (requested vs already consented)\n\n**Authentication:**\n- Requires a valid refresh token (from cookie or request body)\n- Refresh token must match the user associated with the consent challenge\n\n**Response Information:**\n- Client details (name, URI, logo, etc.)\n- List of scopes being requested by the client\n- List of scopes the user has already consented to\n- User subject (user ID)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "user-consent"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "consent_challenge",
+                  "value": "<string>",
+                  "description": "(Required) The consent challenge identifier from the authorization flow"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b6cd5fb6-8222-4bb0-a938-4d9d142bcebd",
+              "name": "User consent information retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "user-consent"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "consent_challenge",
+                      "value": "consent_challenge_xyz123"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"client\": {\n    \"clientId\": \"my-client-app\",\n    \"clientName\": \"My Application\",\n    \"clientUri\": \"https://myapp.example.com\",\n    \"logoUri\": \"https://myapp.example.com/logo.png\",\n    \"policyUri\": \"https://myapp.example.com/privacy\"\n  },\n  \"requested_scopes\": [\n    \"openid\",\n    \"email\",\n    \"profile\",\n    \"phone\"\n  ],\n  \"consented_scopes\": [\n    \"openid\",\n    \"email\"\n  ],\n  \"subject\": \"user123\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6793004-f5da-4eeb-b564-afef2ad90a66",
+              "name": "Bad Request due to missing or invalid consent challenge",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "user-consent"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "consent_challenge",
+                      "value": "consent_challenge_xyz123"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"consent_challenge is required\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eff36546-42d0-4ff8-b0d1-df21fc45dab1",
+              "name": "Unauthorized - Invalid or mismatched refresh token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "user-consent"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "consent_challenge",
+                      "value": "consent_challenge_xyz123"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"unauthorized\",\n    \"message\": \"Invalid refresh token\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dda527e2-170b-4d45-8934-c3d3361da711",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "user-consent"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "consent_challenge",
+                      "value": "consent_challenge_xyz123"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a249c69c-aff5-4d9a-a5df-142830861065",
+          "name": "Accept consent challenge",
+          "request": {
+            "name": "Accept consent challenge",
+            "description": {
+              "content": "API to accept a consent challenge and complete the OAuth 2.0 authorization flow.\n\nThis endpoint is called after the user has reviewed and accepted the requested scopes\non the consent page. It validates the consent challenge and redirects the user to the\nclient's redirect URI with an authorization code.\n\n**Flow:**\n1. User reviews requested scopes on consent page\n2. User accepts/denies scopes and submits the form\n3. Consent page calls this endpoint with consent challenge and selected scopes\n4. Server validates consent challenge and processes scope consent\n5. User is redirected to client with authorization code\n\n**Scope Handling:**\n- User can consent to all or a subset of requested scopes\n- \"openid\" scope is always required and automatically included\n- Invalid or non-existent scopes are filtered out\n- Duplicate scopes are automatically deduplicated\n\n**Authentication:**\n- Requires a valid refresh token (from request body or cookie)\n- Refresh token must match the user associated with the consent challenge\n\n**Response:**\n- `302 Found`: Redirect to client redirect URI with authorization code\n- `400 Bad Request`: Invalid request parameters or missing openid scope\n- `401 Unauthorized`: Invalid consent challenge or refresh token\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "consent-accept"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"consent_challenge\": \"<string>\",\n  \"consented_scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"refresh_token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f317527f-98cf-470f-9c61-539f0ce47e3f",
+              "name": "Redirect to client redirect URI with authorization code",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "consent-accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"consent_challenge\": \"consent_challenge_xyz789\",\n  \"consented_scopes\": [\n    \"openid\",\n    \"email\",\n    \"profile\"\n  ],\n  \"refresh_token\": \"refresh_token_xyz789\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Client redirect URI with authorization code and state",
+                  "key": "Location",
+                  "value": "https://client.example.com/callback?code=abc123&state=xyz789"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f60dafbc-6e81-4aea-94d7-7c8d66284e59",
+              "name": "Bad Request due to missing parameters or invalid data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "consent-accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"consent_challenge\": \"consent_challenge_xyz789\",\n  \"consented_scopes\": [\n    \"openid\",\n    \"email\",\n    \"profile\"\n  ],\n  \"refresh_token\": \"refresh_token_xyz789\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "33cc7b92-6110-4e92-965a-e53d83a05c81",
+              "name": "Unauthorized - Invalid consent challenge or refresh token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "consent-accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"consent_challenge\": \"consent_challenge_xyz789\",\n  \"consented_scopes\": [\n    \"openid\",\n    \"email\",\n    \"profile\"\n  ],\n  \"refresh_token\": \"refresh_token_xyz789\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d7db46d-073a-466f-bc50-1519462c0259",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "consent-accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"consent_challenge\": \"consent_challenge_xyz789\",\n  \"consented_scopes\": [\n    \"openid\",\n    \"email\",\n    \"profile\"\n  ],\n  \"refresh_token\": \"refresh_token_xyz789\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2615d588-cd8d-479c-bdc9-ef48feb5d0d5",
+          "name": "OAuth 2.0 Token Endpoint",
+          "request": {
+            "name": "OAuth 2.0 Token Endpoint",
+            "description": {
+              "content": "OAuth 2.0 Token endpoint for exchanging authorization codes and refresh tokens.\n\nThis endpoint follows the OAuth 2.0 Token Exchange flow as specified in\nRFC 6749 (https://tools.ietf.org/html/rfc6749) and OpenID Connect Core 1.0\n(https://openid.net/specs/openid-connect-core-1_0.html).\n\n**Supported Grant Types:**\n- `authorization_code`: Exchange authorization code for access token\n- `refresh_token`: Exchange refresh token for new access token\n- `client_credentials`: Exchange client credentials for access token\n\n**Authentication Methods:**\n- Client Secret Basic: Authorization header with Base64 encoded client_id:client_secret\n- Client Secret Post: client_id and client_secret in request body\n\n**Security:**\n- Authorization codes can only be used once\n- Refresh tokens are rotated on each use\n- PKCE validation for authorization code flow\n- Multi-tenant isolation via tenant-id header\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "grant_type",
+                  "value": "<string>",
+                  "description": "(Required) OAuth 2.0 grant type"
+                },
+                {
+                  "disabled": false,
+                  "key": "code",
+                  "value": "<string>",
+                  "description": "Authorization code (required for authorization_code grant)"
+                },
+                {
+                  "disabled": false,
+                  "key": "refresh_token",
+                  "value": "<string>",
+                  "description": "Refresh token (required for refresh_token grant)"
+                },
+                {
+                  "disabled": false,
+                  "key": "redirect_uri",
+                  "value": "<uri>",
+                  "description": "Redirect URI (required for authorization_code grant)"
+                },
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>",
+                  "description": "Client identifier (required for client_secret_post auth)"
+                },
+                {
+                  "disabled": false,
+                  "key": "client_secret",
+                  "value": "<string>",
+                  "description": "Client secret (required for client_secret_post auth)"
+                },
+                {
+                  "disabled": false,
+                  "key": "code_verifier",
+                  "value": "<string>",
+                  "description": "PKCE code verifier (required if code_challenge was used)"
+                },
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>",
+                  "description": "Space-separated list of scopes"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "31081d66-7160-45d6-ab75-c6b2702f445d",
+              "name": "Token exchange successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Client Secret Basic authentication",
+                    "key": "Authorization",
+                    "value": "Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ="
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) OAuth 2.0 grant type",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "authorization_code"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Authorization code (required for authorization_code grant)",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "auth_code_abc123"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Redirect URI (required for authorization_code grant)",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "https://client.example.com/callback"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Client identifier (required for client_secret_post auth)",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "my_client_id"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Client secret (required for client_secret_post auth)",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "my_client_secret"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Cache control header",
+                  "key": "Cache-Control",
+                  "value": "no-store"
+                },
+                {
+                  "disabled": false,
+                  "description": "Pragma header",
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": \"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...\",\n  \"token_type\": \"Bearer\",\n  \"expires_in\": 3600,\n  \"refresh_token\": \"refresh_token_xyz789\",\n  \"id_token\": \"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...\",\n  \"scope\": \"openid email profile\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ccfa1a06-6a86-4a07-8514-2a526729dd5a",
+              "name": "Bad Request due to missing parameters or invalid data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Client Secret Basic authentication",
+                    "key": "Authorization",
+                    "value": "Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ="
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) OAuth 2.0 grant type",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "authorization_code"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Authorization code (required for authorization_code grant)",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "auth_code_abc123"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Redirect URI (required for authorization_code grant)",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "https://client.example.com/callback"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Client identifier (required for client_secret_post auth)",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "my_client_id"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Client secret (required for client_secret_post auth)",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "my_client_secret"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d48ddbb5-ecca-4040-86e8-08e06451ab92",
+              "name": "Unauthorized - Invalid client credentials or token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Client Secret Basic authentication",
+                    "key": "Authorization",
+                    "value": "Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ="
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) OAuth 2.0 grant type",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "authorization_code"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Authorization code (required for authorization_code grant)",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "auth_code_abc123"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Redirect URI (required for authorization_code grant)",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "https://client.example.com/callback"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Client identifier (required for client_secret_post auth)",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "my_client_id"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Client secret (required for client_secret_post auth)",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "my_client_secret"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7626bdb-0bae-4a6b-aa2b-1aaf9a759212",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Client Secret Basic authentication",
+                    "key": "Authorization",
+                    "value": "Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ="
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) OAuth 2.0 grant type",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "authorization_code"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Authorization code (required for authorization_code grant)",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "auth_code_abc123"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Redirect URI (required for authorization_code grant)",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "https://client.example.com/callback"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Client identifier (required for client_secret_post auth)",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "my_client_id"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Client secret (required for client_secret_post auth)",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "my_client_secret"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a702c4eb-f0f8-4d9d-a7f4-0695fa2c4299",
+          "name": "OpenID Connect UserInfo Endpoint",
+          "request": {
+            "name": "OpenID Connect UserInfo Endpoint",
+            "description": {
+              "content": "OpenID Connect UserInfo endpoint for retrieving user claims.\n\nThis endpoint follows the OpenID Connect UserInfo specification\n(https://openid.net/specs/openid-connect-core-1_0.html#UserInfo).\n\n**Authentication:**\n- Requires a valid access token in Authorization header\n- Access token must have appropriate scopes for requested claims\n\n**Response Formats:**\n- JSON: Standard JSON response with user claims\n- JWT: Signed JWT containing user claims (if requested)\n\n**Supported Claims:**\n- Standard OpenID Connect claims (sub, name, email, etc.)\n- Custom claims based on consented scopes\n- Claims are filtered based on access token scopes\n\n**Security:**\n- Access token validation and scope checking\n- Multi-tenant isolation via tenant-id header\n- CORS support for cross-origin requests\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "userinfo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2df09184-a87a-49ba-85a4-91e82a24306d",
+              "name": "UserInfo retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "userinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer access token",
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sub\": \"user123\",\n  \"name\": \"John Doe\",\n  \"given_name\": \"John\",\n  \"family_name\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"email_verified\": true,\n  \"phone_number\": \"+1234567890\",\n  \"phone_number_verified\": false,\n  \"picture\": \"https://example.com/avatar.jpg\",\n  \"locale\": \"en-US\",\n  \"updated_at\": 1640995200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84fa16de-ef47-41ef-a52e-10cf23234aee",
+              "name": "Unauthorized - Invalid or expired access token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "userinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer access token",
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd7a7d9f-a6df-4828-9f44-f577c7ae91eb",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "userinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer access token",
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "586da4df-e19e-4414-b636-024389290985",
+          "name": "OpenID Connect UserInfo Endpoint (POST)",
+          "request": {
+            "name": "OpenID Connect UserInfo Endpoint (POST)",
+            "description": {
+              "content": "OpenID Connect UserInfo endpoint for retrieving user claims via POST.\n\nThis endpoint provides the same functionality as the GET endpoint but allows\nfor larger access tokens that might exceed URL length limits.\n\n**Authentication:**\n- Requires a valid access token in Authorization header\n- Access token must have appropriate scopes for requested claims\n\n**Response Formats:**\n- JSON: Standard JSON response with user claims\n- JWT: Signed JWT containing user claims (if requested)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "userinfo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "05dc4e90-d06e-4119-8b5f-d48ac874a66f",
+              "name": "UserInfo retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "userinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer access token",
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sub\": \"user123\",\n  \"name\": \"John Doe\",\n  \"given_name\": \"John\",\n  \"family_name\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"email_verified\": true,\n  \"phone_number\": \"+1234567890\",\n  \"phone_number_verified\": false,\n  \"picture\": \"https://example.com/avatar.jpg\",\n  \"locale\": \"en-US\",\n  \"updated_at\": 1640995200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dba56e76-379a-4264-8f7a-c4a4304bea57",
+              "name": "Unauthorized - Invalid or expired access token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "userinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer access token",
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7a2900a-8379-495b-bf59-6f0e71c09c8d",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "userinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer access token",
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "98f166d9-5ae0-4608-817f-4942ed6f39e0",
+          "name": "Revoke OIDC refresh token",
+          "request": {
+            "name": "Revoke OIDC refresh token",
+            "description": {
+              "content": "Revoke an OIDC refresh token, making it invalid for future use.\n\nThis endpoint allows clients to explicitly revoke oidc refresh tokens when they are\nno longer needed, improving security by reducing the token's lifetime.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "token",
+                "revoke"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "token",
+                  "value": "<string>",
+                  "description": "(Required) The refresh token to revoke"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "aa098c43-cc60-43be-b83f-dd3400a8f89d",
+              "name": "Token revoked successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token",
+                    "revoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The refresh token to revoke",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Token revoked successfully\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0eea65c8-7985-410d-bd75-e1c2aed238f2",
+              "name": "Bad Request due to missing or invalid token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token",
+                    "revoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The refresh token to revoke",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67b34b7d-cc88-44fa-8124-e5e95b47fcc8",
+              "name": "Unauthorized - Invalid token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token",
+                    "revoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The refresh token to revoke",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "69ded78e-0322-43f4-8c20-c54d8e7fd611",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token",
+                    "revoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The refresh token to revoke",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0c5c7a97-02a2-4747-9aa4-9a734f26f08c",
+    "name": "Guardian OIDC API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

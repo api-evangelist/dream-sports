@@ -1,0 +1,1208 @@
+{
+  "item": [
+    {
+      "id": "b909cec4-ff89-423d-85b7-d084419f727d",
+      "name": "Events Catalog",
+      "description": {
+        "content": "Event schema management — create, update, and manage event definitions and their properties",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0aaede2a-85f3-491a-a750-4167688df33c",
+          "name": "List Events",
+          "request": {
+            "name": "List Events",
+            "description": {},
+            "url": {
+              "path": [
+                "thunder",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ce570a79-eefd-4eb2-965d-a8978d452f5d",
+              "name": "Events retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {},\n  \"statusCode\": 1704\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8033072c-aa71-4562-99da-ee8cc85bceb4",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6f2c9e56-57b5-4ca3-bbb7-7b27163f4f4c",
+          "name": "Create or Update Events",
+          "request": {
+            "name": "Create or Update Events",
+            "description": {
+              "content": "Creates new events or updates existing events. Accepts an array of EventInput objects.\nEach event includes a name and a list of properties with types, expected values, and mandatory flags.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"eventName\": \"<string>\",\n    \"properties\": [\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"eventName\": \"<string>\",\n    \"properties\": [\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0ade3a4b-f772-4810-9981-f2a585b23a15",
+              "name": "Event created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"eventName\": \"AppLaunch\",\n    \"properties\": [\n      {\n        \"propertyName\": \"mode\",\n        \"type\": \"string\",\n        \"isMandatory\": true,\n        \"description\": \"App launch mode\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {},\n  \"statusCode\": 1704\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d389f6c-c1f4-4b4f-85ec-e957f57535cd",
+              "name": "Invalid request body or validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"eventName\": \"AppLaunch\",\n    \"properties\": [\n      {\n        \"propertyName\": \"mode\",\n        \"type\": \"string\",\n        \"isMandatory\": true,\n        \"description\": \"App launch mode\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "325dceb2-ef0d-4d75-8839-d1aa284de901",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"eventName\": \"AppLaunch\",\n    \"properties\": [\n      {\n        \"propertyName\": \"mode\",\n        \"type\": \"string\",\n        \"isMandatory\": true,\n        \"description\": \"App launch mode\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "620a650b-e187-40b2-8521-5e91639ad7f4",
+          "name": "Get All Event Names",
+          "request": {
+            "name": "Get All Event Names",
+            "description": {
+              "content": "Retrieves a list of all event names for the project (lightweight, no property details).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "events",
+                "list",
+                "names"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aee3e094-1261-4254-adb1-9775bc375a2b",
+              "name": "Event names retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    "list",
+                    "names"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {},\n  \"statusCode\": 1704\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e6fddc6-a814-4a4e-8c23-11b91d4d9695",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    "list",
+                    "names"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d4d113f9-dd4f-4e18-afcd-b99704329eb0",
+          "name": "Get Event by Name",
+          "request": {
+            "name": "Get Event by Name",
+            "description": {
+              "content": "Retrieves a specific event by its name, including all property definitions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "events",
+                ":event-name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "event-name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "45eb4696-1863-4688-9658-cc2b16f7f9eb",
+              "name": "Event retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    ":event-name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "event-name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {},\n  \"statusCode\": 1704\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d3f375cf-e59a-49fe-b5ea-c24d2a2cb499",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    ":event-name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "event-name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a352a6ac-b65e-4f9d-bc58-4ef1ffe4648b",
+              "name": "Event not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    ":event-name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "event-name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a27ffa21-cc3e-457f-abc4-14752f686237",
+          "name": "Update Event Properties",
+          "request": {
+            "name": "Update Event Properties",
+            "description": {
+              "content": "Updates the properties of an existing event.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "events",
+                ":event-name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "event-name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"eventName\": \"<string>\",\n    \"properties\": [\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"eventName\": \"<string>\",\n    \"properties\": [\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fab33780-05a4-467b-9368-5a8e7833b46c",
+              "name": "Event updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    ":event-name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "event-name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"eventName\": \"<string>\",\n    \"properties\": [\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"eventName\": \"<string>\",\n    \"properties\": [\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {},\n  \"statusCode\": 1704\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f0519e7-9e3a-4490-9662-d930a8c508a1",
+              "name": "Invalid request body or validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    ":event-name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "event-name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"eventName\": \"<string>\",\n    \"properties\": [\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"eventName\": \"<string>\",\n    \"properties\": [\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f66e3cc2-a93a-4dee-b310-700fbd13f00f",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    ":event-name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "event-name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"eventName\": \"<string>\",\n    \"properties\": [\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"eventName\": \"<string>\",\n    \"properties\": [\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d22be692-4be5-408f-9e0b-8cc40d4cf660",
+              "name": "Event not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    ":event-name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "event-name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"eventName\": \"<string>\",\n    \"properties\": [\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"eventName\": \"<string>\",\n    \"properties\": [\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"propertyName\": \"<string>\",\n        \"type\": \"<string>\",\n        \"isMandatory\": \"<boolean>\",\n        \"expectedValue\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "447bf09a-b678-4d0d-b15c-3f7435cb272d",
+          "name": "Delete Event",
+          "request": {
+            "name": "Delete Event",
+            "description": {},
+            "url": {
+              "path": [
+                "thunder",
+                "events",
+                ":event-name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "event-name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "80ebbe73-cc0e-44f5-a743-b63b7873d503",
+              "name": "Event deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    ":event-name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "event-name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2fb6f06b-8bee-466f-acdc-be3b06631bbd",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    ":event-name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "event-name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d4079915-0f4c-4794-8289-224c1eca0e16",
+              "name": "Event not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    ":event-name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "event-name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "TENANT-ID"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ae831f54-38b5-4be2-84fc-419d68e60433",
+    "name": "Raven Journey Events Catalog API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Journey module APIs for Journey management, behaviour tags, events, and SDK operations.\n\n## Authentication\nTENANT-ID and PROJECT-ID headers are required on all endpoints (auth routes use TENANT-ID only) via the global `TenantIdHeader` security scheme.\nThe `/healthcheck` endpoint is exempted. Some endpoints also require `USER-ID`.\n\n## Timestamps\nAll timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).\n\n\nContact Support:\n Name: Raven Team",
+      "type": "text/plain"
+    }
+  }
+}

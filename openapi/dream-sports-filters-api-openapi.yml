@@ -1,0 +1,83 @@
+openapi: 3.2.0
+info:
+  description: Thunder Admin - Management endpoints
+  title: Thunder Admin Filters API
+  version: 1.0.0
+servers:
+- url: http://localhost:8081
+  description: Thunder Admin Server (Management endpoints)
+tags:
+- name: Filters
+  description: APIs for retrieving filter values used in the admin UI. Provides available options for tags, teams, statuses, behaviour tags, and creators.
+paths:
+  /thunder/filters:
+    get:
+      summary: Get Filters
+      description: Retrieves available filter values for CTAs including tags, teams, statuses, behaviour tags, and creators. Used to populate filter dropdowns in the admin UI.
+      operationId: getFilters
+      tags:
+      - Filters
+      parameters:
+      - description: Tenant identifier
+        example: tenant1
+        name: x-tenant-id
+        required: false
+        in: header
+        schema:
+          type: string
+          default: default
+      responses:
+        '200':
+          description: Filter values retrieved successfully
+          content:
+            application/json:
+              examples:
+                Filters Response:
+                  summary: Available filter values
+                  value:
+                    success: true
+                    data:
+                      names:
+                      - Welcome Bonus
+                      - Testing1
+                      tags:
+                      - growth
+                      - notifications
+                      - promotion
+                      teams:
+                      - marketing
+                      - growth
+                      - default
+                      createdBy:
+                      - admin@example.com
+                      statuses:
+                      - DRAFT
+                      - SCHEDULED
+                      - LIVE
+                      - PAUSED
+                      - CONCLUDED
+                      - TERMINATED
+                    statusCode: 200
+              schema:
+                $ref: '#/components/schemas/FilterResponse'
+components:
+  schemas:
+    FilterResponse:
+      type: object
+      properties:
+        names:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+        teams:
+          type: array
+          items:
+            type: string
+        createdBy:
+          type: array
+          items:
+            type: string

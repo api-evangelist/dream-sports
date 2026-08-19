@@ -1,0 +1,136 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Delivr OTA Server Collaborators API"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Collaborators",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List collaborators",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/apps/:appName/collaborators",
+            "headers": [
+              {
+                "name": "tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "appName",
+                "value": "MyApp-iOS",
+                "type": "path",
+                "description": "Application name (or 'owner:appName' for disambiguation)"
+              }
+            ]
+          },
+          "docs": "Returns all collaborators for an app"
+        },
+        {
+          "info": {
+            "name": "Add collaborator",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/apps/:appName/collaborators/:email",
+            "headers": [
+              {
+                "name": "tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "appName",
+                "value": "MyApp-iOS",
+                "type": "path",
+                "description": "Application name (or 'owner:appName' for disambiguation)"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Adds a collaborator to the app (requires Owner permission)"
+        },
+        {
+          "info": {
+            "name": "Update collaborator role",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/apps/:appName/collaborators/:email",
+            "headers": [
+              {
+                "name": "tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "appName",
+                "value": "MyApp-iOS",
+                "type": "path",
+                "description": "Application name (or 'owner:appName' for disambiguation)"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a collaborator's role (requires Owner permission)"
+        },
+        {
+          "info": {
+            "name": "Remove collaborator",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/apps/:appName/collaborators/:email",
+            "headers": [
+              {
+                "name": "tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "appName",
+                "value": "MyApp-iOS",
+                "type": "path",
+                "description": "Application name (or 'owner:appName' for disambiguation)"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Removes a collaborator from the app (requires Owner permission, or user can remove themselves)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

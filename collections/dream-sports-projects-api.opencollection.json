@@ -1,0 +1,133 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Checkmate Test Management Projects API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "user_session",
+      "value": "{{user_session}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/projects",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "query",
+                "description": "Organization ID"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page"
+              },
+              {
+                "name": "textSearch",
+                "value": "",
+                "type": "query",
+                "description": "Text search filter"
+              },
+              {
+                "name": "projectDescription",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project description"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of projects for an organization"
+        },
+        {
+          "info": {
+            "name": "Create a new project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:3000/api/v1/project/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new project in an organization"
+        },
+        {
+          "info": {
+            "name": "Update a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/v1/project/edit",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update project details"
+        },
+        {
+          "info": {
+            "name": "Update project status",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/v1/project/update-status",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Archive or activate a project"
+        },
+        {
+          "info": {
+            "name": "Get project details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/project/detail",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "query",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about a specific project"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

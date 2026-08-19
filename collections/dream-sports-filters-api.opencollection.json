@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Thunder Admin Filters API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Filters",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Filters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8081/thunder/filters",
+            "headers": [
+              {
+                "name": "x-tenant-id",
+                "value": "tenant1"
+              }
+            ]
+          },
+          "docs": "Retrieves available filter values for CTAs including tags, teams, statuses, behaviour tags, and creators. Used to populate filter dropdowns in the admin UI."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

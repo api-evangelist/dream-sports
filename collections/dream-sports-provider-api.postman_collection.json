@@ -1,0 +1,209 @@
+{
+  "item": [
+    {
+      "id": "0536291d-624e-44a9-bf88-9ab28f4ec2ef",
+      "name": "Provider",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "14b2d0cc-9085-42b2-8087-d794b7229042",
+          "name": "Update identity provider details for a user",
+          "request": {
+            "name": "Update identity provider details for a user",
+            "description": {
+              "content": "API to update provider details of an user\n\nA valid request must have the following fields in the request-\n- userId\n- provider\n\nProvider details are included in the provider object.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "provider"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"<string>\",\n  \"provider\": {\n    \"name\": \"<string>\",\n    \"providerUserId\": \"<string>\",\n    \"data\": \"<object>\",\n    \"credentials\": \"<object>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "579966fe-6c4f-49b6-8306-1a2927f1db94",
+              "name": "Returns user details after registering",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "provider"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"<string>\",\n  \"provider\": {\n    \"name\": \"google\",\n    \"providerUserId\": \"1234\",\n    \"data\": \"<object>\",\n    \"credentials\": \"<object>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"phoneNumber\": \"string\",\n  \"email\": \"abcdef@gmail.com\",\n  \"name\": \"John Doe\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "679d13c0-ce97-4ff6-9393-d8542aa58bd9",
+              "name": "Bad Request due to missing parameters or invalid data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "provider"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"<string>\",\n  \"provider\": {\n    \"name\": \"google\",\n    \"providerUserId\": \"1234\",\n    \"data\": \"<object>\",\n    \"credentials\": \"<object>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f956ea1b-62ed-4b1a-9313-51d6d2f4b6a8",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "provider"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"<string>\",\n  \"provider\": {\n    \"name\": \"google\",\n    \"providerUserId\": \"1234\",\n    \"data\": \"<object>\",\n    \"credentials\": \"<object>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f1ac0592-b335-4bcb-837a-58b1fb4c4c02",
+    "name": "Guardian integration endpoints Provider API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Endpoints required to integrate with Guardian.",
+      "type": "text/plain"
+    }
+  }
+}

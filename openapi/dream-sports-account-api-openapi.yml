@@ -1,0 +1,259 @@
+openapi: 3.2.0
+info:
+  title: Dream Sports Account API
+  version: '1.0'
+  description: 'Operations tagged Account across 2 of this provider''s published API definitions: dream-sports-delivr-ota-openapi.yml, dream-sports-dota-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: http://localhost:3000
+  description: Local server
+tags:
+- name: Account
+paths:
+  /account:
+    get:
+      tags:
+      - Account
+      summary: Get current account
+      description: Returns the authenticated user's account information
+      responses:
+        '200':
+          description: Account details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  account:
+                    $ref: '#/components/schemas/Account'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags:
+      - Account
+      summary: Create account
+      description: Creates a new account (internal use)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account:
+                  $ref: '#/components/schemas/AccountCreate'
+      responses:
+        '200':
+          description: Account created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  account:
+                    type: string
+                    description: Account ID
+  /account/ownerTermsStatus:
+    get:
+      tags:
+      - Account
+      summary: Check terms acceptance status
+      description: Checks if the user has accepted the latest terms and conditions
+      responses:
+        '200':
+          description: Terms acceptance status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TermsStatus'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /account/acceptTerms:
+    post:
+      tags:
+      - Account
+      summary: Accept terms and conditions
+      description: Records acceptance of terms and conditions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - termsVersion
+              properties:
+                termsVersion:
+                  type: string
+                  example: v1.0
+      responses:
+        '201':
+          description: Terms accepted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  termsAcceptance:
+                    $ref: '#/components/schemas/TermsAcceptance'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /accountByaccessKeyName:
+    get:
+      tags:
+      - Account
+      summary: Get account by access key
+      description: Retrieves account information using an access key name
+      parameters:
+      - name: accesskeyname
+        in: header
+        required: true
+        schema:
+          type: string
+        description: Access key name
+      responses:
+        '200':
+          description: Account details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/AccountStorage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+components:
+  schemas:
+    AccountStorage:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        gitHubId:
+          type: string
+        microsoftId:
+          type: string
+        azureAdId:
+          type: string
+        createdTime:
+          type: integer
+          format: int64
+    TermsAcceptance:
+      type: object
+      properties:
+        id:
+          type: string
+        accountId:
+          type: string
+        email:
+          type: string
+        termsVersion:
+          type: string
+        acceptedTime:
+          type: integer
+          format: int64
+    Account:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        name:
+          type: string
+          example: John Doe
+        linkedProviders:
+          type: array
+          items:
+            type: string
+          example:
+          - GitHub
+          - Microsoft
+          description: List of linked OAuth providers
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    AccountCreate:
+      type: object
+      required:
+      - email
+      - name
+      properties:
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        gitHubId:
+          type: string
+        microsoftId:
+          type: string
+        azureAdId:
+          type: string
+    TermsStatus:
+      type: object
+      properties:
+        accountId:
+          type: string
+        isOwner:
+          type: boolean
+        ownerAppCount:
+          type: integer
+        termsAccepted:
+          type: boolean
+        termsVersion:
+          type:
+          - string
+          - 'null'
+        acceptedTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        isCurrentVersion:
+          type: boolean
+        currentRequiredVersion:
+          type: string
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/Error'
+            - type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+    Unauthorized:
+      description: Unauthorized - invalid or expired authentication
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: The session or access key being used is invalid, please run "code-push-standalone login" again.
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: AccessKey
+      description: Access key or session token obtained from OAuth authentication
+x-refined-from:
+- dream-sports-delivr-ota-openapi.yml
+- dream-sports-dota-openapi.yml

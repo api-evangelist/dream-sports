@@ -1,0 +1,144 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Guardian Social API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Social",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Signin, Signup or Signinup using the facebook access_token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/auth/fb",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "API to signin, signup or signinup using the facebook access_token. The access_token is verified via the https://graph.facebook.com/me endpoint.\n"
+        },
+        {
+          "info": {
+            "name": "Signin, Signup or Signinup user using ID token verification.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/auth/google",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "API to signin, signup or signinup a user using Google issued ID token.\n\nThe id token is verified statelessly via the public keys exposed by Google using the JWKS URI.\n"
+        },
+        {
+          "info": {
+            "name": "Connect to external identity provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/idp/connect",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Establish a connection with an external identity provider for authentication.\n\nThis endpoint allows Guardian to connect to external identity providers\n(IdPs) for user authentication and profile information retrieval.\n\n**Configuration Requirements:**\n- Provider-specific client credentials (client ID and secret)\n- Redirect URI for OAuth flows\n- Optional scope and endpoint configuration\n"
+        },
+        {
+          "info": {
+            "name": "Signin, Signup or Signinup using the facebook access_token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/auth/fb",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "API to signin, signup or signinup using the facebook access_token. The access_token is verified via the https://graph.facebook.com/me endpoint.\n"
+        },
+        {
+          "info": {
+            "name": "Signin, Signup or Signinup user using ID token verification.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/auth/google",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "API to signin, signup or signinup a user using Google issued ID token.\n\nThe id token is verified statelessly via the public keys exposed by Google using the JWKS URI.\n"
+        },
+        {
+          "info": {
+            "name": "Connect to external identity provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/idp/connect",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Establish a connection with an external identity provider for authentication.\n\nThis endpoint allows Guardian to connect to external identity providers\n(IdPs) for user authentication and profile information retrieval.\n\n**Configuration Requirements:**\n- Provider-specific client credentials (client ID and secret)\n- Redirect URI for OAuth flows\n- Optional scope and endpoint configuration\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

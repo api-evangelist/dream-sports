@@ -1,0 +1,245 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Checkmate Test Management Tests API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "user_session",
+      "value": "{{user_session}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all tests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/project/tests",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "textSearch",
+                "value": "",
+                "type": "query",
+                "description": "Search by title or test ID"
+              },
+              {
+                "name": "priority",
+                "value": "",
+                "type": "query",
+                "description": "Filter by priority (comma-separated IDs)"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by automation status (comma-separated IDs)"
+              },
+              {
+                "name": "squad",
+                "value": "",
+                "type": "query",
+                "description": "Filter by squad (comma-separated IDs)"
+              },
+              {
+                "name": "label",
+                "value": "",
+                "type": "query",
+                "description": "Filter by labels (comma-separated IDs)"
+              },
+              {
+                "name": "platform",
+                "value": "",
+                "type": "query",
+                "description": "Filter by platform (comma-separated IDs)"
+              },
+              {
+                "name": "section",
+                "value": "",
+                "type": "query",
+                "description": "Filter by section (comma-separated IDs)"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated and filtered list of tests for a project"
+        },
+        {
+          "info": {
+            "name": "Create a test case",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:3000/api/v1/test/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new test case in a project"
+        },
+        {
+          "info": {
+            "name": "Update a test case",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/v1/test/update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing test case"
+        },
+        {
+          "info": {
+            "name": "Delete a test case",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:3000/api/v1/test/delete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete a test case by ID"
+        },
+        {
+          "info": {
+            "name": "Bulk create tests",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:3000/api/v1/test/bulk-add",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create multiple test cases at once"
+        },
+        {
+          "info": {
+            "name": "Bulk delete tests",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:3000/api/v1/test/bulk-delete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete multiple test cases at once"
+        },
+        {
+          "info": {
+            "name": "Bulk update tests",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/v1/test/bulk-update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update multiple test cases at once"
+        },
+        {
+          "info": {
+            "name": "Get test details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/test/details",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "testId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about a specific test"
+        },
+        {
+          "info": {
+            "name": "Get tests count",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/project/tests-count",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get total count of tests in a project"
+        },
+        {
+          "info": {
+            "name": "Get test status history",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/test/test-status-history",
+            "params": [
+              {
+                "name": "testId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve the status change history for a test"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

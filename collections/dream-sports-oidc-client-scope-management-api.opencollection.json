@@ -1,0 +1,103 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Guardian OIDC Client Scope Management API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OIDC Client Scope Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get client scopes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/client/:client_id/scope",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the client"
+              }
+            ]
+          },
+          "docs": "Retrieve all scopes associated with an OAuth 2.0 client.\n\n**Response:**\n- Returns a list of scope names\n- Empty list if no scopes are assigned\n- Scopes are returned in alphabetical order\n"
+        },
+        {
+          "info": {
+            "name": "Add scopes to client",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/client/:client_id/scope",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the client"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add one or more scopes to an OAuth 2.0 client. This allows the client\nto request these scopes during the authorization flow.\n\n**Scope Validation:**\n- All scopes must exist in the tenant\n- Duplicate scopes are automatically ignored\n- Invalid scopes are filtered out\n\n**Batch Operation:**\n- Multiple scopes can be added in a single request\n- The operation is atomic - either all valid scopes are added or none\n"
+        },
+        {
+          "info": {
+            "name": "Remove scope from client",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/admin/client/:client_id/scope",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the client"
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "Name of the scope to remove"
+              }
+            ]
+          },
+          "docs": "Remove a specific scope from an OAuth 2.0 client.\n\n**Impact:**\n- The client will no longer be able to request this scope\n- Existing tokens with this scope remain valid until expiration\n- New authorization requests will not include this scope\n\n**Validation:**\n- The scope must be currently assigned to the client\n- If the scope is not assigned, the operation succeeds (idempotent)\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

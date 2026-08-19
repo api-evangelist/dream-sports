@@ -1,0 +1,107 @@
+openapi: 3.2.0
+info:
+  title: Guardian Key Management API
+  version: 1.0.0
+tags:
+- name: Key Management
+paths:
+  /v1/keys/generate:
+    post:
+      tags:
+      - Key Management
+      summary: Generate new RSA key pair
+      description: 'Generate a new RSA key pair for token signing. The new key will be used
+
+        for signing new tokens while the old key remains valid for verification.
+
+
+        **Security:** This operation should be performed periodically to rotate keys.
+
+        The old key will be kept for a grace period to verify existing tokens.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TenantIdHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                keySize:
+                  type: integer
+                  description: RSA key size in bits
+                  enum:
+                  - 2048
+                  - 3072
+                  - 4096
+                  default: 2048
+                  example: 2048
+                format:
+                  type: string
+                  description: Output format for the keys
+                  enum:
+                  - PEM
+                  - JWKS
+                  default: PEM
+                  example: PEM
+      responses:
+        '200':
+          description: New RSA key pair generated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kid:
+                    type: string
+                    description: Unique identifier for the new key (Key ID)
+                  publicKey:
+                    oneOf:
+                    - type: string
+                    - type: object
+                    description: Public key in the requested format (PEM string or JWKS object)
+                  privateKey:
+                    oneOf:
+                    - type: string
+                    - type: object
+                    description: Private key in the requested format (PEM string or JWKS object)
+                  keySize:
+                    type: integer
+                    description: RSA key size in bits
+        '400':
+          description: Bad Request due to invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  parameters:
+    TenantIdHeader:
+      name: tenant-id
+      in: header
+      description: tenant-id of the client integrating with guardian
+      required: true
+      schema:
+        type: string
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.

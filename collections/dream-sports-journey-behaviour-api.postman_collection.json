@@ -1,0 +1,1130 @@
+{
+  "item": [
+    {
+      "id": "403d466e-ca1d-4922-b43d-09e9bb564cee",
+      "name": "Journey Behaviour",
+      "description": {
+        "content": "Journey behaviour tag management — define and manage behaviour tags linked to journeys",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "44aa1b1a-3c7f-4156-bc3a-bcbcfe090567",
+          "name": "List Behaviour Tags",
+          "request": {
+            "name": "List Behaviour Tags",
+            "description": {},
+            "url": {
+              "path": [
+                "thunder",
+                "behaviour-tags",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "091da80f-6bbf-4765-91a4-cff5bd856557",
+              "name": "Behaviour tags retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {},\n  \"statusCode\": 2461\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f774b49-9a4e-4071-88c4-95272dd7fee1",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dbb78796-1b94-4d6f-aafd-78315e122267",
+          "name": "Create Behaviour Tag",
+          "request": {
+            "name": "Create Behaviour Tag",
+            "description": {},
+            "url": {
+              "path": [
+                "thunder",
+                "behaviour-tags",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "USER-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"behaviourTagName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"exposureRule\": {\n    \"session\": {\n      \"limit\": \"<integer>\"\n    },\n    \"window\": {\n      \"limit\": \"<integer>\",\n      \"unit\": \"<string>\",\n      \"value\": \"<integer>\"\n    },\n    \"lifespan\": {\n      \"limit\": \"<integer>\"\n    }\n  },\n  \"linkedCtas\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "731f7f94-23cf-4cd5-a312-e3bb2a04d5d7",
+              "name": "Behaviour tag created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "USER-ID",
+                    "value": "admin"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"behaviourTagName\": \"first_purchase\",\n  \"description\": \"Tag for users who made first purchase\",\n  \"exposureRule\": {\n    \"session\": {\n      \"limit\": 1\n    },\n    \"window\": {\n      \"limit\": 3,\n      \"unit\": \"days\",\n      \"value\": 7\n    },\n    \"lifespan\": {\n      \"limit\": 10\n    }\n  },\n  \"linkedCtas\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {},\n  \"statusCode\": 2461\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f020d9e0-6186-43f5-8d38-0bf943a8606a",
+              "name": "Invalid request body or validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "USER-ID",
+                    "value": "admin"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"behaviourTagName\": \"first_purchase\",\n  \"description\": \"Tag for users who made first purchase\",\n  \"exposureRule\": {\n    \"session\": {\n      \"limit\": 1\n    },\n    \"window\": {\n      \"limit\": 3,\n      \"unit\": \"days\",\n      \"value\": 7\n    },\n    \"lifespan\": {\n      \"limit\": 10\n    }\n  },\n  \"linkedCtas\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "488e4343-bd3b-46ca-9d8d-46488fc35941",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "USER-ID",
+                    "value": "admin"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"behaviourTagName\": \"first_purchase\",\n  \"description\": \"Tag for users who made first purchase\",\n  \"exposureRule\": {\n    \"session\": {\n      \"limit\": 1\n    },\n    \"window\": {\n      \"limit\": 3,\n      \"unit\": \"days\",\n      \"value\": 7\n    },\n    \"lifespan\": {\n      \"limit\": 10\n    }\n  },\n  \"linkedCtas\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "77939cd2-a9a7-43a1-98eb-9b4c219ffe7f",
+          "name": "Get Behaviour Tag",
+          "request": {
+            "name": "Get Behaviour Tag",
+            "description": {},
+            "url": {
+              "path": [
+                "thunder",
+                "behaviour-tags",
+                ":behaviourTagName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "behaviourTagName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "87feba3e-da5b-42b4-87c1-94e9a2628d78",
+              "name": "Behaviour tag retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ":behaviourTagName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "behaviourTagName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {},\n  \"statusCode\": 2461\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f476d08-01d4-48bf-81b2-3a2a379b90a9",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ":behaviourTagName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "behaviourTagName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f6b086f9-e988-4dbd-83c0-e2efe86315f7",
+              "name": "Behaviour tag not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ":behaviourTagName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "behaviourTagName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fb719998-1404-47ed-8d70-b7066d21c3fc",
+          "name": "Update Behaviour Tag",
+          "request": {
+            "name": "Update Behaviour Tag",
+            "description": {},
+            "url": {
+              "path": [
+                "thunder",
+                "behaviour-tags",
+                ":behaviourTagName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "behaviourTagName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "USER-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"<string>\",\n  \"exposureRule\": \"<object>\",\n  \"linkedCtas\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "36fa747f-c47d-44a0-9a3b-beb75ab0a786",
+              "name": "Behaviour tag updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ":behaviourTagName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "behaviourTagName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "USER-ID",
+                    "value": "admin"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Updated description\",\n  \"exposureRule\": {\n    \"session\": {\n      \"limit\": 2\n    },\n    \"window\": {\n      \"limit\": 5,\n      \"unit\": \"days\",\n      \"value\": 7\n    },\n    \"lifespan\": {\n      \"limit\": 20\n    }\n  },\n  \"linkedCtas\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {},\n  \"statusCode\": 2461\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba64211d-f973-40b3-a321-af7c5f0bb629",
+              "name": "Invalid request body or validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ":behaviourTagName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "behaviourTagName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "USER-ID",
+                    "value": "admin"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Updated description\",\n  \"exposureRule\": {\n    \"session\": {\n      \"limit\": 2\n    },\n    \"window\": {\n      \"limit\": 5,\n      \"unit\": \"days\",\n      \"value\": 7\n    },\n    \"lifespan\": {\n      \"limit\": 20\n    }\n  },\n  \"linkedCtas\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "08572dd0-f860-4a41-bc71-231d1cd2d595",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ":behaviourTagName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "behaviourTagName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "USER-ID",
+                    "value": "admin"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Updated description\",\n  \"exposureRule\": {\n    \"session\": {\n      \"limit\": 2\n    },\n    \"window\": {\n      \"limit\": 5,\n      \"unit\": \"days\",\n      \"value\": 7\n    },\n    \"lifespan\": {\n      \"limit\": 20\n    }\n  },\n  \"linkedCtas\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c37936cd-6d5e-4a02-83be-28621ebcdc77",
+              "name": "Behaviour tag not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ":behaviourTagName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "behaviourTagName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "USER-ID",
+                    "value": "admin"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Updated description\",\n  \"exposureRule\": {\n    \"session\": {\n      \"limit\": 2\n    },\n    \"window\": {\n      \"limit\": 5,\n      \"unit\": \"days\",\n      \"value\": 7\n    },\n    \"lifespan\": {\n      \"limit\": 20\n    }\n  },\n  \"linkedCtas\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "24e2bf87-2464-45c9-b606-80b87b700f27",
+          "name": "Delete Behaviour Tag",
+          "request": {
+            "name": "Delete Behaviour Tag",
+            "description": {},
+            "url": {
+              "path": [
+                "thunder",
+                "behaviour-tags",
+                ":behaviourTagName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "behaviourTagName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b1ec14d9-79d1-42b5-8341-4a9161e1c68c",
+              "name": "Behaviour tag deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ":behaviourTagName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "behaviourTagName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "caa3092e-83f3-41e2-a4ce-11beb6644c22",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ":behaviourTagName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "behaviourTagName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d48b6c53-610b-4528-9707-5d11291903a9",
+              "name": "Behaviour tag not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ":behaviourTagName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "behaviourTagName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "TENANT-ID"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "299784ec-c6be-4305-a65f-bdd0dae2af21",
+    "name": "Raven Journey Journey Behaviour API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Journey module APIs for Journey management, behaviour tags, events, and SDK operations.\n\n## Authentication\nTENANT-ID and PROJECT-ID headers are required on all endpoints (auth routes use TENANT-ID only) via the global `TenantIdHeader` security scheme.\nThe `/healthcheck` endpoint is exempted. Some endpoints also require `USER-ID`.\n\n## Timestamps\nAll timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).\n\n\nContact Support:\n Name: Raven Team",
+      "type": "text/plain"
+    }
+  }
+}

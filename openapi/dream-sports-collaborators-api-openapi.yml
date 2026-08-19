@@ -1,0 +1,181 @@
+openapi: 3.2.0
+info:
+  title: Delivr OTA Server Collaborators API
+  description: "Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.) \ndirectly to end users' devices without going through app store review processes.\n\n## Features\n- Deploy over-the-air updates to React Native applications\n- Manage apps, deployments, and releases\n- Gradual rollouts and A/B testing\n- Rollback capabilities\n- Deployment metrics and analytics\n- Multi-platform support\n"
+tags:
+- name: Collaborators
+paths:
+  /apps/{appName}/collaborators:
+    get:
+      tags:
+      - Collaborators
+      summary: List collaborators
+      description: Returns all collaborators for an app
+      parameters:
+      - $ref: '#/components/parameters/AppName'
+      - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '200':
+          description: List of collaborators
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  collaborators:
+                    $ref: '#/components/schemas/CollaboratorMap'
+  /apps/{appName}/collaborators/{email}:
+    post:
+      tags:
+      - Collaborators
+      summary: Add collaborator
+      description: Adds a collaborator to the app (requires Owner permission)
+      parameters:
+      - $ref: '#/components/parameters/AppName'
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+          format: email
+      - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '201':
+          description: Collaborator added
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags:
+      - Collaborators
+      summary: Update collaborator role
+      description: Updates a collaborator's role (requires Owner permission)
+      parameters:
+      - $ref: '#/components/parameters/AppName'
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+          format: email
+      - $ref: '#/components/parameters/TenantHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role:
+                  type: string
+                  enum:
+                  - Owner
+                  - Collaborator
+      responses:
+        '200':
+          description: Collaborator role updated
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags:
+      - Collaborators
+      summary: Remove collaborator
+      description: Removes a collaborator from the app (requires Owner permission, or user can remove themselves)
+      parameters:
+      - $ref: '#/components/parameters/AppName'
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+          format: email
+      - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '201':
+          description: Collaborator removed
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    CollaboratorMap:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/CollaboratorProperties'
+      example:
+        user@example.com:
+          permission: Owner
+          isCurrentAccount: true
+    CollaboratorProperties:
+      type: object
+      properties:
+        permission:
+          type: string
+          enum:
+          - Owner
+          - Collaborator
+        isCurrentAccount:
+          type: boolean
+          description: Whether this is the authenticated user
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request - invalid parameters
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/Error'
+            - type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+  parameters:
+    AppName:
+      name: appName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Application name (or 'owner:appName' for disambiguation)
+      example: MyApp-iOS
+    TenantHeader:
+      name: tenant
+      in: header
+      schema:
+        type: string
+      description: Organization/tenant ID filter
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: AccessKey
+      description: Access key or session token obtained from OAuth authentication

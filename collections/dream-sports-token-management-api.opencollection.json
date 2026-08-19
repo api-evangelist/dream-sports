@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Guardian Token Management API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Token Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get token revocation list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/revocations",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start timestamp (epoch seconds). If not provided, defaults to current time minus access token expiry"
+              }
+            ]
+          },
+          "docs": "Retrieve the list of revoked tokens for the tenant within a time range.\n\nThis endpoint provides information about tokens that have been revoked\nbetween the specified time range. If no 'from' timestamp is provided,\nit defaults to current time minus access token expiry duration.\n\n**Time Range Logic:**\n- The endpoint automatically calculates the 'to' timestamp as the current time\n- If 'from' is not provided, it defaults to current time minus access token expiry\n- If 'from' is before the allowed ran"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

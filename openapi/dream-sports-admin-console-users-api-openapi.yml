@@ -1,0 +1,269 @@
+openapi: 3.2.0
+info:
+  title: Raven Journey Admin - Console Users API
+  description: 'Journey module APIs for Journey management, behaviour tags, events, and SDK operations.
+
+
+    ## Authentication
+
+    TENANT-ID and PROJECT-ID headers are required on all endpoints (auth routes use TENANT-ID only) via the global `TenantIdHeader` security scheme.
+
+    The `/healthcheck` endpoint is exempted. Some endpoints also require `USER-ID`.
+
+
+    ## Timestamps
+
+    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).
+
+    '
+  version: 1.0.0
+  contact:
+    name: Raven Team
+servers:
+- url: http://localhost:8080
+  description: Local development server
+security:
+- TenantIdHeader: []
+tags:
+- name: Admin - Console Users
+  description: 'Admin-only console user operations — user onboarding and updates that include project IDs
+
+    (stored in Firebase custom claims). Requires appropriate admin authorization at the gateway.
+
+    '
+paths:
+  /v1/admin/console-users/onboard:
+    post:
+      tags:
+      - Admin - Console Users
+      summary: Onboard console user (admin)
+      description: 'Creates the user in Firebase, optionally sets validated project IDs on the user (Firebase),
+
+        and records email-to-tenant mapping in Postgres. Project IDs must belong to the tenant.
+
+        '
+      operationId: adminOnboardConsoleUser
+      parameters:
+      - $ref: '#/components/parameters/TenantId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsoleUserOnboardRequest'
+      responses:
+        '201':
+          description: Console user onboarded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsoleUserIdApiResponse'
+        '400':
+          description: Invalid request or project IDs not valid for tenant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: User already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v1/admin/console-users/uid/{uid}:
+    patch:
+      tags:
+      - Admin - Console Users
+      summary: Update console user by uid (admin, includes projectIds)
+      description: 'Same profile fields as the standard PATCH, plus optional projectIds for Firebase custom claims.
+
+        Omit projectIds to leave them unchanged; pass an empty array to clear them.
+
+        '
+      operationId: adminUpdateConsoleUserByUid
+      parameters:
+      - $ref: '#/components/parameters/TenantId'
+      - name: uid
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminConsoleUserUpdateRequest'
+      responses:
+        '204':
+          description: Console user updated
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v1/admin/console-users/email/{email}:
+    patch:
+      tags:
+      - Admin - Console Users
+      summary: Update console user by email (admin, includes projectIds)
+      description: 'Same as admin update by uid; resolves user by email first.
+
+        '
+      operationId: adminUpdateConsoleUserByEmail
+      parameters:
+      - $ref: '#/components/parameters/TenantId'
+      - name: email
+        in: path
+        required: true
+        description: URL-encoded email value
+        schema:
+          type: string
+          format: email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminConsoleUserUpdateRequest'
+      responses:
+        '204':
+          description: Console user updated
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: Downstream timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ConsoleUserIdApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/ConsoleUserIdData'
+    ConsoleUserOnboardRequest:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          format: email
+        projectIds:
+          type: array
+          items:
+            type: string
+          description: Optional; must be a subset of the tenant's projects when non-empty.
+    AdminConsoleUserUpdateRequest:
+      type: object
+      properties:
+        displayName:
+          type: string
+        photoUrl:
+          type: string
+        emailVerified:
+          type: boolean
+        disabled:
+          type: boolean
+        projectIds:
+          type: array
+          items:
+            type: string
+          description: 'Optional. When set, replaces Firebase custom-claim project IDs. Empty array clears them.
+
+            When omitted, existing project IDs are unchanged.
+
+            '
+    ConsoleUserIdData:
+      type: object
+      properties:
+        id:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
+  securitySchemes:
+    TenantIdHeader:
+      type: apiKey
+      in: header
+      name: TENANT-ID

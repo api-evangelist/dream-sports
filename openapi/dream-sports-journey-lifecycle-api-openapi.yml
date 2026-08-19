@@ -1,0 +1,264 @@
+openapi: 3.2.0
+info:
+  title: Raven Journey Journey Lifecycle API
+  description: 'Journey module APIs for Journey management, behaviour tags, events, and SDK operations.
+
+
+    ## Authentication
+
+    TENANT-ID and PROJECT-ID headers are required on all endpoints (auth routes use TENANT-ID only) via the global `TenantIdHeader` security scheme.
+
+    The `/healthcheck` endpoint is exempted. Some endpoints also require `USER-ID`.
+
+
+    ## Timestamps
+
+    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).
+
+    '
+  version: 1.0.0
+  contact:
+    name: Raven Team
+servers:
+- url: http://localhost:8080
+  description: Local development server
+security:
+- TenantIdHeader: []
+tags:
+- name: Journey Lifecycle
+  description: 'Journey lifecycle status transitions.
+
+    Journeys move through states: DRAFT -> SCHEDULED -> LIVE -> PAUSED -> CONCLUDED/TERMINATED.
+
+    Each status transition has its own dedicated endpoint.
+
+    '
+paths:
+  /thunder/ctas/{id}/live:
+    put:
+      tags:
+      - Journey Lifecycle
+      summary: Activate Journey
+      description: Changes the journey status to LIVE. The journey must be in SCHEDULED or PAUSED status.
+      operationId: activateJourney
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 12345
+      responses:
+        '200':
+          description: Journey activated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Journey cannot be activated from current status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Journey not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /thunder/ctas/{id}/pause:
+    put:
+      tags:
+      - Journey Lifecycle
+      summary: Pause Journey
+      description: Changes the journey status to PAUSED. The journey must be in LIVE status.
+      operationId: pauseJourney
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 12345
+      responses:
+        '200':
+          description: Journey paused successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Journey cannot be paused from current status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Journey not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /thunder/ctas/{id}/schedule:
+    put:
+      tags:
+      - Journey Lifecycle
+      summary: Schedule Journey
+      description: Changes the journey status to SCHEDULED. The journey must be in DRAFT status.
+      operationId: scheduleJourney
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 12345
+      responses:
+        '200':
+          description: Journey scheduled successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Journey cannot be scheduled from current status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Journey not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /thunder/ctas/{id}/conclude:
+    put:
+      tags:
+      - Journey Lifecycle
+      summary: Conclude Journey
+      description: Changes the journey status to CONCLUDED. The journey must be in LIVE or PAUSED status.
+      operationId: concludeJourney
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 12345
+      responses:
+        '200':
+          description: Journey concluded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Journey cannot be concluded from current status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Journey not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /thunder/ctas/{id}/terminate:
+    put:
+      tags:
+      - Journey Lifecycle
+      summary: Terminate Journey
+      description: Changes the journey status to TERMINATED. The journey must be in DRAFT, SCHEDULED, LIVE, or PAUSED status.
+      operationId: terminateJourney
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 12345
+      responses:
+        '200':
+          description: Journey terminated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Journey cannot be terminated from current status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Journey not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        statusCode:
+          type: integer
+  securitySchemes:
+    TenantIdHeader:
+      type: apiKey
+      in: header
+      name: TENANT-ID

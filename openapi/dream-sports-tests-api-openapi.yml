@@ -1,0 +1,719 @@
+openapi: 3.2.0
+info:
+  title: Checkmate Test Management Tests API
+  description: 'Comprehensive API documentation for Checkmate - a modern test case management system built with Remix, MySQL, and Drizzle ORM.
+
+
+    ## Features
+
+    - Project and Test Management
+
+    - Test Run Execution
+
+    - Role-Based Access Control (RBAC)
+
+    - Google OAuth Authentication
+
+    - Test Status Tracking and History
+
+
+    ## Authentication
+
+    All endpoints require authentication via session cookies. Users must be logged in through Google OAuth.
+
+
+    ## Authorization
+
+    Access to resources is controlled via Casbin RBAC with three role levels:
+
+    - **Admin**: Full access to all resources
+
+    - **User**: Can create, read, update resources
+
+    - **Reader**: Read-only access
+
+    '
+  version: 1.0.0
+  contact:
+    name: Checkmate API Support
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: http://localhost:3000
+  description: Local development server (default port 3000, configurable via PORT env var)
+- url: https://your-production-domain.com
+  description: Production server (replace with your actual production URL)
+security:
+- cookieAuth: []
+- bearerAuth: []
+tags:
+- name: Tests
+  description: Test case management endpoints
+paths:
+  /api/v1/project/tests:
+    get:
+      tags:
+      - Tests
+      summary: Get all tests
+      description: Retrieve a paginated and filtered list of tests for a project
+      parameters:
+      - name: projectId
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          default: 100
+      - name: textSearch
+        in: query
+        schema:
+          type: string
+        description: Search by title or test ID
+      - name: priority
+        in: query
+        schema:
+          type: string
+        description: Filter by priority (comma-separated IDs)
+      - name: status
+        in: query
+        schema:
+          type: string
+        description: Filter by automation status (comma-separated IDs)
+      - name: squad
+        in: query
+        schema:
+          type: string
+        description: Filter by squad (comma-separated IDs)
+      - name: label
+        in: query
+        schema:
+          type: string
+        description: Filter by labels (comma-separated IDs)
+      - name: platform
+        in: query
+        schema:
+          type: string
+        description: Filter by platform (comma-separated IDs)
+      - name: section
+        in: query
+        schema:
+          type: string
+        description: Filter by section (comma-separated IDs)
+      responses:
+        '200':
+          description: List of tests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      tests:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Test'
+                      totalCount:
+                        type: integer
+                  status:
+                    type: integer
+  /api/v1/test/create:
+    post:
+      tags:
+      - Tests
+      summary: Create a test case
+      description: Create a new test case in a project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - title
+              - projectId
+              - priorityId
+              - automationStatusId
+              - labelIds
+              properties:
+                title:
+                  type: string
+                  minLength: 5
+                  maxLength: 750
+                description:
+                  type:
+                  - string
+                  - 'null'
+                sectionId:
+                  type:
+                  - integer
+                  - 'null'
+                new_section:
+                  type:
+                  - string
+                  - 'null'
+                  description: Create a new section (use ">" for nested sections)
+                projectId:
+                  type: integer
+                squadId:
+                  type:
+                  - integer
+                  - 'null'
+                new_squad:
+                  type:
+                  - string
+                  - 'null'
+                preConditions:
+                  type:
+                  - string
+                  - 'null'
+                steps:
+                  type:
+                  - string
+                  - 'null'
+                expectedResult:
+                  type:
+                  - string
+                  - 'null'
+                priorityId:
+                  type: integer
+                typeId:
+                  type:
+                  - integer
+                  - 'null'
+                automationStatusId:
+                  type: integer
+                testCoveredById:
+                  type:
+                  - integer
+                  - 'null'
+                platformId:
+                  type:
+                  - integer
+                  - 'null'
+                labelIds:
+                  type: array
+                  items:
+                    type: integer
+                jiraTicket:
+                  type:
+                  - string
+                  - 'null'
+                defects:
+                  type:
+                  - string
+                  - 'null'
+                automationId:
+                  type:
+                  - string
+                  - 'null'
+                additionalGroups:
+                  type:
+                  - string
+                  - 'null'
+      responses:
+        '200':
+          description: Test created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      testId:
+                        type: integer
+                      testTitle:
+                        type: string
+                      message:
+                        type: string
+                  status:
+                    type: integer
+  /api/v1/test/update:
+    put:
+      tags:
+      - Tests
+      summary: Update a test case
+      description: Update an existing test case
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - testId
+              - title
+              - projectId
+              - priorityId
+              - automationStatusId
+              - labelIds
+              properties:
+                testId:
+                  type: integer
+                title:
+                  type: string
+                  minLength: 5
+                  maxLength: 750
+                description:
+                  type:
+                  - string
+                  - 'null'
+                sectionId:
+                  type:
+                  - integer
+                  - 'null'
+                new_section:
+                  type:
+                  - string
+                  - 'null'
+                projectId:
+                  type: integer
+                squadId:
+                  type:
+                  - integer
+                  - 'null'
+                new_squad:
+                  type:
+                  - string
+                  - 'null'
+                preConditions:
+                  type:
+                  - string
+                  - 'null'
+                steps:
+                  type:
+                  - string
+                  - 'null'
+                expectedResult:
+                  type:
+                  - string
+                  - 'null'
+                priorityId:
+                  type: integer
+                typeId:
+                  type:
+                  - integer
+                  - 'null'
+                automationStatusId:
+                  type: integer
+                testCoveredById:
+                  type:
+                  - integer
+                  - 'null'
+                platformId:
+                  type:
+                  - integer
+                  - 'null'
+                labelIds:
+                  type: array
+                  items:
+                    type: integer
+                jiraTicket:
+                  type:
+                  - string
+                  - 'null'
+                defects:
+                  type:
+                  - string
+                  - 'null'
+                automationId:
+                  type:
+                  - string
+                  - 'null'
+                additionalGroups:
+                  type:
+                  - string
+                  - 'null'
+      responses:
+        '200':
+          description: Test updated successfully
+  /api/v1/test/delete:
+    delete:
+      tags:
+      - Tests
+      summary: Delete a test case
+      description: Delete a test case by ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - testId
+              properties:
+                testId:
+                  type: integer
+      responses:
+        '200':
+          description: Test deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                  status:
+                    type: integer
+  /api/v1/test/bulk-add:
+    post:
+      tags:
+      - Tests
+      summary: Bulk create tests
+      description: Create multiple test cases at once
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - tests
+              - projectId
+              properties:
+                projectId:
+                  type: integer
+                tests:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - title
+                    properties:
+                      title:
+                        type: string
+                      description:
+                        type: string
+                      sectionId:
+                        type: integer
+                      priorityId:
+                        type: integer
+                      automationStatusId:
+                        type: integer
+      responses:
+        '200':
+          description: Tests created successfully
+  /api/v1/test/bulk-delete:
+    delete:
+      tags:
+      - Tests
+      summary: Bulk delete tests
+      description: Delete multiple test cases at once
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - testIds
+              properties:
+                testIds:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: Tests deleted successfully
+  /api/v1/test/bulk-update:
+    put:
+      tags:
+      - Tests
+      summary: Bulk update tests
+      description: Update multiple test cases at once
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - testIds
+              - projectId
+              properties:
+                testIds:
+                  type: array
+                  items:
+                    type: integer
+                projectId:
+                  type: integer
+                priorityId:
+                  type:
+                  - integer
+                  - 'null'
+                squadId:
+                  type:
+                  - integer
+                  - 'null'
+                automationStatusId:
+                  type:
+                  - integer
+                  - 'null'
+                labelIds:
+                  type:
+                  - array
+                  - 'null'
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: Tests updated successfully
+  /api/v1/test/details:
+    get:
+      tags:
+      - Tests
+      summary: Get test details
+      description: Retrieve detailed information about a specific test
+      parameters:
+      - name: projectId
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: testId
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Test details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Test'
+                  status:
+                    type: integer
+  /api/v1/project/tests-count:
+    get:
+      tags:
+      - Tests
+      summary: Get tests count
+      description: Get total count of tests in a project
+      parameters:
+      - name: projectId
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Test count
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                  status:
+                    type: integer
+  /api/v1/test/test-status-history:
+    get:
+      tags:
+      - Tests
+      summary: Get test status history
+      description: Retrieve the status change history for a test
+      parameters:
+      - name: testId
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Test status history
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        status:
+                          $ref: '#/components/schemas/TestStatus'
+                        changedBy:
+                          type: string
+                        changedOn:
+                          type: string
+                          format: date-time
+                        comment:
+                          type: string
+                  status:
+                    type: integer
+components:
+  schemas:
+    Test:
+      type: object
+      properties:
+        testId:
+          type: integer
+          description: Unique test identifier
+        title:
+          type: string
+          minLength: 5
+          maxLength: 750
+          description: Test case title
+        description:
+          type:
+          - string
+          - 'null'
+          description: Test case description
+        sectionId:
+          type:
+          - integer
+          - 'null'
+          description: Section ID
+        projectId:
+          type: integer
+          description: Project ID
+        squadId:
+          type:
+          - integer
+          - 'null'
+          description: Squad ID
+        preConditions:
+          type:
+          - string
+          - 'null'
+          description: Test preconditions
+        steps:
+          type:
+          - string
+          - 'null'
+          description: Test execution steps
+        expectedResult:
+          type:
+          - string
+          - 'null'
+          description: Expected test result
+        priorityId:
+          type: integer
+          description: Priority ID (required)
+        typeId:
+          type:
+          - integer
+          - 'null'
+          description: Test type ID
+        automationStatusId:
+          type: integer
+          description: Automation status ID (required)
+        testCoveredById:
+          type:
+          - integer
+          - 'null'
+          description: Test coverage type ID
+        platformId:
+          type:
+          - integer
+          - 'null'
+          description: Platform ID
+        labelIds:
+          type: array
+          items:
+            type: integer
+          description: Array of label IDs
+        jiraTicket:
+          type:
+          - string
+          - 'null'
+          description: Associated Jira ticket
+        defects:
+          type:
+          - string
+          - 'null'
+          description: Known defects
+        automationId:
+          type:
+          - string
+          - 'null'
+          description: Automation test ID
+        additionalGroups:
+          type:
+          - string
+          - 'null'
+          description: Additional test groups
+    TestStatus:
+      type: string
+      enum:
+      - Passed
+      - Failed
+      - Blocked
+      - Untested
+      - Retest
+      - Archived
+      - Skipped
+      - InProgress
+      description: Test execution status
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: user_session
+      description: 'Session cookie from Google OAuth authentication.
+
+
+        **How to get:**
+
+        1. Navigate to /login
+
+        2. Authenticate with Google
+
+        3. Cookie is automatically set
+
+
+        **Usage:**
+
+        - Browsers automatically include this cookie
+
+        - cURL: Use `-b cookies.txt` or `-H "Cookie: user_session=value"`
+
+        '
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Token
+      description: 'API token authentication for programmatic access.
+
+
+        **How to get:**
+
+        1. Login via web interface
+
+        2. Call POST /api/v1/token/generate with your userId
+
+        3. Copy the returned token
+
+
+        **Usage:**
+
+        - Include in Authorization header: `Bearer your_token_here`
+
+        - Example: `Authorization: Bearer abc123xyz`
+
+        '

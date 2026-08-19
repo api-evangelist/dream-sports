@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dream Sports Tenants API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tenants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/tenants"
+          },
+          "docs": "Returns all organizations/tenants for the authenticated account"
+        },
+        {
+          "info": {
+            "name": "Remove organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:3000/tenants/:tenantId",
+            "params": [
+              {
+                "name": "tenantId",
+                "value": "",
+                "type": "path",
+                "description": "Organization/tenant ID"
+              }
+            ]
+          },
+          "docs": "Removes an organization/tenant from the account"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

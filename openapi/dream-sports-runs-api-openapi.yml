@@ -1,0 +1,555 @@
+openapi: 3.2.0
+info:
+  title: Checkmate Test Management Runs API
+  description: 'Comprehensive API documentation for Checkmate - a modern test case management system built with Remix, MySQL, and Drizzle ORM.
+
+
+    ## Features
+
+    - Project and Test Management
+
+    - Test Run Execution
+
+    - Role-Based Access Control (RBAC)
+
+    - Google OAuth Authentication
+
+    - Test Status Tracking and History
+
+
+    ## Authentication
+
+    All endpoints require authentication via session cookies. Users must be logged in through Google OAuth.
+
+
+    ## Authorization
+
+    Access to resources is controlled via Casbin RBAC with three role levels:
+
+    - **Admin**: Full access to all resources
+
+    - **User**: Can create, read, update resources
+
+    - **Reader**: Read-only access
+
+    '
+  version: 1.0.0
+  contact:
+    name: Checkmate API Support
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: http://localhost:3000
+  description: Local development server (default port 3000, configurable via PORT env var)
+- url: https://your-production-domain.com
+  description: Production server (replace with your actual production URL)
+security:
+- cookieAuth: []
+- bearerAuth: []
+tags:
+- name: Runs
+  description: Test run management endpoints
+paths:
+  /api/v1/runs:
+    get:
+      tags:
+      - Runs
+      summary: Get all runs
+      description: Retrieve a paginated list of test runs for a project
+      parameters:
+      - name: projectId
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          default: 100
+      - name: textSearch
+        in: query
+        schema:
+          type: string
+      - name: runStatus
+        in: query
+        schema:
+          type: string
+          enum:
+          - Active
+          - Locked
+      responses:
+        '200':
+          description: List of runs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      runs:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Run'
+                      totalCount:
+                        type: integer
+                  status:
+                    type: integer
+  /api/v1/run/create:
+    post:
+      tags:
+      - Runs
+      summary: Create a test run
+      description: Create a new test run with selected tests
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - runName
+              - projectId
+              - testIds
+              properties:
+                runName:
+                  type: string
+                  minLength: 3
+                  maxLength: 100
+                projectId:
+                  type: integer
+                testIds:
+                  type: array
+                  items:
+                    type: integer
+                  description: Array of test IDs to include in the run
+      responses:
+        '200':
+          description: Run created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      runId:
+                        type: integer
+                      message:
+                        type: string
+                  status:
+                    type: integer
+  /api/v1/run/edit:
+    put:
+      tags:
+      - Runs
+      summary: Update a run
+      description: Update run name or add/remove tests
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - runId
+              properties:
+                runId:
+                  type: integer
+                runName:
+                  type: string
+                  minLength: 3
+                  maxLength: 100
+                testIds:
+                  type: array
+                  items:
+                    type: integer
+                  description: Array of test IDs to add to the run
+      responses:
+        '200':
+          description: Run updated successfully
+  /api/v1/run/delete:
+    delete:
+      tags:
+      - Runs
+      summary: Delete a run
+      description: Delete a test run by ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - runId
+              properties:
+                runId:
+                  type: integer
+      responses:
+        '200':
+          description: Run deleted successfully
+  /api/v1/run/detail:
+    get:
+      tags:
+      - Runs
+      summary: Get run details
+      description: Retrieve detailed information about a specific run
+      parameters:
+      - name: runId
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Run details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Run'
+                  status:
+                    type: integer
+  /api/v1/run/tests:
+    get:
+      tags:
+      - Runs
+      summary: Get run tests
+      description: Retrieve all tests in a run with their status
+      parameters:
+      - name: runId
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          default: 100
+      - name: textSearch
+        in: query
+        schema:
+          type: string
+      - name: status
+        in: query
+        schema:
+          type: string
+        description: Filter by test status
+      responses:
+        '200':
+          description: List of tests in run
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      tests:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            testId:
+                              type: integer
+                            title:
+                              type: string
+                            status:
+                              $ref: '#/components/schemas/TestStatus'
+                      totalCount:
+                        type: integer
+                  status:
+                    type: integer
+  /api/v1/run/state-detail:
+    get:
+      tags:
+      - Runs
+      summary: Get run state details
+      description: Get aggregated status counts for a run
+      parameters:
+      - name: runId
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Run state details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      passed:
+                        type: integer
+                      failed:
+                        type: integer
+                      blocked:
+                        type: integer
+                      untested:
+                        type: integer
+                      retest:
+                        type: integer
+                      archived:
+                        type: integer
+                      skipped:
+                        type: integer
+                      inProgress:
+                        type: integer
+                  status:
+                    type: integer
+  /api/v1/run/update-test-status:
+    put:
+      tags:
+      - Runs
+      summary: Update test status in run
+      description: Update the execution status of tests in a run
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - runId
+              - testIdStatusArray
+              properties:
+                runId:
+                  type: integer
+                testIdStatusArray:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      testId:
+                        type: integer
+                      status:
+                        $ref: '#/components/schemas/TestStatus'
+                comment:
+                  type:
+                  - string
+                  - 'null'
+      responses:
+        '200':
+          description: Test status updated successfully
+  /api/v1/run/lock:
+    put:
+      tags:
+      - Runs
+      summary: Lock/unlock a run
+      description: Lock or unlock a test run
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - runId
+              - lock
+              properties:
+                runId:
+                  type: integer
+                lock:
+                  type: boolean
+                  description: true to lock, false to unlock
+      responses:
+        '200':
+          description: Run lock status updated
+  /api/v1/run/reset:
+    put:
+      tags:
+      - Runs
+      summary: Reset run status
+      description: Reset all Passed tests to Retest status
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - runId
+              properties:
+                runId:
+                  type: integer
+      responses:
+        '200':
+          description: Run reset successfully
+  /api/v1/run/remove-tests:
+    put:
+      tags:
+      - Runs
+      summary: Remove tests from run
+      description: Remove specific tests from a run
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - runId
+              - testIds
+              properties:
+                runId:
+                  type: integer
+                testIds:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: Tests removed successfully
+  /api/v1/run/test-status:
+    get:
+      tags:
+      - Runs
+      summary: Get test status in run
+      description: Get the current status of a test in a run
+      parameters:
+      - name: projectId
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: runId
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: testId
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Test status in run
+  /api/v1/run/test-status-history:
+    get:
+      tags:
+      - Runs
+      summary: Get test status history in run
+      description: Get the status change history of a test within a run
+      parameters:
+      - name: runId
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: testId
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Test status history in run
+components:
+  schemas:
+    Run:
+      type: object
+      properties:
+        runId:
+          type: integer
+          description: Unique run identifier
+        runName:
+          type: string
+          description: Name of the test run
+        projectId:
+          type: integer
+          description: Project ID
+        createdBy:
+          type: string
+          description: User who created the run
+        createdOn:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        status:
+          type: string
+          enum:
+          - Active
+          - Locked
+          description: Run status
+    TestStatus:
+      type: string
+      enum:
+      - Passed
+      - Failed
+      - Blocked
+      - Untested
+      - Retest
+      - Archived
+      - Skipped
+      - InProgress
+      description: Test execution status
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: user_session
+      description: 'Session cookie from Google OAuth authentication.
+
+
+        **How to get:**
+
+        1. Navigate to /login
+
+        2. Authenticate with Google
+
+        3. Cookie is automatically set
+
+
+        **Usage:**
+
+        - Browsers automatically include this cookie
+
+        - cURL: Use `-b cookies.txt` or `-H "Cookie: user_session=value"`
+
+        '
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Token
+      description: 'API token authentication for programmatic access.
+
+
+        **How to get:**
+
+        1. Login via web interface
+
+        2. Call POST /api/v1/token/generate with your userId
+
+        3. Copy the returned token
+
+
+        **Usage:**
+
+        - Include in Authorization header: `Bearer your_token_here`
+
+        - Example: `Authorization: Bearer abc123xyz`
+
+        '

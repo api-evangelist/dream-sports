@@ -1,0 +1,118 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Thunder Admin Behaviour Tags API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Behaviour Tags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all Behaviour Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8081/thunder/behaviour-tags",
+            "headers": [
+              {
+                "name": "x-tenant-id",
+                "value": "tenant1"
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all Behaviour Tags for the specified tenant. Behaviour Tags define user segments and their exposure rules for CTAs."
+        },
+        {
+          "info": {
+            "name": "Create a new Behaviour Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8081/thunder/behaviour-tags",
+            "headers": [
+              {
+                "name": "user",
+                "value": "admin@example.com"
+              },
+              {
+                "name": "x-tenant-id",
+                "value": "tenant1"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Behaviour Tag with exposure rules and CTA relations. Behaviour Tags define user segments and control which CTAs are shown or hidden. The exposureRule defines frequency limits (session, window, lifespan). The ctaRelation defines which CTAs to show (shownCta) and hide (hideCta)."
+        },
+        {
+          "info": {
+            "name": "Get Behaviour Tag by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8081/thunder/behaviour-tags/:behaviourTagName",
+            "headers": [
+              {
+                "name": "x-tenant-id",
+                "value": "tenant1"
+              }
+            ],
+            "params": [
+              {
+                "name": "behaviourTagName",
+                "value": "onboarding_eligible",
+                "type": "path",
+                "description": "Name of the Behaviour Tag to retrieve"
+              }
+            ]
+          },
+          "docs": "Retrieves a specific Behaviour Tag by its name. Returns the complete Behaviour Tag object including all metadata, exposure rules, CTA relations, and linked CTAs."
+        },
+        {
+          "info": {
+            "name": "Update an existing Behaviour Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8081/thunder/behaviour-tags/:behaviourTagName",
+            "headers": [
+              {
+                "name": "user",
+                "value": "admin@example.com"
+              },
+              {
+                "name": "x-tenant-id",
+                "value": "tenant1"
+              }
+            ],
+            "params": [
+              {
+                "name": "behaviourTagName",
+                "value": "onboarding_eligible",
+                "type": "path",
+                "description": "Name of the Behaviour Tag to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing Behaviour Tag's description, exposure rules, and CTA relations. Only the fields provided in the request will be updated. The behaviourTagName in the path must match the tag being updated."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,72 @@
+openapi: 3.2.0
+info:
+  title: Dream Sports Health API
+  version: '1.0'
+  description: 'Operations tagged Health across 2 of this provider''s published API definitions: dream-sports-delivr-ota-openapi.yml, dream-sports-raven-journey-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: http://localhost:8080
+  description: Local development server
+tags:
+- name: Health
+paths:
+  /:
+    get:
+      tags:
+      - Health
+      summary: Welcome endpoint
+      description: Returns a welcome message
+      security: []
+      responses:
+        '200':
+          description: Welcome message
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Welcome to the CodePush REST API!
+  /healthcheck:
+    get:
+      tags:
+      - Health
+      summary: Health check
+      description: Checks the health of storage and Redis connections
+      security: []
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Healthy
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+  responses:
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: AccessKey
+      description: Access key or session token obtained from OAuth authentication
+    TenantIdHeader:
+      type: apiKey
+      in: header
+      name: TENANT-ID
+x-refined-from:
+- dream-sports-delivr-ota-openapi.yml
+- dream-sports-raven-journey-openapi.yml

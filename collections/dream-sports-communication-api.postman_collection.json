@@ -1,0 +1,386 @@
+{
+  "item": [
+    {
+      "id": "e409f2d0-e561-4ac7-9eaa-1fb047e3c487",
+      "name": "Communication",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "26ea50f6-ffc0-49cf-8376-8e9f29b94621",
+          "name": "Send Email",
+          "request": {
+            "name": "Send Email",
+            "description": {
+              "content": "API to send an email message using a template.\n\nGuardian invokes this API to send emails, typically for OTP delivery or other notifications.\n\nThe request body includes:\n- **channel**: Communication channel (always \"email\" for this endpoint)\n- **to**: Recipient email address\n- **templateName**: Name of the email template to use\n- **templateParams**: Template parameters as a JSON object (e.g., {\"otp\": \"123456\"})\n\nThe communication service is responsible for:\n- Rendering the template with the provided parameters\n- Sending the email to the recipient\n- Handling email delivery failures gracefully\n\n**Response**: Returns status code 200 on successful email queuing/sending. Any response other than status code 200 will be considered a failure by Guardian.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sendEmail"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel\": \"<string>\",\n  \"to\": \"<string>\",\n  \"templateName\": \"<string>\",\n  \"templateParams\": {\n    \"key_0\": 771.1336124041923\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8972902e-8be4-4b40-a257-9dc9aa516387",
+              "name": "Email sent successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sendEmail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel\": \"email\",\n  \"to\": \"user@example.com\",\n  \"templateName\": \"otp_template\",\n  \"templateParams\": {\n    \"otp\": \"123456\",\n    \"name\": \"John Doe\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bab2b9a3-4192-4238-85e6-a4d9b13bd99f",
+              "name": "Bad Request due to missing parameters or invalid data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sendEmail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel\": \"email\",\n  \"to\": \"user@example.com\",\n  \"templateName\": \"otp_template\",\n  \"templateParams\": {\n    \"otp\": \"123456\",\n    \"name\": \"John Doe\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f9a1156-f216-4aaa-9c6a-cf365c751986",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sendEmail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel\": \"email\",\n  \"to\": \"user@example.com\",\n  \"templateName\": \"otp_template\",\n  \"templateParams\": {\n    \"otp\": \"123456\",\n    \"name\": \"John Doe\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ca7249c4-4e68-44a6-86cb-05d60c8b880e",
+          "name": "Send SMS",
+          "request": {
+            "name": "Send SMS",
+            "description": {
+              "content": "API to send an SMS message using a template.\n\nGuardian invokes this API to send SMS messages, typically for OTP delivery or other notifications.\n\nThe request body includes:\n- **channel**: Communication channel (always \"sms\" for this endpoint)\n- **to**: Recipient phone number (recommended format E.164)\n- **templateName**: Name of the SMS template to use\n- **templateParams**: Template parameters as a JSON object (e.g., {\"otp\": \"123456\"})\n\nThe communication service is responsible for:\n- Rendering the template with the provided parameters\n- Sending the SMS to the recipient\n- Handling SMS delivery failures gracefully\n\n**Response**: Returns status code 200 on successful SMS queuing/sending. Any response other than status code 200 will be considered a failure by Guardian.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sendSms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel\": \"<string>\",\n  \"to\": \"<string>\",\n  \"templateName\": \"<string>\",\n  \"templateParams\": {\n    \"key_0\": 771.1336124041923\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6a608317-4d1a-423f-8f67-40e750809fef",
+              "name": "SMS sent successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sendSms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel\": \"email\",\n  \"to\": \"user@example.com\",\n  \"templateName\": \"otp_template\",\n  \"templateParams\": {\n    \"otp\": \"123456\",\n    \"name\": \"John Doe\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fabd737f-2e55-4777-b633-59ec874b0a93",
+              "name": "Bad Request due to missing parameters or invalid data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sendSms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel\": \"email\",\n  \"to\": \"user@example.com\",\n  \"templateName\": \"otp_template\",\n  \"templateParams\": {\n    \"otp\": \"123456\",\n    \"name\": \"John Doe\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e8ceeb0-5efe-4fe6-b37d-891a049d530d",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sendSms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel\": \"email\",\n  \"to\": \"user@example.com\",\n  \"templateName\": \"otp_template\",\n  \"templateParams\": {\n    \"otp\": \"123456\",\n    \"name\": \"John Doe\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "cdb87f41-d303-4c00-a5f1-5c87cac7fe9c",
+    "name": "Guardian integration endpoints Communication API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Endpoints required to integrate with Guardian.",
+      "type": "text/plain"
+    }
+  }
+}

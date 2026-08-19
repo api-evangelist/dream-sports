@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Guardian integration endpoints Provider API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Provider",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update identity provider details for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/provider",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "API to update provider details of an user\n\nA valid request must have the following fields in the request-\n- userId\n- provider\n\nProvider details are included in the provider object.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

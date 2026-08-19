@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Guardian Public Keys API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Public Keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get JWKS public keys for the tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/certs",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns the list of public keys (in JWKS format) associated with the tenant.\nThese keys are used for verifying tokens issued by the Guardian service.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

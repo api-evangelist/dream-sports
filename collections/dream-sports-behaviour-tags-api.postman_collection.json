@@ -1,0 +1,691 @@
+{
+  "item": [
+    {
+      "id": "bd769e7b-0d99-46d8-8485-38178586fdf4",
+      "name": "Behaviour Tags",
+      "description": {
+        "content": "APIs for managing Behaviour Tags. Behaviour Tags define user segments and their exposure rules for CTAs. They control which CTAs are shown or hidden to specific user groups based on session limits, time windows, and CTA relationships.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2eebeb04-707f-4da9-a0bc-ed1b4772fc67",
+          "name": "List all Behaviour Tags",
+          "request": {
+            "name": "List all Behaviour Tags",
+            "description": {
+              "content": "Retrieves a list of all Behaviour Tags for the specified tenant. Behaviour Tags define user segments and their exposure rules for CTAs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "behaviour-tags"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Tenant identifier",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fb752267-b207-4b79-871c-61eeaa549d61",
+              "name": "List of Behaviour Tags retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"behaviourTags\": [\n      {\n        \"name\": \"onboarding_eligible\",\n        \"description\": \"Users eligible for onboarding nudges\",\n        \"exposureRule\": {\n          \"session\": {\n            \"limit\": 2\n          },\n          \"window\": {\n            \"limit\": 3,\n            \"unit\": \"days\",\n            \"value\": 7\n          },\n          \"lifespan\": {\n            \"limit\": 10\n          }\n        },\n        \"ctaRelation\": {\n          \"shownCta\": {\n            \"rule\": \"LIST\",\n            \"ctaList\": [\n              \"cta-101\"\n            ]\n          },\n          \"hideCta\": {\n            \"rule\": \"ANY\",\n            \"ctaList\": []\n          }\n        },\n        \"linkedCtas\": [\n          \"cta-101\"\n        ],\n        \"createdAt\": 1609459200000,\n        \"createdBy\": \"admin@example.com\",\n        \"lastUpdatedAt\": 1609459200000,\n        \"lastUpdatedBy\": \"admin@example.com\",\n        \"tenantId\": \"tenant1\"\n      }\n    ]\n  },\n  \"statusCode\": 200,\n  \"error\": null,\n  \"message\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "528577eb-aac8-4c95-9535-2e48bb4ac83a",
+          "name": "Create a new Behaviour Tag",
+          "request": {
+            "name": "Create a new Behaviour Tag",
+            "description": {
+              "content": "Creates a new Behaviour Tag with exposure rules and CTA relations. Behaviour Tags define user segments and control which CTAs are shown or hidden. The exposureRule defines frequency limits (session, window, lifespan). The ctaRelation defines which CTAs to show (shownCta) and hide (hideCta).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "behaviour-tags"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) User ID of the admin creating the Behaviour Tag",
+                "key": "user",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Tenant identifier",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"behaviourTagName\": \"<string>\",\n  \"exposureRule\": {\n    \"session\": {\n      \"limit\": \"<integer>\"\n    },\n    \"window\": {\n      \"limit\": \"<integer>\",\n      \"unit\": \"<string>\",\n      \"value\": \"<integer>\"\n    },\n    \"lifespan\": {\n      \"limit\": \"<integer>\"\n    }\n  },\n  \"ctaRelation\": {\n    \"shownCta\": {\n      \"rule\": \"<string>\",\n      \"ctaList\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"hideCta\": {\n      \"rule\": \"<string>\",\n      \"ctaList\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"description\": \"<string>\",\n  \"linkedCtas\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "82ca6895-ba67-4ec8-8b58-2938989ddccc",
+              "name": "Behaviour Tag created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) User ID of the admin creating the Behaviour Tag",
+                    "key": "user",
+                    "value": "admin@example.com"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"behaviourTagName\": \"onboarding_eligible\",\n  \"description\": \"Users eligible for onboarding nudges\",\n  \"linkedCtas\": [],\n  \"exposureRule\": {\n    \"session\": {\n      \"limit\": 2\n    },\n    \"window\": {\n      \"limit\": 3,\n      \"unit\": \"days\",\n      \"value\": 7\n    },\n    \"lifespan\": {\n      \"limit\": 10\n    }\n  },\n  \"ctaRelation\": {\n    \"shownCta\": {\n      \"rule\": \"LIST\",\n      \"ctaList\": [\n        \"cta-101\"\n      ]\n    },\n    \"hideCta\": {\n      \"rule\": \"ANY\",\n      \"ctaList\": []\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": null,\n  \"statusCode\": 200,\n  \"error\": null,\n  \"message\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cb8b33a2-b003-498c-8f47-033d0c40ac48",
+              "name": "Invalid request data or validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) User ID of the admin creating the Behaviour Tag",
+                    "key": "user",
+                    "value": "admin@example.com"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"behaviourTagName\": \"onboarding_eligible\",\n  \"description\": \"Users eligible for onboarding nudges\",\n  \"linkedCtas\": [],\n  \"exposureRule\": {\n    \"session\": {\n      \"limit\": 2\n    },\n    \"window\": {\n      \"limit\": 3,\n      \"unit\": \"days\",\n      \"value\": 7\n    },\n    \"lifespan\": {\n      \"limit\": 10\n    }\n  },\n  \"ctaRelation\": {\n    \"shownCta\": {\n      \"rule\": \"LIST\",\n      \"ctaList\": [\n        \"cta-101\"\n      ]\n    },\n    \"hideCta\": {\n      \"rule\": \"ANY\",\n      \"ctaList\": []\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4e72fe4e-608f-4176-9e54-6fedcd0754c7",
+          "name": "Update an existing Behaviour Tag",
+          "request": {
+            "name": "Update an existing Behaviour Tag",
+            "description": {
+              "content": "Updates an existing Behaviour Tag's description, exposure rules, and CTA relations. Only the fields provided in the request will be updated. The behaviourTagName in the path must match the tag being updated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "behaviour-tags",
+                ":behaviourTagName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "behaviourTagName",
+                  "description": "(Required) Name of the Behaviour Tag to update"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) User ID of the admin updating the Behaviour Tag",
+                "key": "user",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Tenant identifier",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"<string>\",\n  \"exposureRule\": {\n    \"session\": {\n      \"limit\": \"<integer>\"\n    },\n    \"window\": {\n      \"limit\": \"<integer>\",\n      \"unit\": \"<string>\",\n      \"value\": \"<integer>\"\n    },\n    \"lifespan\": {\n      \"limit\": \"<integer>\"\n    }\n  },\n  \"ctaRelation\": {\n    \"shownCta\": {\n      \"rule\": \"<string>\",\n      \"ctaList\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"hideCta\": {\n      \"rule\": \"<string>\",\n      \"ctaList\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"linkedCtas\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "305c019b-f7d7-45d5-9b66-a6a10d8b771d",
+              "name": "Behaviour Tag updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ":behaviourTagName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "behaviourTagName",
+                      "description": "(Required) Name of the Behaviour Tag to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) User ID of the admin updating the Behaviour Tag",
+                    "key": "user",
+                    "value": "admin@example.com"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Updated description for onboarding eligible users\",\n  \"exposureRule\": {\n    \"session\": {\n      \"limit\": 1\n    },\n    \"window\": {\n      \"limit\": 1,\n      \"unit\": \"days\",\n      \"value\": 7\n    },\n    \"lifespan\": {\n      \"limit\": 5\n    }\n  },\n  \"ctaRelation\": {\n    \"shownCta\": {\n      \"rule\": \"ANY\"\n    },\n    \"hideCta\": {\n      \"rule\": \"NONE\"\n    }\n  },\n  \"linkedCtas\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": null,\n  \"statusCode\": 200,\n  \"error\": null,\n  \"message\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a9958e1-9cef-4f13-8fcc-155d9aaaf80b",
+              "name": "Invalid request data or validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ":behaviourTagName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "behaviourTagName",
+                      "description": "(Required) Name of the Behaviour Tag to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) User ID of the admin updating the Behaviour Tag",
+                    "key": "user",
+                    "value": "admin@example.com"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Updated description for onboarding eligible users\",\n  \"exposureRule\": {\n    \"session\": {\n      \"limit\": 1\n    },\n    \"window\": {\n      \"limit\": 1,\n      \"unit\": \"days\",\n      \"value\": 7\n    },\n    \"lifespan\": {\n      \"limit\": 5\n    }\n  },\n  \"ctaRelation\": {\n    \"shownCta\": {\n      \"rule\": \"ANY\"\n    },\n    \"hideCta\": {\n      \"rule\": \"NONE\"\n    }\n  },\n  \"linkedCtas\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b60a45f2-160c-4f6a-ac61-f04a36cddf8b",
+              "name": "Behaviour Tag not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ":behaviourTagName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "behaviourTagName",
+                      "description": "(Required) Name of the Behaviour Tag to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) User ID of the admin updating the Behaviour Tag",
+                    "key": "user",
+                    "value": "admin@example.com"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Updated description for onboarding eligible users\",\n  \"exposureRule\": {\n    \"session\": {\n      \"limit\": 1\n    },\n    \"window\": {\n      \"limit\": 1,\n      \"unit\": \"days\",\n      \"value\": 7\n    },\n    \"lifespan\": {\n      \"limit\": 5\n    }\n  },\n  \"ctaRelation\": {\n    \"shownCta\": {\n      \"rule\": \"ANY\"\n    },\n    \"hideCta\": {\n      \"rule\": \"NONE\"\n    }\n  },\n  \"linkedCtas\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "153811ce-0082-438b-b607-2fe2f7f43e7a",
+          "name": "Get Behaviour Tag by name",
+          "request": {
+            "name": "Get Behaviour Tag by name",
+            "description": {
+              "content": "Retrieves a specific Behaviour Tag by its name. Returns the complete Behaviour Tag object including all metadata, exposure rules, CTA relations, and linked CTAs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "behaviour-tags",
+                ":behaviourTagName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "behaviourTagName",
+                  "description": "(Required) Name of the Behaviour Tag to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Tenant identifier",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "41a9703c-ca47-4b78-a067-34a9606d398c",
+              "name": "Behaviour Tag retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ":behaviourTagName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "behaviourTagName",
+                      "description": "(Required) Name of the Behaviour Tag to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"name\": \"onboarding_eligible\",\n    \"description\": \"Users eligible for onboarding nudges\",\n    \"exposureRule\": {\n      \"session\": {\n        \"limit\": 2\n      },\n      \"window\": {\n        \"limit\": 3,\n        \"unit\": \"days\",\n        \"value\": 7\n      },\n      \"lifespan\": {\n        \"limit\": 10\n      }\n    },\n    \"ctaRelation\": {\n      \"shownCta\": {\n        \"rule\": \"LIST\",\n        \"ctaList\": [\n          \"cta-101\"\n        ]\n      },\n      \"hideCta\": {\n        \"rule\": \"ANY\",\n        \"ctaList\": []\n      }\n    },\n    \"linkedCtas\": [\n      \"cta-101\"\n    ],\n    \"createdAt\": 1609459200000,\n    \"createdBy\": \"admin@example.com\",\n    \"lastUpdatedAt\": 1609459200000,\n    \"lastUpdatedBy\": \"admin@example.com\",\n    \"tenantId\": \"tenant1\"\n  },\n  \"statusCode\": 200,\n  \"error\": null,\n  \"message\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b87aec69-4de6-4df2-8654-68f92161ac45",
+              "name": "Behaviour Tag not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "behaviour-tags",
+                    ":behaviourTagName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "behaviourTagName",
+                      "description": "(Required) Name of the Behaviour Tag to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8081",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "65602b02-ee8e-4d22-976c-1e6580b5b1d5",
+    "name": "Thunder Admin Behaviour Tags API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Thunder Admin - Management endpoints",
+      "type": "text/plain"
+    }
+  }
+}

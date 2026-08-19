@@ -1,0 +1,640 @@
+{
+  "item": [
+    {
+      "id": "690d1242-e26a-4913-82db-b2c67a90eb7e",
+      "name": "Account",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "785e6b0c-9dd7-4ac0-b74a-8aa647af0308",
+          "name": "Get current account",
+          "request": {
+            "name": "Get current account",
+            "description": {
+              "content": "Returns the authenticated user's account information",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "account"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f5e39987-6c18-434f-853e-25c5c8d7143c",
+              "name": "Account details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account\": {\n    \"email\": \"user@example.com\",\n    \"name\": \"John Doe\",\n    \"linkedProviders\": [\n      \"GitHub\",\n      \"Microsoft\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d76cf3a9-143b-48e4-8856-7ddb95696182",
+              "name": "Unauthorized - invalid or expired authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "The session or access key being used is invalid, please run \"code-push-standalone login\" again.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2ff79fb2-d289-454f-9b0d-0b9c7ae03bf2",
+          "name": "Create account",
+          "request": {
+            "name": "Create account",
+            "description": {
+              "content": "Creates a new account (internal use)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "account"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account\": {\n    \"email\": \"<email>\",\n    \"name\": \"<string>\",\n    \"gitHubId\": \"<string>\",\n    \"microsoftId\": \"<string>\",\n    \"azureAdId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7cf00c75-6ea3-4892-a9a0-81b4f9a3a8c1",
+              "name": "Account created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account\": {\n    \"email\": \"<email>\",\n    \"name\": \"<string>\",\n    \"gitHubId\": \"<string>\",\n    \"microsoftId\": \"<string>\",\n    \"azureAdId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9cad51cd-5883-48a0-a175-f0883586a797",
+          "name": "Check terms acceptance status",
+          "request": {
+            "name": "Check terms acceptance status",
+            "description": {
+              "content": "Checks if the user has accepted the latest terms and conditions",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "account",
+                "ownerTermsStatus"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3a75be7a-b876-4777-b172-502c7e525bfa",
+              "name": "Terms acceptance status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    "ownerTermsStatus"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accountId\": \"string\",\n  \"isOwner\": true,\n  \"ownerAppCount\": 8643,\n  \"termsAccepted\": false,\n  \"termsVersion\": \"string\",\n  \"acceptedTime\": null,\n  \"isCurrentVersion\": true,\n  \"currentRequiredVersion\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d366308d-c44e-4423-a02b-dc358b7a9bc7",
+              "name": "Unauthorized - invalid or expired authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    "ownerTermsStatus"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "The session or access key being used is invalid, please run \"code-push-standalone login\" again.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7742d4e7-3b7e-41a4-8a4b-71545e68b39c",
+          "name": "Accept terms and conditions",
+          "request": {
+            "name": "Accept terms and conditions",
+            "description": {
+              "content": "Records acceptance of terms and conditions",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "account",
+                "acceptTerms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"termsVersion\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "431e2efd-8428-416c-b3ff-0657ea1e6d38",
+              "name": "Terms accepted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    "acceptTerms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"termsVersion\": \"v1.0\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"termsAcceptance\": {\n    \"id\": \"string\",\n    \"accountId\": \"string\",\n    \"email\": \"string\",\n    \"termsVersion\": \"string\",\n    \"acceptedTime\": 862\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60bdfb6f-1d8b-433e-adf4-bdc1cbc75659",
+              "name": "Bad request - invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    "acceptTerms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"termsVersion\": \"v1.0\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "95fa7853-0ebf-41b5-b787-13901b9b989d",
+              "name": "Unauthorized - invalid or expired authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    "acceptTerms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"termsVersion\": \"v1.0\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "The session or access key being used is invalid, please run \"code-push-standalone login\" again.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bec3a24d-01c3-48f7-807d-83bbbf1c8c0e",
+          "name": "Get account by access key",
+          "request": {
+            "name": "Get account by access key",
+            "description": {
+              "content": "Retrieves account information using an access key name",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accountByaccessKeyName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Access key name",
+                "key": "accesskeyname",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5d6f1391-67af-48e6-b044-5f0e3cb74e62",
+              "name": "Account details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accountByaccessKeyName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Access key name",
+                    "key": "accesskeyname",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"user\": {\n    \"id\": \"string\",\n    \"email\": \"soCCr@QRgO.tob\",\n    \"name\": \"string\",\n    \"gitHubId\": \"string\",\n    \"microsoftId\": \"string\",\n    \"azureAdId\": \"string\",\n    \"createdTime\": 8148\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dfbf63bd-9c8b-4728-8c61-a12619f758c0",
+              "name": "Bad request - invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accountByaccessKeyName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Access key name",
+                    "key": "accesskeyname",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:3000",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f32acb66-598f-4ded-8863-c3300c66f085",
+    "name": "Dream Sports Account API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Operations tagged Account across 2 of this provider's published API definitions: dream-sports-delivr-ota-openapi.yml, dream-sports-dota-openapi.yml. Each path carries the servers of the definition it was published in.",
+      "type": "text/plain"
+    }
+  }
+}

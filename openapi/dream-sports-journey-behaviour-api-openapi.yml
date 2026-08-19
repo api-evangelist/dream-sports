@@ -1,0 +1,288 @@
+openapi: 3.2.0
+info:
+  title: Raven Journey Journey Behaviour API
+  description: 'Journey module APIs for Journey management, behaviour tags, events, and SDK operations.
+
+
+    ## Authentication
+
+    TENANT-ID and PROJECT-ID headers are required on all endpoints (auth routes use TENANT-ID only) via the global `TenantIdHeader` security scheme.
+
+    The `/healthcheck` endpoint is exempted. Some endpoints also require `USER-ID`.
+
+
+    ## Timestamps
+
+    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).
+
+    '
+  version: 1.0.0
+  contact:
+    name: Raven Team
+servers:
+- url: http://localhost:8080
+  description: Local development server
+security:
+- TenantIdHeader: []
+tags:
+- name: Journey Behaviour
+  description: Journey behaviour tag management — define and manage behaviour tags linked to journeys
+paths:
+  /thunder/behaviour-tags/:
+    get:
+      tags:
+      - Journey Behaviour
+      summary: List Behaviour Tags
+      operationId: listBehaviourTags
+      responses:
+        '200':
+          description: Behaviour tags retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+      - Journey Behaviour
+      summary: Create Behaviour Tag
+      operationId: createBehaviourTag
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BehaviourTagRequest'
+            example:
+              behaviourTagName: first_purchase
+              description: Tag for users who made first purchase
+              exposureRule:
+                session:
+                  limit: 1
+                window:
+                  limit: 3
+                  unit: days
+                  value: 7
+                lifespan:
+                  limit: 10
+              linkedCtas: []
+      responses:
+        '200':
+          description: Behaviour tag created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request body or validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /thunder/behaviour-tags/{behaviourTagName}:
+    get:
+      tags:
+      - Journey Behaviour
+      summary: Get Behaviour Tag
+      operationId: getBehaviourTag
+      parameters:
+      - name: behaviourTagName
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Behaviour tag retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Behaviour tag not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+      - Journey Behaviour
+      summary: Update Behaviour Tag
+      operationId: updateBehaviourTag
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      - name: behaviourTagName
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BehaviourTagUpdateRequest'
+            example:
+              description: Updated description
+              exposureRule:
+                session:
+                  limit: 2
+                window:
+                  limit: 5
+                  unit: days
+                  value: 7
+                lifespan:
+                  limit: 20
+              linkedCtas: []
+      responses:
+        '200':
+          description: Behaviour tag updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request body or validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Behaviour tag not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+      - Journey Behaviour
+      summary: Delete Behaviour Tag
+      operationId: deleteBehaviourTag
+      parameters:
+      - name: behaviourTagName
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Behaviour tag deleted
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Behaviour tag not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        statusCode:
+          type: integer
+    BehaviourTagRequest:
+      type: object
+      required:
+      - behaviourTagName
+      properties:
+        behaviourTagName:
+          type: string
+        description:
+          type: string
+        exposureRule:
+          type: object
+          properties:
+            session:
+              type: object
+              properties:
+                limit:
+                  type: integer
+            window:
+              type: object
+              properties:
+                limit:
+                  type: integer
+                unit:
+                  type: string
+                value:
+                  type: integer
+            lifespan:
+              type: object
+              properties:
+                limit:
+                  type: integer
+        linkedCtas:
+          type: array
+          items:
+            type: string
+    BehaviourTagUpdateRequest:
+      type: object
+      properties:
+        description:
+          type: string
+        exposureRule:
+          type: object
+        linkedCtas:
+          type: array
+          items:
+            type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
+  parameters:
+    UserId:
+      name: USER-ID
+      in: header
+      required: true
+      schema:
+        type: string
+      example: admin
+  securitySchemes:
+    TenantIdHeader:
+      type: apiKey
+      in: header
+      name: TENANT-ID

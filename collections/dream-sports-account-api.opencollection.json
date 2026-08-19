@@ -1,0 +1,87 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dream Sports Account API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get current account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/account"
+          },
+          "docs": "Returns the authenticated user's account information"
+        },
+        {
+          "info": {
+            "name": "Create account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:3000/account",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new account (internal use)"
+        },
+        {
+          "info": {
+            "name": "Check terms acceptance status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/account/ownerTermsStatus"
+          },
+          "docs": "Checks if the user has accepted the latest terms and conditions"
+        },
+        {
+          "info": {
+            "name": "Accept terms and conditions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:3000/account/acceptTerms",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Records acceptance of terms and conditions"
+        },
+        {
+          "info": {
+            "name": "Get account by access key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/accountByaccessKeyName",
+            "headers": [
+              {
+                "name": "accesskeyname",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieves account information using an access key name"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

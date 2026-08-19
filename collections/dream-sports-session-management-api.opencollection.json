@@ -1,0 +1,143 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Guardian Session Management API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Session Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "API to get a new access token using the refresh token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/refreshToken",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "API to get a new access token using the refresh token.\n"
+        },
+        {
+          "info": {
+            "name": "User logout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/logout",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Log out a user by invalidating their refresh token and clearing session cookies.\n\n**Logout Types:**\n- **Standard Logout**: Invalidates only the provided refresh token\n- **Universal Logout**: If `isUniversalLogout` is true, invalidates all refresh tokens for the user\n\n**Behavior:**\n- Validates the provided refresh token\n- Invalidates the token(s) based on logout type\n- Clears authentication cookies by setting them to null\n- Returns 204 No Content on success\n\n**Request Body:**\n- `refreshToken` (re"
+        },
+        {
+          "info": {
+            "name": "API to get a new access token using the refresh token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/refresh-token",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "API to get a new access token using the refresh token. The refresh token can be provided in the request body or as a cookie.\n"
+        },
+        {
+          "info": {
+            "name": "User logout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/logout",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Log out a user by invalidating their refresh token and clearing session cookies.\n\n**Logout Types:**\n- **Token Logout**: Invalidates only the provided refresh token (default)\n- **Client Logout**: If `logout_type` is set to `client`, invalidates all refresh tokens for the user for the specific client\n- **Tenant Logout**: If `logout_type` is set to `tenant`, invalidates all refresh tokens for the user for the tenant (requires first-party client)\n\n**Behavior:**\n- Validates the provided refresh token"
+        },
+        {
+          "info": {
+            "name": "Get user's active refresh tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/user/refresh-tokens",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query",
+                "description": "Client ID (must match the access token's client_id)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-based). Default 1"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (1-100). Default 10"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of active refresh tokens for the authenticated user and client.\nThe user is identified from the Bearer access token; client_id must match the token's client.\n\n**Authentication:**\n- Requires a valid Bearer access token in the Authorization header\n\n**Query parameters:**\n- `client_id` (required): Client ID; must match the client_id in the access token\n- `page` (optional): Page number (1-based). Default 1\n- `page_size` (optional): Number of items per page (1-100). Default 10"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

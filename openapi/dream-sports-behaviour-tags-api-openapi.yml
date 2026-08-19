@@ -1,0 +1,479 @@
+openapi: 3.2.0
+info:
+  description: Thunder Admin - Management endpoints
+  title: Thunder Admin Behaviour Tags API
+  version: 1.0.0
+servers:
+- url: http://localhost:8081
+  description: Thunder Admin Server (Management endpoints)
+tags:
+- name: Behaviour Tags
+  description: APIs for managing Behaviour Tags. Behaviour Tags define user segments and their exposure rules for CTAs. They control which CTAs are shown or hidden to specific user groups based on session limits, time windows, and CTA relationships.
+paths:
+  /thunder/behaviour-tags:
+    get:
+      summary: List all Behaviour Tags
+      description: Retrieves a list of all Behaviour Tags for the specified tenant. Behaviour Tags define user segments and their exposure rules for CTAs.
+      operationId: listBehaviourTags
+      tags:
+      - Behaviour Tags
+      parameters:
+      - description: Tenant identifier
+        example: tenant1
+        name: x-tenant-id
+        required: false
+        in: header
+        schema:
+          type: string
+          default: default
+      responses:
+        '200':
+          description: List of Behaviour Tags retrieved successfully
+          content:
+            application/json:
+              examples:
+                Success Response:
+                  summary: Example list of behaviour tags
+                  value:
+                    success: true
+                    data:
+                      behaviourTags:
+                      - name: onboarding_eligible
+                        description: Users eligible for onboarding nudges
+                        exposureRule:
+                          session:
+                            limit: 2
+                          window:
+                            limit: 3
+                            unit: days
+                            value: 7
+                          lifespan:
+                            limit: 10
+                        ctaRelation:
+                          shownCta:
+                            rule: LIST
+                            ctaList:
+                            - cta-101
+                          hideCta:
+                            rule: ANY
+                            ctaList: []
+                        linkedCtas:
+                        - cta-101
+                        createdAt: 1609459200000
+                        createdBy: admin@example.com
+                        lastUpdatedAt: 1609459200000
+                        lastUpdatedBy: admin@example.com
+                        tenantId: tenant1
+                    statusCode: 200
+                    error: null
+                    message: null
+              schema:
+                $ref: '#/components/schemas/BehaviourTagsResponse'
+    post:
+      summary: Create a new Behaviour Tag
+      description: Creates a new Behaviour Tag with exposure rules and CTA relations. Behaviour Tags define user segments and control which CTAs are shown or hidden. The exposureRule defines frequency limits (session, window, lifespan). The ctaRelation defines which CTAs to show (shownCta) and hide (hideCta).
+      operationId: createBehaviourTag
+      tags:
+      - Behaviour Tags
+      parameters:
+      - description: User ID of the admin creating the Behaviour Tag
+        example: admin@example.com
+        name: user
+        required: true
+        in: header
+        schema:
+          type: string
+      - description: Tenant identifier
+        example: tenant1
+        name: x-tenant-id
+        required: false
+        in: header
+        schema:
+          type: string
+          default: default
+      requestBody:
+        description: Behaviour Tag creation request with name, description, exposure rules, and CTA relations
+        content:
+          application/json:
+            examples:
+              Create Request:
+                summary: Example request to create a behaviour tag
+                value:
+                  behaviourTagName: onboarding_eligible
+                  description: Users eligible for onboarding nudges
+                  linkedCtas: []
+                  exposureRule:
+                    session:
+                      limit: 2
+                    window:
+                      limit: 3
+                      unit: days
+                      value: 7
+                    lifespan:
+                      limit: 10
+                  ctaRelation:
+                    shownCta:
+                      rule: LIST
+                      ctaList:
+                      - cta-101
+                    hideCta:
+                      rule: ANY
+                      ctaList: []
+            schema:
+              $ref: '#/components/schemas/BehaviourTagCreateRequest'
+        required: true
+      responses:
+        '200':
+          description: Behaviour Tag created successfully
+          content:
+            application/json:
+              examples:
+                Success Response:
+                  summary: Behaviour tag created
+                  value:
+                    success: true
+                    data: null
+                    statusCode: 200
+                    error: null
+                    message: null
+        '400':
+          description: Invalid request data or validation failed
+  /thunder/behaviour-tags/{behaviourTagName}:
+    put:
+      summary: Update an existing Behaviour Tag
+      description: Updates an existing Behaviour Tag's description, exposure rules, and CTA relations. Only the fields provided in the request will be updated. The behaviourTagName in the path must match the tag being updated.
+      operationId: updateBehaviourTag
+      tags:
+      - Behaviour Tags
+      parameters:
+      - description: Name of the Behaviour Tag to update
+        example: onboarding_eligible
+        name: behaviourTagName
+        required: true
+        schema:
+          type: string
+        in: path
+      - description: User ID of the admin updating the Behaviour Tag
+        example: admin@example.com
+        name: user
+        required: true
+        in: header
+        schema:
+          type: string
+      - description: Tenant identifier
+        example: tenant1
+        name: x-tenant-id
+        required: false
+        in: header
+        schema:
+          type: string
+          default: default
+      requestBody:
+        description: Behaviour Tag update request with description, exposure rules, and CTA relations
+        content:
+          application/json:
+            examples:
+              Update Request:
+                summary: Example request to update a behaviour tag
+                value:
+                  description: Updated description for onboarding eligible users
+                  exposureRule:
+                    session:
+                      limit: 1
+                    window:
+                      limit: 1
+                      unit: days
+                      value: 7
+                    lifespan:
+                      limit: 5
+                  ctaRelation:
+                    shownCta:
+                      rule: ANY
+                    hideCta:
+                      rule: NONE
+                  linkedCtas: []
+            schema:
+              $ref: '#/components/schemas/BehaviourTagPutRequest'
+        required: true
+      responses:
+        '200':
+          description: Behaviour Tag updated successfully
+          content:
+            application/json:
+              examples:
+                Success Response:
+                  summary: Behaviour tag updated
+                  value:
+                    success: true
+                    data: null
+                    statusCode: 200
+                    error: null
+                    message: null
+        '400':
+          description: Invalid request data or validation failed
+        '404':
+          description: Behaviour Tag not found
+    get:
+      summary: Get Behaviour Tag by name
+      description: Retrieves a specific Behaviour Tag by its name. Returns the complete Behaviour Tag object including all metadata, exposure rules, CTA relations, and linked CTAs.
+      operationId: getBehaviourTag
+      tags:
+      - Behaviour Tags
+      parameters:
+      - description: Name of the Behaviour Tag to retrieve
+        example: onboarding_eligible
+        name: behaviourTagName
+        required: true
+        schema:
+          type: string
+        in: path
+      - description: Tenant identifier
+        example: tenant1
+        name: x-tenant-id
+        required: false
+        in: header
+        schema:
+          type: string
+          default: default
+      responses:
+        '200':
+          description: Behaviour Tag retrieved successfully
+          content:
+            application/json:
+              examples:
+                Success Response:
+                  summary: Example behaviour tag response
+                  value:
+                    success: true
+                    data:
+                      name: onboarding_eligible
+                      description: Users eligible for onboarding nudges
+                      exposureRule:
+                        session:
+                          limit: 2
+                        window:
+                          limit: 3
+                          unit: days
+                          value: 7
+                        lifespan:
+                          limit: 10
+                      ctaRelation:
+                        shownCta:
+                          rule: LIST
+                          ctaList:
+                          - cta-101
+                        hideCta:
+                          rule: ANY
+                          ctaList: []
+                      linkedCtas:
+                      - cta-101
+                      createdAt: 1609459200000
+                      createdBy: admin@example.com
+                      lastUpdatedAt: 1609459200000
+                      lastUpdatedBy: admin@example.com
+                      tenantId: tenant1
+                    statusCode: 200
+                    error: null
+                    message: null
+              schema:
+                $ref: '#/components/schemas/BehaviourTag'
+        '404':
+          description: Behaviour Tag not found
+components:
+  schemas:
+    BehaviourTagPutRequest:
+      description: Request to update an existing Behaviour Tag. All fields are optional - only provided fields will be updated.
+      type: object
+      properties:
+        description:
+          type: string
+          description: Updated description of the Behaviour Tag
+          examples:
+          - Updated description for onboarding eligible users
+        exposureRule:
+          description: Updated exposure rules defining when this behaviour tag applies to users. Includes session, window, and lifespan frequency limits.
+          type: object
+          examples:
+          - session:
+              limit: 1
+            window:
+              limit: 1
+              unit: days
+              value: 7
+            lifespan:
+              limit: 5
+          $ref: '#/components/schemas/ExposureRule'
+        ctaRelation:
+          description: 'Updated CTA relation rules defining which CTAs are shown/hidden for this behaviour tag. shownCta defines which CTAs to show (rule: LIST/ANY/NONE), hideCta defines which CTAs to hide (rule: LIST/ANY/NONE).'
+          type: object
+          examples:
+          - shownCta:
+              rule: ANY
+            hideCta:
+              rule: NONE
+          $ref: '#/components/schemas/CTARelation'
+        linkedCtas:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+          description: Updated set of CTA IDs linked to this behaviour tag
+          examples:
+          - []
+    CtaRelationRuleTypes:
+      type: string
+      enum:
+      - ANY
+      - LIST
+      - REST
+    ExposureRule:
+      type: object
+      properties:
+        session:
+          $ref: '#/components/schemas/SessionFrequency'
+        window:
+          $ref: '#/components/schemas/WindowFrequency'
+        lifespan:
+          $ref: '#/components/schemas/LifespanFrequency'
+    BehaviourTag:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
+        createdBy:
+          type: string
+        lastUpdatedAt:
+          type: integer
+          format: int64
+        lastUpdatedBy:
+          type: string
+        exposureRule:
+          $ref: '#/components/schemas/ExposureRule'
+        ctaRelation:
+          $ref: '#/components/schemas/CTARelation'
+        linkedCtas:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        tenantId:
+          type: string
+    LifespanFrequency:
+      type: object
+      required:
+      - limit
+      properties:
+        limit:
+          type: integer
+          format: int32
+    BehaviourTagsResponse:
+      type: object
+      properties:
+        behaviourTags:
+          type: array
+          items:
+            $ref: '#/components/schemas/BehaviourTag'
+    BehaviourTagCreateRequest:
+      description: Request to create a new Behaviour Tag
+      type: object
+      required:
+      - behaviourTagName
+      - exposureRule
+      - ctaRelation
+      properties:
+        behaviourTagName:
+          type: string
+          description: Name of the Behaviour Tag
+          examples:
+          - new_user_tag
+          - onboarding_eligible
+        description:
+          type: string
+          description: Description of the Behaviour Tag
+          examples:
+          - Users eligible for onboarding nudges
+        exposureRule:
+          description: Exposure rules defining when this behaviour tag applies to users. Includes session, window, and lifespan frequency limits.
+          type: object
+          examples:
+          - session:
+              limit: 2
+            window:
+              limit: 3
+              unit: days
+              value: 7
+            lifespan:
+              limit: 10
+          $ref: '#/components/schemas/ExposureRule'
+        ctaRelation:
+          description: 'CTA relation rules defining which CTAs are shown/hidden for this behaviour tag. shownCta defines which CTAs to show (rule: LIST/ANY/NONE), hideCta defines which CTAs to hide (rule: LIST/ANY/NONE).'
+          type: object
+          examples:
+          - shownCta:
+              rule: LIST
+              ctaList:
+              - cta-101
+            hideCta:
+              rule: ANY
+              ctaList: []
+          $ref: '#/components/schemas/CTARelation'
+        linkedCtas:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+          description: Set of CTA IDs linked to this behaviour tag
+          examples:
+          - ''
+    SessionFrequency:
+      type: object
+      required:
+      - limit
+      properties:
+        limit:
+          type: integer
+          format: int32
+    CTARelation:
+      type: object
+      properties:
+        shownCta:
+          $ref: '#/components/schemas/CtaRelationRule'
+        hideCta:
+          $ref: '#/components/schemas/CtaRelationRule'
+    CtaRelationRule:
+      type: object
+      properties:
+        rule:
+          $ref: '#/components/schemas/CtaRelationRuleTypes'
+        ctaList:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+    WindowFrequency:
+      type: object
+      required:
+      - limit
+      - unit
+      - value
+      properties:
+        limit:
+          type: integer
+          format: int32
+        unit:
+          $ref: '#/components/schemas/WindowFrequencyUnit'
+        value:
+          type: integer
+          format: int32
+    WindowFrequencyUnit:
+      type: string
+      enum:
+      - days
+      - hours
+      - minutes
+      - seconds

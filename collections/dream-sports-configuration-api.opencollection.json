@@ -1,0 +1,230 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Checkmate Test Management Configuration API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "user_session",
+      "value": "{{user_session}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Configuration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get labels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/labels",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get all labels for a project"
+        },
+        {
+          "info": {
+            "name": "Add label",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:3000/api/v1/project/add-labels",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new label for a project"
+        },
+        {
+          "info": {
+            "name": "Get squads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/project/squads",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get all squads for a project"
+        },
+        {
+          "info": {
+            "name": "Add squad",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:3000/api/v1/project/add-squads",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new squad for a project"
+        },
+        {
+          "info": {
+            "name": "Get sections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/project/sections",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get all sections for a project (hierarchical)"
+        },
+        {
+          "info": {
+            "name": "Add section",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:3000/api/v1/project/add-section",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new section for a project"
+        },
+        {
+          "info": {
+            "name": "Edit section",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/v1/project/edit-section",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a section name"
+        },
+        {
+          "info": {
+            "name": "Get priorities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/priority",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get all priorities for an organization"
+        },
+        {
+          "info": {
+            "name": "Get automation statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/automation-status",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get all automation statuses for an organization"
+        },
+        {
+          "info": {
+            "name": "Get platforms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/platform",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get all platforms for an organization"
+        },
+        {
+          "info": {
+            "name": "Get test covered by options",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/test-covered-by",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get all test coverage types for an organization"
+        },
+        {
+          "info": {
+            "name": "Get types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/type",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get all test types for an organization"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

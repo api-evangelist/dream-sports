@@ -1,0 +1,38 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dream Sports Healthcheck API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Healthcheck",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /healthcheck",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8081/healthcheck"
+          }
+        },
+        {
+          "info": {
+            "name": "GET /healthcheck/ping",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8081/healthcheck/ping"
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

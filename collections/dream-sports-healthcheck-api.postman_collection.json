@@ -1,0 +1,178 @@
+{
+  "item": [
+    {
+      "id": "cc81ea2e-220b-4e2c-b17c-6903a70e8d9d",
+      "name": "Healthcheck",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "982da43b-a762-42de-b06e-917bcbc62e7b",
+          "name": "/healthcheck",
+          "request": {
+            "name": "/healthcheck",
+            "description": {},
+            "url": {
+              "path": [
+                "healthcheck"
+              ],
+              "host": [
+                "{{healthcheck-Url}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "039424fb-a179-4ed5-915d-0c8b911715ff",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "healthcheck"
+                  ],
+                  "host": [
+                    "{{healthcheck-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e65e445a-5f8f-4038-b200-7b11c8d9aaaa",
+          "name": "/healthcheck/ping",
+          "request": {
+            "name": "/healthcheck/ping",
+            "description": {},
+            "url": {
+              "path": [
+                "healthcheck",
+                "ping"
+              ],
+              "host": [
+                "{{healthcheck-ping-Url}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e8e0c1ce-0e44-49d0-b929-c6d69575a96f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "healthcheck",
+                    "ping"
+                  ],
+                  "host": [
+                    "{{healthcheck-ping-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8081",
+      "key": "baseUrl"
+    },
+    {
+      "type": "string",
+      "value": "http://localhost:8081",
+      "key": "healthcheck-Url"
+    },
+    {
+      "type": "string",
+      "value": "http://localhost:8081",
+      "key": "healthcheck-ping-Url"
+    }
+  ],
+  "info": {
+    "_postman_id": "a6c58f21-f88d-44b0-8156-80cf9145acf3",
+    "name": "Dream Sports Healthcheck API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Operations tagged Healthcheck across 2 of this provider's published API definitions: dream-sports-thunder-admin-openapi.yml, dream-sports-thunder-api-openapi.yml. Each path carries the servers of the definition it was published in.",
+      "type": "text/plain"
+    }
+  }
+}

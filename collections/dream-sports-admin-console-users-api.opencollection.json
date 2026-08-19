@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Raven Journey Admin - Console Users API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "TENANT-ID",
+      "value": "{{TENANT-ID}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Admin - Console Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Onboard console user (admin)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/admin/console-users/onboard",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates the user in Firebase, optionally sets validated project IDs on the user (Firebase),\nand records email-to-tenant mapping in Postgres. Project IDs must belong to the tenant.\n"
+        },
+        {
+          "info": {
+            "name": "Update console user by uid (admin, includes projectIds)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://localhost:8080/v1/admin/console-users/uid/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Same profile fields as the standard PATCH, plus optional projectIds for Firebase custom claims.\nOmit projectIds to leave them unchanged; pass an empty array to clear them.\n"
+        },
+        {
+          "info": {
+            "name": "Update console user by email (admin, includes projectIds)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://localhost:8080/v1/admin/console-users/email/:email",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "path",
+                "description": "URL-encoded email value"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Same as admin update by uid; resolves user by email first.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

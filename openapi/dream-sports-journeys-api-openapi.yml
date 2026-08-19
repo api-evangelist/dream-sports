@@ -1,0 +1,451 @@
+openapi: 3.2.0
+info:
+  title: Raven Journey Journeys API
+  description: 'Journey module APIs for Journey management, behaviour tags, events, and SDK operations.
+
+
+    ## Authentication
+
+    TENANT-ID and PROJECT-ID headers are required on all endpoints (auth routes use TENANT-ID only) via the global `TenantIdHeader` security scheme.
+
+    The `/healthcheck` endpoint is exempted. Some endpoints also require `USER-ID`.
+
+
+    ## Timestamps
+
+    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).
+
+    '
+  version: 1.0.0
+  contact:
+    name: Raven Team
+servers:
+- url: http://localhost:8080
+  description: Local development server
+security:
+- TenantIdHeader: []
+tags:
+- name: Journeys
+  description: Journey management operations — create, read, update, and delete journeys
+paths:
+  /thunder/filters/:
+    get:
+      tags:
+      - Journeys
+      summary: Get Filter Options
+      description: Returns available filter options for journey listing
+      operationId: getFilters
+      responses:
+        '200':
+          description: Filter options retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /thunder/ctas:
+    get:
+      tags:
+      - Journeys
+      summary: List Journeys
+      description: Retrieves a paginated list of journeys
+      operationId: listJourneys
+      parameters:
+      - name: pageNumber
+        in: query
+        schema:
+          type: integer
+          default: 0
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          default: 10
+      - name: status
+        in: query
+        description: Filter by journey status
+        schema:
+          type: string
+          enum:
+          - DRAFT
+          - SCHEDULED
+          - LIVE
+          - PAUSED
+          - CONCLUDED
+          - TERMINATED
+      - name: team
+        in: query
+        schema:
+          type: string
+      - name: tags
+        in: query
+        schema:
+          type: string
+      - name: searchName
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Journeys retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+      - Journeys
+      summary: Create Journey
+      description: 'Creates a new journey in DRAFT status.
+
+
+        **Important**:
+
+        - `startTime` and `endTime` must be future timestamps (milliseconds)
+
+        - `stateMachineTTL` must be a future timestamp
+
+        - Use `cohortEligibility: { includes: ["all"], excludes: [] }`
+
+        '
+      operationId: createJourney
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JourneyRequest'
+            example:
+              name: Welcome Notification
+              tags:
+              - growth
+              - notifications
+              description: Welcome nudge for new users
+              team: marketing
+              startTime: 2082758400000
+              endTime: 2114294400000
+              rule:
+                cohortEligibility:
+                  includes:
+                  - all
+                  excludes: []
+                stateToAction:
+                  '1': actionId1
+                contextParams:
+                - mode
+                stateTransition:
+                  AppLaunch:
+                    '0':
+                    - transitionTo: '1'
+                      filters:
+                        operator: AND
+                        filter: []
+                priority: 1
+                stateMachineTTL: 2082758400000
+                actions:
+                - actionId1:
+                    type: BottomSheet
+                    nudgeId: '5'
+                frequency:
+                  session:
+                    limit: 1
+                  window:
+                    limit: 1
+                    unit: days
+                    value: 2
+      responses:
+        '200':
+          description: Journey created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+              example:
+                success: true
+                data: 12345
+                statusCode: 200
+        '400':
+          description: Invalid request body or validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /thunder/ctas/{ctaId}:
+    get:
+      tags:
+      - Journeys
+      summary: Get Journey by ID
+      operationId: getJourney
+      parameters:
+      - name: ctaId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Journey retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Journey not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+      - Journeys
+      summary: Update Journey
+      operationId: updateJourney
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      - name: ctaId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JourneyUpdateRequest'
+            example:
+              tags:
+              - growth
+              - updated
+              description: Updated description
+              team: marketing
+              startTime: 2082758400000
+              endTime: 2114294400000
+              rule:
+                cohortEligibility:
+                  includes:
+                  - all
+                  excludes: []
+                stateToAction:
+                  '1': actionId1
+                contextParams:
+                - mode
+                stateTransition:
+                  AppLaunch:
+                    '0':
+                    - transitionTo: '1'
+                      filters:
+                        operator: AND
+                        filter: []
+                priority: 1
+                stateMachineTTL: 2082758400000
+                actions:
+                - actionId1:
+                    type: BottomSheet
+                    nudgeId: '5'
+                frequency:
+                  session:
+                    limit: 1
+                  window:
+                    limit: 1
+                    unit: days
+                    value: 2
+      responses:
+        '200':
+          description: Journey updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request body or validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Journey not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        statusCode:
+          type: integer
+    JourneyUpdateRequest:
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        team:
+          type: string
+        startTime:
+          type: integer
+          format: int64
+        endTime:
+          type: integer
+          format: int64
+        rule:
+          $ref: '#/components/schemas/RuleRequest'
+    RuleRequest:
+      type: object
+      required:
+      - cohortEligibility
+      - stateToAction
+      - stateTransition
+      - priority
+      - stateMachineTTL
+      - actions
+      - frequency
+      properties:
+        cohortEligibility:
+          type: object
+          properties:
+            includes:
+              type: array
+              items:
+                type: string
+            excludes:
+              type: array
+              items:
+                type: string
+        stateToAction:
+          type: object
+          additionalProperties:
+            type: string
+        resetStates:
+          type: array
+          items:
+            type: string
+        contextParams:
+          type: array
+          items:
+            type: string
+        stateTransition:
+          type: object
+        groupByConfig:
+          type: object
+        priority:
+          type: integer
+        stateMachineTTL:
+          type: integer
+          format: int64
+          description: Future epoch timestamp in milliseconds
+        actions:
+          type: array
+          items:
+            type: object
+        frequency:
+          type: object
+          properties:
+            session:
+              type: object
+              properties:
+                limit:
+                  type: integer
+            window:
+              type: object
+              properties:
+                limit:
+                  type: integer
+                unit:
+                  type: string
+                value:
+                  type: integer
+    JourneyRequest:
+      type: object
+      required:
+      - name
+      - team
+      - rule
+      properties:
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        team:
+          type: string
+        startTime:
+          type: integer
+          format: int64
+          description: Future epoch timestamp in milliseconds
+        endTime:
+          type: integer
+          format: int64
+          description: Future epoch timestamp in milliseconds
+        rule:
+          $ref: '#/components/schemas/RuleRequest'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
+  parameters:
+    UserId:
+      name: USER-ID
+      in: header
+      required: true
+      schema:
+        type: string
+      example: admin
+  securitySchemes:
+    TenantIdHeader:
+      type: apiKey
+      in: header
+      name: TENANT-ID

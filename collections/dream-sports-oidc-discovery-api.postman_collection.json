@@ -1,0 +1,158 @@
+{
+  "item": [
+    {
+      "id": "6bbf5d9c-1d4b-4aca-88ee-fbea954d49e6",
+      "name": "OIDC Discovery",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "13799602-84b8-4163-89eb-4c221460c291",
+          "name": "Get OpenID Connect Discovery Configuration",
+          "request": {
+            "name": "Get OpenID Connect Discovery Configuration",
+            "description": {
+              "content": "Returns the OpenID Connect discovery configuration for the tenant.\n\nThis endpoint provides metadata about the OpenID Connect implementation,\nincluding supported endpoints, grant types, response types, scopes, and claims.\n\nThe configuration follows the OpenID Connect Discovery 1.0 specification\n(https://openid.net/specs/openid-connect-discovery-1_0.html).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ".well-known",
+                "openid-configuration"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7aeae330-b586-4055-a65d-56258818d136",
+              "name": "OpenID Connect discovery configuration retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ".well-known",
+                    "openid-configuration"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"issuer\": \"https://auth.example.com\",\n  \"authorization_endpoint\": \"https://auth.example.com/v1/authorize\",\n  \"token_endpoint\": \"https://auth.example.com/v1/token\",\n  \"userinfo_endpoint\": \"https://auth.example.com/v1/userinfo\",\n  \"revocation_endpoint\": \"https://auth.example.com/v1/revoke\",\n  \"jwks_uri\": \"https://auth.example.com/.well-known/jwks.json\",\n  \"response_types_supported\": [\n    \"code\"\n  ],\n  \"subject_types_supported\": [\n    \"public\"\n  ],\n  \"id_token_signing_alg_values_supported\": [\n    \"RS256\",\n    \"RS512\"\n  ],\n  \"grant_types_supported\": [\n    \"authorization_code\",\n    \"client_credentials\",\n    \"refresh_token\"\n  ],\n  \"scopes_supported\": [\n    \"openid\",\n    \"profile\",\n    \"email\",\n    \"phone\"\n  ],\n  \"token_endpoint_auth_methods_supported\": [\n    \"client_secret_basic\",\n    \"client_secret_post\"\n  ],\n  \"claims_supported\": [\n    \"sub\",\n    \"name\",\n    \"email\",\n    \"email_verified\",\n    \"phone_number\",\n    \"phone_number_verified\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf7e3e67-9930-46d1-a966-ac76f586f59b",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ".well-known",
+                    "openid-configuration"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7564c9d0-406a-4eab-8afa-60ea7a04ca4c",
+    "name": "Guardian OIDC Discovery API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,155 @@
+openapi: 3.2.0
+info:
+  title: Raven Journey Nudge Preview API
+  description: 'Journey module APIs for Journey management, behaviour tags, events, and SDK operations.
+
+
+    ## Authentication
+
+    TENANT-ID and PROJECT-ID headers are required on all endpoints (auth routes use TENANT-ID only) via the global `TenantIdHeader` security scheme.
+
+    The `/healthcheck` endpoint is exempted. Some endpoints also require `USER-ID`.
+
+
+    ## Timestamps
+
+    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).
+
+    '
+  version: 1.0.0
+  contact:
+    name: Raven Team
+servers:
+- url: http://localhost:8080
+  description: Local development server
+security:
+- TenantIdHeader: []
+tags:
+- name: Nudge Preview
+  description: Nudge preview management — create, update, and retrieve nudge preview templates with TTL configuration
+paths:
+  /thunder/nudge/preview/:
+    post:
+      tags:
+      - Nudge Preview
+      summary: Create or Update Nudge Preview
+      description: 'Creates a new nudge preview or updates an existing one. Nudge previews store UI templates
+
+        with a TTL (time-to-live) that controls how long the preview is available.
+
+        '
+      operationId: createOrUpdateNudgePreview
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NudgePreview'
+            example:
+              id: preview_001
+              template: '{"type":"BottomSheet","testId":"nudge_container_bottom_sheet"}'
+              ttl: 3600
+      responses:
+        '200':
+          description: Nudge preview created or updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request — id or template is empty
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      tags:
+      - Nudge Preview
+      summary: Get Nudge Preview (Admin)
+      description: Retrieves a nudge preview by its ID using a query parameter.
+      operationId: getNudgePreviewAdmin
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+        example: preview_001
+      responses:
+        '200':
+          description: Nudge preview retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Nudge preview not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Project not authorised for this resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
+    NudgePreview:
+      type: object
+      required:
+      - id
+      - template
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the nudge preview
+        template:
+          type: string
+          description: JSON string containing the nudge UI template configuration
+        projectId:
+          type: string
+          description: Project identifier (set by server)
+        ttl:
+          type: integer
+          format: int32
+          description: Time-to-live in seconds for the preview record (default 3600)
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        statusCode:
+          type: integer
+  securitySchemes:
+    TenantIdHeader:
+      type: apiKey
+      in: header
+      name: TENANT-ID

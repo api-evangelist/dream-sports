@@ -1,0 +1,649 @@
+openapi: 3.2.0
+info:
+  description: Thunder Admin - Management endpoints
+  title: Thunder Admin CT As API
+  version: 1.0.0
+servers:
+- url: http://localhost:8081
+  description: Thunder Admin Server (Management endpoints)
+tags:
+- name: CTAs
+  description: APIs for managing Call-to-Actions (CTAs). Includes CRUD operations for creating, updating, retrieving, and listing CTAs with filtering and pagination support.
+paths:
+  /thunder/ctas:
+    get:
+      summary: List CTAs
+      description: Retrieves a paginated list of CTAs matching the specified filters. All query parameters are optional. Results are sorted by creation date (newest first). Use pagination parameters to control page size and navigation.
+      operationId: listCTAs
+      tags:
+      - CTAs
+      parameters:
+      - description: Filter by behaviour tag name
+        example: new_user
+        name: behaviourTag
+        required: false
+        in: query
+        schema:
+          type: string
+      - description: Filter by creator user ID
+        example: admin@example.com
+        name: createdBy
+        required: false
+        in: query
+        schema:
+          type: string
+      - description: Filter by exact CTA name (case-sensitive)
+        example: Welcome Bonus
+        name: name
+        required: false
+        in: query
+        schema:
+          type: string
+      - description: Page number (0-indexed). Default is 0.
+        example: 0
+        name: pageNumber
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+          default: 0
+        in: query
+      - description: Number of items per page. Default is 10, maximum is 100.
+        example: 10
+        name: pageSize
+        required: false
+        schema:
+          maximum: 100
+          minimum: 1
+          type: integer
+          default: 10
+        in: query
+      - description: Search CTA names (partial match)
+        example: welcome
+        name: searchName
+        required: false
+        in: query
+        schema:
+          type: string
+      - description: Filter by CTA status
+        example: LIVE
+        name: status
+        required: false
+        schema:
+          type: string
+          enum:
+          - DRAFT
+          - SCHEDULED
+          - LIVE
+          - PAUSED
+          - CONCLUDED
+          - TERMINATED
+        in: query
+      - description: Comma-separated list of tags to filter by
+        example: promotion,signup
+        name: tags
+        required: false
+        in: query
+        schema:
+          type: string
+      - description: Comma-separated list of teams to filter by
+        example: marketing,growth
+        name: teams
+        required: false
+        in: query
+        schema:
+          type: string
+      - description: Tenant identifier
+        example: tenant1
+        name: x-tenant-id
+        required: false
+        in: header
+        schema:
+          type: string
+          default: default
+      responses:
+        '200':
+          description: List of CTAs retrieved successfully
+          content:
+            application/json:
+              examples:
+                CTAs List Response:
+                  summary: Paginated list of CTAs
+                  value:
+                    success: true
+                    data:
+                      ctas:
+                      - id: 12345
+                        name: Welcome Bonus
+                        tags:
+                        - growth
+                        - notifications
+                        team: marketing
+                        ctaStatus: LIVE
+                        createdBy: admin@example.com
+                        createdAt: 1609459200000
+                      totalCount: 1
+                      pageNumber: 0
+                      pageSize: 10
+                    statusCode: 200
+              schema:
+                $ref: '#/components/schemas/CTAListResponse'
+    post:
+      summary: Create CTA
+      description: 'Creates a new Call-to-Action (CTA) with the provided details. The CTA will be created in DRAFT status and can be activated later using status update endpoints. Includes rule configuration, state machine setup, actions, and frequency controls. IMPORTANT: rule.cohortEligibility must use includes: ["all"] and excludes: [] since user-cohorts system is not currently supported.'
+      operationId: createCTA
+      tags:
+      - CTAs
+      parameters:
+      - description: User ID of the person creating the CTA
+        example: admin@example.com
+        name: user
+        required: true
+        schema:
+          type: string
+        in: header
+      - description: Tenant identifier for multi-tenancy support
+        example: tenant1
+        name: x-tenant-id
+        required: false
+        schema:
+          type: string
+          default: default
+        in: header
+      requestBody:
+        description: 'CTA creation request containing name, description, tags, team, rule configuration, state machine setup, actions, and frequency controls. Note: rule.cohortEligibility must use includes: ["all"] and excludes: [].'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CTARequest'
+        required: true
+      responses:
+        '200':
+          description: CTA created successfully. Returns the new CTA ID.
+          content:
+            application/json:
+              examples:
+                Success Response:
+                  summary: CTA created successfully
+                  value:
+                    success: true
+                    data: 12345
+                    statusCode: 200
+              schema:
+                description: New CTA ID
+                format: int64
+                type: integer
+        '400':
+          description: Invalid request data or validation failed
+  /thunder/ctas/{ctaId}:
+    put:
+      summary: Update CTA
+      description: 'Updates an existing CTA. Only the fields provided in the request will be updated. Can update rule configuration, state machine setup, actions, and frequency controls. IMPORTANT: If updating rule.cohortEligibility, must use includes: ["all"] and excludes: [] since user-cohorts system is not currently supported.'
+      operationId: updateCTA
+      tags:
+      - CTAs
+      parameters:
+      - description: Unique identifier of the CTA to update
+        example: 12345
+        name: ctaId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        in: path
+      - description: User ID of the person updating the CTA
+        example: admin@example.com
+        name: user
+        required: true
+        in: header
+        schema:
+          type: string
+      - description: Tenant identifier
+        example: tenant1
+        name: x-tenant-id
+        required: false
+        in: header
+        schema:
+          type: string
+          default: default
+      requestBody:
+        description: 'CTA update request containing fields to update. If updating rule.cohortEligibility, must use includes: ["all"] and excludes: [].'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CTAUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: CTA updated successfully
+          content:
+            application/json:
+              examples:
+                Success Response:
+                  summary: CTA updated
+                  value:
+                    success: true
+                    data: null
+                    statusCode: 200
+        '400':
+          description: Invalid request data or validation failed
+        '404':
+          description: CTA not found
+    get:
+      summary: Get CTA by ID
+      description: Retrieves a specific CTA by its unique identifier. Returns the complete CTA object including all metadata, rules, status, and configuration.
+      operationId: getCTA
+      tags:
+      - CTAs
+      parameters:
+      - description: Unique identifier of the CTA
+        example: 12345
+        name: ctaId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        in: path
+      - description: Tenant identifier
+        example: tenant1
+        name: x-tenant-id
+        required: false
+        in: header
+        schema:
+          type: string
+          default: default
+      responses:
+        '200':
+          description: CTA retrieved successfully
+          content:
+            application/json:
+              examples:
+                CTA Response:
+                  summary: Example CTA response
+                  value:
+                    success: true
+                    data:
+                      id: 12345
+                      name: Welcome Bonus
+                      description: Bottom sheet to prompt enabling notifications when lineups are out
+                      tags:
+                      - growth
+                      - notifications
+                      team: marketing
+                      ctaStatus: LIVE
+                      startTime: null
+                      endTime: null
+                      createdAt: 1609459200000
+                      createdBy: admin@example.com
+                      lastUpdatedAt: 1609459200000
+                      lastUpdatedBy: admin@example.com
+                      tenantId: tenant1
+                      behaviourTags: []
+                    statusCode: 200
+              schema:
+                $ref: '#/components/schemas/CTA'
+        '404':
+          description: CTA not found
+components:
+  schemas:
+    CTAStatus:
+      type: string
+      enum:
+      - DRAFT
+      - SCHEDULED
+      - LIVE
+      - PAUSED
+      - CONCLUDED
+      - TERMINATED
+    StatusWiseCount:
+      type: object
+      properties:
+        draft:
+          type: object
+        paused:
+          type: object
+        live:
+          type: object
+        scheduled:
+          type: object
+        concluded:
+          type: object
+        terminated:
+          type: object
+    StateTransitionCondition:
+      type: object
+      required:
+      - transitionTo
+      - filters
+      properties:
+        transitionTo:
+          type: string
+        filters:
+          $ref: '#/components/schemas/Filters'
+    CTARequest:
+      description: 'Request to create a new CTA (Call-to-Action). Note: Cohort eligibility must use ''all'' as the cohort value. Use includes: ["all"] for single cohort or includes: ["all"] for list, and always keep excludes: [] empty. User-cohorts system is not currently supported.'
+      type: object
+      required:
+      - name
+      - team
+      - rule
+      properties:
+        name:
+          type: string
+          maxLength: 100
+          description: Name of the CTA
+          examples:
+          - Testing1
+          - Welcome Bonus
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags associated with the CTA for categorization
+          examples:
+          - growth
+          - notifications
+        description:
+          type: string
+          maxLength: 500
+          description: Detailed description of the CTA
+          examples:
+          - Bottom sheet to prompt enabling notifications when lineups are out
+        team:
+          type: string
+          description: Team that owns this CTA
+          examples:
+          - marketing
+        startTime:
+          type: integer
+          format: int64
+          description: Start time in epoch milliseconds. If null, CTA starts immediately when activated.
+          examples:
+          - 1609459200000
+        endTime:
+          type: integer
+          format: int64
+          description: End time in epoch milliseconds. If null, CTA has no end time.
+          examples:
+          - 1640995200000
+        rule:
+          description: 'Rule configuration for the CTA including cohort eligibility, state transitions, actions, and frequency controls. IMPORTANT: cohortEligibility.includes must be ["all"] and excludes must be []. User-cohorts system is not currently supported.'
+          type: object
+          $ref: '#/components/schemas/RuleRequest'
+    GroupByConfig:
+      type: object
+      properties:
+        maxActiveStateMachineCount:
+          type: integer
+          format: int32
+        groupByKeys:
+          type: array
+          items:
+            type: string
+    WindowFrequencyUnit:
+      type: string
+      enum:
+      - days
+      - hours
+      - minutes
+      - seconds
+    CTAUpdateRequest:
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        team:
+          type: string
+        startTime:
+          type: integer
+          format: int64
+        endTime:
+          type: integer
+          format: int64
+        rule:
+          $ref: '#/components/schemas/RuleRequest'
+    LifespanFrequency:
+      type: object
+      required:
+      - limit
+      properties:
+        limit:
+          type: integer
+          format: int32
+    Filters:
+      type: object
+      required:
+      - operator
+      - filter
+      properties:
+        operator:
+          type: string
+        filter:
+          type: array
+          items: {}
+    RuleRequest:
+      type: object
+      description: 'Rule configuration for CTA including cohort eligibility, state transitions, actions, and frequency. Note: cohortEligibility must use includes: ["all"] and excludes: [].'
+      required:
+      - cohortEligibility
+      - stateToAction
+      - stateTransition
+      - priority
+      - stateMachineTTL
+      - actions
+      - frequency
+      properties:
+        cohortEligibility:
+          description: 'Cohort eligibility. Must use includes: ["all"] and excludes: [] since user-cohorts system is not currently supported.'
+          type: object
+          $ref: '#/components/schemas/CohortEligibility'
+        stateToAction:
+          type: object
+          additionalProperties:
+            type: string
+          minProperties: 1
+        resetStates:
+          type: array
+          items:
+            type: string
+        resetCTAonFirstLaunch:
+          type: boolean
+        contextParams:
+          type: array
+          items:
+            type: string
+        stateTransition:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                $ref: '#/components/schemas/StateTransitionCondition'
+        groupByConfig:
+          $ref: '#/components/schemas/GroupByConfig'
+        priority:
+          type: integer
+          format: int32
+        stateMachineTTL:
+          type: integer
+          format: int64
+        actions:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+        frequency:
+          $ref: '#/components/schemas/Frequency'
+    SessionFrequency:
+      type: object
+      required:
+      - limit
+      properties:
+        limit:
+          type: integer
+          format: int32
+    WindowFrequency:
+      type: object
+      required:
+      - limit
+      - unit
+      - value
+      properties:
+        limit:
+          type: integer
+          format: int32
+        unit:
+          $ref: '#/components/schemas/WindowFrequencyUnit'
+        value:
+          type: integer
+          format: int32
+    CTA:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: integer
+          format: int64
+        rule:
+          $ref: '#/components/schemas/Rule'
+        ctaStatus:
+          $ref: '#/components/schemas/CTAStatus'
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        team:
+          type: string
+        behaviourTags:
+          type: array
+          items:
+            type: string
+        startTime:
+          type: integer
+          format: int64
+        endTime:
+          type: integer
+          format: int64
+        createdAt:
+          type: integer
+          format: int64
+        createdBy:
+          type: string
+        lastUpdatedAt:
+          type: integer
+          format: int64
+        lastUpdatedBy:
+          type: string
+        tenantId:
+          type: string
+    Frequency:
+      type: object
+      properties:
+        session:
+          $ref: '#/components/schemas/SessionFrequency'
+        window:
+          $ref: '#/components/schemas/WindowFrequency'
+        lifeSpan:
+          $ref: '#/components/schemas/LifespanFrequency'
+    Rule:
+      type: object
+      required:
+      - cohortEligibility
+      - stateToAction
+      - stateTransition
+      - priority
+      - actions
+      - frequency
+      properties:
+        cohortEligibility:
+          $ref: '#/components/schemas/CohortEligibility'
+        stateToAction:
+          type: object
+          additionalProperties:
+            type: string
+          minProperties: 1
+        resetStates:
+          type: array
+          items:
+            type: string
+        resetCTAonFirstLaunch:
+          type: boolean
+        contextParams:
+          type: array
+          items:
+            type: string
+        stateTransition:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                $ref: '#/components/schemas/StateTransitionCondition'
+        groupByConfig:
+          $ref: '#/components/schemas/GroupByConfig'
+        priority:
+          type: integer
+          format: int32
+        stateMachineTTL:
+          type: integer
+          format: int64
+        ctaValidTill:
+          type: integer
+          format: int64
+        actions:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+        frequency:
+          $ref: '#/components/schemas/Frequency'
+    CohortEligibility:
+      type: object
+      description: 'Cohort eligibility configuration for CTAs. IMPORTANT: User-cohorts system is not currently supported. Always use includes: ["all"] (single cohort) or includes: ["all"] (list), and keep excludes: [] empty.'
+      required:
+      - includes
+      - excludes
+      properties:
+        includes:
+          type: array
+          items:
+            type: string
+          description: List of cohort names to include. Must be ["all"] since user-cohorts system is not currently supported.
+          minItems: 1
+        excludes:
+          type: array
+          items:
+            type: string
+          description: List of cohort names to exclude. Must always be empty [] since user-cohorts system is not currently supported.
+    CTAListResponse:
+      type: object
+      properties:
+        ctas:
+          type: array
+          items:
+            $ref: '#/components/schemas/CTA'
+        totalEntries:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        statusWiseCount:
+          $ref: '#/components/schemas/StatusWiseCount'

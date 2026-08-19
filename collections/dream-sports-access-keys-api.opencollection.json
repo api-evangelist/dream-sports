@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Delivr OTA Server Access Keys API"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Access Keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List access keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accessKeys"
+          },
+          "docs": "Returns all access keys for the authenticated account"
+        },
+        {
+          "info": {
+            "name": "Create access key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/accessKeys",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new access key for API authentication"
+        },
+        {
+          "info": {
+            "name": "Get access key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accessKeys/:accessKeyName",
+            "params": [
+              {
+                "name": "accessKeyName",
+                "value": "",
+                "type": "path",
+                "description": "Access key friendly name or generated name"
+              }
+            ]
+          },
+          "docs": "Returns details of a specific access key"
+        },
+        {
+          "info": {
+            "name": "Update access key",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/accessKeys/:accessKeyName",
+            "params": [
+              {
+                "name": "accessKeyName",
+                "value": "",
+                "type": "path",
+                "description": "Access key friendly name or generated name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing access key's properties"
+        },
+        {
+          "info": {
+            "name": "Delete access key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/accessKeys/:accessKeyName",
+            "params": [
+              {
+                "name": "accessKeyName",
+                "value": "",
+                "type": "path",
+                "description": "Access key friendly name or generated name"
+              }
+            ]
+          },
+          "docs": "Removes an access key"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

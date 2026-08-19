@@ -1,0 +1,156 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Thunder Admin Events API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8081/thunder/events",
+            "headers": [
+              {
+                "name": "x-tenant-id",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all events for the specified tenant. Each event includes its name and associated properties with types, expected values, and mandatory flags."
+        },
+        {
+          "info": {
+            "name": "Create or Update Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8081/thunder/events",
+            "headers": [
+              {
+                "name": "x-source",
+                "value": ""
+              },
+              {
+                "name": "x-tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates new events or updates existing events. Events define the structure and properties of user actions that can trigger CTAs. Each event includes a name and a list of properties with types, expected values, and mandatory flags."
+        },
+        {
+          "info": {
+            "name": "Get All Event Names",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8081/thunder/events/list/names",
+            "headers": [
+              {
+                "name": "x-tenant-id",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all event names for the specified tenant. This is a lightweight endpoint that returns only the event names without their property details."
+        },
+        {
+          "info": {
+            "name": "Get Event by Name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8081/thunder/events/:event-name",
+            "headers": [
+              {
+                "name": "x-tenant-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "event-name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the event to retrieve"
+              }
+            ]
+          },
+          "docs": "Retrieves a specific event by its name for the specified tenant. Returns the event name and all associated properties with types, expected values, and mandatory flags."
+        },
+        {
+          "info": {
+            "name": "Update Event Properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8081/thunder/events/:event-name",
+            "headers": [
+              {
+                "name": "x-tenant-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "event-name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the event to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing event. Only the properties provided in the request will be updated. This allows partial updates to event property definitions."
+        },
+        {
+          "info": {
+            "name": "Delete Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8081/thunder/events/:event-name",
+            "headers": [
+              {
+                "name": "x-tenant-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "event-name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the event to delete"
+              }
+            ]
+          },
+          "docs": "Deletes an event by its name for the specified tenant. This operation is irreversible."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

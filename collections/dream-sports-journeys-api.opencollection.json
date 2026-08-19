@@ -1,0 +1,148 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Raven Journey Journeys API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "TENANT-ID",
+      "value": "{{TENANT-ID}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Journeys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Filter Options",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/thunder/filters/"
+          },
+          "docs": "Returns available filter options for journey listing"
+        },
+        {
+          "info": {
+            "name": "List Journeys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/thunder/ctas",
+            "params": [
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by journey status"
+              },
+              {
+                "name": "team",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "searchName",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of journeys"
+        },
+        {
+          "info": {
+            "name": "Create Journey",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/thunder/ctas",
+            "headers": [
+              {
+                "name": "USER-ID",
+                "value": "admin"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new journey in DRAFT status.\n\n**Important**:\n- `startTime` and `endTime` must be future timestamps (milliseconds)\n- `stateMachineTTL` must be a future timestamp\n- Use `cohortEligibility: { includes: [\"all\"], excludes: [] }`\n"
+        },
+        {
+          "info": {
+            "name": "Get Journey by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/thunder/ctas/:ctaId",
+            "params": [
+              {
+                "name": "ctaId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Journey by ID"
+        },
+        {
+          "info": {
+            "name": "Update Journey",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/thunder/ctas/:ctaId",
+            "headers": [
+              {
+                "name": "USER-ID",
+                "value": "admin"
+              }
+            ],
+            "params": [
+              {
+                "name": "ctaId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Journey"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

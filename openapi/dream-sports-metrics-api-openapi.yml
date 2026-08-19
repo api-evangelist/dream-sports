@@ -1,0 +1,84 @@
+openapi: 3.2.0
+info:
+  title: Delivr OTA Server Metrics API
+  description: "Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.) \ndirectly to end users' devices without going through app store review processes.\n\n## Features\n- Deploy over-the-air updates to React Native applications\n- Manage apps, deployments, and releases\n- Gradual rollouts and A/B testing\n- Rollback capabilities\n- Deployment metrics and analytics\n- Multi-platform support\n"
+tags:
+- name: Metrics
+paths:
+  /apps/{appName}/deployments/{deploymentName}/metrics:
+    get:
+      tags:
+      - Metrics
+      summary: Get deployment metrics
+      description: Returns installation and usage metrics for a deployment
+      parameters:
+      - $ref: '#/components/parameters/AppName'
+      - $ref: '#/components/parameters/DeploymentName'
+      - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '200':
+          description: Deployment metrics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  metrics:
+                    $ref: '#/components/schemas/DeploymentMetrics'
+components:
+  parameters:
+    AppName:
+      name: appName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Application name (or 'owner:appName' for disambiguation)
+      example: MyApp-iOS
+    DeploymentName:
+      name: deploymentName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Deployment environment name
+      example: Production
+    TenantHeader:
+      name: tenant
+      in: header
+      schema:
+        type: string
+      description: Organization/tenant ID filter
+  schemas:
+    DeploymentMetrics:
+      type: object
+      description: Metrics keyed by package label or app version
+      additionalProperties:
+        $ref: '#/components/schemas/UpdateMetrics'
+      example:
+        v23:
+          active: 1234
+          downloaded: 1500
+          failed: 10
+          installed: 1450
+    UpdateMetrics:
+      type: object
+      properties:
+        active:
+          type: integer
+          description: Number of currently active installations
+        downloaded:
+          type: integer
+          description: Total downloads
+        failed:
+          type: integer
+          description: Number of failed installations
+        installed:
+          type: integer
+          description: Total successful installations
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: AccessKey
+      description: Access key or session token obtained from OAuth authentication

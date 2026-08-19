@@ -1,0 +1,168 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Delivr OTA Server Deployments API"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Deployments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List deployments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/apps/:appName/deployments",
+            "headers": [
+              {
+                "name": "tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "appName",
+                "value": "MyApp-iOS",
+                "type": "path",
+                "description": "Application name (or 'owner:appName' for disambiguation)"
+              }
+            ]
+          },
+          "docs": "Returns all deployments for an app"
+        },
+        {
+          "info": {
+            "name": "Create deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/apps/:appName/deployments",
+            "headers": [
+              {
+                "name": "tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "appName",
+                "value": "MyApp-iOS",
+                "type": "path",
+                "description": "Application name (or 'owner:appName' for disambiguation)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new deployment environment (requires Owner permission)"
+        },
+        {
+          "info": {
+            "name": "Get deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/apps/:appName/deployments/:deploymentName",
+            "headers": [
+              {
+                "name": "tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "appName",
+                "value": "MyApp-iOS",
+                "type": "path",
+                "description": "Application name (or 'owner:appName' for disambiguation)"
+              },
+              {
+                "name": "deploymentName",
+                "value": "Production",
+                "type": "path",
+                "description": "Deployment environment name"
+              }
+            ]
+          },
+          "docs": "Returns details of a specific deployment"
+        },
+        {
+          "info": {
+            "name": "Update deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/apps/:appName/deployments/:deploymentName",
+            "headers": [
+              {
+                "name": "tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "appName",
+                "value": "MyApp-iOS",
+                "type": "path",
+                "description": "Application name (or 'owner:appName' for disambiguation)"
+              },
+              {
+                "name": "deploymentName",
+                "value": "Production",
+                "type": "path",
+                "description": "Deployment environment name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates deployment properties (requires Owner permission)"
+        },
+        {
+          "info": {
+            "name": "Delete deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/apps/:appName/deployments/:deploymentName",
+            "headers": [
+              {
+                "name": "tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "appName",
+                "value": "MyApp-iOS",
+                "type": "path",
+                "description": "Application name (or 'owner:appName' for disambiguation)"
+              },
+              {
+                "name": "deploymentName",
+                "value": "Production",
+                "type": "path",
+                "description": "Deployment environment name"
+              }
+            ]
+          },
+          "docs": "Removes a deployment (requires Owner permission)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

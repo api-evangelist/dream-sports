@@ -1,0 +1,1032 @@
+{
+  "item": [
+    {
+      "id": "d8108ceb-de68-4c74-ba2a-87dc1ce8f374",
+      "name": "CTA Status",
+      "description": {
+        "content": "APIs for managing CTA lifecycle status transitions. CTAs move through states: DRAFT → SCHEDULED → LIVE → PAUSED → CONCLUDED/TERMINATED.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ee0dfcc0-8ee9-4d09-8d52-bce43101e9dd",
+          "name": "Conclude CTA",
+          "request": {
+            "name": "Conclude CTA",
+            "description": {
+              "content": "Changes the CTA status to CONCLUDED. The CTA must be in LIVE or PAUSED status. Concluded CTAs have completed their lifecycle and are no longer available to end users.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "ctas",
+                ":id",
+                "conclude"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier of the CTA to conclude"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Tenant identifier",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "047a2671-152c-4f61-9ce4-e9b49b1aef50",
+              "name": "CTA concluded successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":id",
+                    "conclude"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the CTA to conclude"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": null,\n  \"statusCode\": 200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02e4b361-a8ea-4c91-bd3a-c6fcf63277cd",
+              "name": "CTA cannot be concluded from current status. Only LIVE or PAUSED CTAs can be concluded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":id",
+                    "conclude"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the CTA to conclude"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fc7159b3-3e9e-46fc-860a-968e4de1d409",
+              "name": "CTA not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":id",
+                    "conclude"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the CTA to conclude"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c6b692dc-fa23-46ce-b533-cb2023b43805",
+          "name": "Activate CTA",
+          "request": {
+            "name": "Activate CTA",
+            "description": {
+              "content": "Changes the CTA status to LIVE. The CTA must be in SCHEDULED or PAUSED status. Once LIVE, the CTA will be available to end users through the SDK APIs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "ctas",
+                ":id",
+                "live"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier of the CTA to activate"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Tenant identifier",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3f86e68c-1b72-48a9-b2b7-c0569e48a86d",
+              "name": "CTA activated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":id",
+                    "live"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the CTA to activate"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": null,\n  \"statusCode\": 200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96759f5d-00d4-4b99-b614-2f47a05e6a3d",
+              "name": "CTA cannot be activated from current status. Only SCHEDULED or PAUSED CTAs can be activated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":id",
+                    "live"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the CTA to activate"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "be723d17-048c-4471-8ca5-02487e8348e1",
+              "name": "CTA not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":id",
+                    "live"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the CTA to activate"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f40a3d9f-d335-4b16-b854-4564bd103ecb",
+          "name": "Pause CTA",
+          "request": {
+            "name": "Pause CTA",
+            "description": {
+              "content": "Changes the CTA status to PAUSED. The CTA must be in LIVE status. Paused CTAs are not available to end users but can be reactivated later.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "ctas",
+                ":id",
+                "pause"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier of the CTA to pause"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Tenant identifier",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c3210780-a1f1-4940-b2ac-d58106f188f3",
+              "name": "CTA paused successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":id",
+                    "pause"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the CTA to pause"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": null,\n  \"statusCode\": 200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31ca69a3-7796-4821-8dfe-62851dd34c3f",
+              "name": "CTA cannot be paused from current status. Only LIVE CTAs can be paused.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":id",
+                    "pause"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the CTA to pause"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dc22ae78-c3ac-48c7-9198-3f409e2df450",
+              "name": "CTA not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":id",
+                    "pause"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the CTA to pause"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7cb227fc-db68-4a22-818f-8295c5ff7343",
+          "name": "Schedule CTA",
+          "request": {
+            "name": "Schedule CTA",
+            "description": {
+              "content": "Changes the CTA status to SCHEDULED. The CTA must be in DRAFT status. Scheduled CTAs will become LIVE automatically based on their startTime configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "ctas",
+                ":id",
+                "schedule"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier of the CTA to schedule"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Tenant identifier",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e26e3c0d-0bfb-415d-a04a-fcca3967a5e9",
+              "name": "CTA scheduled successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":id",
+                    "schedule"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the CTA to schedule"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": null,\n  \"statusCode\": 200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3fd72543-50d1-49ae-ab4e-b464fe762363",
+              "name": "CTA cannot be scheduled from current status. Only DRAFT CTAs can be scheduled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":id",
+                    "schedule"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the CTA to schedule"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "da9cd822-ca8b-4b59-a76b-4547bb65bde4",
+              "name": "CTA not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":id",
+                    "schedule"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the CTA to schedule"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "00ee86e8-0462-4f44-b906-ead36bbd96f1",
+          "name": "Terminate CTA",
+          "request": {
+            "name": "Terminate CTA",
+            "description": {
+              "content": "Changes the CTA status to TERMINATED. The CTA must be in DRAFT, SCHEDULED, LIVE, or PAUSED status. Terminated CTAs are permanently stopped and cannot be reactivated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "ctas",
+                ":id",
+                "terminate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier of the CTA to terminate"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Tenant identifier",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "02e4bf4f-815e-407f-b51b-80952a72b5b9",
+              "name": "CTA terminated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":id",
+                    "terminate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the CTA to terminate"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": null,\n  \"statusCode\": 200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3274316-631c-4a0a-854c-833f0f5390bd",
+              "name": "CTA cannot be terminated from current status. Only DRAFT, SCHEDULED, LIVE, or PAUSED CTAs can be terminated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":id",
+                    "terminate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the CTA to terminate"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5bafe1a7-c0d1-42d1-a2b5-c3dfba8b43fa",
+              "name": "CTA not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":id",
+                    "terminate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the CTA to terminate"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8081",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "606b1e4a-658b-42fa-b531-bd4f2c35ddec",
+    "name": "Thunder Admin CTA Status API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Thunder Admin - Management endpoints",
+      "type": "text/plain"
+    }
+  }
+}

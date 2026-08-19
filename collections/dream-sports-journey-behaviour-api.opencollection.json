@@ -1,0 +1,122 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Raven Journey Journey Behaviour API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "TENANT-ID",
+      "value": "{{TENANT-ID}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Journey Behaviour",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Behaviour Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/thunder/behaviour-tags/"
+          },
+          "docs": "List Behaviour Tags"
+        },
+        {
+          "info": {
+            "name": "Create Behaviour Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/thunder/behaviour-tags/",
+            "headers": [
+              {
+                "name": "USER-ID",
+                "value": "admin"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Behaviour Tag"
+        },
+        {
+          "info": {
+            "name": "Get Behaviour Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/thunder/behaviour-tags/:behaviourTagName",
+            "params": [
+              {
+                "name": "behaviourTagName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Behaviour Tag"
+        },
+        {
+          "info": {
+            "name": "Update Behaviour Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/thunder/behaviour-tags/:behaviourTagName",
+            "headers": [
+              {
+                "name": "USER-ID",
+                "value": "admin"
+              }
+            ],
+            "params": [
+              {
+                "name": "behaviourTagName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Behaviour Tag"
+        },
+        {
+          "info": {
+            "name": "Delete Behaviour Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/thunder/behaviour-tags/:behaviourTagName",
+            "params": [
+              {
+                "name": "behaviourTagName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Behaviour Tag"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

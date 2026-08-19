@@ -1,0 +1,102 @@
+openapi: 3.2.0
+info:
+  title: Guardian Public Keys API
+  version: 1.0.0
+tags:
+- name: Public Keys
+paths:
+  /v1/certs:
+    get:
+      tags:
+      - Public Keys
+      summary: Get JWKS public keys for the tenant
+      description: 'Returns the list of public keys (in JWKS format) associated with the tenant.
+
+        These keys are used for verifying tokens issued by the Guardian service.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TenantIdHeader'
+      responses:
+        '200':
+          description: JSON Web Key Set (JWKS) retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  keys:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/JsonWebKey'
+        '400':
+          description: Bad Request - Invalid tenant-id header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  parameters:
+    TenantIdHeader:
+      name: tenant-id
+      in: header
+      description: tenant-id of the client integrating with guardian
+      required: true
+      schema:
+        type: string
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
+    JsonWebKey:
+      type: object
+      required:
+      - kty
+      - kid
+      - alg
+      - n
+      - e
+      properties:
+        kty:
+          type: string
+          description: Key type
+          example: RSA
+        use:
+          type: string
+          description: Key usage
+          example: sig
+        kid:
+          type: string
+          description: Key ID for identifying the key
+          example: 1234567890abcdef
+        alg:
+          type: string
+          description: Algorithm used with the key
+          example: RS256
+        n:
+          type: string
+          format: base64url
+          description: Modulus of the RSA public key
+          example: sXchD_VNjp6WbGLOqK2IcmhA9xyPK...
+        e:
+          type: string
+          format: base64url
+          description: Exponent of the RSA public key
+          example: AQAB

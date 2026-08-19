@@ -1,0 +1,2548 @@
+{
+  "item": [
+    {
+      "id": "f215e045-71a7-418a-a27a-226e2af3c4b9",
+      "name": "Client SDK",
+      "description": {
+        "content": "Client SDK operations — endpoints consumed by the SDK for active journeys and state machine snapshots",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ef67f2ec-db58-46f5-b049-24f095e2982a",
+          "name": "Get Nudge Preview (SDK)",
+          "request": {
+            "name": "Get Nudge Preview (SDK)",
+            "description": {
+              "content": "Retrieves a nudge preview by its ID via path parameter. Used by the client SDK to fetch nudge templates.\nRoute rename: `/cta/nudge/preview/{id}` is renamed to `/sdk/nudge/preview/{id}`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sdk",
+                "nudge",
+                "preview",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5a255479-c72e-4800-bd45-ca4101a29faa",
+              "name": "Nudge preview retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sdk",
+                    "nudge",
+                    "preview",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {},\n  \"statusCode\": 6218\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "36669461-4807-4f43-8b63-4809517f2a0a",
+              "name": "Nudge preview not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sdk",
+                    "nudge",
+                    "preview",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a15f99c5-44f9-45be-a5c5-72ab154e6db1",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sdk",
+                    "nudge",
+                    "preview",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b95aa7df-cba5-4d39-aea1-fd5207650559",
+              "name": "Project not authorised for this resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sdk",
+                    "nudge",
+                    "preview",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3da00a55-c3a9-498a-b4c2-d31d3fe2a28d",
+          "name": "Get Active Journeys for User",
+          "request": {
+            "name": "Get Active Journeys for User",
+            "description": {
+              "content": "Returns active journeys and behaviour tags for a user.\nRoute rename: `/cta/active/state-machines/` is renamed to `/sdk/journeys/active`.\nSDK metadata headers are part of the contract and are marked required here.\nNote: server-side enforcement for these metadata headers is not implemented yet.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sdk",
+                "journeys",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "user-id",
+                "value": "<long>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "platform",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "framework",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "sdk-version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "package",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                "key": "app-version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "app-build",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "os",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "os-version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "os-api-level",
+                "value": "<integer>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ctas\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"behaviourTags\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c4d67931-2794-4c6e-bf87-b0984c94dca7",
+              "name": "Active journeys retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sdk",
+                    "journeys",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "user-id",
+                    "value": "135162489"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "platform",
+                    "value": "android-mobile"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "framework",
+                    "value": "react-native"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "sdk-version",
+                    "value": "1.5.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "package",
+                    "value": "com.dream11.app"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                    "key": "app-version",
+                    "value": "25.2.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "app-build",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os",
+                    "value": "android"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-version",
+                    "value": "14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-api-level",
+                    "value": "34"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ctas\": [],\n  \"behaviourTags\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {},\n  \"statusCode\": 6218\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf76d45b-d87c-4f65-99b5-bf0951a40e56",
+              "name": "Invalid request body or missing userId",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sdk",
+                    "journeys",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "user-id",
+                    "value": "135162489"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "platform",
+                    "value": "android-mobile"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "framework",
+                    "value": "react-native"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "sdk-version",
+                    "value": "1.5.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "package",
+                    "value": "com.dream11.app"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                    "key": "app-version",
+                    "value": "25.2.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "app-build",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os",
+                    "value": "android"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-version",
+                    "value": "14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-api-level",
+                    "value": "34"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ctas\": [],\n  \"behaviourTags\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6322ce3c-b0c3-48b2-a108-3d9a588fcbdc",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sdk",
+                    "journeys",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "user-id",
+                    "value": "135162489"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "platform",
+                    "value": "android-mobile"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "framework",
+                    "value": "react-native"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "sdk-version",
+                    "value": "1.5.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "package",
+                    "value": "com.dream11.app"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                    "key": "app-version",
+                    "value": "25.2.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "app-build",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os",
+                    "value": "android"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-version",
+                    "value": "14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-api-level",
+                    "value": "34"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ctas\": [],\n  \"behaviourTags\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e6506b8b-84f1-4188-961e-26acda0d1660",
+          "name": "Sync Journey State Delta",
+          "request": {
+            "name": "Sync Journey State Delta",
+            "description": {
+              "content": "Saves user's state machine snapshot delta.\nRoute rename: `/cta/state-machines/snapshot/delta/` is renamed to `/sdk/journeys/sync`.\nSDK metadata headers are part of the contract and are marked required here.\nNote: server-side enforcement for these metadata headers is not implemented yet.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sdk",
+                "journeys",
+                "sync"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "user-id",
+                "value": "<long>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "platform",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "framework",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "sdk-version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "package",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                "key": "app-version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "app-build",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "os",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "os-version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "os-api-level",
+                "value": "<integer>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ctas\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"behaviourTags\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b3e4ec42-d019-4059-98fe-2c0681bf0004",
+              "name": "Snapshot saved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sdk",
+                    "journeys",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "user-id",
+                    "value": "135162489"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "platform",
+                    "value": "android-mobile"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "framework",
+                    "value": "react-native"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "sdk-version",
+                    "value": "1.5.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "package",
+                    "value": "com.dream11.app"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                    "key": "app-version",
+                    "value": "25.2.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "app-build",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os",
+                    "value": "android"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-version",
+                    "value": "14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-api-level",
+                    "value": "34"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ctas\": [\n    {\n      \"ctaId\": \"12345\",\n      \"activeStateMachines\": {},\n      \"resetAt\": [],\n      \"actionDoneAt\": []\n    }\n  ],\n  \"behaviourTags\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {},\n  \"statusCode\": 6218\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65e92b76-5270-44d4-9a19-859553357dfb",
+              "name": "Invalid request body or missing userId",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sdk",
+                    "journeys",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "user-id",
+                    "value": "135162489"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "platform",
+                    "value": "android-mobile"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "framework",
+                    "value": "react-native"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "sdk-version",
+                    "value": "1.5.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "package",
+                    "value": "com.dream11.app"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                    "key": "app-version",
+                    "value": "25.2.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "app-build",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os",
+                    "value": "android"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-version",
+                    "value": "14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-api-level",
+                    "value": "34"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ctas\": [\n    {\n      \"ctaId\": \"12345\",\n      \"activeStateMachines\": {},\n      \"resetAt\": [],\n      \"actionDoneAt\": []\n    }\n  ],\n  \"behaviourTags\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd644a1e-8f65-4c39-aaa6-e592ec0eaec7",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sdk",
+                    "journeys",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "user-id",
+                    "value": "135162489"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "platform",
+                    "value": "android-mobile"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "framework",
+                    "value": "react-native"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "sdk-version",
+                    "value": "1.5.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "package",
+                    "value": "com.dream11.app"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                    "key": "app-version",
+                    "value": "25.2.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "app-build",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os",
+                    "value": "android"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-version",
+                    "value": "14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-api-level",
+                    "value": "34"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ctas\": [\n    {\n      \"ctaId\": \"12345\",\n      \"activeStateMachines\": {},\n      \"resetAt\": [],\n      \"actionDoneAt\": []\n    }\n  ],\n  \"behaviourTags\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3bc18a01-3ff9-4123-b284-6cf24c95b089",
+          "name": "SDK User Identify",
+          "request": {
+            "name": "SDK User Identify",
+            "description": {
+              "content": "Creates or updates user profile details from SDK identity flow.\nRoute rename chain: `/user-profile/sdk/login` -> `/sdk/login` -> `/sdk/user/identify`.\nSDK metadata headers are part of the contract and are marked required here.\nNote: server-side enforcement for these metadata headers is not implemented yet.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sdk",
+                "user",
+                "identify"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "user-id",
+                "value": "<long>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "platform",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "framework",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "sdk-version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "package",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                "key": "app-version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "app-build",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "os",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "os-version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "os-api-level",
+                "value": "<integer>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"birthdate\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"city\": \"<string>\",\n  \"locality\": \"<string>\",\n  \"postalCode\": \"<string>\",\n  \"country\": \"<string>\",\n  \"language\": \"<string>\",\n  \"timezone\": \"<string>\",\n  \"custom\": {\n    \"key_0\": 4425.713945155317,\n    \"key_1\": \"string\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "281147f3-4961-4b4f-b0ee-22b5e519a874",
+              "name": "User profile upserted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sdk",
+                    "user",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "user-id",
+                    "value": "135162489"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "platform",
+                    "value": "android-mobile"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "framework",
+                    "value": "react-native"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "sdk-version",
+                    "value": "1.5.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "package",
+                    "value": "com.dream11.app"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                    "key": "app-version",
+                    "value": "25.2.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "app-build",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os",
+                    "value": "android"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-version",
+                    "value": "14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-api-level",
+                    "value": "34"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"135162489\",\n  \"firstName\": \"Khagesh\",\n  \"lastName\": \"Kumar\",\n  \"email\": \"khagesh.kumar@example.com\",\n  \"phone\": \"+919999999999\",\n  \"city\": \"Mumbai\",\n  \"country\": \"India\",\n  \"language\": \"en\",\n  \"timezone\": \"Asia/Kolkata\",\n  \"custom\": {\n    \"acquisitionSource\": \"app\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b54985d1-c974-41db-95c6-194e1c1ad95a",
+              "name": "Invalid request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sdk",
+                    "user",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "user-id",
+                    "value": "135162489"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "platform",
+                    "value": "android-mobile"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "framework",
+                    "value": "react-native"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "sdk-version",
+                    "value": "1.5.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "package",
+                    "value": "com.dream11.app"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                    "key": "app-version",
+                    "value": "25.2.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "app-build",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os",
+                    "value": "android"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-version",
+                    "value": "14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-api-level",
+                    "value": "34"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"135162489\",\n  \"firstName\": \"Khagesh\",\n  \"lastName\": \"Kumar\",\n  \"email\": \"khagesh.kumar@example.com\",\n  \"phone\": \"+919999999999\",\n  \"city\": \"Mumbai\",\n  \"country\": \"India\",\n  \"language\": \"en\",\n  \"timezone\": \"Asia/Kolkata\",\n  \"custom\": {\n    \"acquisitionSource\": \"app\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa99ad37-3f39-40bb-bc44-5e1176af2d66",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sdk",
+                    "user",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "user-id",
+                    "value": "135162489"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "platform",
+                    "value": "android-mobile"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "framework",
+                    "value": "react-native"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "sdk-version",
+                    "value": "1.5.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "package",
+                    "value": "com.dream11.app"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                    "key": "app-version",
+                    "value": "25.2.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "app-build",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os",
+                    "value": "android"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-version",
+                    "value": "14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-api-level",
+                    "value": "34"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"135162489\",\n  \"firstName\": \"Khagesh\",\n  \"lastName\": \"Kumar\",\n  \"email\": \"khagesh.kumar@example.com\",\n  \"phone\": \"+919999999999\",\n  \"city\": \"Mumbai\",\n  \"country\": \"India\",\n  \"language\": \"en\",\n  \"timezone\": \"Asia/Kolkata\",\n  \"custom\": {\n    \"acquisitionSource\": \"app\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5c8bcd90-7fd2-4f36-9555-53392f76880a",
+          "name": "SDK Token Registration",
+          "request": {
+            "name": "SDK Token Registration",
+            "description": {
+              "content": "Registers or updates an SDK device push token for a user.\nRoute rename chain: `/user-profile/sdk/register/token` -> `/sdk/register/token` -> `/sdk/device-token/register`.\nSDK metadata headers are part of the contract and are marked required here.\nNote: server-side enforcement for these metadata headers is not implemented yet.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sdk",
+                "device-token",
+                "register"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "user-id",
+                "value": "<long>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "platform",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "framework",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "sdk-version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "package",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                "key": "app-version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "app-build",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "os",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "os-version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "os-api-level",
+                "value": "<integer>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"<string>\",\n  \"token\": \"<string>\",\n  \"deviceId\": \"<string>\",\n  \"tokenType\": \"<string>\",\n  \"os\": \"<string>\",\n  \"osVersion\": \"<string>\",\n  \"appPackageName\": \"<string>\",\n  \"appVersion\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d165e929-204a-45f6-9a6b-a5227a16e7cd",
+              "name": "Token registered successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sdk",
+                    "device-token",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "user-id",
+                    "value": "135162489"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "platform",
+                    "value": "android-mobile"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "framework",
+                    "value": "react-native"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "sdk-version",
+                    "value": "1.5.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "package",
+                    "value": "com.dream11.app"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                    "key": "app-version",
+                    "value": "25.2.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "app-build",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os",
+                    "value": "android"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-version",
+                    "value": "14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-api-level",
+                    "value": "34"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"135162489\",\n  \"token\": \"fcm_token_ABC123\",\n  \"deviceId\": \"device_001\",\n  \"tokenType\": \"FCM\",\n  \"os\": \"android\",\n  \"osVersion\": \"14\",\n  \"appPackageName\": \"com.dream11.app\",\n  \"appVersion\": \"25.2.0.v1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "04929d8b-ad82-48ac-94de-58b686ff70fa",
+              "name": "Invalid request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sdk",
+                    "device-token",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "user-id",
+                    "value": "135162489"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "platform",
+                    "value": "android-mobile"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "framework",
+                    "value": "react-native"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "sdk-version",
+                    "value": "1.5.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "package",
+                    "value": "com.dream11.app"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                    "key": "app-version",
+                    "value": "25.2.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "app-build",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os",
+                    "value": "android"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-version",
+                    "value": "14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-api-level",
+                    "value": "34"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"135162489\",\n  \"token\": \"fcm_token_ABC123\",\n  \"deviceId\": \"device_001\",\n  \"tokenType\": \"FCM\",\n  \"os\": \"android\",\n  \"osVersion\": \"14\",\n  \"appPackageName\": \"com.dream11.app\",\n  \"appVersion\": \"25.2.0.v1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "86bb3d6b-31fc-4941-93dd-2d8c024678ed",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sdk",
+                    "device-token",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "user-id",
+                    "value": "135162489"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "platform",
+                    "value": "android-mobile"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "framework",
+                    "value": "react-native"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "sdk-version",
+                    "value": "1.5.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "package",
+                    "value": "com.dream11.app"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                    "key": "app-version",
+                    "value": "25.2.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "app-build",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os",
+                    "value": "android"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-version",
+                    "value": "14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-api-level",
+                    "value": "34"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"135162489\",\n  \"token\": \"fcm_token_ABC123\",\n  \"deviceId\": \"device_001\",\n  \"tokenType\": \"FCM\",\n  \"os\": \"android\",\n  \"osVersion\": \"14\",\n  \"appPackageName\": \"com.dream11.app\",\n  \"appVersion\": \"25.2.0.v1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "80fa5a2e-ef0d-4e0b-92e9-013f95058f96",
+          "name": "SDK Preferences Upsert",
+          "request": {
+            "name": "SDK Preferences Upsert",
+            "description": {
+              "content": "Upserts user notification preferences from SDK.\nRoute rename chain: `/user-profile/sdk/preferences` -> `/sdk/preferences` -> `/sdk/user/preferences`.\nSDK metadata headers are part of the contract and are marked required here.\nNote: server-side enforcement for these metadata headers is not implemented yet.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sdk",
+                "user",
+                "preferences"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "user-id",
+                "value": "<long>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "platform",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "framework",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "sdk-version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "package",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                "key": "app-version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "app-build",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "os",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "os-version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "os-api-level",
+                "value": "<integer>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"<string>\",\n  \"items\": [\n    {\n      \"channel\": \"<string>\",\n      \"subcategory\": \"<string>\",\n      \"value\": \"<boolean>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e09543e7-4d5d-4a71-8963-2e57198cf5bb",
+              "name": "Preferences updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sdk",
+                    "user",
+                    "preferences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "user-id",
+                    "value": "135162489"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "platform",
+                    "value": "android-mobile"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "framework",
+                    "value": "react-native"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "sdk-version",
+                    "value": "1.5.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "package",
+                    "value": "com.dream11.app"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                    "key": "app-version",
+                    "value": "25.2.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "app-build",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os",
+                    "value": "android"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-version",
+                    "value": "14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-api-level",
+                    "value": "34"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"135162489\",\n  \"items\": [\n    {\n      \"channel\": \"push\",\n      \"subcategory\": \"contest\",\n      \"value\": true\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"updated\": 139,\n    \"preferences\": [\n      {\n        \"channel\": \"<string>\",\n        \"subcategory\": \"<string>\",\n        \"value\": \"<boolean>\"\n      },\n      {\n        \"channel\": \"<string>\",\n        \"subcategory\": \"<string>\",\n        \"value\": \"<boolean>\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52ad5849-ca57-4f49-a352-0f33f7d29ece",
+              "name": "Invalid request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sdk",
+                    "user",
+                    "preferences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "user-id",
+                    "value": "135162489"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "platform",
+                    "value": "android-mobile"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "framework",
+                    "value": "react-native"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "sdk-version",
+                    "value": "1.5.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "package",
+                    "value": "com.dream11.app"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                    "key": "app-version",
+                    "value": "25.2.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "app-build",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os",
+                    "value": "android"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-version",
+                    "value": "14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-api-level",
+                    "value": "34"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"135162489\",\n  \"items\": [\n    {\n      \"channel\": \"push\",\n      \"subcategory\": \"contest\",\n      \"value\": true\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3162d62-10dc-4b6e-8a67-e4afc5700261",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sdk",
+                    "user",
+                    "preferences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "user-id",
+                    "value": "135162489"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "platform",
+                    "value": "android-mobile"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "framework",
+                    "value": "react-native"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "sdk-version",
+                    "value": "1.5.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "package",
+                    "value": "com.dream11.app"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).",
+                    "key": "app-version",
+                    "value": "25.2.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "app-build",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os",
+                    "value": "android"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-version",
+                    "value": "14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "os-api-level",
+                    "value": "34"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"135162489\",\n  \"items\": [\n    {\n      \"channel\": \"push\",\n      \"subcategory\": \"contest\",\n      \"value\": true\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "TENANT-ID"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4cdc8059-80d0-468b-a1b2-eccdd8dea8e4",
+    "name": "Raven Journey Client SDK API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Journey module APIs for Journey management, behaviour tags, events, and SDK operations.\n\n## Authentication\nTENANT-ID and PROJECT-ID headers are required on all endpoints (auth routes use TENANT-ID only) via the global `TenantIdHeader` security scheme.\nThe `/healthcheck` endpoint is exempted. Some endpoints also require `USER-ID`.\n\n## Timestamps\nAll timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).\n\n\nContact Support:\n Name: Raven Team",
+      "type": "text/plain"
+    }
+  }
+}

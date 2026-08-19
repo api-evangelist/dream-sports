@@ -1,0 +1,273 @@
+openapi: 3.2.0
+info:
+  title: Raven Journey Events Catalog API
+  description: 'Journey module APIs for Journey management, behaviour tags, events, and SDK operations.
+
+
+    ## Authentication
+
+    TENANT-ID and PROJECT-ID headers are required on all endpoints (auth routes use TENANT-ID only) via the global `TenantIdHeader` security scheme.
+
+    The `/healthcheck` endpoint is exempted. Some endpoints also require `USER-ID`.
+
+
+    ## Timestamps
+
+    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).
+
+    '
+  version: 1.0.0
+  contact:
+    name: Raven Team
+servers:
+- url: http://localhost:8080
+  description: Local development server
+security:
+- TenantIdHeader: []
+tags:
+- name: Events Catalog
+  description: Event schema management — create, update, and manage event definitions and their properties
+paths:
+  /thunder/events:
+    get:
+      tags:
+      - Events Catalog
+      summary: List Events
+      operationId: listEvents
+      responses:
+        '200':
+          description: Events retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+      - Events Catalog
+      summary: Create or Update Events
+      description: 'Creates new events or updates existing events. Accepts an array of EventInput objects.
+
+        Each event includes a name and a list of properties with types, expected values, and mandatory flags.
+
+        '
+      operationId: upsertEvents
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/EventInput'
+            example:
+            - eventName: AppLaunch
+              properties:
+              - propertyName: mode
+                type: string
+                isMandatory: true
+                description: App launch mode
+      responses:
+        '200':
+          description: Event created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request body or validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /thunder/events/list/names:
+    get:
+      tags:
+      - Events Catalog
+      summary: Get All Event Names
+      description: Retrieves a list of all event names for the project (lightweight, no property details).
+      operationId: getAllEventNames
+      responses:
+        '200':
+          description: Event names retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /thunder/events/{event-name}:
+    get:
+      tags:
+      - Events Catalog
+      summary: Get Event by Name
+      description: Retrieves a specific event by its name, including all property definitions.
+      operationId: getEvent
+      parameters:
+      - name: event-name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Event retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Event not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+      - Events Catalog
+      summary: Update Event Properties
+      description: Updates the properties of an existing event.
+      operationId: patchEvent
+      parameters:
+      - name: event-name
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/EventInput'
+      responses:
+        '200':
+          description: Event updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request body or validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Event not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+      - Events Catalog
+      summary: Delete Event
+      operationId: deleteEvent
+      parameters:
+      - name: event-name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Event deleted
+        '401':
+          description: PROJECT-ID or TENANT-ID header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Event not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    EventPropertyInput:
+      type: object
+      required:
+      - propertyName
+      - type
+      - isMandatory
+      properties:
+        propertyName:
+          type: string
+        type:
+          type: string
+        expectedValue:
+          type: string
+        isMandatory:
+          type: boolean
+        description:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        statusCode:
+          type: integer
+    EventInput:
+      type: object
+      required:
+      - eventName
+      - properties
+      properties:
+        eventName:
+          type: string
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventPropertyInput'
+  securitySchemes:
+    TenantIdHeader:
+      type: apiKey
+      in: header
+      name: TENANT-ID

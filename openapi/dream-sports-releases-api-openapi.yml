@@ -1,0 +1,332 @@
+openapi: 3.2.0
+info:
+  title: Delivr OTA Server Releases API
+  description: "Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.) \ndirectly to end users' devices without going through app store review processes.\n\n## Features\n- Deploy over-the-air updates to React Native applications\n- Manage apps, deployments, and releases\n- Gradual rollouts and A/B testing\n- Rollback capabilities\n- Deployment metrics and analytics\n- Multi-platform support\n"
+tags:
+- name: Releases
+paths:
+  /apps/{appName}/deployments/{deploymentName}/release:
+    post:
+      tags:
+      - Releases
+      summary: Release update
+      description: Uploads and releases a new package to a deployment
+      parameters:
+      - $ref: '#/components/parameters/AppName'
+      - $ref: '#/components/parameters/DeploymentName'
+      - $ref: '#/components/parameters/TenantHeader'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - packageInfo
+              - package
+              properties:
+                packageInfo:
+                  type: string
+                  description: JSON-encoded PackageInfo object
+                  example: '{"appVersion":"1.0.0","description":"Bug fixes","isMandatory":false}'
+                package:
+                  type: string
+                  format: binary
+                  description: ZIP file containing the update
+      responses:
+        '201':
+          description: Package released
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  package:
+                    $ref: '#/components/schemas/Package'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '413':
+          description: Package too large
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    patch:
+      tags:
+      - Releases
+      summary: Patch release metadata
+      description: Updates properties of an existing release without uploading new package
+      parameters:
+      - $ref: '#/components/parameters/AppName'
+      - $ref: '#/components/parameters/DeploymentName'
+      - $ref: '#/components/parameters/TenantHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                packageInfo:
+                  $ref: '#/components/schemas/PackageInfo'
+                label:
+                  type: string
+                  description: Specific release label to patch (defaults to latest)
+      responses:
+        '200':
+          description: Release metadata updated
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /apps/{appName}/deployments/{deploymentName}/promote/{destDeploymentName}:
+    post:
+      tags:
+      - Releases
+      summary: Promote release
+      description: Promotes a release from one deployment to another
+      parameters:
+      - $ref: '#/components/parameters/AppName'
+      - $ref: '#/components/parameters/DeploymentName'
+      - name: destDeploymentName
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Destination deployment name
+      - $ref: '#/components/parameters/TenantHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                packageInfo:
+                  $ref: '#/components/schemas/PackageInfo'
+                label:
+                  type: string
+                  description: Specific release label to promote (defaults to latest)
+      responses:
+        '201':
+          description: Release promoted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  package:
+                    $ref: '#/components/schemas/Package'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /apps/{appName}/deployments/{deploymentName}/rollback:
+    post:
+      tags:
+      - Releases
+      summary: Rollback deployment
+      description: Rolls back to a previous release
+      parameters:
+      - $ref: '#/components/parameters/AppName'
+      - $ref: '#/components/parameters/DeploymentName'
+      - $ref: '#/components/parameters/TenantHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  type: string
+                  description: Target release label to rollback to (defaults to previous)
+      responses:
+        '201':
+          description: Rollback successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  package:
+                    $ref: '#/components/schemas/Package'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /apps/{appName}/deployments/{deploymentName}/history:
+    get:
+      tags:
+      - Releases
+      summary: Get release history
+      description: Returns the release history for a deployment
+      parameters:
+      - $ref: '#/components/parameters/AppName'
+      - $ref: '#/components/parameters/DeploymentName'
+      - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '200':
+          description: Release history
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  history:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Package'
+    delete:
+      tags:
+      - Releases
+      summary: Clear release history
+      description: Clears the release history for a deployment (requires Owner permission)
+      parameters:
+      - $ref: '#/components/parameters/AppName'
+      - $ref: '#/components/parameters/DeploymentName'
+      - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '204':
+          description: History cleared
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request - invalid parameters
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/Error'
+            - type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    PackageInfo:
+      type: object
+      properties:
+        appVersion:
+          type: string
+          description: Semver or semver range
+          example: 1.0.0
+        description:
+          type: string
+          example: Bug fixes and performance improvements
+        isDisabled:
+          type: boolean
+          default: false
+        isMandatory:
+          type: boolean
+          default: false
+          description: Whether update is mandatory
+        rollout:
+          type: integer
+          minimum: 1
+          maximum: 100
+          description: Percentage of users to receive update
+          example: 50
+        label:
+          type: string
+          description: Generated release label
+          example: v23
+    Package:
+      allOf:
+      - $ref: '#/components/schemas/PackageInfo'
+      - type: object
+        properties:
+          blobUrl:
+            type: string
+            format: uri
+            description: URL to download package
+          packageHash:
+            type: string
+            description: SHA256 hash of package
+          size:
+            type: integer
+            format: int64
+            description: Package size in bytes
+          uploadTime:
+            type: integer
+            format: int64
+            description: Upload timestamp
+          releasedBy:
+            type: string
+            description: Email of user who released
+          releaseMethod:
+            type: string
+            enum:
+            - Upload
+            - Promote
+            - Rollback
+          originalLabel:
+            type: string
+            description: Label of promoted/rolled back release
+          originalDeployment:
+            type: string
+            description: Name of source deployment for promotions
+          diffPackageMap:
+            type: object
+            additionalProperties:
+              type: object
+              properties:
+                url:
+                  type: string
+                size:
+                  type: integer
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+  parameters:
+    AppName:
+      name: appName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Application name (or 'owner:appName' for disambiguation)
+      example: MyApp-iOS
+    DeploymentName:
+      name: deploymentName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Deployment environment name
+      example: Production
+    TenantHeader:
+      name: tenant
+      in: header
+      schema:
+        type: string
+      description: Organization/tenant ID filter
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: AccessKey
+      description: Access key or session token obtained from OAuth authentication

@@ -1,0 +1,904 @@
+{
+  "item": [
+    {
+      "id": "8ade0cc8-08f0-4213-aaa8-643587170085",
+      "name": "Events",
+      "description": {
+        "content": "APIs for managing Events. Events define the structure and properties of user actions that can trigger CTAs. Events include event names and their associated properties with types, expected values, and mandatory flags.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e84357a2-b545-4ad3-8407-8eb6538df968",
+          "name": "Create or Update Events",
+          "request": {
+            "name": "Create or Update Events",
+            "description": {
+              "content": "Creates new events or updates existing events. Events define the structure and properties of user actions that can trigger CTAs. Each event includes a name and a list of properties with types, expected values, and mandatory flags.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Source system identifier",
+                "key": "x-source",
+                "value": "CONCORD"
+              },
+              {
+                "disabled": false,
+                "description": "Tenant ID for multi-tenancy support",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"events\": [\n    {\n      \"eventName\": \"<string>\",\n      \"properties\": [\n        {\n          \"propertyName\": \"<string>\",\n          \"type\": \"<string>\",\n          \"isMandatory\": \"<boolean>\",\n          \"expectedValue\": \"<string>\",\n          \"description\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "77d14475-c8e3-4c23-b813-bbff03fbff4e",
+              "name": "Events created or updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Source system identifier",
+                    "key": "x-source",
+                    "value": "CONCORD"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Tenant ID for multi-tenancy support",
+                    "key": "x-tenant-id",
+                    "value": "default"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"eventName\": \"<string>\",\n      \"properties\": [\n        {\n          \"propertyName\": \"<string>\",\n          \"type\": \"<string>\",\n          \"isMandatory\": \"<boolean>\",\n          \"expectedValue\": \"<string>\",\n          \"description\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"eventsProcessed\": 2\n  },\n  \"statusCode\": 200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f6ce0e5-e50e-4b16-a49b-700a586d1c55",
+              "name": "Invalid request data or validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Source system identifier",
+                    "key": "x-source",
+                    "value": "CONCORD"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Tenant ID for multi-tenancy support",
+                    "key": "x-tenant-id",
+                    "value": "default"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"eventName\": \"<string>\",\n      \"properties\": [\n        {\n          \"propertyName\": \"<string>\",\n          \"type\": \"<string>\",\n          \"isMandatory\": \"<boolean>\",\n          \"expectedValue\": \"<string>\",\n          \"description\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b5c8f8ac-570d-464f-b920-2633290f9395",
+          "name": "Get All Events",
+          "request": {
+            "name": "Get All Events",
+            "description": {
+              "content": "Retrieves a list of all events for the specified tenant. Each event includes its name and associated properties with types, expected values, and mandatory flags.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Tenant ID for multi-tenancy support",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6c0439c8-cff9-4c62-b963-9651eaf462c9",
+              "name": "List of events retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant ID for multi-tenancy support",
+                    "key": "x-tenant-id",
+                    "value": "default"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"eventList\": [\n      {\n        \"eventName\": \"UserLoginEvent\",\n        \"properties\": [\n          {\n            \"propertyName\": \"userId\",\n            \"type\": \"String\",\n            \"isMandatory\": true\n          }\n        ]\n      }\n    ]\n  },\n  \"statusCode\": 200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b75f1f1d-af27-4ade-8d21-26d8daf44bc6",
+          "name": "Get All Event Names",
+          "request": {
+            "name": "Get All Event Names",
+            "description": {
+              "content": "Retrieves a list of all event names for the specified tenant. This is a lightweight endpoint that returns only the event names without their property details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "events",
+                "list",
+                "names"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Tenant ID for multi-tenancy support",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1a52c267-4264-4060-9487-94f1c869bb54",
+              "name": "List of event names retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    "list",
+                    "names"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant ID for multi-tenancy support",
+                    "key": "x-tenant-id",
+                    "value": "default"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"eventNames\": [\n      \"UserLoginEvent\",\n      \"PurchaseCompletedEvent\"\n    ]\n  },\n  \"statusCode\": 200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b9327d92-6118-4fca-a84d-9dda33bf6531",
+          "name": "Update Event Properties",
+          "request": {
+            "name": "Update Event Properties",
+            "description": {
+              "content": "Updates the properties of an existing event. Only the properties provided in the request will be updated. This allows partial updates to event property definitions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "events",
+                ":event-name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "event-name",
+                  "description": "(Required) Name of the event to update"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Tenant ID for multi-tenancy support",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"properties\": [\n    {\n      \"propertyName\": \"<string>\",\n      \"type\": \"<string>\",\n      \"isMandatory\": \"<boolean>\",\n      \"expectedValue\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "28c7ff42-919e-46fe-b5b5-62f8b3693c6c",
+              "name": "Event properties updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    ":event-name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "event-name",
+                      "description": "(Required) Name of the event to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant ID for multi-tenancy support",
+                    "key": "x-tenant-id",
+                    "value": "default"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"properties\": [\n    {\n      \"propertyName\": \"<string>\",\n      \"type\": \"<string>\",\n      \"isMandatory\": \"<boolean>\",\n      \"expectedValue\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": null,\n  \"statusCode\": 200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "963762a1-d861-4728-bb8c-80e7176fb46d",
+              "name": "Invalid request data or validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    ":event-name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "event-name",
+                      "description": "(Required) Name of the event to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant ID for multi-tenancy support",
+                    "key": "x-tenant-id",
+                    "value": "default"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"properties\": [\n    {\n      \"propertyName\": \"<string>\",\n      \"type\": \"<string>\",\n      \"isMandatory\": \"<boolean>\",\n      \"expectedValue\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6a246e98-4891-4a13-bef8-f76a2cc14c16",
+              "name": "Event not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    ":event-name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "event-name",
+                      "description": "(Required) Name of the event to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant ID for multi-tenancy support",
+                    "key": "x-tenant-id",
+                    "value": "default"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"properties\": [\n    {\n      \"propertyName\": \"<string>\",\n      \"type\": \"<string>\",\n      \"isMandatory\": \"<boolean>\",\n      \"expectedValue\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "de0fa378-6109-4ae8-b736-e68a4775ea55",
+          "name": "Get Event by Name",
+          "request": {
+            "name": "Get Event by Name",
+            "description": {
+              "content": "Retrieves a specific event by its name for the specified tenant. Returns the event name and all associated properties with types, expected values, and mandatory flags.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "events",
+                ":event-name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "event-name",
+                  "description": "(Required) Name of the event to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Tenant ID for multi-tenancy support",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fa002ed3-3409-46f1-8a49-5a97f0150b3e",
+              "name": "Event retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    ":event-name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "event-name",
+                      "description": "(Required) Name of the event to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant ID for multi-tenancy support",
+                    "key": "x-tenant-id",
+                    "value": "default"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"eventName\": \"UserLoginEvent\",\n    \"properties\": [\n      {\n        \"propertyName\": \"userId\",\n        \"type\": \"String\",\n        \"isMandatory\": true\n      }\n    ]\n  },\n  \"statusCode\": 200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "692bca9c-8276-4352-a541-12d591d3a77f",
+              "name": "Event not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    ":event-name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "event-name",
+                      "description": "(Required) Name of the event to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant ID for multi-tenancy support",
+                    "key": "x-tenant-id",
+                    "value": "default"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fe4593ca-dab7-4675-ab14-0407055becd9",
+          "name": "Delete Event",
+          "request": {
+            "name": "Delete Event",
+            "description": {
+              "content": "Deletes an event by its name for the specified tenant. This operation is irreversible.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "events",
+                ":event-name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "event-name",
+                  "description": "(Required) Name of the event to delete"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Tenant ID for multi-tenancy support",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e5eb0493-8995-437a-bca1-547d5ee89df4",
+              "name": "Event deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    ":event-name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "event-name",
+                      "description": "(Required) Name of the event to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant ID for multi-tenancy support",
+                    "key": "x-tenant-id",
+                    "value": "default"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": null,\n  \"statusCode\": 200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f97a6d8-83ff-4a15-ab25-12723829a9c5",
+              "name": "Event not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "events",
+                    ":event-name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "event-name",
+                      "description": "(Required) Name of the event to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant ID for multi-tenancy support",
+                    "key": "x-tenant-id",
+                    "value": "default"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8081",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "49370393-f923-4bc5-9c20-63c861516b18",
+    "name": "Thunder Admin Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Thunder Admin - Management endpoints",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Guardian integration endpoints User API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get User Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/user",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query",
+                "description": "User Identifier"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "User email"
+              },
+              {
+                "name": "phoneNumber",
+                "value": "",
+                "type": "query",
+                "description": "User phone number (recommended format E.164)"
+              },
+              {
+                "name": "providerName",
+                "value": "",
+                "type": "query",
+                "description": "name of the provider configured in Guardian IDP Login"
+              },
+              {
+                "name": "providerUserId",
+                "value": "",
+                "type": "query",
+                "description": "value of the sub claim in IDP login"
+              }
+            ]
+          },
+          "docs": "API to validate and return User Details.\nThe following query parameters are supported -\n\n- **userId** - string\n- **email** - string\n- **phoneNumber** - string (recommended format E.164)\n- **providerName** - string\n- **providerUserId** - string\n\nThe logic for determining the user account based on query parameters is delegated to the user service implementation. This approach offers flexibility to clients integrating with Guardian.\n\nGuardian can invoke this API using the following query parameters"
+        },
+        {
+          "info": {
+            "name": "Create a new user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/user",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "API to create a new user with given details\n\nA valid request must have atleast one of the following combination of fields in the request body -\n- phoneNumber, phoneNumberVerified\n- email, emailVerified\n- username and password\n\nAdditionally, the request can have other params in the request body-\n- name\n- firstName\n- lastName\n- email\n- phoneNumber\n- provider\n\nphoneNumberVerified will be sent as true if the phoneNumber was verified by guardian via\n\n- passwordless flow\n- IDP login flow, IDP response"
+        },
+        {
+          "info": {
+            "name": "Authenticate User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/user/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This API validates the username against the given password, and returns a positive response if the credentials are valid.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

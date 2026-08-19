@@ -1,0 +1,174 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Guardian OIDC Client Management API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OIDC Client Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List OAuth 2.0 clients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/client",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of OAuth 2.0 clients for the tenant.\n\n**Pagination:**\n- Page numbers start from 1\n- Page size can be between 1 and 100 (default: 10)\n- Results are ordered by creation date (newest first)\n\n**Response:**\n- Returns a list of client objects with basic information\n- Client secrets are not included in the response for security\n- Total count and pagination metadata are included\n"
+        },
+        {
+          "info": {
+            "name": "Create a new OAuth 2.0 client",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/client",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new OAuth 2.0 client for the tenant. This endpoint allows administrators\nto register new applications that can use the OAuth 2.0 and OpenID Connect flows.\n\n**Client Configuration:**\n- Each client must have a unique client name within the tenant\n- Grant types determine which OAuth 2.0 flows the client can use\n- Response types define the authorization flows supported\n- Redirect URIs must be pre-registered for security\n- Skip consent option allows bypassing user consent for trusted applica"
+        },
+        {
+          "info": {
+            "name": "Get OAuth 2.0 client details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/client/:client_id",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the client"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about a specific OAuth 2.0 client.\n\n**Response:**\n- Returns complete client configuration including client secret\n- All registered redirect URIs, grant types, and response types\n- Contact information and policy URIs\n- Skip consent configuration\n\n**Security Note:** Client secrets are included in the response and should be handled securely.\n"
+        },
+        {
+          "info": {
+            "name": "Update OAuth 2.0 client",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v1/admin/client/:client_id",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the client"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing OAuth 2.0 client configuration. Only provided fields will be updated.\n\n**Update Rules:**\n- All fields are optional (partial updates supported)\n- Grant types and response types cannot be empty if provided\n- Redirect URIs cannot be empty if provided\n- Client name cannot be blank if provided\n\n**Security:**\n- Client secrets are not updated through this endpoint\n- Use the regenerate secret endpoint to update client secrets\n"
+        },
+        {
+          "info": {
+            "name": "Delete OAuth 2.0 client",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/admin/client/:client_id",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the client"
+              }
+            ]
+          },
+          "docs": "Delete an OAuth 2.0 client and all its associated data.\n\n**Important:** This operation is irreversible and will:\n- Remove all client configurations\n- Delete all associated client scopes\n- Invalidate any existing tokens issued to this client\n\n**Security:** Ensure no active applications are using this client before deletion.\n"
+        },
+        {
+          "info": {
+            "name": "Regenerate client secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/client/:client_id/regenerate-secret",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the client"
+              }
+            ]
+          },
+          "docs": "Generate a new client secret for an existing OAuth 2.0 client.\n\n**Security Impact:**\n- The old client secret becomes invalid immediately\n- Any existing access tokens remain valid until expiration\n- Applications using this client will need to update their configuration\n\n**Response:**\n- Returns the new client secret\n- Store this securely as it won't be shown again\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

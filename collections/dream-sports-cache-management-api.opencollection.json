@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Guardian Cache Management API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cache Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Clear all caches",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/cache/clear",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Clear all caches in the system. This operation removes all cached entries\nand resets cache statistics.\n\n**Warning:** This operation will impact performance temporarily as caches\nwill need to be repopulated.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Checkmate Test Management Reports API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "user_session",
+      "value": "{{user_session}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Download run report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/run/report-download",
+            "params": [
+              {
+                "name": "runId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Download a CSV report of test run results"
+        },
+        {
+          "info": {
+            "name": "Download tests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/tests/download",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Download tests in CSV format"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

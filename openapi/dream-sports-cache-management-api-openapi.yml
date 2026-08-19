@@ -1,0 +1,57 @@
+openapi: 3.2.0
+info:
+  title: Guardian Cache Management API
+  version: 1.0.0
+tags:
+- name: Cache Management
+paths:
+  /cache/clear:
+    post:
+      tags:
+      - Cache Management
+      summary: Clear all caches
+      description: 'Clear all caches in the system. This operation removes all cached entries
+
+        and resets cache statistics.
+
+
+        **Warning:** This operation will impact performance temporarily as caches
+
+        will need to be repopulated.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TenantIdHeader'
+      responses:
+        '204':
+          description: All caches cleared successfully
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  parameters:
+    TenantIdHeader:
+      name: tenant-id
+      in: header
+      description: tenant-id of the client integrating with guardian
+      required: true
+      schema:
+        type: string
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.

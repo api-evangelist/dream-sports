@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Checkmate Test Management Organizations API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "user_session",
+      "value": "{{user_session}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/orgs"
+          },
+          "docs": "Get list of all organizations"
+        },
+        {
+          "info": {
+            "name": "Get organization details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/org/detail",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get detailed information about an organization"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

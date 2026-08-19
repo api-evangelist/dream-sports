@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Guardian Device-Bound Authentication API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Device-Bound Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Request authentication challenge",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/biometric/challenge",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate a random challenge (nonce) for biometric authentication.\n\n## Process\n1. Client requests a challenge\n2. Server generates a cryptographically secure 32-byte random nonce\n3. Server stores the challenge with a 5-minute expiry and generates a state\n4. Client receives the challenge and state\n5. Client uses the state for subsequent complete operations\n\n## Challenge Properties\n- **Size**: 32 bytes (256 bits)\n- **Encoding**: Base64\n- **Expiry**: 5 minutes (300 seconds)\n- **Single-use**: Can only"
+        },
+        {
+          "info": {
+            "name": "Complete biometric authentication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/biometric/complete",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Complete biometric authentication flow for MFA.\n\n## Login Flow\n1. Client must first call `/v2/biometric/challenge` to get a challenge and state\n2. Client prompts for biometric authentication (Face ID / Touch ID / Fingerprint)\n3. Client signs the challenge with the private key from secure storage\n4. Client sends the signature, credential_id, device_metadata, and state to this endpoint\n5. Server verifies the signature using the stored public key\n6. If valid, server issues access and refresh tokens"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

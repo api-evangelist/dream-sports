@@ -1,0 +1,675 @@
+{
+  "item": [
+    {
+      "id": "13d16a52-323c-4adf-b69a-b4c3d7a7c4e8",
+      "name": "SDK",
+      "description": {
+        "content": "APIs for SDK clients to interact with Thunder. These endpoints handle app launch, state machine synchronization, and nudge preview retrieval for mobile and web clients.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "45560acb-b22e-4bf0-a9dd-360e5850b23f",
+          "name": "App Launch - Active State Machines",
+          "request": {
+            "name": "App Launch - Active State Machines",
+            "description": {
+              "content": "Called by the client app on launch to synchronize state machines and retrieve active CTAs. The client sends its current state snapshot (CTAs and behaviour tags), and the server returns the updated state with active CTAs that should be shown to the user. Requires api_version header >= 1, otherwise returns empty response.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cta",
+                "active",
+                "state-machines"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "API version. Must be >= 1 for the endpoint to process the request. If null or < 1, returns empty response.",
+                "key": "api_version",
+                "value": "<long>"
+              },
+              {
+                "disabled": false,
+                "description": "Client app version",
+                "key": "app_version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) User ID of the authenticated user",
+                "key": "auth-userid",
+                "value": "<long>"
+              },
+              {
+                "disabled": false,
+                "description": "CodePush version (for React Native apps)",
+                "key": "codepush_version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "App package name",
+                "key": "package_name",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Tenant identifier",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ctas\": [\n    {\n      \"ctaId\": \"<string>\",\n      \"activeStateMachines\": {\n        \"key_0\": {\n          \"currentState\": \"<string>\",\n          \"lastTransitionAt\": \"<long>\",\n          \"createdAt\": \"<long>\",\n          \"context\": {\n            \"key_0\": {},\n            \"key_1\": {}\n          },\n          \"reset\": \"<boolean>\"\n        },\n        \"key_1\": {\n          \"currentState\": \"<string>\",\n          \"lastTransitionAt\": \"<long>\",\n          \"createdAt\": \"<long>\",\n          \"context\": {\n            \"key_0\": {},\n            \"key_1\": {},\n            \"key_2\": {}\n          },\n          \"reset\": \"<boolean>\"\n        }\n      },\n      \"resetAt\": [\n        \"<long>\",\n        \"<long>\"\n      ],\n      \"actionDoneAt\": [\n        \"<long>\",\n        \"<long>\"\n      ]\n    },\n    {\n      \"ctaId\": \"<string>\",\n      \"activeStateMachines\": {\n        \"key_0\": {\n          \"currentState\": \"<string>\",\n          \"lastTransitionAt\": \"<long>\",\n          \"createdAt\": \"<long>\",\n          \"context\": {\n            \"key_0\": {}\n          },\n          \"reset\": \"<boolean>\"\n        },\n        \"key_1\": {\n          \"currentState\": \"<string>\",\n          \"lastTransitionAt\": \"<long>\",\n          \"createdAt\": \"<long>\",\n          \"context\": {\n            \"key_0\": {}\n          },\n          \"reset\": \"<boolean>\"\n        },\n        \"key_2\": {\n          \"currentState\": \"<string>\",\n          \"lastTransitionAt\": \"<long>\",\n          \"createdAt\": \"<long>\",\n          \"context\": {\n            \"key_0\": {},\n            \"key_1\": {},\n            \"key_2\": {},\n            \"key_3\": {},\n            \"key_4\": {}\n          },\n          \"reset\": \"<boolean>\"\n        },\n        \"key_3\": {\n          \"currentState\": \"<string>\",\n          \"lastTransitionAt\": \"<long>\",\n          \"createdAt\": \"<long>\",\n          \"context\": {\n            \"key_0\": {}\n          },\n          \"reset\": \"<boolean>\"\n        }\n      },\n      \"resetAt\": [\n        \"<long>\",\n        \"<long>\"\n      ],\n      \"actionDoneAt\": [\n        \"<long>\",\n        \"<long>\"\n      ]\n    }\n  ],\n  \"behaviourTags\": [\n    {\n      \"behaviourTagName\": \"<string>\",\n      \"exposureRule\": {\n        \"session\": {\n          \"limit\": \"<integer>\"\n        },\n        \"lifespan\": {\n          \"limit\": \"<integer>\"\n        },\n        \"window\": {\n          \"limit\": \"<integer>\",\n          \"unit\": \"<string>\",\n          \"value\": \"<integer>\"\n        },\n        \"ctasResetAt\": [\n          {\n            \"ctaId\": \"<string>\",\n            \"resetAt\": \"<long>\"\n          },\n          {\n            \"ctaId\": \"<string>\",\n            \"resetAt\": \"<long>\"\n          }\n        ]\n      },\n      \"ctaRelation\": {\n        \"shownCta\": {\n          \"rule\": \"<string>\",\n          \"ctaList\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        \"hideCta\": {\n          \"rule\": \"<string>\",\n          \"ctaList\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        \"activeCtas\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    },\n    {\n      \"behaviourTagName\": \"<string>\",\n      \"exposureRule\": {\n        \"session\": {\n          \"limit\": \"<integer>\"\n        },\n        \"lifespan\": {\n          \"limit\": \"<integer>\"\n        },\n        \"window\": {\n          \"limit\": \"<integer>\",\n          \"unit\": \"<string>\",\n          \"value\": \"<integer>\"\n        },\n        \"ctasResetAt\": [\n          {\n            \"ctaId\": \"<string>\",\n            \"resetAt\": \"<long>\"\n          },\n          {\n            \"ctaId\": \"<string>\",\n            \"resetAt\": \"<long>\"\n          }\n        ]\n      },\n      \"ctaRelation\": {\n        \"shownCta\": {\n          \"rule\": \"<string>\",\n          \"ctaList\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        \"hideCta\": {\n          \"rule\": \"<string>\",\n          \"ctaList\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        \"activeCtas\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "62c19839-d157-441d-929c-1ea76327956b",
+              "name": "Active CTAs and state machines retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cta",
+                    "active",
+                    "state-machines"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "API version. Must be >= 1 for the endpoint to process the request. If null or < 1, returns empty response.",
+                    "key": "api_version",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Client app version",
+                    "key": "app_version",
+                    "value": "1.2.3"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) User ID of the authenticated user",
+                    "key": "auth-userid",
+                    "value": "12345"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "CodePush version (for React Native apps)",
+                    "key": "codepush_version",
+                    "value": "1.0.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "App package name",
+                    "key": "package_name",
+                    "value": "com.example.app"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ctas\": [\n    {\n      \"ctaId\": \"101\",\n      \"activeStateMachines\": {\n        \"5\": {\n          \"currentState\": \"2\",\n          \"lastTransitionAt\": 1720166608502,\n          \"context\": {},\n          \"createdAt\": 1720166608502,\n          \"reset\": true\n        }\n      },\n      \"resetAt\": [\n        1701603029000\n      ],\n      \"actionDoneAt\": [\n        1756099199923\n      ]\n    }\n  ],\n  \"behaviourTags\": [\n    {\n      \"behaviourTagName\": \"onboarding_eligible\",\n      \"exposureRule\": {\n        \"session\": {\n          \"limit\": 1\n        },\n        \"window\": {\n          \"limit\": 1,\n          \"unit\": \"days\",\n          \"value\": 7\n        }\n      },\n      \"ctaRelation\": {\n        \"activeCtas\": [\n          1\n        ]\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"ctas\": [\n      {\n        \"ctaId\": \"101\",\n        \"rule\": {\n          \"stateToAction\": {\n            \"1\": \"actionId1\"\n          },\n          \"resetStates\": [],\n          \"resetCTAonFirstLaunch\": false,\n          \"contextParams\": [\n            \"mode\",\n            \"contestId\"\n          ],\n          \"stateTransition\": {\n            \"ContestJoinedClient\": {\n              \"0\": [\n                {\n                  \"transitionTo\": 1,\n                  \"filters\": {\n                    \"operator\": \"AND\",\n                    \"filter\": [\n                      {\n                        \"propertyName\": \"mode\",\n                        \"propertyType\": \"string\",\n                        \"comparisonType\": \"=\",\n                        \"comparisonValue\": \"normal\"\n                      }\n                    ]\n                  }\n                }\n              ]\n            }\n          },\n          \"groupByConfig\": {\n            \"groupBy\": [\n              \"roundId\"\n            ]\n          },\n          \"priority\": 1,\n          \"stateMachineTTL\": 1812517298168,\n          \"ctaValidTill\": 1812517298168,\n          \"actions\": [\n            {\n              \"actionId1\": {\n                \"type\": \"BottomSheet\",\n                \"nudgeId\": \"5\",\n                \"nudgeTemplate\": {\n                  \"testId\": \"nudge_container_bottom_sheet\"\n                }\n              }\n            }\n          ],\n          \"frequency\": {\n            \"session\": {\n              \"limit\": 1\n            },\n            \"window\": {\n              \"limit\": 1,\n              \"unit\": \"days\",\n              \"value\": 2\n            },\n            \"lifespan\": {\n              \"limit\": 10\n            }\n          }\n        },\n        \"activeStateMachines\": {\n          \"5\": {\n            \"currentState\": \"2\",\n            \"lastTransitionAt\": 1720166608502,\n            \"context\": {},\n            \"createdAt\": 1720166608502,\n            \"reset\": true\n          }\n        },\n        \"resetAt\": [\n          1701603029000\n        ],\n        \"actionDoneAt\": [\n          1756099199923\n        ],\n        \"behaviourTagName\": \"onboarding_eligible\"\n      }\n    ],\n    \"behaviourTags\": [\n      {\n        \"behaviourTagName\": \"onboarding_eligible\",\n        \"exposureRule\": {\n          \"session\": {\n            \"limit\": 1\n          },\n          \"window\": {\n            \"limit\": 1,\n            \"unit\": \"days\",\n            \"value\": 7\n          }\n        },\n        \"ctaRelation\": {\n          \"activeCtas\": [\n            1\n          ]\n        }\n      }\n    ]\n  },\n  \"statusCode\": 200,\n  \"error\": null,\n  \"message\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e69d290-f954-43ba-85d2-21940995bc74",
+              "name": "Invalid request data or missing required headers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cta",
+                    "active",
+                    "state-machines"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "API version. Must be >= 1 for the endpoint to process the request. If null or < 1, returns empty response.",
+                    "key": "api_version",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Client app version",
+                    "key": "app_version",
+                    "value": "1.2.3"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) User ID of the authenticated user",
+                    "key": "auth-userid",
+                    "value": "12345"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "CodePush version (for React Native apps)",
+                    "key": "codepush_version",
+                    "value": "1.0.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "App package name",
+                    "key": "package_name",
+                    "value": "com.example.app"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ctas\": [\n    {\n      \"ctaId\": \"101\",\n      \"activeStateMachines\": {\n        \"5\": {\n          \"currentState\": \"2\",\n          \"lastTransitionAt\": 1720166608502,\n          \"context\": {},\n          \"createdAt\": 1720166608502,\n          \"reset\": true\n        }\n      },\n      \"resetAt\": [\n        1701603029000\n      ],\n      \"actionDoneAt\": [\n        1756099199923\n      ]\n    }\n  ],\n  \"behaviourTags\": [\n    {\n      \"behaviourTagName\": \"onboarding_eligible\",\n      \"exposureRule\": {\n        \"session\": {\n          \"limit\": 1\n        },\n        \"window\": {\n          \"limit\": 1,\n          \"unit\": \"days\",\n          \"value\": 7\n        }\n      },\n      \"ctaRelation\": {\n        \"activeCtas\": [\n          1\n        ]\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "98f1a4d6-ab18-4993-bf1d-aa03a30d4f6a",
+          "name": "Get Nudge Preview",
+          "request": {
+            "name": "Get Nudge Preview",
+            "description": {
+              "content": "Retrieves a Nudge Preview by its ID. Nudge Previews contain the UI template and configuration that will be displayed to users. This is the recommended endpoint for retrieving nudge templates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cta",
+                "nudge",
+                "preview",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Nudge Preview ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Tenant identifier",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0c833a87-1d0b-4e43-8468-5e8054a740a0",
+              "name": "Nudge Preview retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cta",
+                    "nudge",
+                    "preview",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Nudge Preview ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"5\",\n    \"template\": \"{\\\"type\\\":\\\"BottomSheet\\\",\\\"testId\\\":\\\"nudge_container_bottom_sheet\\\"}\",\n    \"ttl\": 9999999\n  },\n  \"statusCode\": 200,\n  \"error\": null,\n  \"message\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48410fbd-9c22-4fee-a815-b07db6e04fe8",
+              "name": "Nudge Preview not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cta",
+                    "nudge",
+                    "preview",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Nudge Preview ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "33a50e5a-7a9f-4920-92fa-c7bf7105e18b",
+          "name": "Merge Snapshot Delta",
+          "request": {
+            "name": "Merge Snapshot Delta",
+            "description": {
+              "content": "Merges a delta snapshot from the client with the server state. This endpoint is used to synchronize incremental state changes (CTAs and behaviour tags) between the client and server. The server merges the delta and updates the user's state. Requires api_version header >= 1, otherwise returns false.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cta",
+                "state-machines",
+                "snapshot",
+                "delta"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "API version. Must be >= 1 for the endpoint to process the request. If null or < 1, returns false.",
+                "key": "api_version",
+                "value": "<long>"
+              },
+              {
+                "disabled": false,
+                "description": "Client app version",
+                "key": "app_version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) User ID of the authenticated user",
+                "key": "auth-userid",
+                "value": "<long>"
+              },
+              {
+                "disabled": false,
+                "description": "CodePush version (for React Native apps)",
+                "key": "codepush_version",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "App package name",
+                "key": "package_name",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Tenant identifier",
+                "key": "x-tenant-id",
+                "value": "default"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ctas\": [\n    {\n      \"ctaId\": \"<string>\",\n      \"activeStateMachines\": {\n        \"key_0\": {\n          \"currentState\": \"<string>\",\n          \"lastTransitionAt\": \"<long>\",\n          \"createdAt\": \"<long>\",\n          \"context\": {\n            \"key_0\": {},\n            \"key_1\": {}\n          },\n          \"reset\": \"<boolean>\"\n        },\n        \"key_1\": {\n          \"currentState\": \"<string>\",\n          \"lastTransitionAt\": \"<long>\",\n          \"createdAt\": \"<long>\",\n          \"context\": {\n            \"key_0\": {},\n            \"key_1\": {},\n            \"key_2\": {}\n          },\n          \"reset\": \"<boolean>\"\n        }\n      },\n      \"resetAt\": [\n        \"<long>\",\n        \"<long>\"\n      ],\n      \"actionDoneAt\": [\n        \"<long>\",\n        \"<long>\"\n      ]\n    },\n    {\n      \"ctaId\": \"<string>\",\n      \"activeStateMachines\": {\n        \"key_0\": {\n          \"currentState\": \"<string>\",\n          \"lastTransitionAt\": \"<long>\",\n          \"createdAt\": \"<long>\",\n          \"context\": {\n            \"key_0\": {}\n          },\n          \"reset\": \"<boolean>\"\n        },\n        \"key_1\": {\n          \"currentState\": \"<string>\",\n          \"lastTransitionAt\": \"<long>\",\n          \"createdAt\": \"<long>\",\n          \"context\": {\n            \"key_0\": {},\n            \"key_1\": {}\n          },\n          \"reset\": \"<boolean>\"\n        }\n      },\n      \"resetAt\": [\n        \"<long>\",\n        \"<long>\"\n      ],\n      \"actionDoneAt\": [\n        \"<long>\",\n        \"<long>\"\n      ]\n    }\n  ],\n  \"behaviourTags\": [\n    {\n      \"behaviourTagName\": \"<string>\",\n      \"exposureRule\": {\n        \"session\": {\n          \"limit\": \"<integer>\"\n        },\n        \"lifespan\": {\n          \"limit\": \"<integer>\"\n        },\n        \"window\": {\n          \"limit\": \"<integer>\",\n          \"unit\": \"<string>\",\n          \"value\": \"<integer>\"\n        },\n        \"ctasResetAt\": [\n          {\n            \"ctaId\": \"<string>\",\n            \"resetAt\": \"<long>\"\n          },\n          {\n            \"ctaId\": \"<string>\",\n            \"resetAt\": \"<long>\"\n          }\n        ]\n      },\n      \"ctaRelation\": {\n        \"shownCta\": {\n          \"rule\": \"<string>\",\n          \"ctaList\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        \"hideCta\": {\n          \"rule\": \"<string>\",\n          \"ctaList\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        \"activeCtas\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    },\n    {\n      \"behaviourTagName\": \"<string>\",\n      \"exposureRule\": {\n        \"session\": {\n          \"limit\": \"<integer>\"\n        },\n        \"lifespan\": {\n          \"limit\": \"<integer>\"\n        },\n        \"window\": {\n          \"limit\": \"<integer>\",\n          \"unit\": \"<string>\",\n          \"value\": \"<integer>\"\n        },\n        \"ctasResetAt\": [\n          {\n            \"ctaId\": \"<string>\",\n            \"resetAt\": \"<long>\"\n          },\n          {\n            \"ctaId\": \"<string>\",\n            \"resetAt\": \"<long>\"\n          }\n        ]\n      },\n      \"ctaRelation\": {\n        \"shownCta\": {\n          \"rule\": \"<string>\",\n          \"ctaList\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        \"hideCta\": {\n          \"rule\": \"<string>\",\n          \"ctaList\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        \"activeCtas\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e444c5c1-ff51-4f80-ac65-72703327b627",
+              "name": "Snapshot delta merged successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cta",
+                    "state-machines",
+                    "snapshot",
+                    "delta"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "API version. Must be >= 1 for the endpoint to process the request. If null or < 1, returns false.",
+                    "key": "api_version",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Client app version",
+                    "key": "app_version",
+                    "value": "1.2.3"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) User ID of the authenticated user",
+                    "key": "auth-userid",
+                    "value": "12345"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "CodePush version (for React Native apps)",
+                    "key": "codepush_version",
+                    "value": "1.0.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "App package name",
+                    "key": "package_name",
+                    "value": "com.example.app"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ctas\": [\n    {\n      \"ctaId\": \"101\",\n      \"activeStateMachines\": {\n        \"default\": {\n          \"currentState\": \"1\",\n          \"lastTransitionAt\": 1699999999000,\n          \"context\": {\n            \"cohort\": \"new_user\",\n            \"appVersion\": \"1.2.3\"\n          },\n          \"createdAt\": 1699900000000,\n          \"reset\": false\n        }\n      },\n      \"resetAt\": [\n        1699800000000\n      ],\n      \"actionDoneAt\": [\n        1699850000000\n      ]\n    },\n    {\n      \"ctaId\": \"202\",\n      \"activeStateMachines\": {},\n      \"resetAt\": [],\n      \"actionDoneAt\": []\n    }\n  ],\n  \"behaviourTags\": [\n    {\n      \"behaviourTagName\": \"onboarding_eligible\",\n      \"exposureRule\": {\n        \"session\": {\n          \"limit\": 2\n        },\n        \"lifespan\": {\n          \"limit\": 10\n        },\n        \"window\": {\n          \"limit\": 3,\n          \"unit\": \"days\",\n          \"value\": 7\n        },\n        \"ctasResetAt\": [\n          {\n            \"ctaId\": \"101\",\n            \"resetAt\": 1699700000000\n          }\n        ]\n      },\n      \"ctaRelation\": {\n        \"shownCta\": {\n          \"rule\": \"LIST\",\n          \"ctaList\": [\n            \"101\"\n          ]\n        },\n        \"hideCta\": {\n          \"rule\": \"ANY\",\n          \"ctaList\": []\n        },\n        \"activeCtas\": [\n          \"101\"\n        ]\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": true,\n  \"statusCode\": 200,\n  \"error\": null,\n  \"message\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83511f22-9efd-4942-b4e8-620343bbcde0",
+              "name": "Invalid request data or missing required headers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cta",
+                    "state-machines",
+                    "snapshot",
+                    "delta"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "API version. Must be >= 1 for the endpoint to process the request. If null or < 1, returns false.",
+                    "key": "api_version",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Client app version",
+                    "key": "app_version",
+                    "value": "1.2.3"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) User ID of the authenticated user",
+                    "key": "auth-userid",
+                    "value": "12345"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "CodePush version (for React Native apps)",
+                    "key": "codepush_version",
+                    "value": "1.0.0"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "App package name",
+                    "key": "package_name",
+                    "value": "com.example.app"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Tenant identifier",
+                    "key": "x-tenant-id",
+                    "value": "tenant1"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ctas\": [\n    {\n      \"ctaId\": \"101\",\n      \"activeStateMachines\": {\n        \"default\": {\n          \"currentState\": \"1\",\n          \"lastTransitionAt\": 1699999999000,\n          \"context\": {\n            \"cohort\": \"new_user\",\n            \"appVersion\": \"1.2.3\"\n          },\n          \"createdAt\": 1699900000000,\n          \"reset\": false\n        }\n      },\n      \"resetAt\": [\n        1699800000000\n      ],\n      \"actionDoneAt\": [\n        1699850000000\n      ]\n    },\n    {\n      \"ctaId\": \"202\",\n      \"activeStateMachines\": {},\n      \"resetAt\": [],\n      \"actionDoneAt\": []\n    }\n  ],\n  \"behaviourTags\": [\n    {\n      \"behaviourTagName\": \"onboarding_eligible\",\n      \"exposureRule\": {\n        \"session\": {\n          \"limit\": 2\n        },\n        \"lifespan\": {\n          \"limit\": 10\n        },\n        \"window\": {\n          \"limit\": 3,\n          \"unit\": \"days\",\n          \"value\": 7\n        },\n        \"ctasResetAt\": [\n          {\n            \"ctaId\": \"101\",\n            \"resetAt\": 1699700000000\n          }\n        ]\n      },\n      \"ctaRelation\": {\n        \"shownCta\": {\n          \"rule\": \"LIST\",\n          \"ctaList\": [\n            \"101\"\n          ]\n        },\n        \"hideCta\": {\n          \"rule\": \"ANY\",\n          \"ctaList\": []\n        },\n        \"activeCtas\": [\n          \"101\"\n        ]\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3eefe219-c7da-49d6-a654-e1ee0dcd9d0e",
+    "name": "Thunder SDK API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Thunder API - SDK & Debug endpoints",
+      "type": "text/plain"
+    }
+  }
+}

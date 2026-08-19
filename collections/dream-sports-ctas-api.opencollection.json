@@ -1,0 +1,174 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Thunder Admin CT As API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CTAs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List CTAs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8081/thunder/ctas",
+            "headers": [
+              {
+                "name": "x-tenant-id",
+                "value": "tenant1"
+              }
+            ],
+            "params": [
+              {
+                "name": "behaviourTag",
+                "value": "new_user",
+                "type": "query",
+                "description": "Filter by behaviour tag name"
+              },
+              {
+                "name": "createdBy",
+                "value": "admin@example.com",
+                "type": "query",
+                "description": "Filter by creator user ID"
+              },
+              {
+                "name": "name",
+                "value": "Welcome Bonus",
+                "type": "query",
+                "description": "Filter by exact CTA name (case-sensitive)"
+              },
+              {
+                "name": "pageNumber",
+                "value": "0",
+                "type": "query",
+                "description": "Page number (0-indexed). Default is 0."
+              },
+              {
+                "name": "pageSize",
+                "value": "10",
+                "type": "query",
+                "description": "Number of items per page. Default is 10, maximum is 100."
+              },
+              {
+                "name": "searchName",
+                "value": "welcome",
+                "type": "query",
+                "description": "Search CTA names (partial match)"
+              },
+              {
+                "name": "status",
+                "value": "LIVE",
+                "type": "query",
+                "description": "Filter by CTA status"
+              },
+              {
+                "name": "tags",
+                "value": "promotion,signup",
+                "type": "query",
+                "description": "Comma-separated list of tags to filter by"
+              },
+              {
+                "name": "teams",
+                "value": "marketing,growth",
+                "type": "query",
+                "description": "Comma-separated list of teams to filter by"
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of CTAs matching the specified filters. All query parameters are optional. Results are sorted by creation date (newest first). Use pagination parameters to control page size and navigation."
+        },
+        {
+          "info": {
+            "name": "Create CTA",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8081/thunder/ctas",
+            "headers": [
+              {
+                "name": "user",
+                "value": "admin@example.com"
+              },
+              {
+                "name": "x-tenant-id",
+                "value": "tenant1"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Call-to-Action (CTA) with the provided details. The CTA will be created in DRAFT status and can be activated later using status update endpoints. Includes rule configuration, state machine setup, actions, and frequency controls. IMPORTANT: rule.cohortEligibility must use includes: [\"all\"] and excludes: [] since user-cohorts system is not currently supported."
+        },
+        {
+          "info": {
+            "name": "Get CTA by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8081/thunder/ctas/:ctaId",
+            "headers": [
+              {
+                "name": "x-tenant-id",
+                "value": "tenant1"
+              }
+            ],
+            "params": [
+              {
+                "name": "ctaId",
+                "value": "12345",
+                "type": "path",
+                "description": "Unique identifier of the CTA"
+              }
+            ]
+          },
+          "docs": "Retrieves a specific CTA by its unique identifier. Returns the complete CTA object including all metadata, rules, status, and configuration."
+        },
+        {
+          "info": {
+            "name": "Update CTA",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8081/thunder/ctas/:ctaId",
+            "headers": [
+              {
+                "name": "user",
+                "value": "admin@example.com"
+              },
+              {
+                "name": "x-tenant-id",
+                "value": "tenant1"
+              }
+            ],
+            "params": [
+              {
+                "name": "ctaId",
+                "value": "12345",
+                "type": "path",
+                "description": "Unique identifier of the CTA to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing CTA. Only the fields provided in the request will be updated. Can update rule configuration, state machine setup, actions, and frequency controls. IMPORTANT: If updating rule.cohortEligibility, must use includes: [\"all\"] and excludes: [] since user-cohorts system is not currently supported."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

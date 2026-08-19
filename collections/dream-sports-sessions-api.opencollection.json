@@ -1,0 +1,36 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Delivr OTA Server Sessions API"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sessions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Delete sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/sessions/:createdBy",
+            "params": [
+              {
+                "name": "createdBy",
+                "value": "",
+                "type": "path",
+                "description": "Machine name or identifier that created the sessions"
+              }
+            ]
+          },
+          "docs": "Removes all sessions created by a specific machine/client"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

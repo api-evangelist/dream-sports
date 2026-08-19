@@ -1,0 +1,1433 @@
+{
+  "item": [
+    {
+      "id": "ce79260f-cb78-4364-8b29-5f37f18cc57c",
+      "name": "OIDC Client Management",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d728c7f3-8279-4a96-856c-fa68564ef8ae",
+          "name": "Create a new OAuth 2.0 client",
+          "request": {
+            "name": "Create a new OAuth 2.0 client",
+            "description": {
+              "content": "Create a new OAuth 2.0 client for the tenant. This endpoint allows administrators\nto register new applications that can use the OAuth 2.0 and OpenID Connect flows.\n\n**Client Configuration:**\n- Each client must have a unique client name within the tenant\n- Grant types determine which OAuth 2.0 flows the client can use\n- Response types define the authorization flows supported\n- Redirect URIs must be pre-registered for security\n- Skip consent option allows bypassing user consent for trusted applications\n\n**Security Considerations:**\n- Client secrets are automatically generated and should be kept secure\n- Redirect URIs are validated to prevent open redirect attacks\n- Grant types and response types are validated against OAuth 2.0 specifications\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "admin",
+                "client"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_name\": \"<string>\",\n  \"grant_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"redirect_uris\": [\n    \"<uri>\",\n    \"<uri>\"\n  ],\n  \"response_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"client_uri\": \"<uri>\",\n  \"contacts\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"logo_uri\": \"<uri>\",\n  \"policy_uri\": \"<uri>\",\n  \"skip_consent\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ebbc1b34-d5f9-429a-b3b1-1404899b42f2",
+              "name": "Client created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_name\": \"My Application\",\n  \"grant_types\": [\n    \"authorization_code\",\n    \"refresh_token\"\n  ],\n  \"redirect_uris\": [\n    \"https://myapp.com/callback\",\n    \"https://myapp.com/silent-renew\"\n  ],\n  \"response_types\": [\n    \"code\"\n  ],\n  \"client_uri\": \"https://myapp.com\",\n  \"contacts\": [\n    \"admin@myapp.com\",\n    \"support@myapp.com\"\n  ],\n  \"logo_uri\": \"https://myapp.com/logo.png\",\n  \"policy_uri\": \"https://myapp.com/privacy\",\n  \"skip_consent\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"client_id\": \"my-client-id\",\n  \"client_name\": \"My Application\",\n  \"client_secret\": \"client_secret_xyz789\",\n  \"client_uri\": \"https://myapp.com\",\n  \"contacts\": [\n    \"admin@myapp.com\"\n  ],\n  \"grant_types\": [\n    \"authorization_code\",\n    \"refresh_token\"\n  ],\n  \"redirect_uris\": [\n    \"https://myapp.com/callback\"\n  ],\n  \"response_types\": [\n    \"code\"\n  ],\n  \"skip_consent\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "537f7845-3076-433d-a4de-14af32208473",
+              "name": "Bad Request due to missing parameters or invalid data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_name\": \"My Application\",\n  \"grant_types\": [\n    \"authorization_code\",\n    \"refresh_token\"\n  ],\n  \"redirect_uris\": [\n    \"https://myapp.com/callback\",\n    \"https://myapp.com/silent-renew\"\n  ],\n  \"response_types\": [\n    \"code\"\n  ],\n  \"client_uri\": \"https://myapp.com\",\n  \"contacts\": [\n    \"admin@myapp.com\",\n    \"support@myapp.com\"\n  ],\n  \"logo_uri\": \"https://myapp.com/logo.png\",\n  \"policy_uri\": \"https://myapp.com/privacy\",\n  \"skip_consent\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "be679345-2b46-4759-bbf2-a28dfe960ecc",
+              "name": "Client already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_name\": \"My Application\",\n  \"grant_types\": [\n    \"authorization_code\",\n    \"refresh_token\"\n  ],\n  \"redirect_uris\": [\n    \"https://myapp.com/callback\",\n    \"https://myapp.com/silent-renew\"\n  ],\n  \"response_types\": [\n    \"code\"\n  ],\n  \"client_uri\": \"https://myapp.com\",\n  \"contacts\": [\n    \"admin@myapp.com\",\n    \"support@myapp.com\"\n  ],\n  \"logo_uri\": \"https://myapp.com/logo.png\",\n  \"policy_uri\": \"https://myapp.com/privacy\",\n  \"skip_consent\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31be6ced-caa8-4a6f-bbf9-fbe329c76da4",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_name\": \"My Application\",\n  \"grant_types\": [\n    \"authorization_code\",\n    \"refresh_token\"\n  ],\n  \"redirect_uris\": [\n    \"https://myapp.com/callback\",\n    \"https://myapp.com/silent-renew\"\n  ],\n  \"response_types\": [\n    \"code\"\n  ],\n  \"client_uri\": \"https://myapp.com\",\n  \"contacts\": [\n    \"admin@myapp.com\",\n    \"support@myapp.com\"\n  ],\n  \"logo_uri\": \"https://myapp.com/logo.png\",\n  \"policy_uri\": \"https://myapp.com/privacy\",\n  \"skip_consent\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f830ac3c-dcb3-49e1-ab07-6f841a515b65",
+          "name": "List OAuth 2.0 clients",
+          "request": {
+            "name": "List OAuth 2.0 clients",
+            "description": {
+              "content": "Retrieve a paginated list of OAuth 2.0 clients for the tenant.\n\n**Pagination:**\n- Page numbers start from 1\n- Page size can be between 1 and 100 (default: 10)\n- Results are ordered by creation date (newest first)\n\n**Response:**\n- Returns a list of client objects with basic information\n- Client secrets are not included in the response for security\n- Total count and pagination metadata are included\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "admin",
+                "client"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "10",
+                  "description": "Number of items per page"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c47751cb-5c32-4c0e-81f0-ba9a72a439fa",
+              "name": "Successfully retrieved clients",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"clients\": [\n    {\n      \"client_id\": \"my-client-id\",\n      \"client_name\": \"My Application\",\n      \"grant_types\": [\n        \"authorization_code\",\n        \"refresh_token\"\n      ],\n      \"redirect_uris\": [\n        \"https://myapp.com/callback\"\n      ],\n      \"response_types\": [\n        \"code\"\n      ],\n      \"client_secret\": \"client_secret_xyz789\",\n      \"client_uri\": \"https://myapp.com\",\n      \"contacts\": [\n        \"admin@myapp.com\"\n      ],\n      \"logo_uri\": \"https://myapp.com/logo.png\",\n      \"policy_uri\": \"https://myapp.com/privacy\",\n      \"skip_consent\": false\n    },\n    {\n      \"client_id\": \"my-client-id\",\n      \"client_name\": \"My Application\",\n      \"grant_types\": [\n        \"authorization_code\",\n        \"refresh_token\"\n      ],\n      \"redirect_uris\": [\n        \"https://myapp.com/callback\"\n      ],\n      \"response_types\": [\n        \"code\"\n      ],\n      \"client_secret\": \"client_secret_xyz789\",\n      \"client_uri\": \"https://myapp.com\",\n      \"contacts\": [\n        \"admin@myapp.com\"\n      ],\n      \"logo_uri\": \"https://myapp.com/logo.png\",\n      \"policy_uri\": \"https://myapp.com/privacy\",\n      \"skip_consent\": false\n    }\n  ],\n  \"page\": 1,\n  \"page_size\": 10\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1ca8dc8-fe63-4cda-b0cb-9d2e2b90064b",
+              "name": "Bad Request due to invalid pagination parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "935a6129-059b-46c2-bb85-394fa9158ea2",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6630df60-50e2-4f72-8840-f486ab367c94",
+          "name": "Get OAuth 2.0 client details",
+          "request": {
+            "name": "Get OAuth 2.0 client details",
+            "description": {
+              "content": "Retrieve detailed information about a specific OAuth 2.0 client.\n\n**Response:**\n- Returns complete client configuration including client secret\n- All registered redirect URIs, grant types, and response types\n- Contact information and policy URIs\n- Skip consent configuration\n\n**Security Note:** Client secrets are included in the response and should be handled securely.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "admin",
+                "client",
+                ":client_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "client_id",
+                  "description": "(Required) Unique identifier of the client"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ae815738-afaf-4d2f-96d4-9b4183f5059c",
+              "name": "Client details retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) Unique identifier of the client"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"client_id\": \"my-client-id\",\n  \"client_name\": \"My Application\",\n  \"grant_types\": [\n    \"authorization_code\",\n    \"refresh_token\"\n  ],\n  \"redirect_uris\": [\n    \"https://myapp.com/callback\"\n  ],\n  \"response_types\": [\n    \"code\"\n  ],\n  \"client_secret\": \"client_secret_xyz789\",\n  \"client_uri\": \"https://myapp.com\",\n  \"contacts\": [\n    \"admin@myapp.com\"\n  ],\n  \"logo_uri\": \"https://myapp.com/logo.png\",\n  \"policy_uri\": \"https://myapp.com/privacy\",\n  \"skip_consent\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6393d1c7-7346-4780-900a-f770a0818c68",
+              "name": "Client not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) Unique identifier of the client"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4656e903-5c61-4370-885e-4ab8786458fd",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) Unique identifier of the client"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a64461fb-555e-4b61-9ccb-f3da2d9d05b9",
+          "name": "Update OAuth 2.0 client",
+          "request": {
+            "name": "Update OAuth 2.0 client",
+            "description": {
+              "content": "Update an existing OAuth 2.0 client configuration. Only provided fields will be updated.\n\n**Update Rules:**\n- All fields are optional (partial updates supported)\n- Grant types and response types cannot be empty if provided\n- Redirect URIs cannot be empty if provided\n- Client name cannot be blank if provided\n\n**Security:**\n- Client secrets are not updated through this endpoint\n- Use the regenerate secret endpoint to update client secrets\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "admin",
+                "client",
+                ":client_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "client_id",
+                  "description": "(Required) Unique identifier of the client"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_name\": \"<string>\",\n  \"client_uri\": \"<uri>\",\n  \"contacts\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"grant_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"logo_uri\": \"<uri>\",\n  \"policy_uri\": \"<uri>\",\n  \"redirect_uris\": [\n    \"<uri>\",\n    \"<uri>\"\n  ],\n  \"response_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"skip_consent\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "306bc511-9c4e-4f04-b89c-817e580d4a9d",
+              "name": "Client updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) Unique identifier of the client"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_name\": \"My Updated Application\",\n  \"client_uri\": \"https://myapp.com\",\n  \"contacts\": [\n    \"admin@myapp.com\",\n    \"support@myapp.com\"\n  ],\n  \"grant_types\": [\n    \"authorization_code\",\n    \"refresh_token\"\n  ],\n  \"logo_uri\": \"https://myapp.com/logo.png\",\n  \"policy_uri\": \"https://myapp.com/privacy\",\n  \"redirect_uris\": [\n    \"https://myapp.com/callback\",\n    \"https://myapp.com/silent-renew\"\n  ],\n  \"response_types\": [\n    \"code\"\n  ],\n  \"skip_consent\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"client_id\": \"my-client-id\",\n  \"client_name\": \"My Application\",\n  \"grant_types\": [\n    \"authorization_code\",\n    \"refresh_token\"\n  ],\n  \"redirect_uris\": [\n    \"https://myapp.com/callback\"\n  ],\n  \"response_types\": [\n    \"code\"\n  ],\n  \"client_secret\": \"client_secret_xyz789\",\n  \"client_uri\": \"https://myapp.com\",\n  \"contacts\": [\n    \"admin@myapp.com\"\n  ],\n  \"logo_uri\": \"https://myapp.com/logo.png\",\n  \"policy_uri\": \"https://myapp.com/privacy\",\n  \"skip_consent\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e014727-6125-4a00-9750-1725423d5cae",
+              "name": "Bad Request due to invalid data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) Unique identifier of the client"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_name\": \"My Updated Application\",\n  \"client_uri\": \"https://myapp.com\",\n  \"contacts\": [\n    \"admin@myapp.com\",\n    \"support@myapp.com\"\n  ],\n  \"grant_types\": [\n    \"authorization_code\",\n    \"refresh_token\"\n  ],\n  \"logo_uri\": \"https://myapp.com/logo.png\",\n  \"policy_uri\": \"https://myapp.com/privacy\",\n  \"redirect_uris\": [\n    \"https://myapp.com/callback\",\n    \"https://myapp.com/silent-renew\"\n  ],\n  \"response_types\": [\n    \"code\"\n  ],\n  \"skip_consent\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72827207-a88c-4088-b2b3-3edaea6e4ae1",
+              "name": "Client not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) Unique identifier of the client"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_name\": \"My Updated Application\",\n  \"client_uri\": \"https://myapp.com\",\n  \"contacts\": [\n    \"admin@myapp.com\",\n    \"support@myapp.com\"\n  ],\n  \"grant_types\": [\n    \"authorization_code\",\n    \"refresh_token\"\n  ],\n  \"logo_uri\": \"https://myapp.com/logo.png\",\n  \"policy_uri\": \"https://myapp.com/privacy\",\n  \"redirect_uris\": [\n    \"https://myapp.com/callback\",\n    \"https://myapp.com/silent-renew\"\n  ],\n  \"response_types\": [\n    \"code\"\n  ],\n  \"skip_consent\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f14da95-9101-42b9-a380-072ee265e6d7",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) Unique identifier of the client"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_name\": \"My Updated Application\",\n  \"client_uri\": \"https://myapp.com\",\n  \"contacts\": [\n    \"admin@myapp.com\",\n    \"support@myapp.com\"\n  ],\n  \"grant_types\": [\n    \"authorization_code\",\n    \"refresh_token\"\n  ],\n  \"logo_uri\": \"https://myapp.com/logo.png\",\n  \"policy_uri\": \"https://myapp.com/privacy\",\n  \"redirect_uris\": [\n    \"https://myapp.com/callback\",\n    \"https://myapp.com/silent-renew\"\n  ],\n  \"response_types\": [\n    \"code\"\n  ],\n  \"skip_consent\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "917e0e7f-4033-41d2-ac13-4e010d46762b",
+          "name": "Delete OAuth 2.0 client",
+          "request": {
+            "name": "Delete OAuth 2.0 client",
+            "description": {
+              "content": "Delete an OAuth 2.0 client and all its associated data.\n\n**Important:** This operation is irreversible and will:\n- Remove all client configurations\n- Delete all associated client scopes\n- Invalidate any existing tokens issued to this client\n\n**Security:** Ensure no active applications are using this client before deletion.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "admin",
+                "client",
+                ":client_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "client_id",
+                  "description": "(Required) Unique identifier of the client"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8484db3d-7503-4492-b34b-c403eb8f575b",
+              "name": "Client deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) Unique identifier of the client"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b6fb7143-42b7-4f06-95cf-935504030445",
+              "name": "Client not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) Unique identifier of the client"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2acc713-baa4-4acc-902f-aec1dae40031",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) Unique identifier of the client"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d9e51be8-e757-4a4f-ad70-75908dc07d91",
+          "name": "Regenerate client secret",
+          "request": {
+            "name": "Regenerate client secret",
+            "description": {
+              "content": "Generate a new client secret for an existing OAuth 2.0 client.\n\n**Security Impact:**\n- The old client secret becomes invalid immediately\n- Any existing access tokens remain valid until expiration\n- Applications using this client will need to update their configuration\n\n**Response:**\n- Returns the new client secret\n- Store this securely as it won't be shown again\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "admin",
+                "client",
+                ":client_id",
+                "regenerate-secret"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "client_id",
+                  "description": "(Required) Unique identifier of the client"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) tenant-id of the client integrating with guardian",
+                "key": "tenant-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a25fd061-6734-4abc-9b79-9048fac99582",
+              "name": "Client secret regenerated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client",
+                    ":client_id",
+                    "regenerate-secret"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) Unique identifier of the client"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"client_secret\": \"new_client_secret_abc123\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4cb69339-da35-4835-a398-0064e787156a",
+              "name": "Client not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client",
+                    ":client_id",
+                    "regenerate-secret"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) Unique identifier of the client"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5cbde62-2aa6-4b2f-b057-dc6698f431e0",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "client",
+                    ":client_id",
+                    "regenerate-secret"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) Unique identifier of the client"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) tenant-id of the client integrating with guardian",
+                    "key": "tenant-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_request\",\n    \"message\": \"Something went wrong.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4eb149a5-8856-4119-af2d-ff69755c27e7",
+    "name": "Guardian OIDC Client Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

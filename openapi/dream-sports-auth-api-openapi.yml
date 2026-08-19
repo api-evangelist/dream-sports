@@ -1,0 +1,192 @@
+openapi: 3.2.0
+info:
+  title: Raven Journey Auth API
+  description: 'Journey module APIs for Journey management, behaviour tags, events, and SDK operations.
+
+
+    ## Authentication
+
+    TENANT-ID and PROJECT-ID headers are required on all endpoints (auth routes use TENANT-ID only) via the global `TenantIdHeader` security scheme.
+
+    The `/healthcheck` endpoint is exempted. Some endpoints also require `USER-ID`.
+
+
+    ## Timestamps
+
+    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).
+
+    '
+  version: 1.0.0
+  contact:
+    name: Raven Team
+servers:
+- url: http://localhost:8080
+  description: Local development server
+security:
+- TenantIdHeader: []
+tags:
+- name: Auth
+  description: Authentication operations — Google login and token refresh
+paths:
+  /v1/auth/google-login:
+    post:
+      tags:
+      - Auth
+      summary: Google login
+      operationId: googleLogin
+      description: "Login flow (no signInWithIdp):\n1) Verify Google ID token with Google tokeninfo.\n2) Validate issuer/audience/expiry/email_verified.\n   - If auth.googleAllowedAudience is configured, aud must match it.\n3) Resolve existing Firebase user by google sub (provider mapping).\n4) If not found, fallback to email lookup.\n   - If google provider already exists on email match -> fail.\n   - If google provider missing -> link google.com provider with verified sub.\n5) Mint custom token and exchange via signInWithCustomToken.\n"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthLoginRequest'
+            example:
+              google_id_token: '{{GOOGLE_ID_TOKEN_RAW}}'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokenApiResponse'
+              example:
+                success: true
+                data:
+                  access_token: '{{FIREBASE_ID_TOKEN_RAW}}'
+                  refresh_token: '{{FIREBASE_REFRESH_TOKEN_RAW}}'
+                  expires_in: 3600
+                  token_type: Bearer
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Invalid credentials or TENANT-ID header is missing/invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: User not onboarded for tenant or email-matched user already linked to Google provider
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Authentication downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v1/auth/refresh:
+    post:
+      tags:
+      - Auth
+      summary: Refresh access token
+      operationId: refreshToken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRefreshRequest'
+            example:
+              refresh_token: '{{FIREBASE_REFRESH_TOKEN_RAW}}'
+      responses:
+        '200':
+          description: Token refresh successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokenApiResponse'
+              example:
+                success: true
+                data:
+                  access_token: '{{FIREBASE_ID_TOKEN_RAW}}'
+                  refresh_token: '{{FIREBASE_REFRESH_TOKEN_RAW}}'
+                  expires_in: 3600
+                  token_type: Bearer
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Refresh token invalid/revoked or TENANT-ID header is missing/invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Authentication downstream failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    AuthLoginRequest:
+      type: object
+      required:
+      - google_id_token
+      properties:
+        google_id_token:
+          type: string
+          description: Raw Google ID token (JWT)
+          example: '{{GOOGLE_ID_TOKEN_RAW}}'
+    AuthTokenData:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: Raw Firebase ID token (JWT)
+          example: '{{FIREBASE_ID_TOKEN_RAW}}'
+        refresh_token:
+          type: string
+          description: Raw Firebase refresh token
+          example: '{{FIREBASE_REFRESH_TOKEN_RAW}}'
+        expires_in:
+          type: integer
+          format: int64
+          example: 3600
+        token_type:
+          type: string
+          example: Bearer
+    AuthRefreshRequest:
+      type: object
+      required:
+      - refresh_token
+      properties:
+        refresh_token:
+          type: string
+          description: Raw Firebase refresh token
+          example: '{{FIREBASE_REFRESH_TOKEN_RAW}}'
+    AuthTokenApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/AuthTokenData'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
+  securitySchemes:
+    TenantIdHeader:
+      type: apiKey
+      in: header
+      name: TENANT-ID

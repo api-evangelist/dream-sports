@@ -1,0 +1,149 @@
+openapi: 3.2.0
+info:
+  title: Guardian Token Management API
+  version: 1.0.0
+tags:
+- name: Token Management
+paths:
+  /v1/revocations:
+    get:
+      tags:
+      - Token Management
+      summary: Get token revocation list
+      description: 'Retrieve the list of revoked tokens for the tenant within a time range.
+
+
+        This endpoint provides information about tokens that have been revoked
+
+        between the specified time range. If no ''from'' timestamp is provided,
+
+        it defaults to current time minus access token expiry duration.
+
+
+        **Time Range Logic:**
+
+        - The endpoint automatically calculates the ''to'' timestamp as the current time
+
+        - If ''from'' is not provided, it defaults to current time minus access token expiry
+
+        - If ''from'' is before the allowed range, it gets adjusted to the minimum allowed time
+
+        - If ''from'' is in the future, an error is returned
+
+
+        **Response:**
+
+        - Returns a list of revoked token identifiers (strings)
+
+        - Includes the actual time range used for the query
+
+        - Includes the access token expiry duration for reference
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/TenantIdHeader'
+      - name: from
+        in: query
+        required: false
+        description: Start timestamp (epoch seconds). If not provided, defaults to current time minus access token expiry
+        schema:
+          type: integer
+          format: int64
+          minimum: 0
+          example: 1640995200
+      responses:
+        '200':
+          description: Revocation list retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RevocationsResponse'
+        '400':
+          description: Bad Request due to invalid timestamp parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                invalid_timestamp:
+                  summary: Invalid timestamp format
+                  value:
+                    error:
+                      code: invalid_request
+                      message: Invalid timestamp
+                future_timestamp:
+                  summary: Future timestamp not allowed
+                  value:
+                    error:
+                      code: invalid_request
+                      message: from Timestamp is not in allowed range
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  parameters:
+    TenantIdHeader:
+      name: tenant-id
+      in: header
+      description: tenant-id of the client integrating with guardian
+      required: true
+      schema:
+        type: string
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
+    RevocationsResponse:
+      type: object
+      description: Response containing revoked tokens within a time range
+      required:
+      - revocations
+      - from
+      - to
+      - expiry
+      properties:
+        revocations:
+          type: array
+          description: List of revoked token identifiers
+          items:
+            type: string
+          example:
+          - token123
+          - token456
+          - token789
+        from:
+          type: integer
+          format: int64
+          description: Start timestamp (epoch seconds) for the query range
+          example: 1640995200
+        to:
+          type: integer
+          format: int64
+          description: End timestamp (epoch seconds) for the query range
+          example: 1641081600
+        expiry:
+          type: integer
+          description: Access token expiry duration in seconds
+          example: 3600
+      example:
+        revocations:
+        - rft_abc123
+        - rft_def456
+        - rft_ghi789
+        from: 1640995200
+        to: 1641081600
+        expiry: 3600

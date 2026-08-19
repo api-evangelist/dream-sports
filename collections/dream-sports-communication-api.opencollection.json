@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Guardian integration endpoints Communication API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Communication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send Email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/sendEmail",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "API to send an email message using a template.\n\nGuardian invokes this API to send emails, typically for OTP delivery or other notifications.\n\nThe request body includes:\n- **channel**: Communication channel (always \"email\" for this endpoint)\n- **to**: Recipient email address\n- **templateName**: Name of the email template to use\n- **templateParams**: Template parameters as a JSON object (e.g., {\"otp\": \"123456\"})\n\nThe communication service is responsible for:\n- Rendering the template with the provi"
+        },
+        {
+          "info": {
+            "name": "Send SMS",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/sendSms",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "API to send an SMS message using a template.\n\nGuardian invokes this API to send SMS messages, typically for OTP delivery or other notifications.\n\nThe request body includes:\n- **channel**: Communication channel (always \"sms\" for this endpoint)\n- **to**: Recipient phone number (recommended format E.164)\n- **templateName**: Name of the SMS template to use\n- **templateParams**: Template parameters as a JSON object (e.g., {\"otp\": \"123456\"})\n\nThe communication service is responsible for:\n- Rendering t"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

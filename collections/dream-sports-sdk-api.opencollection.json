@@ -1,0 +1,125 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Thunder SDK API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SDK",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "App Launch - Active State Machines",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/cta/active/state-machines",
+            "headers": [
+              {
+                "name": "api_version",
+                "value": "1"
+              },
+              {
+                "name": "app_version",
+                "value": "1.2.3"
+              },
+              {
+                "name": "auth-userid",
+                "value": "12345"
+              },
+              {
+                "name": "codepush_version",
+                "value": "1.0.0"
+              },
+              {
+                "name": "package_name",
+                "value": "com.example.app"
+              },
+              {
+                "name": "x-tenant-id",
+                "value": "tenant1"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Called by the client app on launch to synchronize state machines and retrieve active CTAs. The client sends its current state snapshot (CTAs and behaviour tags), and the server returns the updated state with active CTAs that should be shown to the user. Requires api_version header >= 1, otherwise returns empty response."
+        },
+        {
+          "info": {
+            "name": "Get Nudge Preview",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/cta/nudge/preview/:id",
+            "headers": [
+              {
+                "name": "x-tenant-id",
+                "value": "tenant1"
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "5",
+                "type": "path",
+                "description": "Nudge Preview ID"
+              }
+            ]
+          },
+          "docs": "Retrieves a Nudge Preview by its ID. Nudge Previews contain the UI template and configuration that will be displayed to users. This is the recommended endpoint for retrieving nudge templates."
+        },
+        {
+          "info": {
+            "name": "Merge Snapshot Delta",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/cta/state-machines/snapshot/delta",
+            "headers": [
+              {
+                "name": "api_version",
+                "value": "1"
+              },
+              {
+                "name": "app_version",
+                "value": "1.2.3"
+              },
+              {
+                "name": "auth-userid",
+                "value": "12345"
+              },
+              {
+                "name": "codepush_version",
+                "value": "1.0.0"
+              },
+              {
+                "name": "package_name",
+                "value": "com.example.app"
+              },
+              {
+                "name": "x-tenant-id",
+                "value": "tenant1"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Merges a delta snapshot from the client with the server state. This endpoint is used to synchronize incremental state changes (CTAs and behaviour tags) between the client and server. The server merges the delta and updates the user's state. Requires api_version header >= 1, otherwise returns false."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

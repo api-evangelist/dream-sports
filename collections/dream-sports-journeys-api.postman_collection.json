@@ -1,0 +1,1141 @@
+{
+  "item": [
+    {
+      "id": "c671dada-17f7-457a-b2ad-381861677b24",
+      "name": "Journeys",
+      "description": {
+        "content": "Journey management operations — create, read, update, and delete journeys",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "264f8c1f-7d79-4a99-9775-fea0f50343f8",
+          "name": "Get Filter Options",
+          "request": {
+            "name": "Get Filter Options",
+            "description": {
+              "content": "Returns available filter options for journey listing",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "filters",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "09405010-2cc2-4d28-8653-5bfc6cb67cde",
+              "name": "Filter options retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "filters",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {},\n  \"statusCode\": 6739\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a2fb4f7-fc3f-45fb-ab51-0714a0bc32a6",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "filters",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "49c9a6e9-7abf-4180-b00e-20c4c376433c",
+          "name": "List Journeys",
+          "request": {
+            "name": "List Journeys",
+            "description": {
+              "content": "Retrieves a paginated list of journeys",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "ctas"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by journey status"
+                },
+                {
+                  "disabled": false,
+                  "key": "team",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "searchName",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "06be3815-f3b8-494a-a4b0-5f619b6fdbc7",
+              "name": "Journeys retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "team",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {},\n  \"statusCode\": 6739\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f614c137-502d-4390-bf42-b0bfa98fdbfa",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "team",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ede4994d-3f50-483e-b13b-61ba70354961",
+          "name": "Create Journey",
+          "request": {
+            "name": "Create Journey",
+            "description": {
+              "content": "Creates a new journey in DRAFT status.\n\n**Important**:\n- `startTime` and `endTime` must be future timestamps (milliseconds)\n- `stateMachineTTL` must be a future timestamp\n- Use `cohortEligibility: { includes: [\"all\"], excludes: [] }`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "thunder",
+                "ctas"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "USER-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"team\": \"<string>\",\n  \"rule\": {\n    \"cohortEligibility\": {\n      \"includes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"excludes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"stateToAction\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\"\n    },\n    \"stateTransition\": \"<object>\",\n    \"priority\": \"<integer>\",\n    \"stateMachineTTL\": \"<long>\",\n    \"actions\": [\n      \"<object>\",\n      \"<object>\"\n    ],\n    \"frequency\": {\n      \"session\": {\n        \"limit\": \"<integer>\"\n      },\n      \"window\": {\n        \"limit\": \"<integer>\",\n        \"unit\": \"<string>\",\n        \"value\": \"<integer>\"\n      }\n    },\n    \"resetStates\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"contextParams\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"groupByConfig\": \"<object>\"\n  },\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"startTime\": \"<long>\",\n  \"endTime\": \"<long>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "959198d6-1e5c-4e7b-8b6e-9b8611cac688",
+              "name": "Journey created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "USER-ID",
+                    "value": "admin"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Welcome Notification\",\n  \"tags\": [\n    \"growth\",\n    \"notifications\"\n  ],\n  \"description\": \"Welcome nudge for new users\",\n  \"team\": \"marketing\",\n  \"startTime\": 2082758400000,\n  \"endTime\": 2114294400000,\n  \"rule\": {\n    \"cohortEligibility\": {\n      \"includes\": [\n        \"all\"\n      ],\n      \"excludes\": []\n    },\n    \"stateToAction\": {\n      \"1\": \"actionId1\"\n    },\n    \"contextParams\": [\n      \"mode\"\n    ],\n    \"stateTransition\": {\n      \"AppLaunch\": {\n        \"0\": [\n          {\n            \"transitionTo\": \"1\",\n            \"filters\": {\n              \"operator\": \"AND\",\n              \"filter\": []\n            }\n          }\n        ]\n      }\n    },\n    \"priority\": 1,\n    \"stateMachineTTL\": 2082758400000,\n    \"actions\": [\n      {\n        \"actionId1\": {\n          \"type\": \"BottomSheet\",\n          \"nudgeId\": \"5\"\n        }\n      }\n    ],\n    \"frequency\": {\n      \"session\": {\n        \"limit\": 1\n      },\n      \"window\": {\n        \"limit\": 1,\n        \"unit\": \"days\",\n        \"value\": 2\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": 12345,\n  \"statusCode\": 200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17da890d-ebbe-4832-9064-0d9041a9b619",
+              "name": "Invalid request body or validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "USER-ID",
+                    "value": "admin"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Welcome Notification\",\n  \"tags\": [\n    \"growth\",\n    \"notifications\"\n  ],\n  \"description\": \"Welcome nudge for new users\",\n  \"team\": \"marketing\",\n  \"startTime\": 2082758400000,\n  \"endTime\": 2114294400000,\n  \"rule\": {\n    \"cohortEligibility\": {\n      \"includes\": [\n        \"all\"\n      ],\n      \"excludes\": []\n    },\n    \"stateToAction\": {\n      \"1\": \"actionId1\"\n    },\n    \"contextParams\": [\n      \"mode\"\n    ],\n    \"stateTransition\": {\n      \"AppLaunch\": {\n        \"0\": [\n          {\n            \"transitionTo\": \"1\",\n            \"filters\": {\n              \"operator\": \"AND\",\n              \"filter\": []\n            }\n          }\n        ]\n      }\n    },\n    \"priority\": 1,\n    \"stateMachineTTL\": 2082758400000,\n    \"actions\": [\n      {\n        \"actionId1\": {\n          \"type\": \"BottomSheet\",\n          \"nudgeId\": \"5\"\n        }\n      }\n    ],\n    \"frequency\": {\n      \"session\": {\n        \"limit\": 1\n      },\n      \"window\": {\n        \"limit\": 1,\n        \"unit\": \"days\",\n        \"value\": 2\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6e9d127-e539-419f-bec0-2ea5ff87f23c",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "USER-ID",
+                    "value": "admin"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Welcome Notification\",\n  \"tags\": [\n    \"growth\",\n    \"notifications\"\n  ],\n  \"description\": \"Welcome nudge for new users\",\n  \"team\": \"marketing\",\n  \"startTime\": 2082758400000,\n  \"endTime\": 2114294400000,\n  \"rule\": {\n    \"cohortEligibility\": {\n      \"includes\": [\n        \"all\"\n      ],\n      \"excludes\": []\n    },\n    \"stateToAction\": {\n      \"1\": \"actionId1\"\n    },\n    \"contextParams\": [\n      \"mode\"\n    ],\n    \"stateTransition\": {\n      \"AppLaunch\": {\n        \"0\": [\n          {\n            \"transitionTo\": \"1\",\n            \"filters\": {\n              \"operator\": \"AND\",\n              \"filter\": []\n            }\n          }\n        ]\n      }\n    },\n    \"priority\": 1,\n    \"stateMachineTTL\": 2082758400000,\n    \"actions\": [\n      {\n        \"actionId1\": {\n          \"type\": \"BottomSheet\",\n          \"nudgeId\": \"5\"\n        }\n      }\n    ],\n    \"frequency\": {\n      \"session\": {\n        \"limit\": 1\n      },\n      \"window\": {\n        \"limit\": 1,\n        \"unit\": \"days\",\n        \"value\": 2\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce53e254-cdc3-4586-806b-6bef2524a62e",
+          "name": "Get Journey by ID",
+          "request": {
+            "name": "Get Journey by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "thunder",
+                "ctas",
+                ":ctaId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "ctaId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b664c8e2-0156-4df6-9f1d-a61af807bcfd",
+              "name": "Journey retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":ctaId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ctaId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {},\n  \"statusCode\": 6739\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31fbb15a-bed0-463c-8471-2c36349ea074",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":ctaId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ctaId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ef21afc-3a8f-4259-8472-dca7128f7d98",
+              "name": "Journey not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":ctaId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ctaId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d10e3c6f-4d26-47f0-93ca-8c1ab84cbc31",
+          "name": "Update Journey",
+          "request": {
+            "name": "Update Journey",
+            "description": {},
+            "url": {
+              "path": [
+                "thunder",
+                "ctas",
+                ":ctaId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "ctaId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "USER-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"team\": \"<string>\",\n  \"startTime\": \"<long>\",\n  \"endTime\": \"<long>\",\n  \"rule\": {\n    \"cohortEligibility\": {\n      \"includes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"excludes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"stateToAction\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"stateTransition\": \"<object>\",\n    \"priority\": \"<integer>\",\n    \"stateMachineTTL\": \"<long>\",\n    \"actions\": [\n      \"<object>\",\n      \"<object>\"\n    ],\n    \"frequency\": {\n      \"session\": {\n        \"limit\": \"<integer>\"\n      },\n      \"window\": {\n        \"limit\": \"<integer>\",\n        \"unit\": \"<string>\",\n        \"value\": \"<integer>\"\n      }\n    },\n    \"resetStates\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"contextParams\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"groupByConfig\": \"<object>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9b265d4d-1fba-492c-b76d-42d72fdebaeb",
+              "name": "Journey updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":ctaId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ctaId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "USER-ID",
+                    "value": "admin"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"growth\",\n    \"updated\"\n  ],\n  \"description\": \"Updated description\",\n  \"team\": \"marketing\",\n  \"startTime\": 2082758400000,\n  \"endTime\": 2114294400000,\n  \"rule\": {\n    \"cohortEligibility\": {\n      \"includes\": [\n        \"all\"\n      ],\n      \"excludes\": []\n    },\n    \"stateToAction\": {\n      \"1\": \"actionId1\"\n    },\n    \"contextParams\": [\n      \"mode\"\n    ],\n    \"stateTransition\": {\n      \"AppLaunch\": {\n        \"0\": [\n          {\n            \"transitionTo\": \"1\",\n            \"filters\": {\n              \"operator\": \"AND\",\n              \"filter\": []\n            }\n          }\n        ]\n      }\n    },\n    \"priority\": 1,\n    \"stateMachineTTL\": 2082758400000,\n    \"actions\": [\n      {\n        \"actionId1\": {\n          \"type\": \"BottomSheet\",\n          \"nudgeId\": \"5\"\n        }\n      }\n    ],\n    \"frequency\": {\n      \"session\": {\n        \"limit\": 1\n      },\n      \"window\": {\n        \"limit\": 1,\n        \"unit\": \"days\",\n        \"value\": 2\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {},\n  \"statusCode\": 6739\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "38337064-daa3-4a39-9988-ea7c430dd364",
+              "name": "Invalid request body or validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":ctaId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ctaId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "USER-ID",
+                    "value": "admin"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"growth\",\n    \"updated\"\n  ],\n  \"description\": \"Updated description\",\n  \"team\": \"marketing\",\n  \"startTime\": 2082758400000,\n  \"endTime\": 2114294400000,\n  \"rule\": {\n    \"cohortEligibility\": {\n      \"includes\": [\n        \"all\"\n      ],\n      \"excludes\": []\n    },\n    \"stateToAction\": {\n      \"1\": \"actionId1\"\n    },\n    \"contextParams\": [\n      \"mode\"\n    ],\n    \"stateTransition\": {\n      \"AppLaunch\": {\n        \"0\": [\n          {\n            \"transitionTo\": \"1\",\n            \"filters\": {\n              \"operator\": \"AND\",\n              \"filter\": []\n            }\n          }\n        ]\n      }\n    },\n    \"priority\": 1,\n    \"stateMachineTTL\": 2082758400000,\n    \"actions\": [\n      {\n        \"actionId1\": {\n          \"type\": \"BottomSheet\",\n          \"nudgeId\": \"5\"\n        }\n      }\n    ],\n    \"frequency\": {\n      \"session\": {\n        \"limit\": 1\n      },\n      \"window\": {\n        \"limit\": 1,\n        \"unit\": \"days\",\n        \"value\": 2\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "286956ea-50a0-4421-b7d4-2eb4091b6394",
+              "name": "PROJECT-ID or TENANT-ID header is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":ctaId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ctaId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "USER-ID",
+                    "value": "admin"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"growth\",\n    \"updated\"\n  ],\n  \"description\": \"Updated description\",\n  \"team\": \"marketing\",\n  \"startTime\": 2082758400000,\n  \"endTime\": 2114294400000,\n  \"rule\": {\n    \"cohortEligibility\": {\n      \"includes\": [\n        \"all\"\n      ],\n      \"excludes\": []\n    },\n    \"stateToAction\": {\n      \"1\": \"actionId1\"\n    },\n    \"contextParams\": [\n      \"mode\"\n    ],\n    \"stateTransition\": {\n      \"AppLaunch\": {\n        \"0\": [\n          {\n            \"transitionTo\": \"1\",\n            \"filters\": {\n              \"operator\": \"AND\",\n              \"filter\": []\n            }\n          }\n        ]\n      }\n    },\n    \"priority\": 1,\n    \"stateMachineTTL\": 2082758400000,\n    \"actions\": [\n      {\n        \"actionId1\": {\n          \"type\": \"BottomSheet\",\n          \"nudgeId\": \"5\"\n        }\n      }\n    ],\n    \"frequency\": {\n      \"session\": {\n        \"limit\": 1\n      },\n      \"window\": {\n        \"limit\": 1,\n        \"unit\": \"days\",\n        \"value\": 2\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aac4ae90-cdf9-43d7-ac13-58c2df20b8fb",
+              "name": "Journey not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "thunder",
+                    "ctas",
+                    ":ctaId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ctaId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "TENANT-ID",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "USER-ID",
+                    "value": "admin"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"growth\",\n    \"updated\"\n  ],\n  \"description\": \"Updated description\",\n  \"team\": \"marketing\",\n  \"startTime\": 2082758400000,\n  \"endTime\": 2114294400000,\n  \"rule\": {\n    \"cohortEligibility\": {\n      \"includes\": [\n        \"all\"\n      ],\n      \"excludes\": []\n    },\n    \"stateToAction\": {\n      \"1\": \"actionId1\"\n    },\n    \"contextParams\": [\n      \"mode\"\n    ],\n    \"stateTransition\": {\n      \"AppLaunch\": {\n        \"0\": [\n          {\n            \"transitionTo\": \"1\",\n            \"filters\": {\n              \"operator\": \"AND\",\n              \"filter\": []\n            }\n          }\n        ]\n      }\n    },\n    \"priority\": 1,\n    \"stateMachineTTL\": 2082758400000,\n    \"actions\": [\n      {\n        \"actionId1\": {\n          \"type\": \"BottomSheet\",\n          \"nudgeId\": \"5\"\n        }\n      }\n    ],\n    \"frequency\": {\n      \"session\": {\n        \"limit\": 1\n      },\n      \"window\": {\n        \"limit\": 1,\n        \"unit\": \"days\",\n        \"value\": 2\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"cause\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "TENANT-ID"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c3bfad67-3b01-40ce-8228-17ba5ad56304",
+    "name": "Raven Journey Journeys API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Journey module APIs for Journey management, behaviour tags, events, and SDK operations.\n\n## Authentication\nTENANT-ID and PROJECT-ID headers are required on all endpoints (auth routes use TENANT-ID only) via the global `TenantIdHeader` security scheme.\nThe `/healthcheck` endpoint is exempted. Some endpoints also require `USER-ID`.\n\n## Timestamps\nAll timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).\n\n\nContact Support:\n Name: Raven Team",
+      "type": "text/plain"
+    }
+  }
+}

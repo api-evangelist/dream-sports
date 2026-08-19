@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Guardian Key Management API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Key Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate new RSA key pair",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/keys/generate",
+            "headers": [
+              {
+                "name": "tenant-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate a new RSA key pair for token signing. The new key will be used\nfor signing new tokens while the old key remains valid for verification.\n\n**Security:** This operation should be performed periodically to rotate keys.\nThe old key will be kept for a grace period to verify existing tokens.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

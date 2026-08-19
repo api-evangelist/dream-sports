@@ -1,0 +1,121 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Raven Journey Events Catalog API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "TENANT-ID",
+      "value": "{{TENANT-ID}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events Catalog",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/thunder/events"
+          },
+          "docs": "List Events"
+        },
+        {
+          "info": {
+            "name": "Create or Update Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/thunder/events",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates new events or updates existing events. Accepts an array of EventInput objects.\nEach event includes a name and a list of properties with types, expected values, and mandatory flags.\n"
+        },
+        {
+          "info": {
+            "name": "Get All Event Names",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/thunder/events/list/names"
+          },
+          "docs": "Retrieves a list of all event names for the project (lightweight, no property details)."
+        },
+        {
+          "info": {
+            "name": "Get Event by Name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/thunder/events/:event-name",
+            "params": [
+              {
+                "name": "event-name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves a specific event by its name, including all property definitions."
+        },
+        {
+          "info": {
+            "name": "Update Event Properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/thunder/events/:event-name",
+            "params": [
+              {
+                "name": "event-name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing event."
+        },
+        {
+          "info": {
+            "name": "Delete Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/thunder/events/:event-name",
+            "params": [
+              {
+                "name": "event-name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Event"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
