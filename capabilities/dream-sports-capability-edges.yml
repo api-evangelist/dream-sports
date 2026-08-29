@@ -1,0 +1,193 @@
+slug: dream-sports
+provider: Dream Sports
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 18
+edges:
+- tag: OIDC
+  spec_file: dream-sports-oidc-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: '"OAuth 2.0 Authorization Endpoint", "OpenID Connect UserInfo Endpoint", "Revoke OIDC refresh
+    token"'
+  reason: Guardian is an identity provider surface implementing OAuth 2.0/OIDC authorization, token issuance
+    and revocation — squarely identity and access management.
+- tag: Tests
+  spec_file: dream-sports-tests-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.88
+  evidence: '"Create a test case", "Bulk create tests", "Get test status history"; schemas Test, TestStatus'
+  reason: Test case authoring, bulk maintenance and status history in Checkmate is test suite stewardship
+    — software quality engineering.
+- tag: Deployments
+  spec_file: dream-sports-deployments-api-openapi.yml
+  capability_id: BC-4210.40
+  capability_id_l1: BC-4210
+  capability_name: Deployment Orchestration
+  confidence: 0.85
+  evidence: 'POST /apps/{appName}/deployments Create deployment; description: ''Deploy over-the-air updates
+    to React Native applications ... Gradual rollouts ... Rollback capabilities'''
+  reason: Manages deployment targets/channels for OTA release delivery with gradual rollout and rollback
+    — deployment orchestration for software releases.
+- tag: OIDC Client Management
+  spec_file: dream-sports-oidc-client-management-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: '"Create a new OAuth 2.0 client", "Regenerate client secret"'
+  reason: Lifecycle management of OAuth clients and their secrets is federation/credential administration
+    within IAM. (Developer credential management would fit if this were a public developer portal, but
+    this is an internal admin identity service.)
+- tag: OIDC Client Scope Management
+  spec_file: dream-sports-oidc-client-scope-management-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: '"Add scopes to client", "Remove scope from client"'
+  reason: Granting and revoking OAuth scopes on a client is access-rights administration, i.e. identity
+    and access management.
+- tag: Password
+  spec_file: dream-sports-password-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: '"Sign in using user identifier with password or PIN", "Signup a new user using username and
+    password"'
+  reason: Credential-based authentication and user registration in the Guardian identity service — identity
+    and access management.
+- tag: Passwordless
+  spec_file: dream-sports-passwordless-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: '"Initiate the passwordless flow", "Send OTP for contact verification", "Verify OTP for contact
+    verification"'
+  reason: OTP-based passwordless authentication and contact verification flows are authentication mechanisms,
+    mapping to identity and access management.
+- tag: Runs
+  spec_file: dream-sports-runs-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.85
+  evidence: '"Create a test run", "Get run tests", "Update test status in run", "Reset run status"; schemas
+    Run, TestStatus'
+  reason: Test run execution and per-test status tracking is squarely software quality engineering (test
+    strategy and automated/manual test suite stewardship).
+- tag: OIDC Scope Management
+  spec_file: dream-sports-oidc-scope-management-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: '"Create a new scope", "Update an existing scope", schema ScopeListResponse'
+  reason: Definition and lifecycle of authorization scopes used by the identity provider — access-rights
+    modelling under IAM.
+- tag: Acquisition
+  spec_file: dream-sports-acquisition-api-openapi.yml
+  capability_id: BC-4210.40
+  capability_id_l1: BC-4210
+  capability_name: Deployment Orchestration
+  confidence: 0.75
+  evidence: GET /updateCheck    Check for updates; POST /reportStatus/deploy    Report deployment status;
+    POST /reportStatus/download    Report download
+  reason: 'Client-side CodePush acquisition flow: devices check for available update packages, download
+    them and report deploy status. This is delivery of software changes to running production clients
+    with rollout/rollback control, i.e. deployment orchestration within release & deployment management.'
+- tag: Device-Bound Authentication
+  spec_file: dream-sports-device-bound-authentication-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: 'POST /v2/biometric/challenge Request authentication challenge; POST /v2/biometric/complete
+    Complete biometric authentication; schemas: DeviceMetadata, TokenResponse'
+  reason: Biometric, device-bound authentication challenge/response issuing tokens — an identity and access
+    management capability delivered as a product feature (Guardian auth service).
+- tag: Journeys
+  spec_file: dream-sports-journeys-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.72
+  evidence: 'POST /thunder/ctas createJourney Create Journey; schemas: JourneyRequest, RuleRequest'
+  reason: CRUD over customer engagement journeys with targeting rules — marketing automation / lifecycle
+    campaign orchestration.
+- tag: Apps
+  spec_file: dream-sports-apps-api-openapi.yml
+  capability_id: BC-4210
+  capability_id_l1: BC-4210
+  capability_name: Software Release & Deployment Management
+  confidence: 0.7
+  evidence: GET /apps/{appName}/deployments    List deployments for an app; POST /apps/{appName}/deployments    Create
+    a deployment; schemas Deployment, Package, Metrics
+  reason: Manages apps, their deployments (environments/channels) and release packages in the OTA update
+    server, plus collaborator access. Clearly in the software release & deployment domain; the mix of
+    app registry, deployment channels and collaborator roles prevents committing to a single L2.
+- tag: Configuration
+  spec_file: dream-sports-configuration-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.7
+  evidence: 'openapi description: ''Checkmate - a modern test case management system''; GET /api/v1/automation-status
+    Get automation statuses; GET /api/v1/test-covered-by'
+  reason: Reference-data configuration (labels, squads, sections, priorities, automation status) for a
+    test case management system — supports software quality engineering, though the tag itself is config
+    metadata.
+- tag: Journey Lifecycle
+  spec_file: dream-sports-journey-lifecycle-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: PUT /thunder/ctas/{id}/live activateJourney Activate Journey; PUT /thunder/ctas/{id}/schedule
+    scheduleJourney
+  reason: Activating, scheduling, pausing and concluding customer engagement journeys (CTAs) is campaign/marketing-automation
+    lifecycle control.
+- tag: OIDC Discovery
+  spec_file: dream-sports-oidc-discovery-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: '"Get OpenID Connect Discovery Configuration" — schema OIDCDiscoveryResponse'
+  reason: A single well-known metadata endpoint is largely protocol plumbing, but it is an intrinsic part
+    of the OIDC identity provider surface; mapped to IAM at reduced confidence.
+- tag: Provider
+  spec_file: dream-sports-provider-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /provider — "Update identity provider details for a user"; schemas ProviderData, AddProviderDetailsRequest
+  reason: Guardian is an identity/auth service and this tag manages the identity provider linked to a
+    user account, which is identity and access management. Not tenant-level SSO federation configuration,
+    so the IAM L2 fits better than tenant identity federation.
+- tag: Social
+  spec_file: dream-sports-social-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: '"Signin, Signup or Signinup using the facebook access_token", "Connect to external identity
+    provider"'
+  reason: Social login and external identity provider connection in Guardian implement federated identity
+    and access management. Authentication-heavy, so confidence is held below high.
