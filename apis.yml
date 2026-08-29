@@ -12,6 +12,19 @@ description: >-
   DOTA (over-the-air mobile updates), protobuf service definitions for Odin (its internal developer platform), a
   first-party stdio MCP server for Odin, an llms.txt, and client SDKs published to npm under the @d11 scope and to
   LuaRocks under the dream11 namespace.
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 image: https://www.dreamsports.group/images/logo.svg
 url: https://raw.githubusercontent.com/api-evangelist/dream-sports/refs/heads/main/apis.yml
 x-type: company
