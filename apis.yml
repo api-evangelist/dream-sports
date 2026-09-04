@@ -25,6 +25,20 @@ deliveryModel:
   - repository-unlicensed
   generated: '2026-08-28'
   method: derived
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source:
+  - authentication
+  - scopes
+  - security
+  generated: '2026-09-03'
+  method: derived
 image: https://www.dreamsports.group/images/logo.svg
 url: https://raw.githubusercontent.com/api-evangelist/dream-sports/refs/heads/main/apis.yml
 x-type: company
