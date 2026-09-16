@@ -151,42 +151,6 @@ apis:
     url: https://github.com/dream-horizon-org/delivr
   - type: CLI
     url: cli/dream-sports-cli.yml
-- aid: dream-sports:dream-sports-accesskeys-api
-  name: Dream Sports Access Keys API
-  description: The AccessKeys API from Dream Sports — 1 operation(s) for accesskeys.
-  humanURL: https://guardianhq.io/docs/
-  baseURL: https://auth.dream11.com/
-  tags:
-  - Access Keys
-  tags_raw:
-  - AccessKeys
-  properties:
-  - type: OpenAPI
-    url: openapi/dream-sports-accesskeys-api-openapi.yml
-  - type: Documentation
-    url: https://guardianhq.io/docs/
-  - type: SourceCode
-    url: https://github.com/dream-horizon-org/guardian
-  - type: OpenIDConnect
-    url: https://auth.dream11.com/.well-known/openid-configuration
-  - type: Webhooks
-    url: asyncapi/dream-sports-webhooks.yml
-  - type: Authentication
-    url: authentication/dream-sports-authentication.yml
-  - type: OAuthScopes
-    url: scopes/dream-sports-scopes.yml
-  - type: Documentation
-    url: https://checkmate.dreamhorizon.org/
-  - type: SourceCode
-    url: https://github.com/dream-horizon-org/checkmate
-  - type: SourceCode
-    url: https://github.com/dream-horizon-org/raven
-  - type: Documentation
-    url: https://www.delivr.live/
-  - type: SourceCode
-    url: https://github.com/dream-horizon-org/delivr
-  - type: CLI
-    url: cli/dream-sports-cli.yml
 - aid: dream-sports:dream-sports-account-api
   name: Dream Sports Account API
   description: The Account API from Dream Sports — 4 operation(s) for account.
