@@ -962,42 +962,6 @@ apis:
     url: https://github.com/dream-horizon-org/delivr
   - type: CLI
     url: cli/dream-sports-cli.yml
-- aid: dream-sports:dream-sports-healthcheck-api
-  name: Dream Sports Healthcheck API
-  description: The Healthcheck API from Dream Sports — 2 operation(s) for healthcheck.
-  humanURL: https://guardianhq.io/docs/
-  baseURL: https://auth.dream11.com/
-  tags:
-  - Health Check
-  tags_raw:
-  - Healthcheck
-  properties:
-  - type: OpenAPI
-    url: openapi/dream-sports-healthcheck-api-openapi.yml
-  - type: Documentation
-    url: https://guardianhq.io/docs/
-  - type: SourceCode
-    url: https://github.com/dream-horizon-org/guardian
-  - type: OpenIDConnect
-    url: https://auth.dream11.com/.well-known/openid-configuration
-  - type: Webhooks
-    url: asyncapi/dream-sports-webhooks.yml
-  - type: Authentication
-    url: authentication/dream-sports-authentication.yml
-  - type: OAuthScopes
-    url: scopes/dream-sports-scopes.yml
-  - type: Documentation
-    url: https://checkmate.dreamhorizon.org/
-  - type: SourceCode
-    url: https://github.com/dream-horizon-org/checkmate
-  - type: SourceCode
-    url: https://github.com/dream-horizon-org/raven
-  - type: Documentation
-    url: https://www.delivr.live/
-  - type: SourceCode
-    url: https://github.com/dream-horizon-org/delivr
-  - type: CLI
-    url: cli/dream-sports-cli.yml
 - aid: dream-sports:dream-sports-journey-behaviour-api
   name: Dream Sports Journey Behaviour API
   description: Journey behaviour tag management — define and manage behaviour tags linked to journeys
@@ -1428,42 +1392,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/dream-sports-oidc-scope-management-api-openapi.yml
-  - type: Documentation
-    url: https://guardianhq.io/docs/
-  - type: SourceCode
-    url: https://github.com/dream-horizon-org/guardian
-  - type: OpenIDConnect
-    url: https://auth.dream11.com/.well-known/openid-configuration
-  - type: Webhooks
-    url: asyncapi/dream-sports-webhooks.yml
-  - type: Authentication
-    url: authentication/dream-sports-authentication.yml
-  - type: OAuthScopes
-    url: scopes/dream-sports-scopes.yml
-  - type: Documentation
-    url: https://checkmate.dreamhorizon.org/
-  - type: SourceCode
-    url: https://github.com/dream-horizon-org/checkmate
-  - type: SourceCode
-    url: https://github.com/dream-horizon-org/raven
-  - type: Documentation
-    url: https://www.delivr.live/
-  - type: SourceCode
-    url: https://github.com/dream-horizon-org/delivr
-  - type: CLI
-    url: cli/dream-sports-cli.yml
-- aid: dream-sports:dream-sports-openapi-api
-  name: Dream Sports Openapi API
-  description: The Openapi API from Dream Sports — 1 operation(s) for openapi.
-  humanURL: https://guardianhq.io/docs/
-  baseURL: https://auth.dream11.com/
-  tags:
-  - OpenAPI
-  tags_raw:
-  - Openapi
-  properties:
-  - type: OpenAPI
-    url: openapi/dream-sports-openapi-api-openapi.yml
   - type: Documentation
     url: https://guardianhq.io/docs/
   - type: SourceCode
@@ -2189,6 +2117,74 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/dream-sports-users-api-openapi.yml
+  - type: Documentation
+    url: https://guardianhq.io/docs/
+  - type: SourceCode
+    url: https://github.com/dream-horizon-org/guardian
+  - type: OpenIDConnect
+    url: https://auth.dream11.com/.well-known/openid-configuration
+  - type: Webhooks
+    url: asyncapi/dream-sports-webhooks.yml
+  - type: Authentication
+    url: authentication/dream-sports-authentication.yml
+  - type: OAuthScopes
+    url: scopes/dream-sports-scopes.yml
+  - type: Documentation
+    url: https://checkmate.dreamhorizon.org/
+  - type: SourceCode
+    url: https://github.com/dream-horizon-org/checkmate
+  - type: SourceCode
+    url: https://github.com/dream-horizon-org/raven
+  - type: Documentation
+    url: https://www.delivr.live/
+  - type: SourceCode
+    url: https://github.com/dream-horizon-org/delivr
+  - type: CLI
+    url: cli/dream-sports-cli.yml
+- aid: dream-sports:dream-sports-health-check-api
+  name: Dream Sports Health Check API
+  description: The Health Check API from Dream Sports — 2 operation(s) for health check.
+  humanURL: https://github.com/dream-horizon-org/odin-mcp
+  baseURL: https://auth.dream11.com/
+  tags:
+  - Health Check
+  properties:
+  - type: OpenAPI
+    url: openapi/dream-sports-health-check-api-openapi.yml
+  - type: Documentation
+    url: https://guardianhq.io/docs/
+  - type: SourceCode
+    url: https://github.com/dream-horizon-org/guardian
+  - type: OpenIDConnect
+    url: https://auth.dream11.com/.well-known/openid-configuration
+  - type: Webhooks
+    url: asyncapi/dream-sports-webhooks.yml
+  - type: Authentication
+    url: authentication/dream-sports-authentication.yml
+  - type: OAuthScopes
+    url: scopes/dream-sports-scopes.yml
+  - type: Documentation
+    url: https://checkmate.dreamhorizon.org/
+  - type: SourceCode
+    url: https://github.com/dream-horizon-org/checkmate
+  - type: SourceCode
+    url: https://github.com/dream-horizon-org/raven
+  - type: Documentation
+    url: https://www.delivr.live/
+  - type: SourceCode
+    url: https://github.com/dream-horizon-org/delivr
+  - type: CLI
+    url: cli/dream-sports-cli.yml
+- aid: dream-sports:dream-sports-open-api-api
+  name: Dream Sports Open API
+  description: The Open API API from Dream Sports — 1 operation(s) for open api.
+  humanURL: https://github.com/dream-horizon-org/odin-mcp
+  baseURL: https://auth.dream11.com/
+  tags:
+  - Open API
+  properties:
+  - type: OpenAPI
+    url: openapi/dream-sports-open-api-api-openapi.yml
   - type: Documentation
     url: https://guardianhq.io/docs/
   - type: SourceCode
