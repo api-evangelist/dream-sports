@@ -13,9 +13,7 @@ info:
 
     ## Timestamps
 
-    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).
-
-    '
+    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).'
   version: 1.0.0
   contact:
     name: Raven Team
@@ -35,9 +33,7 @@ paths:
       summary: Get Nudge Preview (SDK)
       description: 'Retrieves a nudge preview by its ID via path parameter. Used by the client SDK to fetch nudge templates.
 
-        Route rename: `/cta/nudge/preview/{id}` is renamed to `/sdk/nudge/preview/{id}`.
-
-        '
+        Route rename: `/cta/nudge/preview/{id}` is renamed to `/sdk/nudge/preview/{id}`.'
       operationId: getNudgePreviewSdk
       parameters:
       - name: id
@@ -82,9 +78,7 @@ paths:
 
         SDK metadata headers are part of the contract and are marked required here.
 
-        Note: server-side enforcement for these metadata headers is not implemented yet.
-
-        '
+        Note: server-side enforcement for these metadata headers is not implemented yet.'
       operationId: getActiveJourneysSdk
       parameters:
       - $ref: '#/components/parameters/SdkUserId'
@@ -136,9 +130,7 @@ paths:
 
         SDK metadata headers are part of the contract and are marked required here.
 
-        Note: server-side enforcement for these metadata headers is not implemented yet.
-
-        '
+        Note: server-side enforcement for these metadata headers is not implemented yet.'
       operationId: syncJourneyState
       parameters:
       - $ref: '#/components/parameters/SdkUserId'
@@ -194,9 +186,7 @@ paths:
 
         SDK metadata headers are part of the contract and are marked required here.
 
-        Note: server-side enforcement for these metadata headers is not implemented yet.
-
-        '
+        Note: server-side enforcement for these metadata headers is not implemented yet.'
       operationId: sdkUserIdentify
       parameters:
       - $ref: '#/components/parameters/SdkUserId'
@@ -253,9 +243,7 @@ paths:
 
         SDK metadata headers are part of the contract and are marked required here.
 
-        Note: server-side enforcement for these metadata headers is not implemented yet.
-
-        '
+        Note: server-side enforcement for these metadata headers is not implemented yet.'
       operationId: sdkDeviceTokenRegister
       parameters:
       - $ref: '#/components/parameters/SdkUserId'
@@ -309,9 +297,7 @@ paths:
 
         SDK metadata headers are part of the contract and are marked required here.
 
-        Note: server-side enforcement for these metadata headers is not implemented yet.
-
-        '
+        Note: server-side enforcement for these metadata headers is not implemented yet.'
       operationId: sdkUserPreferencesUpsert
       parameters:
       - $ref: '#/components/parameters/SdkUserId'
@@ -370,6 +356,54 @@ components:
           type: string
         value:
           type: boolean
+    SdkUpsertPreferencesRequest:
+      type: object
+      required:
+      - userId
+      - items
+      properties:
+        userId:
+          type: string
+        items:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/PreferenceItem'
+    SdkUserProfileLoginRequest:
+      type: object
+      required:
+      - userId
+      properties:
+        userId:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        birthdate:
+          type: string
+        gender:
+          type: string
+        city:
+          type: string
+        locality:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+        language:
+          type: string
+        timezone:
+          type: string
+        custom:
+          type: object
+          additionalProperties: true
     ApiResponse:
       type: object
       properties:
@@ -418,41 +452,6 @@ components:
           type: string
         appVersion:
           type: string
-    SdkUserProfileLoginRequest:
-      type: object
-      required:
-      - userId
-      properties:
-        userId:
-          type: string
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-          format: email
-        phone:
-          type: string
-        birthdate:
-          type: string
-        gender:
-          type: string
-        city:
-          type: string
-        locality:
-          type: string
-        postalCode:
-          type: string
-        country:
-          type: string
-        language:
-          type: string
-        timezone:
-          type: string
-        custom:
-          type: object
-          additionalProperties: true
     SdkUpsertPreferencesResponse:
       type: object
       properties:
@@ -462,19 +461,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PreferenceItem'
-    SdkUpsertPreferencesRequest:
+    SdkUpsertPreferencesApiResponse:
       type: object
-      required:
-      - userId
-      - items
       properties:
-        userId:
-          type: string
-        items:
-          type: array
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/PreferenceItem'
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/SdkUpsertPreferencesResponse'
     JourneySnapshotRequest:
       type: object
       properties:
@@ -486,94 +479,7 @@ components:
           type: array
           items:
             type: object
-    SdkUpsertPreferencesApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        data:
-          $ref: '#/components/schemas/SdkUpsertPreferencesResponse'
   parameters:
-    SdkPackage:
-      name: package
-      in: header
-      required: true
-      schema:
-        type: string
-        pattern: ^[A-Za-z0-9._-]{3,128}$
-      example: com.dream11.app
-    SdkOsApiLevel:
-      name: os-api-level
-      in: header
-      required: true
-      schema:
-        type: integer
-        format: int32
-        minimum: 0
-      example: 34
-    SdkOs:
-      name: os
-      in: header
-      required: true
-      schema:
-        type: string
-        enum:
-        - android
-        - ios
-        - tvos
-      example: android
-    SdkFramework:
-      name: framework
-      in: header
-      required: true
-      schema:
-        type: string
-        enum:
-        - native
-        - react-native
-        - flutter
-      example: react-native
-    SdkVersion:
-      name: sdk-version
-      in: header
-      required: true
-      schema:
-        type: string
-        pattern: ^[A-Za-z0-9._-]{1,64}$
-      example: 1.5.0
-    SdkOsVersion:
-      name: os-version
-      in: header
-      required: true
-      schema:
-        type: string
-        pattern: ^[A-Za-z0-9._-]{1,32}$
-      example: '14'
-    SdkAppVersion:
-      name: app-version
-      in: header
-      required: true
-      schema:
-        type: string
-        pattern: ^[A-Za-z0-9._-]{1,64}$
-      description: Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).
-      example: 25.2.0
-    SdkAppBuild:
-      name: app-build
-      in: header
-      required: true
-      schema:
-        type: string
-        pattern: ^[A-Za-z0-9._-]{1,64}$
-      example: 250200123
-    SdkUserId:
-      name: user-id
-      in: header
-      required: true
-      schema:
-        type: integer
-        format: int64
-      example: 135162489
     SdkPlatform:
       name: platform
       in: header
@@ -586,6 +492,86 @@ components:
         - ios
         - tvos
       example: android-mobile
+    SdkOsApiLevel:
+      name: os-api-level
+      in: header
+      required: true
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+      example: 34
+    SdkAppBuild:
+      name: app-build
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^[A-Za-z0-9._-]{1,64}$
+      example: 250200123
+    SdkAppVersion:
+      name: app-version
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^[A-Za-z0-9._-]{1,64}$
+      description: Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).
+      example: 25.2.0
+    SdkPackage:
+      name: package
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^[A-Za-z0-9._-]{3,128}$
+      example: com.dream11.app
+    SdkOs:
+      name: os
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+        - android
+        - ios
+        - tvos
+      example: android
+    SdkOsVersion:
+      name: os-version
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^[A-Za-z0-9._-]{1,32}$
+      example: '14'
+    SdkUserId:
+      name: user-id
+      in: header
+      required: true
+      schema:
+        type: integer
+        format: int64
+      example: 135162489
+    SdkVersion:
+      name: sdk-version
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^[A-Za-z0-9._-]{1,64}$
+      example: 1.5.0
+    SdkFramework:
+      name: framework
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+        - native
+        - react-native
+        - flutter
+      example: react-native
   securitySchemes:
     TenantIdHeader:
       type: apiKey

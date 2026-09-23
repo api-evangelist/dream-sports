@@ -13,9 +13,7 @@ info:
 
     ## Timestamps
 
-    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).
-
-    '
+    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).'
   version: 1.0.0
   contact:
     name: Raven Team
@@ -215,6 +213,29 @@ components:
           type: object
         statusCode:
           type: integer
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
+    BehaviourTagUpdateRequest:
+      type: object
+      properties:
+        description:
+          type: string
+        exposureRule:
+          type: object
+        linkedCtas:
+          type: array
+          items:
+            type: string
     BehaviourTagRequest:
       type: object
       required:
@@ -250,29 +271,6 @@ components:
           type: array
           items:
             type: string
-    BehaviourTagUpdateRequest:
-      type: object
-      properties:
-        description:
-          type: string
-        exposureRule:
-          type: object
-        linkedCtas:
-          type: array
-          items:
-            type: string
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            cause:
-              type: string
-            code:
-              type: string
   parameters:
     UserId:
       name: USER-ID

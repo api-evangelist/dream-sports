@@ -9,18 +9,22 @@ servers:
 - url: http://localhost:8080
   description: Thunder API Server (SDK & Debug endpoints)
 tags:
-- name: Openapi
+- name: Open API
 paths:
   /openapi:
-    servers:
-    - url: http://localhost:8081
-      description: Thunder Admin Server (Management endpoints)
     get:
       responses:
         '200':
           description: OK
       tags:
-      - Openapi
+      - Open API
+      summary: Get openapi
+      x-summary-source: derived
+      operationId: getOpenapi
+      x-operation-id-source: derived
+    servers:
+    - url: http://localhost:8081
+      description: Thunder Admin Server (Management endpoints)
 x-refined-from:
 - dream-sports-thunder-admin-openapi.yml
 - dream-sports-thunder-api-openapi.yml

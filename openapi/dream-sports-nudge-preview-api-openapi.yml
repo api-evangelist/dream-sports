@@ -13,9 +13,7 @@ info:
 
     ## Timestamps
 
-    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).
-
-    '
+    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).'
   version: 1.0.0
   contact:
     name: Raven Team
@@ -35,9 +33,7 @@ paths:
       summary: Create or Update Nudge Preview
       description: 'Creates a new nudge preview or updates an existing one. Nudge previews store UI templates
 
-        with a TTL (time-to-live) that controls how long the preview is available.
-
-        '
+        with a TTL (time-to-live) that controls how long the preview is available.'
       operationId: createOrUpdateNudgePreview
       requestBody:
         required: true

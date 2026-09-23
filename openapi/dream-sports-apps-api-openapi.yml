@@ -1,11 +1,24 @@
 openapi: 3.2.0
 info:
-  title: Dream Sports Apps API
-  version: '1.0'
-  description: 'Operations tagged Apps across 2 of this provider''s published API definitions: dream-sports-delivr-ota-openapi.yml, dream-sports-dota-openapi.yml. Each path carries the servers of the definition it was published in.'
-servers:
-- url: http://localhost:3000
-  description: Local server
+  title: Delivr OTA Server Apps API
+  description: 'Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.)
+
+    directly to end users'' devices without going through app store review processes.
+
+
+    ## Features
+
+    - Deploy over-the-air updates to React Native applications
+
+    - Manage apps, deployments, and releases
+
+    - Gradual rollouts and A/B testing
+
+    - Rollback capabilities
+
+    - Deployment metrics and analytics
+
+    - Multi-platform support'
 tags:
 - name: Apps
 paths:
@@ -33,6 +46,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/App'
+      operationId: getApps
+      x-operation-id-source: derived
     post:
       tags:
       - Apps
@@ -66,6 +81,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '409':
           $ref: '#/components/responses/Conflict'
+      operationId: postApps
+      x-operation-id-source: derived
   /apps/{appName}:
     get:
       tags:
@@ -87,6 +104,8 @@ paths:
                     $ref: '#/components/schemas/App'
         '404':
           $ref: '#/components/responses/NotFound'
+      operationId: getAppsByAppName
+      x-operation-id-source: derived
     patch:
       tags:
       - Apps
@@ -123,6 +142,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '409':
           $ref: '#/components/responses/Conflict'
+      operationId: patchAppsByAppName
+      x-operation-id-source: derived
     delete:
       tags:
       - Apps
@@ -138,6 +159,8 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      operationId: deleteAppsByAppName
+      x-operation-id-source: derived
   /apps/{appName}/transfer/{email}:
     post:
       tags:
@@ -163,414 +186,43 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
-  /apps/{appName}/collaborators:
-    servers:
-    - url: http://localhost:3000
-      description: Local server
-    get:
-      summary: List collaborators for an app
-      parameters:
-      - in: path
-        name: appName
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: List of collaborators
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  collaborators:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Collaborator'
-      tags:
-      - Apps
-      security:
-      - BearerAuth: []
-  /apps/{appName}/collaborators/{email}:
-    servers:
-    - url: http://localhost:3000
-      description: Local server
-    post:
-      summary: Add a collaborator
-      parameters:
-      - in: path
-        name: appName
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: email
-        required: true
-        schema:
-          type: string
-      responses:
-        '201':
-          description: Collaborator added
-      tags:
-      - Apps
-      security:
-      - BearerAuth: []
-    patch:
-      summary: Update collaborator role
-      parameters:
-      - in: path
-        name: appName
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: email
-        required: true
-        schema:
-          type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                role:
-                  type: string
-      responses:
-        '204':
-          description: Collaborator updated
-      tags:
-      - Apps
-      security:
-      - BearerAuth: []
-    delete:
-      summary: Remove a collaborator
-      parameters:
-      - in: path
-        name: appName
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: email
-        required: true
-        schema:
-          type: string
-      responses:
-        '201':
-          description: Collaborator removed
-      tags:
-      - Apps
-      security:
-      - BearerAuth: []
-  /apps/{appName}/deployments:
-    servers:
-    - url: http://localhost:3000
-      description: Local server
-    get:
-      summary: List deployments for an app
-      parameters:
-      - in: path
-        name: appName
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: List of deployments
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  deployments:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Deployment'
-      tags:
-      - Apps
-      security:
-      - BearerAuth: []
-    post:
-      summary: Create a deployment
-      parameters:
-      - in: path
-        name: appName
-        required: true
-        schema:
-          type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                key:
-                  type: string
-      responses:
-        '201':
-          description: Deployment created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  deployment:
-                    $ref: '#/components/schemas/Deployment'
-      tags:
-      - Apps
-      security:
-      - BearerAuth: []
-  /apps/{appName}/deployments/{deploymentName}:
-    servers:
-    - url: http://localhost:3000
-      description: Local server
-    get:
-      summary: Get deployment details
-      parameters:
-      - in: path
-        name: appName
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: deploymentName
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Deployment details
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  deployment:
-                    $ref: '#/components/schemas/Deployment'
-      tags:
-      - Apps
-      security:
-      - BearerAuth: []
-    patch:
-      summary: Update deployment metadata
-      parameters:
-      - in: path
-        name: appName
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: deploymentName
-        required: true
-        schema:
-          type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Deployment'
-      responses:
-        '200':
-          description: Deployment updated
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  deployment:
-                    $ref: '#/components/schemas/Deployment'
-      tags:
-      - Apps
-      security:
-      - BearerAuth: []
-    delete:
-      summary: Delete a deployment
-      parameters:
-      - in: path
-        name: appName
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: deploymentName
-        required: true
-        schema:
-          type: string
-      responses:
-        '201':
-          description: Deployment deleted
-      tags:
-      - Apps
-      security:
-      - BearerAuth: []
-  /apps/{appName}/deployments/{deploymentName}/release:
-    servers:
-    - url: http://localhost:3000
-      description: Local server
-    post:
-      summary: Release a new update
-      parameters:
-      - in: path
-        name: appName
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: deploymentName
-        required: true
-        schema:
-          type: string
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                package:
-                  type: string
-                  format: binary
-                packageInfo:
-                  type: string
-      responses:
-        '201':
-          description: Release created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  package:
-                    $ref: '#/components/schemas/Package'
-      tags:
-      - Apps
-      security:
-      - BearerAuth: []
-    patch:
-      summary: Patch latest release metadata
-      parameters:
-      - in: path
-        name: appName
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: deploymentName
-        required: true
-        schema:
-          type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Package'
-      responses:
-        '200':
-          description: Release updated
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  package:
-                    $ref: '#/components/schemas/Package'
-      tags:
-      - Apps
-      security:
-      - BearerAuth: []
-  /apps/{appName}/deployments/{deploymentName}/history:
-    servers:
-    - url: http://localhost:3000
-      description: Local server
-    get:
-      summary: Get release history
-      parameters:
-      - in: path
-        name: appName
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: deploymentName
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Release history
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  history:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Package'
-      tags:
-      - Apps
-      security:
-      - BearerAuth: []
-    delete:
-      summary: Clear release history
-      parameters:
-      - in: path
-        name: appName
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: deploymentName
-        required: true
-        schema:
-          type: string
-      responses:
-        '201':
-          description: History cleared
-      tags:
-      - Apps
-      security:
-      - BearerAuth: []
-  /apps/{appName}/deployments/{deploymentName}/metrics:
-    servers:
-    - url: http://localhost:3000
-      description: Local server
-    get:
-      summary: Get deployment metrics
-      parameters:
-      - in: path
-        name: appName
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: deploymentName
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Deployment metrics
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  metrics:
-                    $ref: '#/components/schemas/Metrics'
-      tags:
-      - Apps
-      security:
-      - BearerAuth: []
+      operationId: postAppsByAppNameTransferByEmail
+      x-operation-id-source: derived
 components:
+  parameters:
+    AppName:
+      name: appName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Application name (or 'owner:appName' for disambiguation)
+      example: MyApp-iOS
+    TenantHeader:
+      name: tenant
+      in: header
+      schema:
+        type: string
+      description: Organization/tenant ID filter
   schemas:
+    CollaboratorProperties:
+      type: object
+      properties:
+        permission:
+          type: string
+          enum:
+          - Owner
+          - Collaborator
+        isCurrentAccount:
+          type: boolean
+          description: Whether this is the authenticated user
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
     CollaboratorMap:
       type: object
       additionalProperties:
@@ -603,65 +255,6 @@ components:
               type: string
             orgName:
               type: string
-    Collaborator:
-      type: object
-      properties:
-        email:
-          type: string
-        accountId:
-          type: string
-        permission:
-          type: string
-    Package:
-      type: object
-      properties:
-        label:
-          type: string
-        appVersion:
-          type: string
-        description:
-          type: string
-        uploadTime:
-          type: integer
-        blobUrl:
-          type: string
-        size:
-          type: integer
-        isMandatory:
-          type: boolean
-        isDisabled:
-          type: boolean
-    CollaboratorProperties:
-      type: object
-      properties:
-        permission:
-          type: string
-          enum:
-          - Owner
-          - Collaborator
-        isCurrentAccount:
-          type: boolean
-          description: Whether this is the authenticated user
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
-    Deployment:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        key:
-          type: string
-        createdTime:
-          type: integer
-        package:
-          $ref: '#/components/schemas/Package'
     AppCreationRequest:
       allOf:
       - $ref: '#/components/schemas/App'
@@ -671,40 +264,7 @@ components:
             type: boolean
             default: false
             description: If true, does not create default Production/Staging deployments
-    Metrics:
-      type: object
-      additionalProperties:
-        type: object
-        properties:
-          active:
-            type: integer
-          downloaded:
-            type: integer
-          failed:
-            type: integer
-          installed:
-            type: integer
-          totalActive:
-            type: integer
   responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Conflict:
-      description: Conflict - resource already exists
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Bad request - invalid parameters
       content:
@@ -718,27 +278,27 @@ components:
                 properties:
                   message:
                     type: string
-  parameters:
-    AppName:
-      name: appName
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Application name (or 'owner:appName' for disambiguation)
-      example: MyApp-iOS
-    TenantHeader:
-      name: tenant
-      in: header
-      schema:
-        type: string
-      description: Organization/tenant ID filter
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflict - resource already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     BearerAuth:
       type: http
       scheme: bearer
       bearerFormat: AccessKey
       description: Access key or session token obtained from OAuth authentication
-x-refined-from:
-- dream-sports-delivr-ota-openapi.yml
-- dream-sports-dota-openapi.yml

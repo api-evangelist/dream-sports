@@ -13,9 +13,7 @@ info:
 
     ## Timestamps
 
-    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).
-
-    '
+    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).'
   version: 1.0.0
   contact:
     name: Raven Team
@@ -28,9 +26,7 @@ tags:
 - name: Admin - Console Users
   description: 'Admin-only console user operations — user onboarding and updates that include project IDs
 
-    (stored in Firebase custom claims). Requires appropriate admin authorization at the gateway.
-
-    '
+    (stored in Firebase custom claims). Requires appropriate admin authorization at the gateway.'
 paths:
   /v1/admin/console-users/onboard:
     post:
@@ -39,9 +35,7 @@ paths:
       summary: Onboard console user (admin)
       description: 'Creates the user in Firebase, optionally sets validated project IDs on the user (Firebase),
 
-        and records email-to-tenant mapping in Postgres. Project IDs must belong to the tenant.
-
-        '
+        and records email-to-tenant mapping in Postgres. Project IDs must belong to the tenant.'
       operationId: adminOnboardConsoleUser
       parameters:
       - $ref: '#/components/parameters/TenantId'
@@ -95,9 +89,7 @@ paths:
       summary: Update console user by uid (admin, includes projectIds)
       description: 'Same profile fields as the standard PATCH, plus optional projectIds for Firebase custom claims.
 
-        Omit projectIds to leave them unchanged; pass an empty array to clear them.
-
-        '
+        Omit projectIds to leave them unchanged; pass an empty array to clear them.'
       operationId: adminUpdateConsoleUserByUid
       parameters:
       - $ref: '#/components/parameters/TenantId'
@@ -150,9 +142,7 @@ paths:
       tags:
       - Admin - Console Users
       summary: Update console user by email (admin, includes projectIds)
-      description: 'Same as admin update by uid; resolves user by email first.
-
-        '
+      description: Same as admin update by uid; resolves user by email first.
       operationId: adminUpdateConsoleUserByEmail
       parameters:
       - $ref: '#/components/parameters/TenantId'
@@ -204,27 +194,11 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ConsoleUserIdApiResponse:
+    ConsoleUserIdData:
       type: object
       properties:
-        success:
-          type: boolean
-          example: true
-        data:
-          $ref: '#/components/schemas/ConsoleUserIdData'
-    ConsoleUserOnboardRequest:
-      type: object
-      required:
-      - email
-      properties:
-        email:
+        id:
           type: string
-          format: email
-        projectIds:
-          type: array
-          items:
-            type: string
-          description: Optional; must be a subset of the tenant's projects when non-empty.
     AdminConsoleUserUpdateRequest:
       type: object
       properties:
@@ -245,11 +219,14 @@ components:
             When omitted, existing project IDs are unchanged.
 
             '
-    ConsoleUserIdData:
+    ConsoleUserIdApiResponse:
       type: object
       properties:
-        id:
-          type: string
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/ConsoleUserIdData'
     ErrorResponse:
       type: object
       properties:
@@ -262,6 +239,19 @@ components:
               type: string
             code:
               type: string
+    ConsoleUserOnboardRequest:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          format: email
+        projectIds:
+          type: array
+          items:
+            type: string
+          description: Optional; must be a subset of the tenant's projects when non-empty.
   securitySchemes:
     TenantIdHeader:
       type: apiKey

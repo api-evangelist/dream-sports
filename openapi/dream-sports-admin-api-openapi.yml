@@ -20,9 +20,7 @@ paths:
 
         **Authentication:**
 
-        - Requires Basic authentication in the Authorization header (admin credentials)
-
-        '
+        - Requires Basic authentication in the Authorization header (admin credentials)'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: Authorization
@@ -58,6 +56,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postV1AdminLogout
+      x-operation-id-source: derived
 components:
   schemas:
     V1AdminLogoutRequestBody:

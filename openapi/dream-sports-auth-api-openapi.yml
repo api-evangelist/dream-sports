@@ -13,9 +13,7 @@ info:
 
     ## Timestamps
 
-    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).
-
-    '
+    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).'
   version: 1.0.0
   contact:
     name: Raven Team
@@ -34,7 +32,23 @@ paths:
       - Auth
       summary: Google login
       operationId: googleLogin
-      description: "Login flow (no signInWithIdp):\n1) Verify Google ID token with Google tokeninfo.\n2) Validate issuer/audience/expiry/email_verified.\n   - If auth.googleAllowedAudience is configured, aud must match it.\n3) Resolve existing Firebase user by google sub (provider mapping).\n4) If not found, fallback to email lookup.\n   - If google provider already exists on email match -> fail.\n   - If google provider missing -> link google.com provider with verified sub.\n5) Mint custom token and exchange via signInWithCustomToken.\n"
+      description: 'Login flow (no signInWithIdp):
+
+        1) Verify Google ID token with Google tokeninfo.
+
+        2) Validate issuer/audience/expiry/email_verified.
+
+        - If auth.googleAllowedAudience is configured, aud must match it.
+
+        3) Resolve existing Firebase user by google sub (provider mapping).
+
+        4) If not found, fallback to email lookup.
+
+        - If google provider already exists on email match -> fail.
+
+        - If google provider missing -> link google.com provider with verified sub.
+
+        5) Mint custom token and exchange via signInWithCustomToken.'
       requestBody:
         required: true
         content:
@@ -138,6 +152,15 @@ components:
           type: string
           description: Raw Google ID token (JWT)
           example: '{{GOOGLE_ID_TOKEN_RAW}}'
+    AuthRefreshRequest:
+      type: object
+      required:
+      - refresh_token
+      properties:
+        refresh_token:
+          type: string
+          description: Raw Firebase refresh token
+          example: '{{FIREBASE_REFRESH_TOKEN_RAW}}'
     AuthTokenData:
       type: object
       properties:
@@ -156,15 +179,6 @@ components:
         token_type:
           type: string
           example: Bearer
-    AuthRefreshRequest:
-      type: object
-      required:
-      - refresh_token
-      properties:
-        refresh_token:
-          type: string
-          description: Raw Firebase refresh token
-          example: '{{FIREBASE_REFRESH_TOKEN_RAW}}'
     AuthTokenApiResponse:
       type: object
       properties:

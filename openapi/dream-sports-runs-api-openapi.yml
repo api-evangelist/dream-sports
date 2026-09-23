@@ -1,38 +1,7 @@
 openapi: 3.2.0
 info:
   title: Checkmate Test Management Runs API
-  description: 'Comprehensive API documentation for Checkmate - a modern test case management system built with Remix, MySQL, and Drizzle ORM.
-
-
-    ## Features
-
-    - Project and Test Management
-
-    - Test Run Execution
-
-    - Role-Based Access Control (RBAC)
-
-    - Google OAuth Authentication
-
-    - Test Status Tracking and History
-
-
-    ## Authentication
-
-    All endpoints require authentication via session cookies. Users must be logged in through Google OAuth.
-
-
-    ## Authorization
-
-    Access to resources is controlled via Casbin RBAC with three role levels:
-
-    - **Admin**: Full access to all resources
-
-    - **User**: Can create, read, update resources
-
-    - **Reader**: Read-only access
-
-    '
+  description: Comprehensive API documentation for Checkmate - a modern test case management system built with Remix, MySQL, and Drizzle ORM.
   version: 1.0.0
   contact:
     name: Checkmate API Support
@@ -103,6 +72,8 @@ paths:
                         type: integer
                   status:
                     type: integer
+      operationId: getApiV1Runs
+      x-operation-id-source: derived
   /api/v1/run/create:
     post:
       tags:
@@ -148,6 +119,8 @@ paths:
                         type: string
                   status:
                     type: integer
+      operationId: postApiV1RunCreate
+      x-operation-id-source: derived
   /api/v1/run/edit:
     put:
       tags:
@@ -177,6 +150,8 @@ paths:
       responses:
         '200':
           description: Run updated successfully
+      operationId: putApiV1RunEdit
+      x-operation-id-source: derived
   /api/v1/run/delete:
     delete:
       tags:
@@ -197,6 +172,8 @@ paths:
       responses:
         '200':
           description: Run deleted successfully
+      operationId: deleteApiV1RunDelete
+      x-operation-id-source: derived
   /api/v1/run/detail:
     get:
       tags:
@@ -221,6 +198,8 @@ paths:
                     $ref: '#/components/schemas/Run'
                   status:
                     type: integer
+      operationId: getApiV1RunDetail
+      x-operation-id-source: derived
   /api/v1/run/tests:
     get:
       tags:
@@ -278,6 +257,8 @@ paths:
                         type: integer
                   status:
                     type: integer
+      operationId: getApiV1RunTests
+      x-operation-id-source: derived
   /api/v1/run/state-detail:
     get:
       tags:
@@ -319,6 +300,8 @@ paths:
                         type: integer
                   status:
                     type: integer
+      operationId: getApiV1RunStateDetail
+      x-operation-id-source: derived
   /api/v1/run/update-test-status:
     put:
       tags:
@@ -353,6 +336,8 @@ paths:
       responses:
         '200':
           description: Test status updated successfully
+      operationId: putApiV1RunUpdateTestStatus
+      x-operation-id-source: derived
   /api/v1/run/lock:
     put:
       tags:
@@ -377,6 +362,8 @@ paths:
       responses:
         '200':
           description: Run lock status updated
+      operationId: putApiV1RunLock
+      x-operation-id-source: derived
   /api/v1/run/reset:
     put:
       tags:
@@ -397,6 +384,8 @@ paths:
       responses:
         '200':
           description: Run reset successfully
+      operationId: putApiV1RunReset
+      x-operation-id-source: derived
   /api/v1/run/remove-tests:
     put:
       tags:
@@ -422,6 +411,8 @@ paths:
       responses:
         '200':
           description: Tests removed successfully
+      operationId: putApiV1RunRemoveTests
+      x-operation-id-source: derived
   /api/v1/run/test-status:
     get:
       tags:
@@ -447,6 +438,8 @@ paths:
       responses:
         '200':
           description: Test status in run
+      operationId: getApiV1RunTestStatus
+      x-operation-id-source: derived
   /api/v1/run/test-status-history:
     get:
       tags:
@@ -467,8 +460,22 @@ paths:
       responses:
         '200':
           description: Test status history in run
+      operationId: getApiV1RunTestStatusHistory
+      x-operation-id-source: derived
 components:
   schemas:
+    TestStatus:
+      type: string
+      enum:
+      - Passed
+      - Failed
+      - Blocked
+      - Untested
+      - Retest
+      - Archived
+      - Skipped
+      - InProgress
+      description: Test execution status
     Run:
       type: object
       properties:
@@ -494,18 +501,6 @@ components:
           - Active
           - Locked
           description: Run status
-    TestStatus:
-      type: string
-      enum:
-      - Passed
-      - Failed
-      - Blocked
-      - Untested
-      - Retest
-      - Archived
-      - Skipped
-      - InProgress
-      description: Test execution status
   securitySchemes:
     cookieAuth:
       type: apiKey

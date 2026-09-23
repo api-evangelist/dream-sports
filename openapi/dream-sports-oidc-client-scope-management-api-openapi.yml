@@ -28,9 +28,7 @@ paths:
 
         - Multiple scopes can be added in a single request
 
-        - The operation is atomic - either all valid scopes are added or none
-
-        '
+        - The operation is atomic - either all valid scopes are added or none'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: client_id
@@ -67,6 +65,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postV1AdminClientByClientIdScope
+      x-operation-id-source: derived
     get:
       tags:
       - OIDC Client Scope Management
@@ -80,9 +80,7 @@ paths:
 
         - Empty list if no scopes are assigned
 
-        - Scopes are returned in alphabetical order
-
-        '
+        - Scopes are returned in alphabetical order'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: client_id
@@ -111,6 +109,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: getV1AdminClientByClientIdScope
+      x-operation-id-source: derived
     delete:
       tags:
       - OIDC Client Scope Management
@@ -131,9 +131,7 @@ paths:
 
         - The scope must be currently assigned to the client
 
-        - If the scope is not assigned, the operation succeeds (idempotent)
-
-        '
+        - If the scope is not assigned, the operation succeeds (idempotent)'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: client_id
@@ -165,17 +163,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: deleteV1AdminClientByClientIdScope
+      x-operation-id-source: derived
 components:
   schemas:
-    ClientScopeResponse:
+    CreateClientScopeRequestBody:
       type: object
-      description: Response containing client scopes
+      description: Request body for adding scopes to a client
       required:
       - scopes
       properties:
         scopes:
           type: array
-          description: List of scope names associated with the client
+          description: List of scope names to add to the client
           items:
             type: string
           example:
@@ -201,15 +201,15 @@ components:
               type: string
               description: Human-readable error message
               example: Something went wrong.
-    CreateClientScopeRequestBody:
+    ClientScopeResponse:
       type: object
-      description: Request body for adding scopes to a client
+      description: Response containing client scopes
       required:
       - scopes
       properties:
         scopes:
           type: array
-          description: List of scope names to add to the client
+          description: List of scope names associated with the client
           items:
             type: string
           example:

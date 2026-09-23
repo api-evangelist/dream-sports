@@ -1,7 +1,24 @@
 openapi: 3.2.0
 info:
   title: Delivr OTA Server Releases API
-  description: "Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.) \ndirectly to end users' devices without going through app store review processes.\n\n## Features\n- Deploy over-the-air updates to React Native applications\n- Manage apps, deployments, and releases\n- Gradual rollouts and A/B testing\n- Rollback capabilities\n- Deployment metrics and analytics\n- Multi-platform support\n"
+  description: 'Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.)
+
+    directly to end users'' devices without going through app store review processes.
+
+
+    ## Features
+
+    - Deploy over-the-air updates to React Native applications
+
+    - Manage apps, deployments, and releases
+
+    - Gradual rollouts and A/B testing
+
+    - Rollback capabilities
+
+    - Deployment metrics and analytics
+
+    - Multi-platform support'
 tags:
 - name: Releases
 paths:
@@ -51,6 +68,8 @@ paths:
           description: Package too large
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: postAppsByAppNameDeploymentsByDeploymentNameRelease
+      x-operation-id-source: derived
     patch:
       tags:
       - Releases
@@ -79,6 +98,8 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      operationId: patchAppsByAppNameDeploymentsByDeploymentNameRelease
+      x-operation-id-source: derived
   /apps/{appName}/deployments/{deploymentName}/promote/{destDeploymentName}:
     post:
       tags:
@@ -120,6 +141,8 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      operationId: postAppsByAppNameDeploymentsByDeploymentNamePromoteByDestDeploymentName
+      x-operation-id-source: derived
   /apps/{appName}/deployments/{deploymentName}/rollback:
     post:
       tags:
@@ -153,6 +176,8 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      operationId: postAppsByAppNameDeploymentsByDeploymentNameRollback
+      x-operation-id-source: derived
   /apps/{appName}/deployments/{deploymentName}/history:
     get:
       tags:
@@ -175,6 +200,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Package'
+      operationId: getAppsByAppNameDeploymentsByDeploymentNameHistory
+      x-operation-id-source: derived
     delete:
       tags:
       - Releases
@@ -189,39 +216,32 @@ paths:
           description: History cleared
         '403':
           $ref: '#/components/responses/Forbidden'
+      operationId: deleteAppsByAppNameDeploymentsByDeploymentNameHistory
+      x-operation-id-source: derived
 components:
-  responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request - invalid parameters
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/components/schemas/Error'
-            - type: array
-              items:
-                type: object
-                properties:
-                  message:
-                    type: string
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    AppName:
+      name: appName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Application name (or 'owner:appName' for disambiguation)
+      example: MyApp-iOS
+    DeploymentName:
+      name: deploymentName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Deployment environment name
+      example: Production
+    TenantHeader:
+      name: tenant
+      in: header
+      schema:
+        type: string
+      description: Organization/tenant ID filter
   schemas:
     PackageInfo:
       type: object
@@ -301,29 +321,38 @@ components:
           type: string
         code:
           type: string
-  parameters:
-    AppName:
-      name: appName
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Application name (or 'owner:appName' for disambiguation)
-      example: MyApp-iOS
-    DeploymentName:
-      name: deploymentName
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Deployment environment name
-      example: Production
-    TenantHeader:
-      name: tenant
-      in: header
-      schema:
-        type: string
-      description: Organization/tenant ID filter
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/Error'
+            - type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     BearerAuth:
       type: http

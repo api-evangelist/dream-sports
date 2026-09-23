@@ -10,9 +10,7 @@ paths:
       tags:
       - Session Management
       summary: API to get a new access token using the refresh token
-      description: 'API to get a new access token using the refresh token.
-
-        '
+      description: API to get a new access token using the refresh token.
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       requestBody:
@@ -41,6 +39,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postV1RefreshToken
+      x-operation-id-source: derived
   /v1/logout:
     post:
       tags:
@@ -71,9 +71,7 @@ paths:
 
         - `refreshToken` (required): The refresh token to invalidate
 
-        - `isUniversalLogout` (optional): Whether to invalidate all user sessions (default: false)
-
-        '
+        - `isUniversalLogout` (optional): Whether to invalidate all user sessions (default: false)'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       requestBody:
@@ -120,14 +118,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postV1Logout
+      x-operation-id-source: derived
   /v2/refresh-token:
     post:
       tags:
       - Session Management
       summary: API to get a new access token using the refresh token
-      description: 'API to get a new access token using the refresh token. The refresh token can be provided in the request body or as a cookie.
-
-        '
+      description: API to get a new access token using the refresh token. The refresh token can be provided in the request body or as a cookie.
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       requestBody:
@@ -175,6 +173,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postV2RefreshToken
+      x-operation-id-source: derived
   /v2/logout:
     post:
       tags:
@@ -209,9 +209,7 @@ paths:
 
         - `logout_type` (optional): Type of logout - `token` (default), `client`, or `tenant`
 
-        - `client_id` (optional): Client ID for the logout operation
-
-        '
+        - `client_id` (optional): Client ID for the logout operation'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       requestBody:
@@ -259,6 +257,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postV2Logout
+      x-operation-id-source: derived
   /v2/user/refresh-tokens:
     get:
       tags:
@@ -287,9 +287,7 @@ paths:
 
         - `refresh_tokens`: List of active refresh tokens with device/location metadata
 
-        - `total_count`: Total number of active refresh tokens (across all pages)
-
-        '
+        - `total_count`: Total number of active refresh tokens (across all pages)'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: Authorization
@@ -355,15 +353,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: getV2UserRefreshTokens
+      x-operation-id-source: derived
 components:
   schemas:
-    V2RefreshTokenRequestBody:
+    V2LogoutRequestBody:
       type: object
       properties:
         refresh_token:
           type: string
-          description: Refresh token (can also be provided as cookie)
+          description: Refresh token to invalidate (can also be provided as cookie)
           example: refresh_token_xyz789
+        logout_type:
+          type: string
+          description: Type of logout
+          enum:
+          - token
+          - client
+          - tenant
+          default: token
+          example: token
         client_id:
           type: string
           description: Client identifier
@@ -412,21 +421,48 @@ components:
           type: integer
           description: Access token expiration time in seconds
           example: 3600
-    RefreshToken:
+    V2RefreshTokenRequestBody:
       type: object
       properties:
-        accessToken:
+        refresh_token:
           type: string
-          example: accesstoken
-          description: Short lived Bearer JWT token to access APIs.
-        tokenType:
+          description: Refresh token (can also be provided as cookie)
+          example: refresh_token_xyz789
+        client_id:
           type: string
-          example: Bearer
-          description: type of token. Only supports Bearer for now.
-        expiresIn:
-          type: integer
-          example: 3600
-          description: expiry of the access token in seconds
+          description: Client identifier
+          example: my-client-id
+    V1RefreshTokenRequestBody:
+      type: object
+      required:
+      - refreshToken
+      properties:
+        refreshToken:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
+    V1LogoutRequestBody:
+      type: object
+      required:
+      - refreshToken
+      properties:
+        refreshToken:
+          type: string
+        isUniversalLogout:
+          type: boolean
+          default: false
     UserRefreshTokensResponse:
       type: object
       description: Paginated list of user's active refresh tokens
@@ -458,57 +494,21 @@ components:
           source: web
           created_at: '2022-09-29 14:20:00'
         total_count: 2
-    V2LogoutRequestBody:
+    RefreshToken:
       type: object
       properties:
-        refresh_token:
+        accessToken:
           type: string
-          description: Refresh token to invalidate (can also be provided as cookie)
-          example: refresh_token_xyz789
-        logout_type:
+          example: accesstoken
+          description: Short lived Bearer JWT token to access APIs.
+        tokenType:
           type: string
-          description: Type of logout
-          enum:
-          - token
-          - client
-          - tenant
-          default: token
-          example: token
-        client_id:
-          type: string
-          description: Client identifier
-          example: my-client-id
-    V1RefreshTokenRequestBody:
-      type: object
-      required:
-      - refreshToken
-      properties:
-        refreshToken:
-          type: string
-    V1LogoutRequestBody:
-      type: object
-      required:
-      - refreshToken
-      properties:
-        refreshToken:
-          type: string
-        isUniversalLogout:
-          type: boolean
-          default: false
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code identifying the type of error
-              example: invalid_request
-            message:
-              type: string
-              description: Human-readable error message
-              example: Something went wrong.
+          example: Bearer
+          description: type of token. Only supports Bearer for now.
+        expiresIn:
+          type: integer
+          example: 3600
+          description: expiry of the access token in seconds
   parameters:
     TenantIdHeader:
       name: tenant-id

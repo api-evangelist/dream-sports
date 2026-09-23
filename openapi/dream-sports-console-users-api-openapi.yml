@@ -13,9 +13,7 @@ info:
 
     ## Timestamps
 
-    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).
-
-    '
+    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).'
   version: 1.0.0
   contact:
     name: Raven Team
@@ -52,9 +50,7 @@ paths:
 
         - email={email1}&email={email2}
 
-        Filter semantics when both id and email are provided: UNION.
-
-        '
+        Filter semantics when both id and email are provided: UNION.'
       parameters:
       - name: pageSize
         in: query
@@ -478,48 +474,11 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ConsoleUserIdApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: true
-        data:
-          $ref: '#/components/schemas/ConsoleUserIdData'
     ConsoleUserIdData:
       type: object
       properties:
         id:
           type: string
-    ConsoleUserUpdateRequest:
-      type: object
-      description: Profile fields only (no projectIds). Use admin update to change project IDs.
-      properties:
-        displayName:
-          type: string
-        photoUrl:
-          type: string
-        emailVerified:
-          type: boolean
-        disabled:
-          type: boolean
-    ConsoleUserListData:
-      type: object
-      properties:
-        records:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConsoleUserRecord'
-        pagination:
-          $ref: '#/components/schemas/ConsoleUserPagination'
-    ConsoleUserRecordApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: true
-        data:
-          $ref: '#/components/schemas/ConsoleUserRecord'
     ConsoleUserCreateRequest:
       type: object
       required:
@@ -536,14 +495,35 @@ components:
           type: boolean
         disabled:
           type: boolean
-    ConsoleUserListApiResponse:
+    ConsoleUserUpdateRequest:
+      type: object
+      description: Profile fields only (no projectIds). Use admin update to change project IDs.
+      properties:
+        displayName:
+          type: string
+        photoUrl:
+          type: string
+        emailVerified:
+          type: boolean
+        disabled:
+          type: boolean
+    ConsoleUserIdApiResponse:
       type: object
       properties:
         success:
           type: boolean
           example: true
         data:
-          $ref: '#/components/schemas/ConsoleUserListData'
+          $ref: '#/components/schemas/ConsoleUserIdData'
+    ConsoleUserListData:
+      type: object
+      properties:
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsoleUserRecord'
+        pagination:
+          $ref: '#/components/schemas/ConsoleUserPagination'
     ConsoleUserPagination:
       type: object
       properties:
@@ -571,6 +551,22 @@ components:
               type: string
             code:
               type: string
+    ConsoleUserListApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/ConsoleUserListData'
+    ConsoleUserRecordApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/ConsoleUserRecord'
     ConsoleUserRecord:
       type: object
       properties:

@@ -1,7 +1,24 @@
 openapi: 3.2.0
 info:
   title: Delivr OTA Server Collaborators API
-  description: "Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.) \ndirectly to end users' devices without going through app store review processes.\n\n## Features\n- Deploy over-the-air updates to React Native applications\n- Manage apps, deployments, and releases\n- Gradual rollouts and A/B testing\n- Rollback capabilities\n- Deployment metrics and analytics\n- Multi-platform support\n"
+  description: 'Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.)
+
+    directly to end users'' devices without going through app store review processes.
+
+
+    ## Features
+
+    - Deploy over-the-air updates to React Native applications
+
+    - Manage apps, deployments, and releases
+
+    - Gradual rollouts and A/B testing
+
+    - Rollback capabilities
+
+    - Deployment metrics and analytics
+
+    - Multi-platform support'
 tags:
 - name: Collaborators
 paths:
@@ -24,6 +41,8 @@ paths:
                 properties:
                   collaborators:
                     $ref: '#/components/schemas/CollaboratorMap'
+      operationId: getAppsByAppNameCollaborators
+      x-operation-id-source: derived
   /apps/{appName}/collaborators/{email}:
     post:
       tags:
@@ -48,6 +67,8 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      operationId: postAppsByAppNameCollaboratorsByEmail
+      x-operation-id-source: derived
     patch:
       tags:
       - Collaborators
@@ -81,6 +102,8 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      operationId: patchAppsByAppNameCollaboratorsByEmail
+      x-operation-id-source: derived
     delete:
       tags:
       - Collaborators
@@ -104,60 +127,9 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      operationId: deleteAppsByAppNameCollaboratorsByEmail
+      x-operation-id-source: derived
 components:
-  schemas:
-    CollaboratorMap:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/CollaboratorProperties'
-      example:
-        user@example.com:
-          permission: Owner
-          isCurrentAccount: true
-    CollaboratorProperties:
-      type: object
-      properties:
-        permission:
-          type: string
-          enum:
-          - Owner
-          - Collaborator
-        isCurrentAccount:
-          type: boolean
-          description: Whether this is the authenticated user
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
-  responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request - invalid parameters
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/components/schemas/Error'
-            - type: array
-              items:
-                type: object
-                properties:
-                  message:
-                    type: string
   parameters:
     AppName:
       name: appName
@@ -173,6 +145,59 @@ components:
       schema:
         type: string
       description: Organization/tenant ID filter
+  schemas:
+    CollaboratorProperties:
+      type: object
+      properties:
+        permission:
+          type: string
+          enum:
+          - Owner
+          - Collaborator
+        isCurrentAccount:
+          type: boolean
+          description: Whether this is the authenticated user
+    CollaboratorMap:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/CollaboratorProperties'
+      example:
+        user@example.com:
+          permission: Owner
+          isCurrentAccount: true
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/Error'
+            - type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     BearerAuth:
       type: http

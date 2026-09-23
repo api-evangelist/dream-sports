@@ -10,7 +10,18 @@ paths:
       tags:
       - OIDC Scope Management
       summary: List scopes
-      description: "Retrieve a paginated list of scopes for a tenant. \nOptionally filter by scope name using partial matching.\n\n**Query Parameters:**\n- `name`: Filter scopes by name (case-insensitive partial match)\n- `page`: Page number for pagination (starts from 1)\n- `page_size`: Number of items per page (1-100, default: 10)\n"
+      description: 'Retrieve a paginated list of scopes for a tenant.
+
+        Optionally filter by scope name using partial matching.
+
+
+        **Query Parameters:**
+
+        - `name`: Filter scopes by name (case-insensitive partial match)
+
+        - `page`: Page number for pagination (starts from 1)
+
+        - `page_size`: Number of items per page (1-100, default: 10)'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: name
@@ -92,11 +103,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: getScopes
+      x-operation-id-source: derived
     post:
       tags:
       - OIDC Scope Management
       summary: Create a new scope
-      description: "Create a new scope for a tenant. Scopes define permissions and claims \nthat can be granted to users and applications.\n\n**Predefined OIDC Scope Validation:**\n- `openid`: Must contain only the 'sub' claim\n- `phone`: Must contain 'phone_number' and/or 'phone_number_verified' claims (maximum 2 claims)\n- `email`: Must contain 'email' and/or 'email_verified' claims (maximum 2 claims)\n- `address`: Must contain only the 'address' claim\n\nCustom scopes can have any combination of claims.\n"
+      description: 'Create a new scope for a tenant. Scopes define permissions and claims
+
+        that can be granted to users and applications.
+
+
+        **Predefined OIDC Scope Validation:**
+
+        - `openid`: Must contain only the ''sub'' claim
+
+        - `phone`: Must contain ''phone_number'' and/or ''phone_number_verified'' claims (maximum 2 claims)
+
+        - `email`: Must contain ''email'' and/or ''email_verified'' claims (maximum 2 claims)
+
+        - `address`: Must contain only the ''address'' claim
+
+
+        Custom scopes can have any combination of claims.'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       requestBody:
@@ -236,6 +265,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postScopes
+      x-operation-id-source: derived
   /scopes/{name}:
     put:
       tags:
@@ -257,9 +288,7 @@ paths:
         - `address`: Must contain only the ''address'' claim
 
 
-        **Note:** The scope name cannot be changed. To rename a scope, delete the old one and create a new one.
-
-        '
+        **Note:** The scope name cannot be changed. To rename a scope, delete the old one and create a new one.'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: name
@@ -407,11 +436,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: putScopesByName
+      x-operation-id-source: derived
     delete:
       tags:
       - OIDC Scope Management
       summary: Delete a scope
-      description: "Delete a specific scope by name. This operation is irreversible and will \nremove all associations with this scope.\n\n**Important:** Deleting a scope that is currently in use by applications \nor users may cause authentication and authorization issues.\n"
+      description: 'Delete a specific scope by name. This operation is irreversible and will
+
+        remove all associations with this scope.
+
+
+        **Important:** Deleting a scope that is currently in use by applications
+
+        or users may cause authentication and authorization issues.'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: name
@@ -443,8 +481,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: deleteScopesByName
+      x-operation-id-source: derived
 components:
   schemas:
+    UpdateScopeRequest:
+      type: object
+      description: 'Request payload for updating an existing scope. All fields are optional for partial updates.
+
+        The scope name cannot be changed through this endpoint.
+
+        '
+      properties:
+        display_name:
+          type: string
+          description: Human-readable display name
+          example: Updated Profile Reader
+          maxLength: 100
+        description:
+          type: string
+          description: Detailed description of the scope
+          example: Updated description for profile reading permissions
+          maxLength: 500
+        claims:
+          type: array
+          description: "List of claims associated with this scope. For predefined OIDC scopes, \nspecific claims are required and validated:\n- openid: ['sub'] (exactly 1 claim)\n- phone: ['phone_number', 'phone_number_verified'] (exactly 2 claims)\n- email: ['email', 'email_verified'] (exactly 2 claims)\n- address: ['address'] (exactly 1 claim)\n\nCustom scopes can have any combination of claims.\n"
+          items:
+            type: string
+            example: name
+          example:
+          - name
+          - email
+          - profile
+          - picture
+        icon_url:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL to the scope's icon
+          example: https://example.com/icons/updated-profile.png
+        is_oidc:
+          type: boolean
+          description: Whether this is an OpenID Connect standard scope
+          example: false
     ScopeResponse:
       type: object
       description: Scope information
@@ -525,46 +605,6 @@ components:
           type: boolean
           description: Whether this is an OpenID Connect standard scope
           example: true
-    UpdateScopeRequest:
-      type: object
-      description: 'Request payload for updating an existing scope. All fields are optional for partial updates.
-
-        The scope name cannot be changed through this endpoint.
-
-        '
-      properties:
-        display_name:
-          type: string
-          description: Human-readable display name
-          example: Updated Profile Reader
-          maxLength: 100
-        description:
-          type: string
-          description: Detailed description of the scope
-          example: Updated description for profile reading permissions
-          maxLength: 500
-        claims:
-          type: array
-          description: "List of claims associated with this scope. For predefined OIDC scopes, \nspecific claims are required and validated:\n- openid: ['sub'] (exactly 1 claim)\n- phone: ['phone_number', 'phone_number_verified'] (exactly 2 claims)\n- email: ['email', 'email_verified'] (exactly 2 claims)\n- address: ['address'] (exactly 1 claim)\n\nCustom scopes can have any combination of claims.\n"
-          items:
-            type: string
-            example: name
-          example:
-          - name
-          - email
-          - profile
-          - picture
-        icon_url:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: URL to the scope's icon
-          example: https://example.com/icons/updated-profile.png
-        is_oidc:
-          type: boolean
-          description: Whether this is an OpenID Connect standard scope
-          example: false
     ErrorResponse:
       type: object
       properties:

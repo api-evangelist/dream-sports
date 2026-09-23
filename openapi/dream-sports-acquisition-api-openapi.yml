@@ -1,7 +1,24 @@
 openapi: 3.2.0
 info:
   title: Delivr OTA Server Acquisition API
-  description: "Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.) \ndirectly to end users' devices without going through app store review processes.\n\n## Features\n- Deploy over-the-air updates to React Native applications\n- Manage apps, deployments, and releases\n- Gradual rollouts and A/B testing\n- Rollback capabilities\n- Deployment metrics and analytics\n- Multi-platform support\n"
+  description: 'Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.)
+
+    directly to end users'' devices without going through app store review processes.
+
+
+    ## Features
+
+    - Deploy over-the-air updates to React Native applications
+
+    - Manage apps, deployments, and releases
+
+    - Gradual rollouts and A/B testing
+
+    - Rollback capabilities
+
+    - Deployment metrics and analytics
+
+    - Multi-platform support'
 tags:
 - name: Acquisition
 paths:
@@ -12,9 +29,7 @@ paths:
       summary: Check for updates
       description: 'Client SDK endpoint to check for available updates.
 
-        This endpoint does not require authentication - it uses deployment keys.
-
-        '
+        This endpoint does not require authentication - it uses deployment keys.'
       security: []
       parameters:
       - name: deploymentKey
@@ -62,6 +77,8 @@ paths:
                     $ref: '#/components/schemas/UpdateCheckResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      operationId: getUpdateCheck
+      x-operation-id-source: derived
   /v0.1/public/codepush/update_check:
     get:
       tags:
@@ -106,6 +123,8 @@ paths:
                 properties:
                   update_info:
                     $ref: '#/components/schemas/UpdateCheckResponse'
+      operationId: getV01PublicCodepushUpdateCheck
+      x-operation-id-source: derived
   /reportStatus/deploy:
     post:
       tags:
@@ -113,9 +132,7 @@ paths:
       summary: Report deployment status
       description: 'Client SDK reports installation success/failure for metrics tracking.
 
-        This endpoint does not require authentication.
-
-        '
+        This endpoint does not require authentication.'
       security: []
       requestBody:
         required: true
@@ -128,6 +145,8 @@ paths:
           description: Status recorded
         '400':
           $ref: '#/components/responses/BadRequest'
+      operationId: postReportStatusDeploy
+      x-operation-id-source: derived
   /v0.1/public/codepush/report_status/deploy:
     post:
       tags:
@@ -144,6 +163,8 @@ paths:
       responses:
         '200':
           description: Status recorded
+      operationId: postV01PublicCodepushReportStatusDeploy
+      x-operation-id-source: derived
   /reportStatus/download:
     post:
       tags:
@@ -151,9 +172,7 @@ paths:
       summary: Report download
       description: 'Client SDK reports package download for metrics tracking.
 
-        This endpoint does not require authentication.
-
-        '
+        This endpoint does not require authentication.'
       security: []
       requestBody:
         required: true
@@ -166,6 +185,8 @@ paths:
           description: Download recorded
         '400':
           $ref: '#/components/responses/BadRequest'
+      operationId: postReportStatusDownload
+      x-operation-id-source: derived
   /v0.1/public/codepush/report_status/download:
     post:
       tags:
@@ -182,6 +203,8 @@ paths:
       responses:
         '200':
           description: Download recorded
+      operationId: postV01PublicCodepushReportStatusDownload
+      x-operation-id-source: derived
 components:
   schemas:
     PackageInfo:
@@ -237,28 +260,6 @@ components:
           target_binary_range:
             type: string
             description: Target binary version range
-    DownloadReport:
-      type: object
-      required:
-      - deploymentKey
-      - label
-      properties:
-        deploymentKey:
-          type: string
-          description: Deployment key (can use snake_case deployment_key)
-        label:
-          type: string
-          description: Release label
-        clientUniqueId:
-          type: string
-          description: Unique device identifier (can use snake_case client_unique_id)
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
     DeploymentStatusReport:
       type: object
       required:
@@ -288,6 +289,28 @@ components:
         previousLabelOrAppVersion:
           type: string
           description: Previous label or version (can use snake_case previous_label_or_app_version)
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    DownloadReport:
+      type: object
+      required:
+      - deploymentKey
+      - label
+      properties:
+        deploymentKey:
+          type: string
+          description: Deployment key (can use snake_case deployment_key)
+        label:
+          type: string
+          description: Release label
+        clientUniqueId:
+          type: string
+          description: Unique device identifier (can use snake_case client_unique_id)
   responses:
     BadRequest:
       description: Bad request - invalid parameters

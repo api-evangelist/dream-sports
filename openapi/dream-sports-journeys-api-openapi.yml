@@ -13,9 +13,7 @@ info:
 
     ## Timestamps
 
-    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).
-
-    '
+    All timestamps are in milliseconds since Unix epoch. Use future timestamps (e.g., 2082758400000 = Jan 1, 2036).'
   version: 1.0.0
   contact:
     name: Raven Team
@@ -116,9 +114,7 @@ paths:
 
         - `stateMachineTTL` must be a future timestamp
 
-        - Use `cohortEligibility: { includes: ["all"], excludes: [] }`
-
-        '
+        - Use `cohortEligibility: { includes: ["all"], excludes: [] }`'
       operationId: createJourney
       parameters:
       - $ref: '#/components/parameters/UserId'
@@ -304,18 +300,15 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ApiResponse:
+    JourneyRequest:
       type: object
+      required:
+      - name
+      - team
+      - rule
       properties:
-        success:
-          type: boolean
-        data:
-          type: object
-        statusCode:
-          type: integer
-    JourneyUpdateRequest:
-      type: object
-      properties:
+        name:
+          type: string
         tags:
           type: array
           items:
@@ -327,9 +320,11 @@ components:
         startTime:
           type: integer
           format: int64
+          description: Future epoch timestamp in milliseconds
         endTime:
           type: integer
           format: int64
+          description: Future epoch timestamp in milliseconds
         rule:
           $ref: '#/components/schemas/RuleRequest'
     RuleRequest:
@@ -397,15 +392,18 @@ components:
                   type: string
                 value:
                   type: integer
-    JourneyRequest:
+    ApiResponse:
       type: object
-      required:
-      - name
-      - team
-      - rule
       properties:
-        name:
-          type: string
+        success:
+          type: boolean
+        data:
+          type: object
+        statusCode:
+          type: integer
+    JourneyUpdateRequest:
+      type: object
+      properties:
         tags:
           type: array
           items:
@@ -417,11 +415,9 @@ components:
         startTime:
           type: integer
           format: int64
-          description: Future epoch timestamp in milliseconds
         endTime:
           type: integer
           format: int64
-          description: Future epoch timestamp in milliseconds
         rule:
           $ref: '#/components/schemas/RuleRequest'
     ErrorResponse:

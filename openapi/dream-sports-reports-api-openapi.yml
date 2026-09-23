@@ -1,38 +1,7 @@
 openapi: 3.2.0
 info:
   title: Checkmate Test Management Reports API
-  description: 'Comprehensive API documentation for Checkmate - a modern test case management system built with Remix, MySQL, and Drizzle ORM.
-
-
-    ## Features
-
-    - Project and Test Management
-
-    - Test Run Execution
-
-    - Role-Based Access Control (RBAC)
-
-    - Google OAuth Authentication
-
-    - Test Status Tracking and History
-
-
-    ## Authentication
-
-    All endpoints require authentication via session cookies. Users must be logged in through Google OAuth.
-
-
-    ## Authorization
-
-    Access to resources is controlled via Casbin RBAC with three role levels:
-
-    - **Admin**: Full access to all resources
-
-    - **User**: Can create, read, update resources
-
-    - **Reader**: Read-only access
-
-    '
+  description: Comprehensive API documentation for Checkmate - a modern test case management system built with Remix, MySQL, and Drizzle ORM.
   version: 1.0.0
   contact:
     name: Checkmate API Support
@@ -71,6 +40,8 @@ paths:
               schema:
                 type: string
                 format: binary
+      operationId: getApiV1RunReportDownload
+      x-operation-id-source: derived
   /api/v1/tests/download:
     get:
       tags:
@@ -91,6 +62,8 @@ paths:
               schema:
                 type: string
                 format: binary
+      operationId: getApiV1TestsDownload
+      x-operation-id-source: derived
 components:
   securitySchemes:
     cookieAuth:

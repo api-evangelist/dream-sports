@@ -1,7 +1,24 @@
 openapi: 3.2.0
 info:
   title: Delivr OTA Server Sessions API
-  description: "Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.) \ndirectly to end users' devices without going through app store review processes.\n\n## Features\n- Deploy over-the-air updates to React Native applications\n- Manage apps, deployments, and releases\n- Gradual rollouts and A/B testing\n- Rollback capabilities\n- Deployment metrics and analytics\n- Multi-platform support\n"
+  description: 'Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.)
+
+    directly to end users'' devices without going through app store review processes.
+
+
+    ## Features
+
+    - Deploy over-the-air updates to React Native applications
+
+    - Manage apps, deployments, and releases
+
+    - Gradual rollouts and A/B testing
+
+    - Rollback capabilities
+
+    - Deployment metrics and analytics
+
+    - Multi-platform support'
 tags:
 - name: Sessions
 paths:
@@ -23,7 +40,16 @@ paths:
           description: Sessions deleted
         '404':
           $ref: '#/components/responses/NotFound'
+      operationId: deleteSessionsByCreatedBy
+      x-operation-id-source: derived
 components:
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -32,13 +58,6 @@ components:
           type: string
         code:
           type: string
-  responses:
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     BearerAuth:
       type: http

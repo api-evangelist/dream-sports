@@ -354,249 +354,6 @@ paths:
           description: Invalid request data or missing required headers
 components:
   schemas:
-    LifespanFrequency:
-      type: object
-      required:
-      - limit
-      properties:
-        limit:
-          type: integer
-          format: int32
-    SessionFrequency:
-      type: object
-      required:
-      - limit
-      properties:
-        limit:
-          type: integer
-          format: int32
-    CTARelationSnapshot:
-      type: object
-      properties:
-        shownCta:
-          $ref: '#/components/schemas/CtaRelationRule'
-        hideCta:
-          $ref: '#/components/schemas/CtaRelationRule'
-        activeCtas:
-          type: array
-          items:
-            type: string
-    CtaRelationRule:
-      type: object
-      properties:
-        rule:
-          $ref: '#/components/schemas/CtaRelationRuleTypes'
-        ctaList:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-    WindowFrequency:
-      type: object
-      required:
-      - limit
-      - unit
-      - value
-      properties:
-        limit:
-          type: integer
-          format: int32
-        unit:
-          $ref: '#/components/schemas/WindowFrequencyUnit'
-        value:
-          type: integer
-          format: int32
-    Frequency:
-      type: object
-      properties:
-        session:
-          $ref: '#/components/schemas/SessionFrequency'
-        window:
-          $ref: '#/components/schemas/WindowFrequency'
-        lifeSpan:
-          $ref: '#/components/schemas/LifespanFrequency'
-    BehaviourExposureRule:
-      type: object
-      properties:
-        session:
-          $ref: '#/components/schemas/SessionFrequency'
-        lifespan:
-          $ref: '#/components/schemas/LifespanFrequency'
-        window:
-          $ref: '#/components/schemas/WindowFrequency'
-        ctasResetAt:
-          type: array
-          items:
-            $ref: '#/components/schemas/CTAReset'
-    RuleResponse:
-      type: object
-      required:
-      - stateToAction
-      - stateTransition
-      - priority
-      - actions
-      - frequency
-      properties:
-        stateToAction:
-          type: object
-          additionalProperties:
-            type: string
-          minProperties: 1
-        resetStates:
-          type: array
-          items:
-            type: string
-        resetCTAonFirstLaunch:
-          type: boolean
-        contextParams:
-          type: array
-          items:
-            type: string
-        stateTransition:
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties:
-              type: array
-              items:
-                $ref: '#/components/schemas/StateTransitionCondition'
-        groupByConfig:
-          $ref: '#/components/schemas/GroupByConfig'
-        priority:
-          type: integer
-          format: int32
-        stateMachineTTL:
-          type: integer
-          format: int64
-        ctaValidTill:
-          type: integer
-          format: int64
-        actions:
-          type: array
-          items:
-            type: object
-            additionalProperties: {}
-        frequency:
-          $ref: '#/components/schemas/Frequency'
-    GroupByConfig:
-      type: object
-      properties:
-        maxActiveStateMachineCount:
-          type: integer
-          format: int32
-        groupByKeys:
-          type: array
-          items:
-            type: string
-    StateMachineSnapshot:
-      type: object
-      properties:
-        ctaId:
-          type: string
-        activeStateMachines:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/StateMachine'
-        resetAt:
-          type: array
-          items:
-            type: integer
-            format: int64
-        actionDoneAt:
-          type: array
-          items:
-            type: integer
-            format: int64
-    StateMachine:
-      type: object
-      required:
-      - currentState
-      - lastTransitionAt
-      - createdAt
-      properties:
-        currentState:
-          type: string
-        lastTransitionAt:
-          type: integer
-          format: int64
-        context:
-          type: object
-          additionalProperties: {}
-        createdAt:
-          type: integer
-          format: int64
-        reset:
-          type: boolean
-    Filters:
-      type: object
-      required:
-      - operator
-      - filter
-      properties:
-        operator:
-          type: string
-        filter:
-          type: array
-          items: {}
-    CTAResponse:
-      type: object
-      properties:
-        ctas:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserCTAAndStateMachineResponse'
-        behaviourTags:
-          type: array
-          items:
-            $ref: '#/components/schemas/BehaviourTagSnapshot'
-    UserCTAAndStateMachineResponse:
-      type: object
-      properties:
-        ctaId:
-          type: string
-        rule:
-          $ref: '#/components/schemas/RuleResponse'
-        activeStateMachines:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/StateMachine'
-        resetAt:
-          type: array
-          items:
-            type: integer
-            format: int64
-        actionDoneAt:
-          type: array
-          items:
-            type: integer
-            format: int64
-        behaviourTagName:
-          type: string
-    StateTransitionCondition:
-      type: object
-      required:
-      - transitionTo
-      - filters
-      properties:
-        transitionTo:
-          type: string
-        filters:
-          $ref: '#/components/schemas/Filters'
-    BehaviourTagSnapshot:
-      type: object
-      properties:
-        behaviourTagName:
-          type: string
-        exposureRule:
-          $ref: '#/components/schemas/BehaviourExposureRule'
-        ctaRelation:
-          $ref: '#/components/schemas/CTARelationSnapshot'
-    CtaRelationRuleTypes:
-      type: string
-      enum:
-      - ANY
-      - LIST
-      - REST
     NudgePreview:
       type: object
       properties:
@@ -648,13 +405,240 @@ components:
               ctaRelation:
                 activeCtas:
                 - 1
-    WindowFrequencyUnit:
+    StateMachineSnapshot:
+      type: object
+      properties:
+        ctaId:
+          type: string
+        activeStateMachines:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/StateMachine'
+        resetAt:
+          type: array
+          items:
+            type: integer
+            format: int64
+        actionDoneAt:
+          type: array
+          items:
+            type: integer
+            format: int64
+    BehaviourExposureRule:
+      type: object
+      properties:
+        session:
+          $ref: '#/components/schemas/SessionFrequency'
+        lifespan:
+          $ref: '#/components/schemas/LifespanFrequency'
+        window:
+          $ref: '#/components/schemas/WindowFrequency'
+        ctasResetAt:
+          type: array
+          items:
+            $ref: '#/components/schemas/CTAReset'
+    CTAResponse:
+      type: object
+      properties:
+        ctas:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserCTAAndStateMachineResponse'
+        behaviourTags:
+          type: array
+          items:
+            $ref: '#/components/schemas/BehaviourTagSnapshot'
+    CtaRelationRuleTypes:
       type: string
       enum:
-      - days
-      - hours
-      - minutes
-      - seconds
+      - ANY
+      - LIST
+      - REST
+    CTARelationSnapshot:
+      type: object
+      properties:
+        shownCta:
+          $ref: '#/components/schemas/CtaRelationRule'
+        hideCta:
+          $ref: '#/components/schemas/CtaRelationRule'
+        activeCtas:
+          type: array
+          items:
+            type: string
+    UserCTAAndStateMachineResponse:
+      type: object
+      properties:
+        ctaId:
+          type: string
+        rule:
+          $ref: '#/components/schemas/RuleResponse'
+        activeStateMachines:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/StateMachine'
+        resetAt:
+          type: array
+          items:
+            type: integer
+            format: int64
+        actionDoneAt:
+          type: array
+          items:
+            type: integer
+            format: int64
+        behaviourTagName:
+          type: string
+    WindowFrequency:
+      type: object
+      required:
+      - limit
+      - unit
+      - value
+      properties:
+        limit:
+          type: integer
+          format: int32
+        unit:
+          $ref: '#/components/schemas/WindowFrequencyUnit'
+        value:
+          type: integer
+          format: int32
+    StateTransitionCondition:
+      type: object
+      required:
+      - transitionTo
+      - filters
+      properties:
+        transitionTo:
+          type: string
+        filters:
+          $ref: '#/components/schemas/Filters'
+    RuleResponse:
+      type: object
+      required:
+      - stateToAction
+      - stateTransition
+      - priority
+      - actions
+      - frequency
+      properties:
+        stateToAction:
+          type: object
+          additionalProperties:
+            type: string
+          minProperties: 1
+        resetStates:
+          type: array
+          items:
+            type: string
+        resetCTAonFirstLaunch:
+          type: boolean
+        contextParams:
+          type: array
+          items:
+            type: string
+        stateTransition:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                $ref: '#/components/schemas/StateTransitionCondition'
+        groupByConfig:
+          $ref: '#/components/schemas/GroupByConfig'
+        priority:
+          type: integer
+          format: int32
+        stateMachineTTL:
+          type: integer
+          format: int64
+        ctaValidTill:
+          type: integer
+          format: int64
+        actions:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+        frequency:
+          $ref: '#/components/schemas/Frequency'
+    BehaviourTagSnapshot:
+      type: object
+      properties:
+        behaviourTagName:
+          type: string
+        exposureRule:
+          $ref: '#/components/schemas/BehaviourExposureRule'
+        ctaRelation:
+          $ref: '#/components/schemas/CTARelationSnapshot'
+    StateMachine:
+      type: object
+      required:
+      - currentState
+      - lastTransitionAt
+      - createdAt
+      properties:
+        currentState:
+          type: string
+        lastTransitionAt:
+          type: integer
+          format: int64
+        context:
+          type: object
+          additionalProperties: {}
+        createdAt:
+          type: integer
+          format: int64
+        reset:
+          type: boolean
+    LifespanFrequency:
+      type: object
+      required:
+      - limit
+      properties:
+        limit:
+          type: integer
+          format: int32
+    SessionFrequency:
+      type: object
+      required:
+      - limit
+      properties:
+        limit:
+          type: integer
+          format: int32
+    Filters:
+      type: object
+      required:
+      - operator
+      - filter
+      properties:
+        operator:
+          type: string
+        filter:
+          type: array
+          items: {}
+    GroupByConfig:
+      type: object
+      properties:
+        maxActiveStateMachineCount:
+          type: integer
+          format: int32
+        groupByKeys:
+          type: array
+          items:
+            type: string
+    CtaRelationRule:
+      type: object
+      properties:
+        rule:
+          $ref: '#/components/schemas/CtaRelationRuleTypes'
+        ctaList:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
     CTAReset:
       type: object
       properties:
@@ -663,3 +647,19 @@ components:
         resetAt:
           type: integer
           format: int64
+    WindowFrequencyUnit:
+      type: string
+      enum:
+      - days
+      - hours
+      - minutes
+      - seconds
+    Frequency:
+      type: object
+      properties:
+        session:
+          $ref: '#/components/schemas/SessionFrequency'
+        window:
+          $ref: '#/components/schemas/WindowFrequency'
+        lifeSpan:
+          $ref: '#/components/schemas/LifespanFrequency'

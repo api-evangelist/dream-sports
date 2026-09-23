@@ -1,7 +1,24 @@
 openapi: 3.2.0
 info:
   title: Delivr OTA Server Authentication API
-  description: "Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.) \ndirectly to end users' devices without going through app store review processes.\n\n## Features\n- Deploy over-the-air updates to React Native applications\n- Manage apps, deployments, and releases\n- Gradual rollouts and A/B testing\n- Rollback capabilities\n- Deployment metrics and analytics\n- Multi-platform support\n"
+  description: 'Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.)
+
+    directly to end users'' devices without going through app store review processes.
+
+
+    ## Features
+
+    - Deploy over-the-air updates to React Native applications
+
+    - Manage apps, deployments, and releases
+
+    - Gradual rollouts and A/B testing
+
+    - Rollback capabilities
+
+    - Deployment metrics and analytics
+
+    - Multi-platform support'
 tags:
 - name: Authentication
 paths:
@@ -25,6 +42,8 @@ paths:
             text/html:
               schema:
                 type: string
+      operationId: getAuthLogin
+      x-operation-id-source: derived
   /auth/register:
     get:
       tags:
@@ -45,6 +64,8 @@ paths:
             text/html:
               schema:
                 type: string
+      operationId: getAuthRegister
+      x-operation-id-source: derived
   /auth/link:
     get:
       tags:
@@ -66,6 +87,8 @@ paths:
             text/html:
               schema:
                 type: string
+      operationId: getAuthLink
+      x-operation-id-source: derived
   /auth/login/{provider}:
     get:
       tags:
@@ -80,6 +103,8 @@ paths:
           description: Redirect to OAuth provider
         '429':
           $ref: '#/components/responses/TooManyRequests'
+      operationId: getAuthLoginByProvider
+      x-operation-id-source: derived
   /auth/register/{provider}:
     get:
       tags:
@@ -96,6 +121,8 @@ paths:
           description: Registration is disabled
         '429':
           $ref: '#/components/responses/TooManyRequests'
+      operationId: getAuthRegisterByProvider
+      x-operation-id-source: derived
   /auth/link/{provider}:
     get:
       tags:
@@ -110,6 +137,8 @@ paths:
           description: Redirect to OAuth provider
         '429':
           $ref: '#/components/responses/TooManyRequests'
+      operationId: getAuthLinkByProvider
+      x-operation-id-source: derived
   /auth/callback/{provider}:
     get:
       tags:
@@ -131,15 +160,9 @@ paths:
             text/html:
               schema:
                 type: string
+      operationId: getAuthCallbackByProvider
+      x-operation-id-source: derived
 components:
-  schemas:
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
   responses:
     TooManyRequests:
       description: Too many requests - rate limit exceeded
@@ -160,6 +183,14 @@ components:
         - azure-ad
         - google
       description: OAuth provider name
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
   securitySchemes:
     BearerAuth:
       type: http

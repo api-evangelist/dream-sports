@@ -37,9 +37,7 @@ paths:
 
         - Includes the actual time range used for the query
 
-        - Includes the access token expiry duration for reference
-
-        '
+        - Includes the access token expiry duration for reference'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: from
@@ -83,15 +81,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: getV1Revocations
+      x-operation-id-source: derived
 components:
-  parameters:
-    TenantIdHeader:
-      name: tenant-id
-      in: header
-      description: tenant-id of the client integrating with guardian
-      required: true
-      schema:
-        type: string
   schemas:
     ErrorResponse:
       type: object
@@ -147,3 +139,11 @@ components:
         from: 1640995200
         to: 1641081600
         expiry: 3600
+  parameters:
+    TenantIdHeader:
+      name: tenant-id
+      in: header
+      description: tenant-id of the client integrating with guardian
+      required: true
+      schema:
+        type: string

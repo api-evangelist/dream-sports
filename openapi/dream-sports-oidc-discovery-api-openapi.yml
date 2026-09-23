@@ -20,9 +20,7 @@ paths:
 
         The configuration follows the OpenID Connect Discovery 1.0 specification
 
-        (https://openid.net/specs/openid-connect-discovery-1_0.html).
-
-        '
+        (https://openid.net/specs/openid-connect-discovery-1_0.html).'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       responses:
@@ -74,6 +72,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: getWellKnownOpenidConfiguration
+      x-operation-id-source: derived
 components:
   schemas:
     OIDCDiscoveryResponse:

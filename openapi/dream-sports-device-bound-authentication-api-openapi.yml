@@ -43,9 +43,7 @@ paths:
 
         - **Expiry**: State expires with the challenge (5 minutes)
 
-        - **Required**: State must be provided in complete requests
-
-        '
+        - **Required**: State must be provided in complete requests'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       requestBody:
@@ -104,6 +102,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postV2BiometricChallenge
+      x-operation-id-source: derived
   /v2/biometric/complete:
     post:
       tags:
@@ -146,9 +146,7 @@ paths:
 
         - State must be valid and not expired
 
-        - State can only be used once
-
-        '
+        - State can only be used once'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       requestBody:
@@ -279,37 +277,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postV2BiometricComplete
+      x-operation-id-source: derived
 components:
   schemas:
-    DeviceMetadata:
+    TokenResponse:
       type: object
-      required:
-      - device_id
       properties:
-        platform:
+        accessToken:
           type: string
-          description: Device platform (e.g., iOS, Android)
-          example: iOS
-        device_id:
+          example: accesstoken
+          description: Short lived Bearer JWT token to access APIs.
+        refreshToken:
           type: string
-          description: Unique identifier for the device
-          example: device-abc123xyz
-        device_model:
+          example: refreshToken
+          description: Long Lived token used to refresh access token.
+        idToken:
           type: string
-          description: Device model name
-          example: iPhone 14 Pro
-        os_version:
+          example: idToken
+          description: OpenID Connect ID token
+        tokenType:
           type: string
-          description: Operating system version
-          example: iOS 17.0
-        app_version:
-          type: string
-          description: Application version
-          example: 1.2.3
-        device_name:
-          type: string
-          description: User-friendly device name
-          example: John's iPhone
+          example: Bearer
+          description: type of token. Only supports Bearer for now.
+        expiresIn:
+          type: integer
+          example: 3600
+          description: expiry of the access token in seconds
+        isNewUser:
+          type: boolean
+          description: Indicates if the user is new
+          example: false
     BiometricLoginErrorResponse:
       type: object
       properties:
@@ -346,24 +344,6 @@ components:
           type: integer
           description: Challenge expiry time in seconds (default 300 = 5 minutes)
           example: 300
-    BiometricChallengeRequest:
-      type: object
-      required:
-      - refresh_token
-      - client_id
-      - device_metadata
-      properties:
-        refresh_token:
-          type: string
-          description: Refresh token for authentication context
-          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-        client_id:
-          type: string
-          description: Client application identifier
-          example: mobile-app
-        device_metadata:
-          $ref: '#/components/schemas/DeviceMetadata'
-          description: Device metadata including device_id (required)
     BiometricCompleteRequest:
       type: object
       required:
@@ -403,6 +383,24 @@ components:
         device_metadata:
           $ref: '#/components/schemas/DeviceMetadata'
           description: Device metadata including device_id, platform, and other device information (required)
+    BiometricChallengeRequest:
+      type: object
+      required:
+      - refresh_token
+      - client_id
+      - device_metadata
+      properties:
+        refresh_token:
+          type: string
+          description: Refresh token for authentication context
+          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        client_id:
+          type: string
+          description: Client application identifier
+          example: mobile-app
+        device_metadata:
+          $ref: '#/components/schemas/DeviceMetadata'
+          description: Device metadata including device_id (required)
     ErrorResponse:
       type: object
       properties:
@@ -417,33 +415,35 @@ components:
               type: string
               description: Human-readable error message
               example: Something went wrong.
-    TokenResponse:
+    DeviceMetadata:
       type: object
+      required:
+      - device_id
       properties:
-        accessToken:
+        platform:
           type: string
-          example: accesstoken
-          description: Short lived Bearer JWT token to access APIs.
-        refreshToken:
+          description: Device platform (e.g., iOS, Android)
+          example: iOS
+        device_id:
           type: string
-          example: refreshToken
-          description: Long Lived token used to refresh access token.
-        idToken:
+          description: Unique identifier for the device
+          example: device-abc123xyz
+        device_model:
           type: string
-          example: idToken
-          description: OpenID Connect ID token
-        tokenType:
+          description: Device model name
+          example: iPhone 14 Pro
+        os_version:
           type: string
-          example: Bearer
-          description: type of token. Only supports Bearer for now.
-        expiresIn:
-          type: integer
-          example: 3600
-          description: expiry of the access token in seconds
-        isNewUser:
-          type: boolean
-          description: Indicates if the user is new
-          example: false
+          description: Operating system version
+          example: iOS 17.0
+        app_version:
+          type: string
+          description: Application version
+          example: 1.2.3
+        device_name:
+          type: string
+          description: User-friendly device name
+          example: John's iPhone
   parameters:
     TenantIdHeader:
       name: tenant-id

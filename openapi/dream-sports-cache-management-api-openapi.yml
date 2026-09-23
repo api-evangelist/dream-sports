@@ -17,9 +17,7 @@ paths:
 
         **Warning:** This operation will impact performance temporarily as caches
 
-        will need to be repopulated.
-
-        '
+        will need to be repopulated.'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       responses:
@@ -31,15 +29,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postCacheClear
+      x-operation-id-source: derived
 components:
-  parameters:
-    TenantIdHeader:
-      name: tenant-id
-      in: header
-      description: tenant-id of the client integrating with guardian
-      required: true
-      schema:
-        type: string
   schemas:
     ErrorResponse:
       type: object
@@ -55,3 +47,11 @@ components:
               type: string
               description: Human-readable error message
               example: Something went wrong.
+  parameters:
+    TenantIdHeader:
+      name: tenant-id
+      in: header
+      description: tenant-id of the client integrating with guardian
+      required: true
+      schema:
+        type: string

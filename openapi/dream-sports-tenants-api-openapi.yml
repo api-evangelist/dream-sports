@@ -1,11 +1,24 @@
 openapi: 3.2.0
 info:
-  title: Dream Sports Tenants API
-  version: '1.0'
-  description: 'Operations tagged Tenants across 2 of this provider''s published API definitions: dream-sports-delivr-ota-openapi.yml, dream-sports-dota-openapi.yml. Each path carries the servers of the definition it was published in.'
-servers:
-- url: http://localhost:3000
-  description: Local server
+  title: Delivr OTA Server Tenants API
+  description: 'Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.)
+
+    directly to end users'' devices without going through app store review processes.
+
+
+    ## Features
+
+    - Deploy over-the-air updates to React Native applications
+
+    - Manage apps, deployments, and releases
+
+    - Gradual rollouts and A/B testing
+
+    - Rollback capabilities
+
+    - Deployment metrics and analytics
+
+    - Multi-platform support'
 tags:
 - name: Tenants
 paths:
@@ -27,6 +40,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Organization'
+      operationId: getTenants
+      x-operation-id-source: derived
   /tenants/{tenantId}:
     delete:
       tags:
@@ -45,15 +60,17 @@ paths:
           description: Organization deleted
         '404':
           $ref: '#/components/responses/NotFound'
+      operationId: deleteTenantsByTenantId
+      x-operation-id-source: derived
 components:
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
     Organization:
       type: object
       properties:
@@ -68,19 +85,16 @@ components:
           format: int64
         role:
           type: string
-  responses:
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
   securitySchemes:
     BearerAuth:
       type: http
       scheme: bearer
       bearerFormat: AccessKey
       description: Access key or session token obtained from OAuth authentication
-x-refined-from:
-- dream-sports-delivr-ota-openapi.yml
-- dream-sports-dota-openapi.yml

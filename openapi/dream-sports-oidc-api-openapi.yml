@@ -65,9 +65,7 @@ paths:
 
         - PKCE support for public clients (RFC 7636)
 
-        - Multi-tenant isolation via tenant-id header
-
-        '
+        - Multi-tenant isolation via tenant-id header'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: response_type
@@ -201,6 +199,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: getAuthorize
+      x-operation-id-source: derived
   /login-accept:
     post:
       tags:
@@ -242,9 +242,7 @@ paths:
 
         - `400 Bad Request`: Invalid request parameters
 
-        - `401 Unauthorized`: Invalid login challenge or refresh token
-
-        '
+        - `401 Unauthorized`: Invalid login challenge or refresh token'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: RT
@@ -287,6 +285,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postLoginAccept
+      x-operation-id-source: derived
   /user-consent:
     get:
       tags:
@@ -324,9 +324,7 @@ paths:
 
         - List of scopes the user has already consented to
 
-        - User subject (user ID)
-
-        '
+        - User subject (user ID)'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: consent_challenge
@@ -398,6 +396,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: getUserConsent
+      x-operation-id-source: derived
   /consent-accept:
     post:
       tags:
@@ -450,9 +450,7 @@ paths:
 
         - `400 Bad Request`: Invalid request parameters or missing openid scope
 
-        - `401 Unauthorized`: Invalid consent challenge or refresh token
-
-        '
+        - `401 Unauthorized`: Invalid consent challenge or refresh token'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: RT
@@ -495,6 +493,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postConsentAccept
+      x-operation-id-source: derived
   /token:
     post:
       tags:
@@ -534,9 +534,7 @@ paths:
 
         - PKCE validation for authorization code flow
 
-        - Multi-tenant isolation via tenant-id header
-
-        '
+        - Multi-tenant isolation via tenant-id header'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: Authorization
@@ -588,6 +586,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postToken
+      x-operation-id-source: derived
   /userinfo:
     get:
       tags:
@@ -630,9 +630,7 @@ paths:
 
         - Multi-tenant isolation via tenant-id header
 
-        - CORS support for cross-origin requests
-
-        '
+        - CORS support for cross-origin requests'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: Authorization
@@ -666,6 +664,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: getUserinfo
+      x-operation-id-source: derived
     post:
       tags:
       - OIDC
@@ -689,9 +689,7 @@ paths:
 
         - JSON: Standard JSON response with user claims
 
-        - JWT: Signed JWT containing user claims (if requested)
-
-        '
+        - JWT: Signed JWT containing user claims (if requested)'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: Authorization
@@ -725,6 +723,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postUserinfo
+      x-operation-id-source: derived
   /token/revoke:
     post:
       tags:
@@ -735,9 +735,7 @@ paths:
 
         This endpoint allows clients to explicitly revoke oidc refresh tokens when they are
 
-        no longer needed, improving security by reducing the token''s lifetime.
-
-        '
+        no longer needed, improving security by reducing the token''s lifetime.'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       requestBody:
@@ -781,175 +779,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postTokenRevoke
+      x-operation-id-source: derived
 components:
   schemas:
-    UserConsentResponse:
-      type: object
-      description: User consent information for OAuth 2.0 client
-      required:
-      - client
-      - requested_scopes
-      - consented_scopes
-      - subject
-      properties:
-        client:
-          type: object
-          description: Client application information (filtered for security)
-          required:
-          - client_id
-          - client_name
-          properties:
-            clientId:
-              type: string
-              description: Unique identifier for the client application
-              example: my-client-app
-            clientName:
-              type: string
-              description: Human-readable name of the client application
-              example: My Application
-            clientUri:
-              type: string
-              format: uri
-              description: URL of the client application's home page
-              example: https://myapp.example.com
-            logoUri:
-              type: string
-              format: uri
-              description: URL of the client application's logo image
-              example: https://myapp.example.com/logo.png
-            policyUri:
-              type: string
-              format: uri
-              description: URL of the client application's privacy policy
-              example: https://myapp.example.com/privacy
-        requested_scopes:
-          type: array
-          description: List of OAuth 2.0 scopes being requested by the client
-          items:
-            type: string
-          example:
-          - openid
-          - email
-          - profile
-          - phone
-        consented_scopes:
-          type: array
-          description: List of OAuth 2.0 scopes the user has already consented to
-          items:
-            type: string
-          example:
-          - openid
-          - email
-        subject:
-          type: string
-          description: User identifier (subject) associated with the consent
-          example: user123
-      example:
-        client:
-          client_id: my-client-app
-          client_name: My Application
-          client_uri: https://myapp.example.com
-          logo_uri: https://myapp.example.com/logo.png
-          policy_uri: https://myapp.example.com/privacy
-        requested_scopes:
-        - openid
-        - email
-        - profile
-        - phone
-        consented_scopes:
-        - openid
-        - email
-        subject: user123
-    TokenRequestBody:
-      type: object
-      description: Request body for OAuth 2.0 token endpoint
-      required:
-      - grant_type
-      properties:
-        grant_type:
-          type: string
-          description: OAuth 2.0 grant type
-          enum:
-          - authorization_code
-          - refresh_token
-          - client_credentials
-          example: authorization_code
-        code:
-          type: string
-          description: Authorization code (required for authorization_code grant)
-          example: auth_code_abc123
-        refresh_token:
-          type: string
-          description: Refresh token (required for refresh_token grant)
-          example: refresh_token_xyz789
-        redirect_uri:
-          type: string
-          format: uri
-          description: Redirect URI (required for authorization_code grant)
-          example: https://client.example.com/callback
-        client_id:
-          type: string
-          description: Client identifier (required for client_secret_post auth)
-          example: my_client_id
-        client_secret:
-          type: string
-          description: Client secret (required for client_secret_post auth)
-          example: my_client_secret
-        code_verifier:
-          type: string
-          description: PKCE code verifier (required if code_challenge was used)
-          example: code_verifier_abc123
-        scope:
-          type: string
-          description: Space-separated list of scopes
-          example: openid email profile
-      example:
-        grant_type: authorization_code
-        code: auth_code_abc123
-        redirect_uri: https://client.example.com/callback
-        client_id: my_client_id
-        client_secret: my_client_secret
-    OidcTokenResponse:
-      type: object
-      description: OAuth 2.0 token response
-      required:
-      - access_token
-      - token_type
-      - expires_in
-      properties:
-        access_token:
-          type: string
-          description: OAuth 2.0 access token
-          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-        token_type:
-          type: string
-          description: Token type
-          enum:
-          - Bearer
-          example: Bearer
-        expires_in:
-          type: integer
-          description: Access token expiration time in seconds
-          example: 3600
-        refresh_token:
-          type: string
-          description: OAuth 2.0 refresh token
-          example: refresh_token_xyz789
-        id_token:
-          type: string
-          description: OpenID Connect ID token
-          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-        scope:
-          type: string
-          description: Space-separated list of granted scopes
-          example: openid email profile
-      example:
-        access_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-        token_type: Bearer
-        expires_in: 3600
-        refresh_token: refresh_token_xyz789
-        id_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-        scope: openid email profile
     UserInfoResponse:
       type: object
       description: OpenID Connect UserInfo response
@@ -1046,6 +879,187 @@ components:
         - email
         - profile
         refresh_token: refresh_token_xyz789
+    OidcTokenResponse:
+      type: object
+      description: OAuth 2.0 token response
+      required:
+      - access_token
+      - token_type
+      - expires_in
+      properties:
+        access_token:
+          type: string
+          description: OAuth 2.0 access token
+          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        token_type:
+          type: string
+          description: Token type
+          enum:
+          - Bearer
+          example: Bearer
+        expires_in:
+          type: integer
+          description: Access token expiration time in seconds
+          example: 3600
+        refresh_token:
+          type: string
+          description: OAuth 2.0 refresh token
+          example: refresh_token_xyz789
+        id_token:
+          type: string
+          description: OpenID Connect ID token
+          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        scope:
+          type: string
+          description: Space-separated list of granted scopes
+          example: openid email profile
+      example:
+        access_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        token_type: Bearer
+        expires_in: 3600
+        refresh_token: refresh_token_xyz789
+        id_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        scope: openid email profile
+    TokenRequestBody:
+      type: object
+      description: Request body for OAuth 2.0 token endpoint
+      required:
+      - grant_type
+      properties:
+        grant_type:
+          type: string
+          description: OAuth 2.0 grant type
+          enum:
+          - authorization_code
+          - refresh_token
+          - client_credentials
+          example: authorization_code
+        code:
+          type: string
+          description: Authorization code (required for authorization_code grant)
+          example: auth_code_abc123
+        refresh_token:
+          type: string
+          description: Refresh token (required for refresh_token grant)
+          example: refresh_token_xyz789
+        redirect_uri:
+          type: string
+          format: uri
+          description: Redirect URI (required for authorization_code grant)
+          example: https://client.example.com/callback
+        client_id:
+          type: string
+          description: Client identifier (required for client_secret_post auth)
+          example: my_client_id
+        client_secret:
+          type: string
+          description: Client secret (required for client_secret_post auth)
+          example: my_client_secret
+        code_verifier:
+          type: string
+          description: PKCE code verifier (required if code_challenge was used)
+          example: code_verifier_abc123
+        scope:
+          type: string
+          description: Space-separated list of scopes
+          example: openid email profile
+      example:
+        grant_type: authorization_code
+        code: auth_code_abc123
+        redirect_uri: https://client.example.com/callback
+        client_id: my_client_id
+        client_secret: my_client_secret
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
+    UserConsentResponse:
+      type: object
+      description: User consent information for OAuth 2.0 client
+      required:
+      - client
+      - requested_scopes
+      - consented_scopes
+      - subject
+      properties:
+        client:
+          type: object
+          description: Client application information (filtered for security)
+          required:
+          - client_id
+          - client_name
+          properties:
+            clientId:
+              type: string
+              description: Unique identifier for the client application
+              example: my-client-app
+            clientName:
+              type: string
+              description: Human-readable name of the client application
+              example: My Application
+            clientUri:
+              type: string
+              format: uri
+              description: URL of the client application's home page
+              example: https://myapp.example.com
+            logoUri:
+              type: string
+              format: uri
+              description: URL of the client application's logo image
+              example: https://myapp.example.com/logo.png
+            policyUri:
+              type: string
+              format: uri
+              description: URL of the client application's privacy policy
+              example: https://myapp.example.com/privacy
+        requested_scopes:
+          type: array
+          description: List of OAuth 2.0 scopes being requested by the client
+          items:
+            type: string
+          example:
+          - openid
+          - email
+          - profile
+          - phone
+        consented_scopes:
+          type: array
+          description: List of OAuth 2.0 scopes the user has already consented to
+          items:
+            type: string
+          example:
+          - openid
+          - email
+        subject:
+          type: string
+          description: User identifier (subject) associated with the consent
+          example: user123
+      example:
+        client:
+          client_id: my-client-app
+          client_name: My Application
+          client_uri: https://myapp.example.com
+          logo_uri: https://myapp.example.com/logo.png
+          policy_uri: https://myapp.example.com/privacy
+        requested_scopes:
+        - openid
+        - email
+        - profile
+        - phone
+        consented_scopes:
+        - openid
+        - email
+        subject: user123
     LoginAcceptRequestBody:
       type: object
       description: Request body for accepting login challenge
@@ -1064,20 +1078,6 @@ components:
       example:
         login_challenge: login_challenge_abc123
         refresh_token: refresh_token_xyz789
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code identifying the type of error
-              example: invalid_request
-            message:
-              type: string
-              description: Human-readable error message
-              example: Something went wrong.
   parameters:
     TenantIdHeader:
       name: tenant-id

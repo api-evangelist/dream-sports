@@ -1,38 +1,7 @@
 openapi: 3.2.0
 info:
   title: Checkmate Test Management Projects API
-  description: 'Comprehensive API documentation for Checkmate - a modern test case management system built with Remix, MySQL, and Drizzle ORM.
-
-
-    ## Features
-
-    - Project and Test Management
-
-    - Test Run Execution
-
-    - Role-Based Access Control (RBAC)
-
-    - Google OAuth Authentication
-
-    - Test Status Tracking and History
-
-
-    ## Authentication
-
-    All endpoints require authentication via session cookies. Users must be logged in through Google OAuth.
-
-
-    ## Authorization
-
-    Access to resources is controlled via Casbin RBAC with three role levels:
-
-    - **Admin**: Full access to all resources
-
-    - **User**: Can create, read, update resources
-
-    - **Reader**: Read-only access
-
-    '
+  description: Comprehensive API documentation for Checkmate - a modern test case management system built with Remix, MySQL, and Drizzle ORM.
   version: 1.0.0
   contact:
     name: Checkmate API Support
@@ -116,6 +85,8 @@ paths:
           description: Unauthorized
         '403':
           description: Forbidden
+      operationId: getApiV1Projects
+      x-operation-id-source: derived
   /api/v1/project/create:
     post:
       tags:
@@ -169,6 +140,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: postApiV1ProjectCreate
+      x-operation-id-source: derived
   /api/v1/project/edit:
     put:
       tags:
@@ -207,6 +180,8 @@ paths:
                 $ref: '#/components/schemas/SuccessResponse'
         '400':
           description: Bad request
+      operationId: putApiV1ProjectEdit
+      x-operation-id-source: derived
   /api/v1/project/update-status:
     put:
       tags:
@@ -237,6 +212,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SuccessResponse'
+      operationId: putApiV1ProjectUpdateStatus
+      x-operation-id-source: derived
   /api/v1/project/detail:
     get:
       tags:
@@ -262,20 +239,10 @@ paths:
                     $ref: '#/components/schemas/Project'
                   status:
                     type: integer
+      operationId: getApiV1ProjectDetail
+      x-operation-id-source: derived
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message
-        status:
-          type: integer
-          description: HTTP status code
-      required:
-      - error
-      - status
     SuccessResponse:
       type: object
       properties:
@@ -322,6 +289,18 @@ components:
         orgId:
           type: integer
           description: Organization ID
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+        status:
+          type: integer
+          description: HTTP status code
+      required:
+      - error
+      - status
   securitySchemes:
     cookieAuth:
       type: apiKey

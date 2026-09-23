@@ -37,9 +37,7 @@ paths:
         - Handling email delivery failures gracefully
 
 
-        **Response**: Returns status code 200 on successful email queuing/sending. Any response other than status code 200 will be considered a failure by Guardian.
-
-        '
+        **Response**: Returns status code 200 on successful email queuing/sending. Any response other than status code 200 will be considered a failure by Guardian.'
       requestBody:
         content:
           application/json:
@@ -65,6 +63,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/errorResponse'
+      operationId: postSendEmail
+      x-operation-id-source: derived
   /sendSms:
     post:
       tags:
@@ -96,9 +96,7 @@ paths:
         - Handling SMS delivery failures gracefully
 
 
-        **Response**: Returns status code 200 on successful SMS queuing/sending. Any response other than status code 200 will be considered a failure by Guardian.
-
-        '
+        **Response**: Returns status code 200 on successful SMS queuing/sending. Any response other than status code 200 will be considered a failure by Guardian.'
       requestBody:
         content:
           application/json:
@@ -124,6 +122,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/errorResponse'
+      operationId: postSendSms
+      x-operation-id-source: derived
 components:
   schemas:
     SendMessageRequest:

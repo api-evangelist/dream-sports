@@ -17,9 +17,7 @@ paths:
 
         **Security:** This operation should be performed periodically to rotate keys.
 
-        The old key will be kept for a grace period to verify existing tokens.
-
-        '
+        The old key will be kept for a grace period to verify existing tokens.'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       requestBody:
@@ -81,15 +79,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postV1KeysGenerate
+      x-operation-id-source: derived
 components:
-  parameters:
-    TenantIdHeader:
-      name: tenant-id
-      in: header
-      description: tenant-id of the client integrating with guardian
-      required: true
-      schema:
-        type: string
   schemas:
     ErrorResponse:
       type: object
@@ -105,3 +97,11 @@ components:
               type: string
               description: Human-readable error message
               example: Something went wrong.
+  parameters:
+    TenantIdHeader:
+      name: tenant-id
+      in: header
+      description: tenant-id of the client integrating with guardian
+      required: true
+      schema:
+        type: string

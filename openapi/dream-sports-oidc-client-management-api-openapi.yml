@@ -34,9 +34,7 @@ paths:
 
         - Redirect URIs are validated to prevent open redirect attacks
 
-        - Grant types and response types are validated against OAuth 2.0 specifications
-
-        '
+        - Grant types and response types are validated against OAuth 2.0 specifications'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       requestBody:
@@ -70,6 +68,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postV1AdminClient
+      x-operation-id-source: derived
     get:
       tags:
       - OIDC Client Management
@@ -92,9 +92,7 @@ paths:
 
         - Client secrets are not included in the response for security
 
-        - Total count and pagination metadata are included
-
-        '
+        - Total count and pagination metadata are included'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: page
@@ -135,6 +133,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: getV1AdminClient
+      x-operation-id-source: derived
   /v1/admin/client/{client_id}:
     get:
       tags:
@@ -154,9 +154,7 @@ paths:
         - Skip consent configuration
 
 
-        **Security Note:** Client secrets are included in the response and should be handled securely.
-
-        '
+        **Security Note:** Client secrets are included in the response and should be handled securely.'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: client_id
@@ -185,6 +183,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: getV1AdminClientByClientId
+      x-operation-id-source: derived
     patch:
       tags:
       - OIDC Client Management
@@ -207,9 +207,7 @@ paths:
 
         - Client secrets are not updated through this endpoint
 
-        - Use the regenerate secret endpoint to update client secrets
-
-        '
+        - Use the regenerate secret endpoint to update client secrets'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: client_id
@@ -250,6 +248,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: patchV1AdminClientByClientId
+      x-operation-id-source: derived
     delete:
       tags:
       - OIDC Client Management
@@ -266,9 +266,7 @@ paths:
         - Invalidate any existing tokens issued to this client
 
 
-        **Security:** Ensure no active applications are using this client before deletion.
-
-        '
+        **Security:** Ensure no active applications are using this client before deletion.'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: client_id
@@ -293,6 +291,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: deleteV1AdminClientByClientId
+      x-operation-id-source: derived
   /v1/admin/client/{client_id}/regenerate-secret:
     post:
       tags:
@@ -314,9 +314,7 @@ paths:
 
         - Returns the new client secret
 
-        - Store this securely as it won''t be shown again
-
-        '
+        - Store this securely as it won''t be shown again'
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       - name: client_id
@@ -345,8 +343,142 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postV1AdminClientByClientIdRegenerateSecret
+      x-operation-id-source: derived
 components:
   schemas:
+    UpdateClientRequestBody:
+      type: object
+      description: Request body for updating an OAuth 2.0 client
+      properties:
+        client_name:
+          type: string
+          description: Human-readable name for the client
+          example: My Updated Application
+        client_uri:
+          type: string
+          format: uri
+          description: URL of the client's home page
+          example: https://myapp.com
+        contacts:
+          type: array
+          description: List of contact email addresses
+          items:
+            type: string
+            format: email
+          example:
+          - admin@myapp.com
+          - support@myapp.com
+        grant_types:
+          type: array
+          description: OAuth 2.0 grant types supported by the client
+          items:
+            type: string
+            enum:
+            - authorization_code
+            - client_credentials
+            - refresh_token
+          example:
+          - authorization_code
+          - refresh_token
+        logo_uri:
+          type: string
+          format: uri
+          description: URL of the client's logo
+          example: https://myapp.com/logo.png
+        policy_uri:
+          type: string
+          format: uri
+          description: URL of the client's privacy policy
+          example: https://myapp.com/privacy
+        redirect_uris:
+          type: array
+          description: List of authorized redirect URIs
+          items:
+            type: string
+            format: uri
+          example:
+          - https://myapp.com/callback
+          - https://myapp.com/silent-renew
+        response_types:
+          type: array
+          description: OAuth 2.0 response types supported by the client
+          items:
+            type: string
+            enum:
+            - code
+          example:
+          - code
+        skip_consent:
+          type: boolean
+          description: Whether to skip user consent for this client
+          example: false
+      example:
+        client_name: My Updated Application
+        client_uri: https://myapp.com
+        grant_types:
+        - authorization_code
+        - refresh_token
+        redirect_uris:
+        - https://myapp.com/callback
+        response_types:
+        - code
+    ClientSecretResponse:
+      type: object
+      description: Response for client secret regeneration
+      required:
+      - client_secret
+      properties:
+        client_secret:
+          type: string
+          description: The newly generated client secret
+          example: new_client_secret_abc123
+      example:
+        client_secret: new_client_secret_abc123
+    ClientListResponse:
+      type: object
+      description: Paginated list of OAuth 2.0 clients
+      required:
+      - clients
+      - page
+      - page_size
+      properties:
+        clients:
+          type: array
+          description: List of client objects
+          items:
+            $ref: '#/components/schemas/ClientResponse'
+        page:
+          type: integer
+          description: Current page number
+          example: 1
+        page_size:
+          type: integer
+          description: Number of items per page
+          example: 10
+      example:
+        clients:
+        - client_id: client-1
+          client_name: First Application
+          grant_types:
+          - authorization_code
+          redirect_uris:
+          - https://app1.com/callback
+          response_types:
+          - code
+          skip_consent: false
+        - client_id: client-2
+          client_name: Second Application
+          grant_types:
+          - authorization_code
+          - refresh_token
+          redirect_uris:
+          - https://app2.com/callback
+          response_types:
+          - code
+          skip_consent: true
+        page: 1
+        page_size: 10
     ClientResponse:
       type: object
       description: OAuth 2.0 client response
@@ -440,126 +572,20 @@ components:
         response_types:
         - code
         skip_consent: false
-    UpdateClientRequestBody:
+    ErrorResponse:
       type: object
-      description: Request body for updating an OAuth 2.0 client
       properties:
-        client_name:
-          type: string
-          description: Human-readable name for the client
-          example: My Updated Application
-        client_uri:
-          type: string
-          format: uri
-          description: URL of the client's home page
-          example: https://myapp.com
-        contacts:
-          type: array
-          description: List of contact email addresses
-          items:
-            type: string
-            format: email
-          example:
-          - admin@myapp.com
-          - support@myapp.com
-        grant_types:
-          type: array
-          description: OAuth 2.0 grant types supported by the client
-          items:
-            type: string
-            enum:
-            - authorization_code
-            - client_credentials
-            - refresh_token
-          example:
-          - authorization_code
-          - refresh_token
-        logo_uri:
-          type: string
-          format: uri
-          description: URL of the client's logo
-          example: https://myapp.com/logo.png
-        policy_uri:
-          type: string
-          format: uri
-          description: URL of the client's privacy policy
-          example: https://myapp.com/privacy
-        redirect_uris:
-          type: array
-          description: List of authorized redirect URIs
-          items:
-            type: string
-            format: uri
-          example:
-          - https://myapp.com/callback
-          - https://myapp.com/silent-renew
-        response_types:
-          type: array
-          description: OAuth 2.0 response types supported by the client
-          items:
-            type: string
-            enum:
-            - code
-          example:
-          - code
-        skip_consent:
-          type: boolean
-          description: Whether to skip user consent for this client
-          example: false
-      example:
-        client_name: My Updated Application
-        client_uri: https://myapp.com
-        grant_types:
-        - authorization_code
-        - refresh_token
-        redirect_uris:
-        - https://myapp.com/callback
-        response_types:
-        - code
-    ClientListResponse:
-      type: object
-      description: Paginated list of OAuth 2.0 clients
-      required:
-      - clients
-      - page
-      - page_size
-      properties:
-        clients:
-          type: array
-          description: List of client objects
-          items:
-            $ref: '#/components/schemas/ClientResponse'
-        page:
-          type: integer
-          description: Current page number
-          example: 1
-        page_size:
-          type: integer
-          description: Number of items per page
-          example: 10
-      example:
-        clients:
-        - client_id: client-1
-          client_name: First Application
-          grant_types:
-          - authorization_code
-          redirect_uris:
-          - https://app1.com/callback
-          response_types:
-          - code
-          skip_consent: false
-        - client_id: client-2
-          client_name: Second Application
-          grant_types:
-          - authorization_code
-          - refresh_token
-          redirect_uris:
-          - https://app2.com/callback
-          response_types:
-          - code
-          skip_consent: true
-        page: 1
-        page_size: 10
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
     CreateClientRequestBody:
       type: object
       description: Request body for creating a new OAuth 2.0 client
@@ -645,32 +671,6 @@ components:
         response_types:
         - code
         skip_consent: false
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code identifying the type of error
-              example: invalid_request
-            message:
-              type: string
-              description: Human-readable error message
-              example: Something went wrong.
-    ClientSecretResponse:
-      type: object
-      description: Response for client secret regeneration
-      required:
-      - client_secret
-      properties:
-        client_secret:
-          type: string
-          description: The newly generated client secret
-          example: new_client_secret_abc123
-      example:
-        client_secret: new_client_secret_abc123
   parameters:
     TenantIdHeader:
       name: tenant-id

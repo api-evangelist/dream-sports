@@ -10,9 +10,7 @@ paths:
       tags:
       - Guest Authentication
       summary: Login Guest User
-      description: 'Initializes a guest session using a shared secret key encrypted identifier(encryption is optional). Uses AES (Advanced Encryption Standard) algorithm for encryption and decryption of user identifier.
-
-        '
+      description: Initializes a guest session using a shared secret key encrypted identifier(encryption is optional). Uses AES (Advanced Encryption Standard) algorithm for encryption and decryption of user identifier.
       parameters:
       - $ref: '#/components/parameters/TenantIdHeader'
       requestBody:
@@ -85,44 +83,10 @@ paths:
                     error:
                       code: client_not_found
                       message: Client not found
+      operationId: postV1GuestLogin
+      x-operation-id-source: derived
 components:
-  parameters:
-    TenantIdHeader:
-      name: tenant-id
-      in: header
-      description: tenant-id of the client integrating with guardian
-      required: true
-      schema:
-        type: string
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code identifying the type of error
-              example: invalid_request
-            message:
-              type: string
-              description: Human-readable error message
-              example: Something went wrong.
-    GuestLoginResponse:
-      type: object
-      properties:
-        access_token:
-          type: string
-          description: Access token
-        token_type:
-          type: string
-          description: Type of token issued
-          example: Bearer
-        expires_in:
-          type: integer
-          description: Expiry of access token in seconds
-          example: 180
     V1GuestLoginRequestBody:
       type: object
       required:
@@ -147,3 +111,39 @@ components:
           - read
           - write
           - profile
+    GuestLoginResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: Access token
+        token_type:
+          type: string
+          description: Type of token issued
+          example: Bearer
+        expires_in:
+          type: integer
+          description: Expiry of access token in seconds
+          example: 180
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
+  parameters:
+    TenantIdHeader:
+      name: tenant-id
+      in: header
+      description: tenant-id of the client integrating with guardian
+      required: true
+      schema:
+        type: string

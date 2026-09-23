@@ -1,7 +1,24 @@
 openapi: 3.2.0
 info:
   title: Delivr OTA Server Access Keys API
-  description: "Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.) \ndirectly to end users' devices without going through app store review processes.\n\n## Features\n- Deploy over-the-air updates to React Native applications\n- Manage apps, deployments, and releases\n- Gradual rollouts and A/B testing\n- Rollback capabilities\n- Deployment metrics and analytics\n- Multi-platform support\n"
+  description: 'Delivr OTA Server API enables developers to deploy mobile app updates (JavaScript, assets, etc.)
+
+    directly to end users'' devices without going through app store review processes.
+
+
+    ## Features
+
+    - Deploy over-the-air updates to React Native applications
+
+    - Manage apps, deployments, and releases
+
+    - Gradual rollouts and A/B testing
+
+    - Rollback capabilities
+
+    - Deployment metrics and analytics
+
+    - Multi-platform support'
 tags:
 - name: Access Keys
 paths:
@@ -25,6 +42,8 @@ paths:
                       $ref: '#/components/schemas/AccessKey'
         '401':
           $ref: '#/components/responses/Unauthorized'
+      operationId: getAccessKeys
+      x-operation-id-source: derived
     post:
       tags:
       - Access Keys
@@ -55,6 +74,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '409':
           $ref: '#/components/responses/Conflict'
+      operationId: postAccessKeys
+      x-operation-id-source: derived
   /accessKeys/{accessKeyName}:
     get:
       tags:
@@ -75,6 +96,8 @@ paths:
                     $ref: '#/components/schemas/AccessKey'
         '404':
           $ref: '#/components/responses/NotFound'
+      operationId: getAccessKeysByAccessKeyName
+      x-operation-id-source: derived
     patch:
       tags:
       - Access Keys
@@ -104,6 +127,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '409':
           $ref: '#/components/responses/Conflict'
+      operationId: patchAccessKeysByAccessKeyName
+      x-operation-id-source: derived
     delete:
       tags:
       - Access Keys
@@ -116,20 +141,10 @@ paths:
           description: Access key deleted
         '404':
           $ref: '#/components/responses/NotFound'
+      operationId: deleteAccessKeysByAccessKeyName
+      x-operation-id-source: derived
 components:
   responses:
-    Conflict:
-      description: Conflict - resource already exists
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Bad request - invalid parameters
       content:
@@ -150,29 +165,27 @@ components:
           schema:
             type: string
             example: The session or access key being used is invalid, please run "code-push-standalone login" again.
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflict - resource already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    AccessKeyName:
+      name: accessKeyName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Access key friendly name or generated name
   schemas:
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
-    AccessKeyRequest:
-      type: object
-      properties:
-        friendlyName:
-          type: string
-          example: CI/CD Key
-        description:
-          type: string
-        ttl:
-          type: integer
-          format: int64
-          description: Time-to-live in milliseconds
-          example: 5184000000
-        scope:
-          type: string
     AccessKey:
       type: object
       properties:
@@ -202,14 +215,28 @@ components:
         scope:
           type: string
           description: Optional scope restriction
-  parameters:
-    AccessKeyName:
-      name: accessKeyName
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Access key friendly name or generated name
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    AccessKeyRequest:
+      type: object
+      properties:
+        friendlyName:
+          type: string
+          example: CI/CD Key
+        description:
+          type: string
+        ttl:
+          type: integer
+          format: int64
+          description: Time-to-live in milliseconds
+          example: 5184000000
+        scope:
+          type: string
   securitySchemes:
     BearerAuth:
       type: http

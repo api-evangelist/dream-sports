@@ -1,38 +1,7 @@
 openapi: 3.2.0
 info:
   title: Checkmate Test Management Configuration API
-  description: 'Comprehensive API documentation for Checkmate - a modern test case management system built with Remix, MySQL, and Drizzle ORM.
-
-
-    ## Features
-
-    - Project and Test Management
-
-    - Test Run Execution
-
-    - Role-Based Access Control (RBAC)
-
-    - Google OAuth Authentication
-
-    - Test Status Tracking and History
-
-
-    ## Authentication
-
-    All endpoints require authentication via session cookies. Users must be logged in through Google OAuth.
-
-
-    ## Authorization
-
-    Access to resources is controlled via Casbin RBAC with three role levels:
-
-    - **Admin**: Full access to all resources
-
-    - **User**: Can create, read, update resources
-
-    - **Reader**: Read-only access
-
-    '
+  description: Comprehensive API documentation for Checkmate - a modern test case management system built with Remix, MySQL, and Drizzle ORM.
   version: 1.0.0
   contact:
     name: Checkmate API Support
@@ -77,6 +46,8 @@ paths:
                       $ref: '#/components/schemas/Label'
                   status:
                     type: integer
+      operationId: getApiV1Labels
+      x-operation-id-source: derived
   /api/v1/project/add-labels:
     post:
       tags:
@@ -100,6 +71,8 @@ paths:
       responses:
         '200':
           description: Label created successfully
+      operationId: postApiV1ProjectAddLabels
+      x-operation-id-source: derived
   /api/v1/project/squads:
     get:
       tags:
@@ -126,6 +99,8 @@ paths:
                       $ref: '#/components/schemas/Squad'
                   status:
                     type: integer
+      operationId: getApiV1ProjectSquads
+      x-operation-id-source: derived
   /api/v1/project/add-squads:
     post:
       tags:
@@ -149,6 +124,8 @@ paths:
       responses:
         '200':
           description: Squad created successfully
+      operationId: postApiV1ProjectAddSquads
+      x-operation-id-source: derived
   /api/v1/project/sections:
     get:
       tags:
@@ -175,6 +152,8 @@ paths:
                       $ref: '#/components/schemas/Section'
                   status:
                     type: integer
+      operationId: getApiV1ProjectSections
+      x-operation-id-source: derived
   /api/v1/project/add-section:
     post:
       tags:
@@ -203,6 +182,8 @@ paths:
       responses:
         '200':
           description: Section created successfully
+      operationId: postApiV1ProjectAddSection
+      x-operation-id-source: derived
   /api/v1/project/edit-section:
     put:
       tags:
@@ -226,6 +207,8 @@ paths:
       responses:
         '200':
           description: Section updated successfully
+      operationId: putApiV1ProjectEditSection
+      x-operation-id-source: derived
   /api/v1/priority:
     get:
       tags:
@@ -252,6 +235,8 @@ paths:
                       $ref: '#/components/schemas/Priority'
                   status:
                     type: integer
+      operationId: getApiV1Priority
+      x-operation-id-source: derived
   /api/v1/automation-status:
     get:
       tags:
@@ -278,6 +263,8 @@ paths:
                       $ref: '#/components/schemas/AutomationStatus'
                   status:
                     type: integer
+      operationId: getApiV1AutomationStatus
+      x-operation-id-source: derived
   /api/v1/platform:
     get:
       tags:
@@ -304,6 +291,8 @@ paths:
                       $ref: '#/components/schemas/Platform'
                   status:
                     type: integer
+      operationId: getApiV1Platform
+      x-operation-id-source: derived
   /api/v1/test-covered-by:
     get:
       tags:
@@ -330,6 +319,8 @@ paths:
                       $ref: '#/components/schemas/TestCoveredBy'
                   status:
                     type: integer
+      operationId: getApiV1TestCoveredBy
+      x-operation-id-source: derived
   /api/v1/type:
     get:
       tags:
@@ -356,15 +347,68 @@ paths:
                       $ref: '#/components/schemas/Type'
                   status:
                     type: integer
+      operationId: getApiV1Type
+      x-operation-id-source: derived
 components:
   schemas:
-    Platform:
+    Type:
       type: object
       properties:
-        platformId:
+        typeId:
           type: integer
-        platformName:
+        typeName:
           type: string
+    TestCoveredBy:
+      type: object
+      properties:
+        testCoveredById:
+          type: integer
+        testCoveredByName:
+          type: string
+    AutomationStatus:
+      type: object
+      properties:
+        automationStatusId:
+          type: integer
+        automationStatusName:
+          type: string
+    Priority:
+      type: object
+      properties:
+        priorityId:
+          type: integer
+        priorityName:
+          type: string
+          enum:
+          - Critical
+          - High
+          - Medium
+          - Low
+          - Trivial
+    Squad:
+      type: object
+      properties:
+        squadId:
+          type: integer
+          description: Unique squad identifier
+        squadName:
+          type: string
+          description: Squad name
+        projectId:
+          type: integer
+          description: Project ID
+    Label:
+      type: object
+      properties:
+        labelId:
+          type: integer
+          description: Unique label identifier
+        labelName:
+          type: string
+          description: Label name
+        projectId:
+          type: integer
+          description: Project ID
     Section:
       type: object
       properties:
@@ -382,63 +426,12 @@ components:
         projectId:
           type: integer
           description: Project ID
-    AutomationStatus:
+    Platform:
       type: object
       properties:
-        automationStatusId:
+        platformId:
           type: integer
-        automationStatusName:
-          type: string
-    Squad:
-      type: object
-      properties:
-        squadId:
-          type: integer
-          description: Unique squad identifier
-        squadName:
-          type: string
-          description: Squad name
-        projectId:
-          type: integer
-          description: Project ID
-    Type:
-      type: object
-      properties:
-        typeId:
-          type: integer
-        typeName:
-          type: string
-    Label:
-      type: object
-      properties:
-        labelId:
-          type: integer
-          description: Unique label identifier
-        labelName:
-          type: string
-          description: Label name
-        projectId:
-          type: integer
-          description: Project ID
-    Priority:
-      type: object
-      properties:
-        priorityId:
-          type: integer
-        priorityName:
-          type: string
-          enum:
-          - Critical
-          - High
-          - Medium
-          - Low
-          - Trivial
-    TestCoveredBy:
-      type: object
-      properties:
-        testCoveredById:
-          type: integer
-        testCoveredByName:
+        platformName:
           type: string
   securitySchemes:
     cookieAuth:

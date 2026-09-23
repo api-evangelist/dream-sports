@@ -9,12 +9,9 @@ servers:
 - url: http://localhost:8080
   description: Thunder API Server (SDK & Debug endpoints)
 tags:
-- name: Healthcheck
+- name: Health Check
 paths:
   /healthcheck:
-    servers:
-    - url: http://localhost:8081
-      description: Thunder Admin Server (Management endpoints)
     get:
       responses:
         '200':
@@ -24,11 +21,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/JsonObject'
       tags:
-      - Healthcheck
-  /healthcheck/ping:
+      - Health Check
+      summary: Get healthcheck
+      x-summary-source: derived
+      operationId: getHealthcheck
+      x-operation-id-source: derived
     servers:
     - url: http://localhost:8081
       description: Thunder Admin Server (Management endpoints)
+  /healthcheck/ping:
     get:
       responses:
         '200':
@@ -38,7 +39,14 @@ paths:
               schema:
                 type: string
       tags:
-      - Healthcheck
+      - Health Check
+      summary: Get healthcheck ping
+      x-summary-source: derived
+      operationId: getHealthcheckPing
+      x-operation-id-source: derived
+    servers:
+    - url: http://localhost:8081
+      description: Thunder Admin Server (Management endpoints)
 components:
   schemas:
     JsonObject:
