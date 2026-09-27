@@ -129,6 +129,51 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    V1UserBlockedFlowsResponse:
+      type: object
+      properties:
+        userIdentifier:
+          type: string
+          description: User identifier
+          example: user@example.com
+        blockedFlows:
+          type: array
+          items:
+            type: string
+            enum:
+            - passwordless
+            - password
+            - social_auth
+            - otp_verify
+            - pin
+          description: List of currently blocked flow types
+          example:
+          - passwordless
+          - password
+        totalCount:
+          type: integer
+          description: Total number of blocked flows
+          example: 2
+      example:
+        userIdentifier: user@example.com
+        blockedFlows:
+        - passwordless
+        - social_auth
+        totalCount: 2
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
     V1BlockUserFlowRequestBody:
       type: object
       required:
@@ -170,20 +215,6 @@ components:
         - social_auth
         reason: Suspicious activity detected
         unblockedAt: 1704067200
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code identifying the type of error
-              example: invalid_request
-            message:
-              type: string
-              description: Human-readable error message
-              example: Something went wrong.
     V1UnblockUserFlowRequestBody:
       type: object
       required:
@@ -216,37 +247,6 @@ components:
         userIdentifier: john@example.com
         unblockFlows:
         - password
-    V1UserBlockedFlowsResponse:
-      type: object
-      properties:
-        userIdentifier:
-          type: string
-          description: User identifier
-          example: user@example.com
-        blockedFlows:
-          type: array
-          items:
-            type: string
-            enum:
-            - passwordless
-            - password
-            - social_auth
-            - otp_verify
-            - pin
-          description: List of currently blocked flow types
-          example:
-          - passwordless
-          - password
-        totalCount:
-          type: integer
-          description: Total number of blocked flows
-          example: 2
-      example:
-        userIdentifier: user@example.com
-        blockedFlows:
-        - passwordless
-        - social_auth
-        totalCount: 2
   parameters:
     TenantIdHeader:
       name: tenant-id

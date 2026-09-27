@@ -65,14 +65,6 @@ components:
           type: object
         credentials:
           type: object
-    AddProviderDetailsRequest:
-      type: object
-      properties:
-        userId:
-          type: string
-          example: 1234
-        provider:
-          $ref: '#/components/schemas/ProviderData'
     User:
       type: object
       properties:
@@ -100,3 +92,11 @@ components:
             message:
               type: string
               example: Something went wrong.
+    AddProviderDetailsRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 1234
+        provider:
+          $ref: '#/components/schemas/ProviderData'

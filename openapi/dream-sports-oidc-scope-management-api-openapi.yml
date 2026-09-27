@@ -485,46 +485,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    UpdateScopeRequest:
-      type: object
-      description: 'Request payload for updating an existing scope. All fields are optional for partial updates.
-
-        The scope name cannot be changed through this endpoint.
-
-        '
-      properties:
-        display_name:
-          type: string
-          description: Human-readable display name
-          example: Updated Profile Reader
-          maxLength: 100
-        description:
-          type: string
-          description: Detailed description of the scope
-          example: Updated description for profile reading permissions
-          maxLength: 500
-        claims:
-          type: array
-          description: "List of claims associated with this scope. For predefined OIDC scopes, \nspecific claims are required and validated:\n- openid: ['sub'] (exactly 1 claim)\n- phone: ['phone_number', 'phone_number_verified'] (exactly 2 claims)\n- email: ['email', 'email_verified'] (exactly 2 claims)\n- address: ['address'] (exactly 1 claim)\n\nCustom scopes can have any combination of claims.\n"
-          items:
-            type: string
-            example: name
-          example:
-          - name
-          - email
-          - profile
-          - picture
-        icon_url:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: URL to the scope's icon
-          example: https://example.com/icons/updated-profile.png
-        is_oidc:
-          type: boolean
-          description: Whether this is an OpenID Connect standard scope
-          example: false
     ScopeResponse:
       type: object
       description: Scope information
@@ -605,6 +565,46 @@ components:
           type: boolean
           description: Whether this is an OpenID Connect standard scope
           example: true
+    UpdateScopeRequest:
+      type: object
+      description: 'Request payload for updating an existing scope. All fields are optional for partial updates.
+
+        The scope name cannot be changed through this endpoint.
+
+        '
+      properties:
+        display_name:
+          type: string
+          description: Human-readable display name
+          example: Updated Profile Reader
+          maxLength: 100
+        description:
+          type: string
+          description: Detailed description of the scope
+          example: Updated description for profile reading permissions
+          maxLength: 500
+        claims:
+          type: array
+          description: "List of claims associated with this scope. For predefined OIDC scopes, \nspecific claims are required and validated:\n- openid: ['sub'] (exactly 1 claim)\n- phone: ['phone_number', 'phone_number_verified'] (exactly 2 claims)\n- email: ['email', 'email_verified'] (exactly 2 claims)\n- address: ['address'] (exactly 1 claim)\n\nCustom scopes can have any combination of claims.\n"
+          items:
+            type: string
+            example: name
+          example:
+          - name
+          - email
+          - profile
+          - picture
+        icon_url:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL to the scope's icon
+          example: https://example.com/icons/updated-profile.png
+        is_oidc:
+          type: boolean
+          description: Whether this is an OpenID Connect standard scope
+          example: false
     ErrorResponse:
       type: object
       properties:

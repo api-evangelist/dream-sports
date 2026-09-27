@@ -358,12 +358,31 @@ components:
           type: integer
         typeName:
           type: string
+    Label:
+      type: object
+      properties:
+        labelId:
+          type: integer
+          description: Unique label identifier
+        labelName:
+          type: string
+          description: Label name
+        projectId:
+          type: integer
+          description: Project ID
     TestCoveredBy:
       type: object
       properties:
         testCoveredById:
           type: integer
         testCoveredByName:
+          type: string
+    Platform:
+      type: object
+      properties:
+        platformId:
+          type: integer
+        platformName:
           type: string
     AutomationStatus:
       type: object
@@ -397,18 +416,6 @@ components:
         projectId:
           type: integer
           description: Project ID
-    Label:
-      type: object
-      properties:
-        labelId:
-          type: integer
-          description: Unique label identifier
-        labelName:
-          type: string
-          description: Label name
-        projectId:
-          type: integer
-          description: Project ID
     Section:
       type: object
       properties:
@@ -426,13 +433,6 @@ components:
         projectId:
           type: integer
           description: Project ID
-    Platform:
-      type: object
-      properties:
-        platformId:
-          type: integer
-        platformName:
-          type: string
   securitySchemes:
     cookieAuth:
       type: apiKey

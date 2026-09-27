@@ -144,48 +144,22 @@ paths:
       operationId: deleteAccessKeysByAccessKeyName
       x-operation-id-source: derived
 components:
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/components/schemas/Error'
-            - type: array
-              items:
-                type: object
-                properties:
-                  message:
-                    type: string
-    Unauthorized:
-      description: Unauthorized - invalid or expired authentication
-      content:
-        text/plain:
-          schema:
-            type: string
-            example: The session or access key being used is invalid, please run "code-push-standalone login" again.
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Conflict:
-      description: Conflict - resource already exists
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    AccessKeyName:
-      name: accessKeyName
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Access key friendly name or generated name
   schemas:
+    AccessKeyRequest:
+      type: object
+      properties:
+        friendlyName:
+          type: string
+          example: CI/CD Key
+        description:
+          type: string
+        ttl:
+          type: integer
+          format: int64
+          description: Time-to-live in milliseconds
+          example: 5184000000
+        scope:
+          type: string
     AccessKey:
       type: object
       properties:
@@ -222,21 +196,47 @@ components:
           type: string
         code:
           type: string
-    AccessKeyRequest:
-      type: object
-      properties:
-        friendlyName:
-          type: string
-          example: CI/CD Key
-        description:
-          type: string
-        ttl:
-          type: integer
-          format: int64
-          description: Time-to-live in milliseconds
-          example: 5184000000
-        scope:
-          type: string
+  parameters:
+    AccessKeyName:
+      name: accessKeyName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Access key friendly name or generated name
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/Error'
+            - type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+    Unauthorized:
+      description: Unauthorized - invalid or expired authentication
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: The session or access key being used is invalid, please run "code-push-standalone login" again.
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflict - resource already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     BearerAuth:
       type: http

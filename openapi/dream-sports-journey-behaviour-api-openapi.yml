@@ -203,39 +203,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
+  parameters:
+    UserId:
+      name: USER-ID
+      in: header
+      required: true
+      schema:
+        type: string
+      example: admin
   schemas:
-    ApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        data:
-          type: object
-        statusCode:
-          type: integer
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            cause:
-              type: string
-            code:
-              type: string
-    BehaviourTagUpdateRequest:
-      type: object
-      properties:
-        description:
-          type: string
-        exposureRule:
-          type: object
-        linkedCtas:
-          type: array
-          items:
-            type: string
     BehaviourTagRequest:
       type: object
       required:
@@ -271,14 +247,38 @@ components:
           type: array
           items:
             type: string
-  parameters:
-    UserId:
-      name: USER-ID
-      in: header
-      required: true
-      schema:
-        type: string
-      example: admin
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
+    BehaviourTagUpdateRequest:
+      type: object
+      properties:
+        description:
+          type: string
+        exposureRule:
+          type: object
+        linkedCtas:
+          type: array
+          items:
+            type: string
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        statusCode:
+          type: integer
   securitySchemes:
     TenantIdHeader:
       type: apiKey

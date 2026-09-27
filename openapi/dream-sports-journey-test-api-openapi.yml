@@ -127,15 +127,6 @@ components:
               type: string
             code:
               type: string
-    TestJourneyRequest:
-      type: object
-      description: Request to create a test journey for validating journey behaviour before going live
-      properties:
-        userIds:
-          type: array
-          items:
-            type: string
-          description: List of user IDs to test the journey with
     ApiResponse:
       type: object
       properties:
@@ -145,6 +136,15 @@ components:
           type: object
         statusCode:
           type: integer
+    TestJourneyRequest:
+      type: object
+      description: Request to create a test journey for validating journey behaviour before going live
+      properties:
+        userIds:
+          type: array
+          items:
+            type: string
+          description: List of user IDs to test the journey with
   securitySchemes:
     TenantIdHeader:
       type: apiKey

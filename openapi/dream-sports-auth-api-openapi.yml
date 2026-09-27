@@ -143,15 +143,14 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    AuthLoginRequest:
+    AuthTokenApiResponse:
       type: object
-      required:
-      - google_id_token
       properties:
-        google_id_token:
-          type: string
-          description: Raw Google ID token (JWT)
-          example: '{{GOOGLE_ID_TOKEN_RAW}}'
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/AuthTokenData'
     AuthRefreshRequest:
       type: object
       required:
@@ -161,6 +160,18 @@ components:
           type: string
           description: Raw Firebase refresh token
           example: '{{FIREBASE_REFRESH_TOKEN_RAW}}'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
     AuthTokenData:
       type: object
       properties:
@@ -179,26 +190,15 @@ components:
         token_type:
           type: string
           example: Bearer
-    AuthTokenApiResponse:
+    AuthLoginRequest:
       type: object
+      required:
+      - google_id_token
       properties:
-        success:
-          type: boolean
-          example: true
-        data:
-          $ref: '#/components/schemas/AuthTokenData'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            cause:
-              type: string
-            code:
-              type: string
+        google_id_token:
+          type: string
+          description: Raw Google ID token (JWT)
+          example: '{{GOOGLE_ID_TOKEN_RAW}}'
   securitySchemes:
     TenantIdHeader:
       type: apiKey

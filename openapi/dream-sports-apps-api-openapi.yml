@@ -189,82 +189,13 @@ paths:
       operationId: postAppsByAppNameTransferByEmail
       x-operation-id-source: derived
 components:
-  parameters:
-    AppName:
-      name: appName
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Application name (or 'owner:appName' for disambiguation)
-      example: MyApp-iOS
-    TenantHeader:
-      name: tenant
-      in: header
-      schema:
-        type: string
-      description: Organization/tenant ID filter
-  schemas:
-    CollaboratorProperties:
-      type: object
-      properties:
-        permission:
-          type: string
-          enum:
-          - Owner
-          - Collaborator
-        isCurrentAccount:
-          type: boolean
-          description: Whether this is the authenticated user
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
-    CollaboratorMap:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/CollaboratorProperties'
-      example:
-        user@example.com:
-          permission: Owner
-          isCurrentAccount: true
-    App:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          example: MyApp-iOS
-        collaborators:
-          $ref: '#/components/schemas/CollaboratorMap'
-        deployments:
-          type: array
-          items:
-            type: string
-          example:
-          - Production
-          - Staging
-        organisation:
-          type: object
-          properties:
-            orgId:
-              type: string
-            orgName:
-              type: string
-    AppCreationRequest:
-      allOf:
-      - $ref: '#/components/schemas/App'
-      - type: object
-        properties:
-          manuallyProvisionDeployments:
-            type: boolean
-            default: false
-            description: If true, does not create default Production/Staging deployments
   responses:
+    Conflict:
+      description: Conflict - resource already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Bad request - invalid parameters
       content:
@@ -290,12 +221,81 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Conflict:
-      description: Conflict - resource already exists
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  schemas:
+    CollaboratorMap:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/CollaboratorProperties'
+      example:
+        user@example.com:
+          permission: Owner
+          isCurrentAccount: true
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    AppCreationRequest:
+      allOf:
+      - $ref: '#/components/schemas/App'
+      - type: object
+        properties:
+          manuallyProvisionDeployments:
+            type: boolean
+            default: false
+            description: If true, does not create default Production/Staging deployments
+    App:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          example: MyApp-iOS
+        collaborators:
+          $ref: '#/components/schemas/CollaboratorMap'
+        deployments:
+          type: array
+          items:
+            type: string
+          example:
+          - Production
+          - Staging
+        organisation:
+          type: object
+          properties:
+            orgId:
+              type: string
+            orgName:
+              type: string
+    CollaboratorProperties:
+      type: object
+      properties:
+        permission:
+          type: string
+          enum:
+          - Owner
+          - Collaborator
+        isCurrentAccount:
+          type: boolean
+          description: Whether this is the authenticated user
+  parameters:
+    TenantHeader:
+      name: tenant
+      in: header
+      schema:
+        type: string
+      description: Organization/tenant ID filter
+    AppName:
+      name: appName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Application name (or 'owner:appName' for disambiguation)
+      example: MyApp-iOS
   securitySchemes:
     BearerAuth:
       type: http

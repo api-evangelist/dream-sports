@@ -84,6 +84,14 @@ paths:
       operationId: getV1Revocations
       x-operation-id-source: derived
 components:
+  parameters:
+    TenantIdHeader:
+      name: tenant-id
+      in: header
+      description: tenant-id of the client integrating with guardian
+      required: true
+      schema:
+        type: string
   schemas:
     ErrorResponse:
       type: object
@@ -139,11 +147,3 @@ components:
         from: 1640995200
         to: 1641081600
         expiry: 3600
-  parameters:
-    TenantIdHeader:
-      name: tenant-id
-      in: header
-      description: tenant-id of the client integrating with guardian
-      required: true
-      schema:
-        type: string

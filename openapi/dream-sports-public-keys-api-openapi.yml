@@ -42,6 +42,14 @@ paths:
       operationId: getV1Certs
       x-operation-id-source: derived
 components:
+  parameters:
+    TenantIdHeader:
+      name: tenant-id
+      in: header
+      description: tenant-id of the client integrating with guardian
+      required: true
+      schema:
+        type: string
   schemas:
     ErrorResponse:
       type: object
@@ -92,11 +100,3 @@ components:
           format: base64url
           description: Exponent of the RSA public key
           example: AQAB
-  parameters:
-    TenantIdHeader:
-      name: tenant-id
-      in: header
-      description: tenant-id of the client integrating with guardian
-      required: true
-      schema:
-        type: string

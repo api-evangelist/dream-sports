@@ -212,6 +212,23 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    EventPropertyInput:
+      type: object
+      required:
+      - propertyName
+      - type
+      - isMandatory
+      properties:
+        propertyName:
+          type: string
+        type:
+          type: string
+        expectedValue:
+          type: string
+        isMandatory:
+          type: boolean
+        description:
+          type: string
     EventInput:
       type: object
       required:
@@ -236,23 +253,6 @@ components:
               type: string
             code:
               type: string
-    EventPropertyInput:
-      type: object
-      required:
-      - propertyName
-      - type
-      - isMandatory
-      properties:
-        propertyName:
-          type: string
-        type:
-          type: string
-        expectedValue:
-          type: string
-        isMandatory:
-          type: boolean
-        description:
-          type: string
     ApiResponse:
       type: object
       properties:

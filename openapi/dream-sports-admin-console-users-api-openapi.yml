@@ -194,11 +194,39 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ConsoleUserIdData:
+    ConsoleUserIdApiResponse:
       type: object
       properties:
-        id:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/ConsoleUserIdData'
+    ConsoleUserOnboardRequest:
+      type: object
+      required:
+      - email
+      properties:
+        email:
           type: string
+          format: email
+        projectIds:
+          type: array
+          items:
+            type: string
+          description: Optional; must be a subset of the tenant's projects when non-empty.
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
     AdminConsoleUserUpdateRequest:
       type: object
       properties:
@@ -219,39 +247,11 @@ components:
             When omitted, existing project IDs are unchanged.
 
             '
-    ConsoleUserIdApiResponse:
+    ConsoleUserIdData:
       type: object
       properties:
-        success:
-          type: boolean
-          example: true
-        data:
-          $ref: '#/components/schemas/ConsoleUserIdData'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            cause:
-              type: string
-            code:
-              type: string
-    ConsoleUserOnboardRequest:
-      type: object
-      required:
-      - email
-      properties:
-        email:
+        id:
           type: string
-          format: email
-        projectIds:
-          type: array
-          items:
-            type: string
-          description: Optional; must be a subset of the tenant's projects when non-empty.
   securitySchemes:
     TenantIdHeader:
       type: apiKey

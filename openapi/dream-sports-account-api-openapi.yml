@@ -151,49 +151,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    TermsStatus:
-      type: object
-      properties:
-        accountId:
-          type: string
-        isOwner:
-          type: boolean
-        ownerAppCount:
-          type: integer
-        termsAccepted:
-          type: boolean
-        termsVersion:
-          type:
-          - string
-          - 'null'
-        acceptedTime:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        isCurrentVersion:
-          type: boolean
-        currentRequiredVersion:
-          type: string
-    AccountStorage:
-      type: object
-      properties:
-        id:
-          type: string
-        email:
-          type: string
-          format: email
-        name:
-          type: string
-        gitHubId:
-          type: string
-        microsoftId:
-          type: string
-        azureAdId:
-          type: string
-        createdTime:
-          type: integer
-          format: int64
     TermsAcceptance:
       type: object
       properties:
@@ -250,6 +207,49 @@ components:
           - GitHub
           - Microsoft
           description: List of linked OAuth providers
+    AccountStorage:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        gitHubId:
+          type: string
+        microsoftId:
+          type: string
+        azureAdId:
+          type: string
+        createdTime:
+          type: integer
+          format: int64
+    TermsStatus:
+      type: object
+      properties:
+        accountId:
+          type: string
+        isOwner:
+          type: boolean
+        ownerAppCount:
+          type: integer
+        termsAccepted:
+          type: boolean
+        termsVersion:
+          type:
+          - string
+          - 'null'
+        acceptedTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        isCurrentVersion:
+          type: boolean
+        currentRequiredVersion:
+          type: string
   responses:
     BadRequest:
       description: Bad request - invalid parameters

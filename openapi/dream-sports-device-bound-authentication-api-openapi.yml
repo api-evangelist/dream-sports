@@ -281,6 +281,24 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    BiometricChallengeRequest:
+      type: object
+      required:
+      - refresh_token
+      - client_id
+      - device_metadata
+      properties:
+        refresh_token:
+          type: string
+          description: Refresh token for authentication context
+          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        client_id:
+          type: string
+          description: Client application identifier
+          example: mobile-app
+        device_metadata:
+          $ref: '#/components/schemas/DeviceMetadata'
+          description: Device metadata including device_id (required)
     TokenResponse:
       type: object
       properties:
@@ -308,42 +326,6 @@ components:
           type: boolean
           description: Indicates if the user is new
           example: false
-    BiometricLoginErrorResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: Indicates if authentication was successful
-          example: false
-        message:
-          type: string
-          description: Error message
-          example: Authentication failed
-        error:
-          type: string
-          description: Error code
-          enum:
-          - invalid_signature
-          - challenge_not_found
-          - challenge_expired
-          - credential_not_found
-          - invalid_state
-          example: invalid_signature
-    BiometricChallengeResponse:
-      type: object
-      properties:
-        state:
-          type: string
-          description: Single-use state token for register/login operations. Must be used within expires_in seconds.
-          example: biometric_challenge_a1b2c3d4e5f6
-        challenge:
-          type: string
-          description: Base64-encoded challenge (32-byte nonce)
-          example: xJ8k2nM9pQ3vT7wY1cF6hL4mN8qR5sV0zX3bG7jK9tW2yP6uA4dH1eI5oU8rE3c=
-        expires_in:
-          type: integer
-          description: Challenge expiry time in seconds (default 300 = 5 minutes)
-          example: 300
     BiometricCompleteRequest:
       type: object
       required:
@@ -383,38 +365,27 @@ components:
         device_metadata:
           $ref: '#/components/schemas/DeviceMetadata'
           description: Device metadata including device_id, platform, and other device information (required)
-    BiometricChallengeRequest:
-      type: object
-      required:
-      - refresh_token
-      - client_id
-      - device_metadata
-      properties:
-        refresh_token:
-          type: string
-          description: Refresh token for authentication context
-          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-        client_id:
-          type: string
-          description: Client application identifier
-          example: mobile-app
-        device_metadata:
-          $ref: '#/components/schemas/DeviceMetadata'
-          description: Device metadata including device_id (required)
-    ErrorResponse:
+    BiometricLoginErrorResponse:
       type: object
       properties:
+        success:
+          type: boolean
+          description: Indicates if authentication was successful
+          example: false
+        message:
+          type: string
+          description: Error message
+          example: Authentication failed
         error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code identifying the type of error
-              example: invalid_request
-            message:
-              type: string
-              description: Human-readable error message
-              example: Something went wrong.
+          type: string
+          description: Error code
+          enum:
+          - invalid_signature
+          - challenge_not_found
+          - challenge_expired
+          - credential_not_found
+          - invalid_state
+          example: invalid_signature
     DeviceMetadata:
       type: object
       required:
@@ -444,6 +415,35 @@ components:
           type: string
           description: User-friendly device name
           example: John's iPhone
+    BiometricChallengeResponse:
+      type: object
+      properties:
+        state:
+          type: string
+          description: Single-use state token for register/login operations. Must be used within expires_in seconds.
+          example: biometric_challenge_a1b2c3d4e5f6
+        challenge:
+          type: string
+          description: Base64-encoded challenge (32-byte nonce)
+          example: xJ8k2nM9pQ3vT7wY1cF6hL4mN8qR5sV0zX3bG7jK9tW2yP6uA4dH1eI5oU8rE3c=
+        expires_in:
+          type: integer
+          description: Challenge expiry time in seconds (default 300 = 5 minutes)
+          example: 300
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
   parameters:
     TenantIdHeader:
       name: tenant-id

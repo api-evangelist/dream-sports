@@ -13,17 +13,24 @@ description: >-
   first-party stdio MCP server for Odin, an llms.txt, and client SDKs published to npm under the @d11 scope and to
   LuaRocks under the dream11 namespace.
 deliveryModel:
-  model: unknown
+  model: saas
+  license_evidence:
+    not_product:
+    - dream-horizon-org/checkmate
+    - dream-horizon-org/delivr
+    - dream-horizon-org/guardian
+    - dream-horizon-org/odin-mcp
+    - dream-horizon-org/raven
   open_source: unknown
   commercial: true
   callable_host: true
-  label: Delivery model not determined — needs a product licence on record
+  label: Hosted service · you call their endpoint
   confidence: low
   source:
   - openapi
   - pricing
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: unknown
@@ -46,11 +53,14 @@ x-source: harvest:secondary-market
 specificationVersion: '0.23'
 created: '2026-08-04'
 modified: '2026-08-04'
+x-docs-platform: docusaurus
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-09-25
 tags:
 - Company
 - Sports Technology
 - Fantasy Sports
-- Open-Source
+- Open Source
 - Developer Tools
 - Platform Engineering
 - Authentication
@@ -64,7 +74,7 @@ tags:
 - Feature Flags
 - India
 - MCP
-- agent-native
+- Agent-Native
 tags_raw:
 - Company
 - sports-technology
@@ -85,6 +95,7 @@ tags_raw:
 - india
 - mcp
 - agent-native
+- Open-Source
 apis:
 - name: Odin MCP Server
   description: >-
@@ -96,16 +107,17 @@ apis:
   humanURL: https://github.com/dream-horizon-org/odin-mcp
   tags:
   - MCP
-  - agent-native
+  - Agent-Native
   - Developer Platform
   - DevOps
-  - Open-Source
+  - Open Source
   tags_raw:
   - mcp
   - agent-native
   - developer-platform
   - devops
   - open-source
+  - Open-Source
   properties:
   - type: MCPServer
     url: mcp/dream-sports-mcp.yml
@@ -2183,8 +2195,6 @@ apis:
   humanURL: https://github.com/dream-horizon-org/odin-mcp
   baseURL: https://auth.dream11.com/
   tags:
-  - OpenAPI
-  tags_raw:
   - Open API
   properties:
   - type: OpenAPI

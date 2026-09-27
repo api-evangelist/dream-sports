@@ -300,6 +300,25 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    JourneyUpdateRequest:
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        team:
+          type: string
+        startTime:
+          type: integer
+          format: int64
+        endTime:
+          type: integer
+          format: int64
+        rule:
+          $ref: '#/components/schemas/RuleRequest'
     JourneyRequest:
       type: object
       required:
@@ -327,6 +346,27 @@ components:
           description: Future epoch timestamp in milliseconds
         rule:
           $ref: '#/components/schemas/RuleRequest'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        statusCode:
+          type: integer
     RuleRequest:
       type: object
       required:
@@ -392,46 +432,6 @@ components:
                   type: string
                 value:
                   type: integer
-    ApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        data:
-          type: object
-        statusCode:
-          type: integer
-    JourneyUpdateRequest:
-      type: object
-      properties:
-        tags:
-          type: array
-          items:
-            type: string
-        description:
-          type: string
-        team:
-          type: string
-        startTime:
-          type: integer
-          format: int64
-        endTime:
-          type: integer
-          format: int64
-        rule:
-          $ref: '#/components/schemas/RuleRequest'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            cause:
-              type: string
-            code:
-              type: string
   parameters:
     UserId:
       name: USER-ID
