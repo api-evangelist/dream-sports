@@ -265,6 +265,18 @@ components:
         createdOn:
           type: string
           format: date-time
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+        status:
+          type: integer
+          description: HTTP status code
+      required:
+      - error
+      - status
     Project:
       type: object
       properties:
@@ -289,18 +301,6 @@ components:
         orgId:
           type: integer
           description: Organization ID
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message
-        status:
-          type: integer
-          description: HTTP status code
-      required:
-      - error
-      - status
   securitySchemes:
     cookieAuth:
       type: apiKey

@@ -474,29 +474,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ConsoleUserPagination:
-      type: object
-      properties:
-        pageSize:
-          type: integer
-        recordCount:
-          type:
-          - integer
-          - 'null'
-          description: Total matching records. Present only when id/email filters are used.
-        nextPageToken:
-          type:
-          - string
-          - 'null'
-          description: Cursor for fetching the next page. Null when there are no more results.
-    ConsoleUserRecordApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: true
-        data:
-          $ref: '#/components/schemas/ConsoleUserRecord'
     ConsoleUserIdApiResponse:
       type: object
       properties:
@@ -505,63 +482,6 @@ components:
           example: true
         data:
           $ref: '#/components/schemas/ConsoleUserIdData'
-    ConsoleUserListData:
-      type: object
-      properties:
-        records:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConsoleUserRecord'
-        pagination:
-          $ref: '#/components/schemas/ConsoleUserPagination'
-    ConsoleUserUpdateRequest:
-      type: object
-      description: Profile fields only (no projectIds). Use admin update to change project IDs.
-      properties:
-        displayName:
-          type: string
-        photoUrl:
-          type: string
-        emailVerified:
-          type: boolean
-        disabled:
-          type: boolean
-    ConsoleUserListApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: true
-        data:
-          $ref: '#/components/schemas/ConsoleUserListData'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            cause:
-              type: string
-            code:
-              type: string
-    ConsoleUserCreateRequest:
-      type: object
-      required:
-      - email
-      properties:
-        email:
-          type: string
-          format: email
-        displayName:
-          type: string
-        photoUrl:
-          type: string
-        emailVerified:
-          type: boolean
-        disabled:
-          type: boolean
     ConsoleUserRecord:
       type: object
       properties:
@@ -598,11 +518,91 @@ components:
           - string
           - 'null'
           format: date-time
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
+    ConsoleUserCreateRequest:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          format: email
+        displayName:
+          type: string
+        photoUrl:
+          type: string
+        emailVerified:
+          type: boolean
+        disabled:
+          type: boolean
+    ConsoleUserListData:
+      type: object
+      properties:
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsoleUserRecord'
+        pagination:
+          $ref: '#/components/schemas/ConsoleUserPagination'
+    ConsoleUserUpdateRequest:
+      type: object
+      description: Profile fields only (no projectIds). Use admin update to change project IDs.
+      properties:
+        displayName:
+          type: string
+        photoUrl:
+          type: string
+        emailVerified:
+          type: boolean
+        disabled:
+          type: boolean
+    ConsoleUserListApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/ConsoleUserListData'
+    ConsoleUserRecordApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/ConsoleUserRecord'
     ConsoleUserIdData:
       type: object
       properties:
         id:
           type: string
+    ConsoleUserPagination:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+        recordCount:
+          type:
+          - integer
+          - 'null'
+          description: Total matching records. Present only when id/email filters are used.
+        nextPageToken:
+          type:
+          - string
+          - 'null'
+          description: Cursor for fetching the next page. Null when there are no more results.
   securitySchemes:
     TenantIdHeader:
       type: apiKey

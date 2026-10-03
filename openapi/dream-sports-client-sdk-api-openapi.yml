@@ -343,44 +343,18 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    JourneySnapshotRequest:
+    ErrorResponse:
       type: object
       properties:
-        ctas:
-          type: array
-          items:
-            type: object
-        behaviourTags:
-          type: array
-          items:
-            type: object
-    SdkTokenRegisterRequest:
-      type: object
-      required:
-      - userId
-      - token
-      - deviceId
-      - tokenType
-      properties:
-        userId:
-          type: string
-        token:
-          type: string
-        deviceId:
-          type: string
-        tokenType:
-          type: string
-          enum:
-          - FCM
-          - APNS
-        os:
-          type: string
-        osVersion:
-          type: string
-        appPackageName:
-          type: string
-        appVersion:
-          type: string
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
     SdkUpsertPreferencesRequest:
       type: object
       required:
@@ -394,13 +368,6 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/PreferenceItem'
-    SdkUpsertPreferencesApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        data:
-          $ref: '#/components/schemas/SdkUpsertPreferencesResponse'
     PreferenceItem:
       type: object
       required:
@@ -423,18 +390,13 @@ components:
           type: object
         statusCode:
           type: integer
-    ErrorResponse:
+    SdkUpsertPreferencesApiResponse:
       type: object
       properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            cause:
-              type: string
-            code:
-              type: string
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/SdkUpsertPreferencesResponse'
     SdkUpsertPreferencesResponse:
       type: object
       properties:
@@ -479,7 +441,69 @@ components:
         custom:
           type: object
           additionalProperties: true
+    JourneySnapshotRequest:
+      type: object
+      properties:
+        ctas:
+          type: array
+          items:
+            type: object
+        behaviourTags:
+          type: array
+          items:
+            type: object
+    SdkTokenRegisterRequest:
+      type: object
+      required:
+      - userId
+      - token
+      - deviceId
+      - tokenType
+      properties:
+        userId:
+          type: string
+        token:
+          type: string
+        deviceId:
+          type: string
+        tokenType:
+          type: string
+          enum:
+          - FCM
+          - APNS
+        os:
+          type: string
+        osVersion:
+          type: string
+        appPackageName:
+          type: string
+        appVersion:
+          type: string
   parameters:
+    SdkPackage:
+      name: package
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^[A-Za-z0-9._-]{3,128}$
+      example: com.dream11.app
+    SdkVersion:
+      name: sdk-version
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^[A-Za-z0-9._-]{1,64}$
+      example: 1.5.0
+    SdkAppBuild:
+      name: app-build
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^[A-Za-z0-9._-]{1,64}$
+      example: 250200123
     SdkAppVersion:
       name: app-version
       in: header
@@ -489,34 +513,6 @@ components:
         pattern: ^[A-Za-z0-9._-]{1,64}$
       description: Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).
       example: 25.2.0
-    SdkOs:
-      name: os
-      in: header
-      required: true
-      schema:
-        type: string
-        enum:
-        - android
-        - ios
-        - tvos
-      example: android
-    SdkVersion:
-      name: sdk-version
-      in: header
-      required: true
-      schema:
-        type: string
-        pattern: ^[A-Za-z0-9._-]{1,64}$
-      example: 1.5.0
-    SdkOsApiLevel:
-      name: os-api-level
-      in: header
-      required: true
-      schema:
-        type: integer
-        format: int32
-        minimum: 0
-      example: 34
     SdkUserId:
       name: user-id
       in: header
@@ -525,14 +521,6 @@ components:
         type: integer
         format: int64
       example: 135162489
-    SdkAppBuild:
-      name: app-build
-      in: header
-      required: true
-      schema:
-        type: string
-        pattern: ^[A-Za-z0-9._-]{1,64}$
-      example: 250200123
     SdkFramework:
       name: framework
       in: header
@@ -544,6 +532,23 @@ components:
         - react-native
         - flutter
       example: react-native
+    SdkOsApiLevel:
+      name: os-api-level
+      in: header
+      required: true
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+      example: 34
+    SdkOsVersion:
+      name: os-version
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^[A-Za-z0-9._-]{1,32}$
+      example: '14'
     SdkPlatform:
       name: platform
       in: header
@@ -556,22 +561,17 @@ components:
         - ios
         - tvos
       example: android-mobile
-    SdkPackage:
-      name: package
+    SdkOs:
+      name: os
       in: header
       required: true
       schema:
         type: string
-        pattern: ^[A-Za-z0-9._-]{3,128}$
-      example: com.dream11.app
-    SdkOsVersion:
-      name: os-version
-      in: header
-      required: true
-      schema:
-        type: string
-        pattern: ^[A-Za-z0-9._-]{1,32}$
-      example: '14'
+        enum:
+        - android
+        - ios
+        - tvos
+      example: android
   securitySchemes:
     TenantIdHeader:
       type: apiKey

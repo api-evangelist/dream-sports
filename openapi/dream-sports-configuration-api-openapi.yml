@@ -351,32 +351,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Type:
-      type: object
-      properties:
-        typeId:
-          type: integer
-        typeName:
-          type: string
-    Label:
-      type: object
-      properties:
-        labelId:
-          type: integer
-          description: Unique label identifier
-        labelName:
-          type: string
-          description: Label name
-        projectId:
-          type: integer
-          description: Project ID
-    TestCoveredBy:
-      type: object
-      properties:
-        testCoveredById:
-          type: integer
-        testCoveredByName:
-          type: string
     Platform:
       type: object
       properties:
@@ -384,6 +358,23 @@ components:
           type: integer
         platformName:
           type: string
+    Section:
+      type: object
+      properties:
+        sectionId:
+          type: integer
+          description: Unique section identifier
+        sectionName:
+          type: string
+          description: Section name
+        parentId:
+          type:
+          - integer
+          - 'null'
+          description: Parent section ID for hierarchy
+        projectId:
+          type: integer
+          description: Project ID
     AutomationStatus:
       type: object
       properties:
@@ -404,6 +395,20 @@ components:
           - Medium
           - Low
           - Trivial
+    TestCoveredBy:
+      type: object
+      properties:
+        testCoveredById:
+          type: integer
+        testCoveredByName:
+          type: string
+    Type:
+      type: object
+      properties:
+        typeId:
+          type: integer
+        typeName:
+          type: string
     Squad:
       type: object
       properties:
@@ -416,20 +421,15 @@ components:
         projectId:
           type: integer
           description: Project ID
-    Section:
+    Label:
       type: object
       properties:
-        sectionId:
+        labelId:
           type: integer
-          description: Unique section identifier
-        sectionName:
+          description: Unique label identifier
+        labelName:
           type: string
-          description: Section name
-        parentId:
-          type:
-          - integer
-          - 'null'
-          description: Parent section ID for hierarchy
+          description: Label name
         projectId:
           type: integer
           description: Project ID

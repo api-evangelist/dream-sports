@@ -207,21 +207,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    DownloadReport:
-      type: object
-      required:
-      - deploymentKey
-      - label
-      properties:
-        deploymentKey:
-          type: string
-          description: Deployment key (can use snake_case deployment_key)
-        label:
-          type: string
-          description: Release label
-        clientUniqueId:
-          type: string
-          description: Unique device identifier (can use snake_case client_unique_id)
     UpdateCheckResponse:
       allOf:
       - $ref: '#/components/schemas/PackageInfo'
@@ -311,6 +296,21 @@ components:
         previousLabelOrAppVersion:
           type: string
           description: Previous label or version (can use snake_case previous_label_or_app_version)
+    DownloadReport:
+      type: object
+      required:
+      - deploymentKey
+      - label
+      properties:
+        deploymentKey:
+          type: string
+          description: Deployment key (can use snake_case deployment_key)
+        label:
+          type: string
+          description: Release label
+        clientUniqueId:
+          type: string
+          description: Unique device identifier (can use snake_case client_unique_id)
   responses:
     BadRequest:
       description: Bad request - invalid parameters

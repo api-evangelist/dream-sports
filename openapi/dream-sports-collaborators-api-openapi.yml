@@ -130,7 +130,29 @@ paths:
       operationId: deleteAppsByAppNameCollaboratorsByEmail
       x-operation-id-source: derived
 components:
+  parameters:
+    AppName:
+      name: appName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Application name (or 'owner:appName' for disambiguation)
+      example: MyApp-iOS
+    TenantHeader:
+      name: tenant
+      in: header
+      schema:
+        type: string
+      description: Organization/tenant ID filter
   schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
     CollaboratorMap:
       type: object
       additionalProperties:
@@ -139,13 +161,6 @@ components:
         user@example.com:
           permission: Owner
           isCurrentAccount: true
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
     CollaboratorProperties:
       type: object
       properties:
@@ -158,6 +173,12 @@ components:
           type: boolean
           description: Whether this is the authenticated user
   responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Bad request - invalid parameters
       content:
@@ -171,33 +192,12 @@ components:
                 properties:
                   message:
                     type: string
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Forbidden:
       description: Forbidden - insufficient permissions
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    TenantHeader:
-      name: tenant
-      in: header
-      schema:
-        type: string
-      description: Organization/tenant ID filter
-    AppName:
-      name: appName
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Application name (or 'owner:appName' for disambiguation)
-      example: MyApp-iOS
   securitySchemes:
     BearerAuth:
       type: http

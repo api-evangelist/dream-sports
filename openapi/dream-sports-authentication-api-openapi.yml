@@ -163,13 +163,6 @@ paths:
       operationId: getAuthCallbackByProvider
       x-operation-id-source: derived
 components:
-  responses:
-    TooManyRequests:
-      description: Too many requests - rate limit exceeded
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     OAuthProvider:
       name: provider
@@ -191,6 +184,13 @@ components:
           type: string
         code:
           type: string
+  responses:
+    TooManyRequests:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     BearerAuth:
       type: http

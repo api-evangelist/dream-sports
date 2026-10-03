@@ -106,15 +106,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
-  parameters:
-    UserId:
-      name: USER-ID
-      in: header
-      required: true
-      schema:
-        type: string
-      example: admin
   schemas:
+    TestJourneyRequest:
+      type: object
+      description: Request to create a test journey for validating journey behaviour before going live
+      properties:
+        userIds:
+          type: array
+          items:
+            type: string
+          description: List of user IDs to test the journey with
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        statusCode:
+          type: integer
     ErrorResponse:
       type: object
       properties:
@@ -127,24 +137,14 @@ components:
               type: string
             code:
               type: string
-    ApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        data:
-          type: object
-        statusCode:
-          type: integer
-    TestJourneyRequest:
-      type: object
-      description: Request to create a test journey for validating journey behaviour before going live
-      properties:
-        userIds:
-          type: array
-          items:
-            type: string
-          description: List of user IDs to test the journey with
+  parameters:
+    UserId:
+      name: USER-ID
+      in: header
+      required: true
+      schema:
+        type: string
+      example: admin
   securitySchemes:
     TenantIdHeader:
       type: apiKey

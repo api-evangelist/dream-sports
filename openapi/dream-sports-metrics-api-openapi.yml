@@ -45,7 +45,41 @@ paths:
       operationId: getAppsByAppNameDeploymentsByDeploymentNameMetrics
       x-operation-id-source: derived
 components:
+  parameters:
+    AppName:
+      name: appName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Application name (or 'owner:appName' for disambiguation)
+      example: MyApp-iOS
+    TenantHeader:
+      name: tenant
+      in: header
+      schema:
+        type: string
+      description: Organization/tenant ID filter
+    DeploymentName:
+      name: deploymentName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Deployment environment name
+      example: Production
   schemas:
+    DeploymentMetrics:
+      type: object
+      description: Metrics keyed by package label or app version
+      additionalProperties:
+        $ref: '#/components/schemas/UpdateMetrics'
+      example:
+        v23:
+          active: 1234
+          downloaded: 1500
+          failed: 10
+          installed: 1450
     UpdateMetrics:
       type: object
       properties:
@@ -61,40 +95,6 @@ components:
         installed:
           type: integer
           description: Total successful installations
-    DeploymentMetrics:
-      type: object
-      description: Metrics keyed by package label or app version
-      additionalProperties:
-        $ref: '#/components/schemas/UpdateMetrics'
-      example:
-        v23:
-          active: 1234
-          downloaded: 1500
-          failed: 10
-          installed: 1450
-  parameters:
-    TenantHeader:
-      name: tenant
-      in: header
-      schema:
-        type: string
-      description: Organization/tenant ID filter
-    DeploymentName:
-      name: deploymentName
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Deployment environment name
-      example: Production
-    AppName:
-      name: appName
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Application name (or 'owner:appName' for disambiguation)
-      example: MyApp-iOS
   securitySchemes:
     BearerAuth:
       type: http

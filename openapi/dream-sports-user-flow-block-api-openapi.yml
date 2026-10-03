@@ -129,6 +129,38 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    V1UnblockUserFlowRequestBody:
+      type: object
+      required:
+      - userIdentifier
+      - unblockFlows
+      properties:
+        userIdentifier:
+          type: string
+          description: User identifier (email, phone number, username)
+          example: user@example.com
+        unblockFlows:
+          type: array
+          items:
+            type: string
+            enum:
+            - passwordless
+            - password
+            - social_auth
+            - otp_verify
+            - pin
+          description: 'List of flow types to unblock. Use "password" or "pin" to unblock when
+
+            blocked due to wrong attempts (user_identifier must be username, email, or phone).
+
+            '
+          example:
+          - password
+          - pin
+      example:
+        userIdentifier: john@example.com
+        unblockFlows:
+        - password
     V1UserBlockedFlowsResponse:
       type: object
       properties:
@@ -215,38 +247,6 @@ components:
         - social_auth
         reason: Suspicious activity detected
         unblockedAt: 1704067200
-    V1UnblockUserFlowRequestBody:
-      type: object
-      required:
-      - userIdentifier
-      - unblockFlows
-      properties:
-        userIdentifier:
-          type: string
-          description: User identifier (email, phone number, username)
-          example: user@example.com
-        unblockFlows:
-          type: array
-          items:
-            type: string
-            enum:
-            - passwordless
-            - password
-            - social_auth
-            - otp_verify
-            - pin
-          description: 'List of flow types to unblock. Use "password" or "pin" to unblock when
-
-            blocked due to wrong attempts (user_identifier must be username, email, or phone).
-
-            '
-          example:
-          - password
-          - pin
-      example:
-        userIdentifier: john@example.com
-        unblockFlows:
-        - password
   parameters:
     TenantIdHeader:
       name: tenant-id

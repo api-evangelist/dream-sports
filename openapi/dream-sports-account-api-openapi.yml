@@ -150,7 +150,77 @@ paths:
       operationId: getAccountByaccessKeyName
       x-operation-id-source: derived
 components:
+  responses:
+    Unauthorized:
+      description: Unauthorized - invalid or expired authentication
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: The session or access key being used is invalid, please run "code-push-standalone login" again.
+    BadRequest:
+      description: Bad request - invalid parameters
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/Error'
+            - type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
   schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    Account:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        name:
+          type: string
+          example: John Doe
+        linkedProviders:
+          type: array
+          items:
+            type: string
+          example:
+          - GitHub
+          - Microsoft
+          description: List of linked OAuth providers
+    TermsStatus:
+      type: object
+      properties:
+        accountId:
+          type: string
+        isOwner:
+          type: boolean
+        ownerAppCount:
+          type: integer
+        termsAccepted:
+          type: boolean
+        termsVersion:
+          type:
+          - string
+          - 'null'
+        acceptedTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        isCurrentVersion:
+          type: boolean
+        currentRequiredVersion:
+          type: string
     TermsAcceptance:
       type: object
       properties:
@@ -182,31 +252,6 @@ components:
           type: string
         azureAdId:
           type: string
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
-    Account:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-          example: user@example.com
-        name:
-          type: string
-          example: John Doe
-        linkedProviders:
-          type: array
-          items:
-            type: string
-          example:
-          - GitHub
-          - Microsoft
-          description: List of linked OAuth providers
     AccountStorage:
       type: object
       properties:
@@ -226,51 +271,6 @@ components:
         createdTime:
           type: integer
           format: int64
-    TermsStatus:
-      type: object
-      properties:
-        accountId:
-          type: string
-        isOwner:
-          type: boolean
-        ownerAppCount:
-          type: integer
-        termsAccepted:
-          type: boolean
-        termsVersion:
-          type:
-          - string
-          - 'null'
-        acceptedTime:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        isCurrentVersion:
-          type: boolean
-        currentRequiredVersion:
-          type: string
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/components/schemas/Error'
-            - type: array
-              items:
-                type: object
-                properties:
-                  message:
-                    type: string
-    Unauthorized:
-      description: Unauthorized - invalid or expired authentication
-      content:
-        text/plain:
-          schema:
-            type: string
-            example: The session or access key being used is invalid, please run "code-push-standalone login" again.
   securitySchemes:
     BearerAuth:
       type: http

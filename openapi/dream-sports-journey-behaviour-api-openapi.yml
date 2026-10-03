@@ -203,14 +203,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
-  parameters:
-    UserId:
-      name: USER-ID
-      in: header
-      required: true
-      schema:
-        type: string
-      example: admin
   schemas:
     BehaviourTagRequest:
       type: object
@@ -247,18 +239,6 @@ components:
           type: array
           items:
             type: string
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            cause:
-              type: string
-            code:
-              type: string
     BehaviourTagUpdateRequest:
       type: object
       properties:
@@ -279,6 +259,26 @@ components:
           type: object
         statusCode:
           type: integer
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
+  parameters:
+    UserId:
+      name: USER-ID
+      in: header
+      required: true
+      schema:
+        type: string
+      example: admin
   securitySchemes:
     TenantIdHeader:
       type: apiKey

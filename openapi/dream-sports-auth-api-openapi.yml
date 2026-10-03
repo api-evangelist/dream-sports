@@ -143,14 +143,15 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    AuthTokenApiResponse:
+    AuthLoginRequest:
       type: object
+      required:
+      - google_id_token
       properties:
-        success:
-          type: boolean
-          example: true
-        data:
-          $ref: '#/components/schemas/AuthTokenData'
+        google_id_token:
+          type: string
+          description: Raw Google ID token (JWT)
+          example: '{{GOOGLE_ID_TOKEN_RAW}}'
     AuthRefreshRequest:
       type: object
       required:
@@ -190,15 +191,14 @@ components:
         token_type:
           type: string
           example: Bearer
-    AuthLoginRequest:
+    AuthTokenApiResponse:
       type: object
-      required:
-      - google_id_token
       properties:
-        google_id_token:
-          type: string
-          description: Raw Google ID token (JWT)
-          example: '{{GOOGLE_ID_TOKEN_RAW}}'
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/AuthTokenData'
   securitySchemes:
     TenantIdHeader:
       type: apiKey

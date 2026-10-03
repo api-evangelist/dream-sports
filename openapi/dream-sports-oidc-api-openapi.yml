@@ -783,6 +783,47 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    OidcTokenResponse:
+      type: object
+      description: OAuth 2.0 token response
+      required:
+      - access_token
+      - token_type
+      - expires_in
+      properties:
+        access_token:
+          type: string
+          description: OAuth 2.0 access token
+          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        token_type:
+          type: string
+          description: Token type
+          enum:
+          - Bearer
+          example: Bearer
+        expires_in:
+          type: integer
+          description: Access token expiration time in seconds
+          example: 3600
+        refresh_token:
+          type: string
+          description: OAuth 2.0 refresh token
+          example: refresh_token_xyz789
+        id_token:
+          type: string
+          description: OpenID Connect ID token
+          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        scope:
+          type: string
+          description: Space-separated list of granted scopes
+          example: openid email profile
+      example:
+        access_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        token_type: Bearer
+        expires_in: 3600
+        refresh_token: refresh_token_xyz789
+        id_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        scope: openid email profile
     UserInfoResponse:
       type: object
       description: OpenID Connect UserInfo response
@@ -847,6 +888,38 @@ components:
         picture: https://example.com/avatar.jpg
         locale: en-US
         updated_at: 1640995200
+    ConsentAcceptRequestBody:
+      type: object
+      description: Request body for accepting consent challenge
+      required:
+      - consent_challenge
+      - consented_scopes
+      - refresh_token
+      properties:
+        consent_challenge:
+          type: string
+          description: Consent challenge received from the consent page
+          example: consent_challenge_xyz789
+        consented_scopes:
+          type: array
+          description: List of scopes the user has consented to
+          items:
+            type: string
+          example:
+          - openid
+          - email
+          - profile
+        refresh_token:
+          type: string
+          description: Valid refresh token for the user
+          example: refresh_token_xyz789
+      example:
+        consent_challenge: consent_challenge_xyz789
+        consented_scopes:
+        - openid
+        - email
+        - profile
+        refresh_token: refresh_token_xyz789
     ErrorResponse:
       type: object
       properties:
@@ -861,6 +934,24 @@ components:
               type: string
               description: Human-readable error message
               example: Something went wrong.
+    LoginAcceptRequestBody:
+      type: object
+      description: Request body for accepting login challenge
+      required:
+      - login_challenge
+      - refresh_token
+      properties:
+        login_challenge:
+          type: string
+          description: Login challenge received from the login page
+          example: login_challenge_abc123
+        refresh_token:
+          type: string
+          description: Valid refresh token for the user
+          example: refresh_token_xyz789
+      example:
+        login_challenge: login_challenge_abc123
+        refresh_token: refresh_token_xyz789
     TokenRequestBody:
       type: object
       description: Request body for OAuth 2.0 token endpoint
@@ -910,24 +1001,6 @@ components:
         redirect_uri: https://client.example.com/callback
         client_id: my_client_id
         client_secret: my_client_secret
-    LoginAcceptRequestBody:
-      type: object
-      description: Request body for accepting login challenge
-      required:
-      - login_challenge
-      - refresh_token
-      properties:
-        login_challenge:
-          type: string
-          description: Login challenge received from the login page
-          example: login_challenge_abc123
-        refresh_token:
-          type: string
-          description: Valid refresh token for the user
-          example: refresh_token_xyz789
-      example:
-        login_challenge: login_challenge_abc123
-        refresh_token: refresh_token_xyz789
     UserConsentResponse:
       type: object
       description: User consent information for OAuth 2.0 client
@@ -1005,79 +1078,6 @@ components:
         - openid
         - email
         subject: user123
-    ConsentAcceptRequestBody:
-      type: object
-      description: Request body for accepting consent challenge
-      required:
-      - consent_challenge
-      - consented_scopes
-      - refresh_token
-      properties:
-        consent_challenge:
-          type: string
-          description: Consent challenge received from the consent page
-          example: consent_challenge_xyz789
-        consented_scopes:
-          type: array
-          description: List of scopes the user has consented to
-          items:
-            type: string
-          example:
-          - openid
-          - email
-          - profile
-        refresh_token:
-          type: string
-          description: Valid refresh token for the user
-          example: refresh_token_xyz789
-      example:
-        consent_challenge: consent_challenge_xyz789
-        consented_scopes:
-        - openid
-        - email
-        - profile
-        refresh_token: refresh_token_xyz789
-    OidcTokenResponse:
-      type: object
-      description: OAuth 2.0 token response
-      required:
-      - access_token
-      - token_type
-      - expires_in
-      properties:
-        access_token:
-          type: string
-          description: OAuth 2.0 access token
-          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-        token_type:
-          type: string
-          description: Token type
-          enum:
-          - Bearer
-          example: Bearer
-        expires_in:
-          type: integer
-          description: Access token expiration time in seconds
-          example: 3600
-        refresh_token:
-          type: string
-          description: OAuth 2.0 refresh token
-          example: refresh_token_xyz789
-        id_token:
-          type: string
-          description: OpenID Connect ID token
-          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-        scope:
-          type: string
-          description: Space-separated list of granted scopes
-          example: openid email profile
-      example:
-        access_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-        token_type: Bearer
-        expires_in: 3600
-        refresh_token: refresh_token_xyz789
-        id_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-        scope: openid email profile
   parameters:
     TenantIdHeader:
       name: tenant-id

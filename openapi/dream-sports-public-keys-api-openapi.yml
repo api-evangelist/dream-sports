@@ -51,20 +51,6 @@ components:
       schema:
         type: string
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code identifying the type of error
-              example: invalid_request
-            message:
-              type: string
-              description: Human-readable error message
-              example: Something went wrong.
     JsonWebKey:
       type: object
       required:
@@ -100,3 +86,17 @@ components:
           format: base64url
           description: Exponent of the RSA public key
           example: AQAB
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
