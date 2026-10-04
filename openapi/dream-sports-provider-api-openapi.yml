@@ -52,6 +52,14 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    AddProviderDetailsRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 1234
+        provider:
+          $ref: '#/components/schemas/ProviderData'
     User:
       type: object
       properties:
@@ -83,14 +91,6 @@ components:
           type: object
         credentials:
           type: object
-    AddProviderDetailsRequest:
-      type: object
-      properties:
-        userId:
-          type: string
-          example: 1234
-        provider:
-          $ref: '#/components/schemas/ProviderData'
     errorResponse:
       type: object
       properties:

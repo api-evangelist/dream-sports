@@ -87,6 +87,34 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
+    GuestLoginResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: Access token
+        token_type:
+          type: string
+          description: Type of token issued
+          example: Bearer
+        expires_in:
+          type: integer
+          description: Expiry of access token in seconds
+          example: 180
     V1GuestLoginRequestBody:
       type: object
       required:
@@ -111,34 +139,6 @@ components:
           - read
           - write
           - profile
-    GuestLoginResponse:
-      type: object
-      properties:
-        access_token:
-          type: string
-          description: Access token
-        token_type:
-          type: string
-          description: Type of token issued
-          example: Bearer
-        expires_in:
-          type: integer
-          description: Expiry of access token in seconds
-          example: 180
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code identifying the type of error
-              example: invalid_request
-            message:
-              type: string
-              description: Human-readable error message
-              example: Something went wrong.
   parameters:
     TenantIdHeader:
       name: tenant-id

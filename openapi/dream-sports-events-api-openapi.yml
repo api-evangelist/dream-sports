@@ -228,25 +228,18 @@ paths:
           description: Event not found
 components:
   schemas:
-    EventPatchRequest:
+    EventInput:
       type: object
       required:
+      - eventName
       - properties
       properties:
+        eventName:
+          type: string
         properties:
           type: array
           items:
             $ref: '#/components/schemas/EventPropertyInput'
-          minItems: 1
-    EventsUpsertRequest:
-      type: object
-      required:
-      - events
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/EventInput'
           minItems: 1
     EventPropertyInput:
       type: object
@@ -265,14 +258,21 @@ components:
           type: boolean
         description:
           type: string
-    EventInput:
+    EventsUpsertRequest:
       type: object
       required:
-      - eventName
+      - events
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventInput'
+          minItems: 1
+    EventPatchRequest:
+      type: object
+      required:
       - properties
       properties:
-        eventName:
-          type: string
         properties:
           type: array
           items:

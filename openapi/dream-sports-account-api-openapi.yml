@@ -151,13 +151,6 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
-    Unauthorized:
-      description: Unauthorized - invalid or expired authentication
-      content:
-        text/plain:
-          schema:
-            type: string
-            example: The session or access key being used is invalid, please run "code-push-standalone login" again.
     BadRequest:
       description: Bad request - invalid parameters
       content:
@@ -171,7 +164,55 @@ components:
                 properties:
                   message:
                     type: string
+    Unauthorized:
+      description: Unauthorized - invalid or expired authentication
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: The session or access key being used is invalid, please run "code-push-standalone login" again.
   schemas:
+    AccountCreate:
+      type: object
+      required:
+      - email
+      - name
+      properties:
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        gitHubId:
+          type: string
+        microsoftId:
+          type: string
+        azureAdId:
+          type: string
+    TermsStatus:
+      type: object
+      properties:
+        accountId:
+          type: string
+        isOwner:
+          type: boolean
+        ownerAppCount:
+          type: integer
+        termsAccepted:
+          type: boolean
+        termsVersion:
+          type:
+          - string
+          - 'null'
+        acceptedTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        isCurrentVersion:
+          type: boolean
+        currentRequiredVersion:
+          type: string
     Error:
       type: object
       properties:
@@ -197,61 +238,6 @@ components:
           - GitHub
           - Microsoft
           description: List of linked OAuth providers
-    TermsStatus:
-      type: object
-      properties:
-        accountId:
-          type: string
-        isOwner:
-          type: boolean
-        ownerAppCount:
-          type: integer
-        termsAccepted:
-          type: boolean
-        termsVersion:
-          type:
-          - string
-          - 'null'
-        acceptedTime:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        isCurrentVersion:
-          type: boolean
-        currentRequiredVersion:
-          type: string
-    TermsAcceptance:
-      type: object
-      properties:
-        id:
-          type: string
-        accountId:
-          type: string
-        email:
-          type: string
-        termsVersion:
-          type: string
-        acceptedTime:
-          type: integer
-          format: int64
-    AccountCreate:
-      type: object
-      required:
-      - email
-      - name
-      properties:
-        email:
-          type: string
-          format: email
-        name:
-          type: string
-        gitHubId:
-          type: string
-        microsoftId:
-          type: string
-        azureAdId:
-          type: string
     AccountStorage:
       type: object
       properties:
@@ -269,6 +255,20 @@ components:
         azureAdId:
           type: string
         createdTime:
+          type: integer
+          format: int64
+    TermsAcceptance:
+      type: object
+      properties:
+        id:
+          type: string
+        accountId:
+          type: string
+        email:
+          type: string
+        termsVersion:
+          type: string
+        acceptedTime:
           type: integer
           format: int64
   securitySchemes:

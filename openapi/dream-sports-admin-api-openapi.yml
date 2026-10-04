@@ -59,28 +59,7 @@ paths:
       operationId: postV1AdminLogout
       x-operation-id-source: derived
 components:
-  parameters:
-    TenantIdHeader:
-      name: tenant-id
-      in: header
-      description: tenant-id of the client integrating with guardian
-      required: true
-      schema:
-        type: string
   schemas:
-    V1AdminLogoutRequestBody:
-      type: object
-      description: Request body for admin logout operation
-      required:
-      - userId
-      properties:
-        userId:
-          type: string
-          description: User ID to logout
-          example: user123
-          minLength: 1
-      example:
-        userId: user123
     ErrorResponse:
       type: object
       properties:
@@ -95,3 +74,24 @@ components:
               type: string
               description: Human-readable error message
               example: Something went wrong.
+    V1AdminLogoutRequestBody:
+      type: object
+      description: Request body for admin logout operation
+      required:
+      - userId
+      properties:
+        userId:
+          type: string
+          description: User ID to logout
+          example: user123
+          minLength: 1
+      example:
+        userId: user123
+  parameters:
+    TenantIdHeader:
+      name: tenant-id
+      in: header
+      description: tenant-id of the client integrating with guardian
+      required: true
+      schema:
+        type: string

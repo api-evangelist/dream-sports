@@ -145,21 +145,8 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
-    Unauthorized:
-      description: Unauthorized - invalid or expired authentication
-      content:
-        text/plain:
-          schema:
-            type: string
-            example: The session or access key being used is invalid, please run "code-push-standalone login" again.
     Conflict:
       description: Conflict - resource already exists
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
       content:
         application/json:
           schema:
@@ -177,7 +164,35 @@ components:
                 properties:
                   message:
                     type: string
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - invalid or expired authentication
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: The session or access key being used is invalid, please run "code-push-standalone login" again.
   schemas:
+    AccessKeyRequest:
+      type: object
+      properties:
+        friendlyName:
+          type: string
+          example: CI/CD Key
+        description:
+          type: string
+        ttl:
+          type: integer
+          format: int64
+          description: Time-to-live in milliseconds
+          example: 5184000000
+        scope:
+          type: string
     Error:
       type: object
       properties:
@@ -214,21 +229,6 @@ components:
         scope:
           type: string
           description: Optional scope restriction
-    AccessKeyRequest:
-      type: object
-      properties:
-        friendlyName:
-          type: string
-          example: CI/CD Key
-        description:
-          type: string
-        ttl:
-          type: integer
-          format: int64
-          description: Time-to-live in milliseconds
-          example: 5184000000
-        scope:
-          type: string
   parameters:
     AccessKeyName:
       name: accessKeyName

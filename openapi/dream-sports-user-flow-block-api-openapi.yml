@@ -129,6 +129,47 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    V1BlockUserFlowRequestBody:
+      type: object
+      required:
+      - userIdentifier
+      - blockFlows
+      - reason
+      - unblockedAt
+      properties:
+        userIdentifier:
+          type: string
+          description: User identifier (email, phone number, username)
+          example: user@example.com
+        blockFlows:
+          type: array
+          items:
+            type: string
+            enum:
+            - passwordless
+            - password
+            - social_auth
+            - otp_verify
+          description: List of flow types to block
+          example:
+          - passwordless
+          - social_auth
+        reason:
+          type: string
+          description: Reason for blocking the flows
+          example: Suspicious activity detected
+        unblockedAt:
+          type: integer
+          format: int64
+          description: Unix timestamp when the block should automatically expire(epoch)
+          example: 1704067200
+      example:
+        userIdentifier: user@example.com
+        blockFlows:
+        - passwordless
+        - social_auth
+        reason: Suspicious activity detected
+        unblockedAt: 1704067200
     V1UnblockUserFlowRequestBody:
       type: object
       required:
@@ -206,47 +247,6 @@ components:
               type: string
               description: Human-readable error message
               example: Something went wrong.
-    V1BlockUserFlowRequestBody:
-      type: object
-      required:
-      - userIdentifier
-      - blockFlows
-      - reason
-      - unblockedAt
-      properties:
-        userIdentifier:
-          type: string
-          description: User identifier (email, phone number, username)
-          example: user@example.com
-        blockFlows:
-          type: array
-          items:
-            type: string
-            enum:
-            - passwordless
-            - password
-            - social_auth
-            - otp_verify
-          description: List of flow types to block
-          example:
-          - passwordless
-          - social_auth
-        reason:
-          type: string
-          description: Reason for blocking the flows
-          example: Suspicious activity detected
-        unblockedAt:
-          type: integer
-          format: int64
-          description: Unix timestamp when the block should automatically expire(epoch)
-          example: 1704067200
-      example:
-        userIdentifier: user@example.com
-        blockFlows:
-        - passwordless
-        - social_auth
-        reason: Suspicious activity detected
-        unblockedAt: 1704067200
   parameters:
     TenantIdHeader:
       name: tenant-id

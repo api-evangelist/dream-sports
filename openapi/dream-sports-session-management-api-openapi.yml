@@ -357,127 +357,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    V2RefreshTokenResponse:
-      type: object
-      required:
-      - access_token
-      - token_type
-      - expires_in
-      properties:
-        access_token:
-          type: string
-          description: New access token
-          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-        token_type:
-          type: string
-          description: Token type
-          enum:
-          - Bearer
-          example: Bearer
-        expires_in:
-          type: integer
-          description: Access token expiration time in seconds
-          example: 3600
-    UserRefreshTokenItem:
-      type: object
-      description: A single active refresh token with device/location metadata
-      properties:
-        refresh_token:
-          type: string
-          description: The refresh token value
-        device_name:
-          type: string
-          description: Device name associated with the token
-        location:
-          type: string
-          description: Location when the token was created
-        ip:
-          type: string
-          description: IP address when the token was created
-        source:
-          type: string
-          description: Source (e.g. mobile, web)
-        created_at:
-          type: string
-          description: When the refresh token was created (format yyyy-MM-dd HH:mm:ss)
-          example: '2022-09-30 12:25:26'
-    V2RefreshTokenRequestBody:
-      type: object
-      properties:
-        refresh_token:
-          type: string
-          description: Refresh token (can also be provided as cookie)
-          example: refresh_token_xyz789
-        client_id:
-          type: string
-          description: Client identifier
-          example: my-client-id
-    RefreshToken:
-      type: object
-      properties:
-        accessToken:
-          type: string
-          example: accesstoken
-          description: Short lived Bearer JWT token to access APIs.
-        tokenType:
-          type: string
-          example: Bearer
-          description: type of token. Only supports Bearer for now.
-        expiresIn:
-          type: integer
-          example: 3600
-          description: expiry of the access token in seconds
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code identifying the type of error
-              example: invalid_request
-            message:
-              type: string
-              description: Human-readable error message
-              example: Something went wrong.
-    V2LogoutRequestBody:
-      type: object
-      properties:
-        refresh_token:
-          type: string
-          description: Refresh token to invalidate (can also be provided as cookie)
-          example: refresh_token_xyz789
-        logout_type:
-          type: string
-          description: Type of logout
-          enum:
-          - token
-          - client
-          - tenant
-          default: token
-          example: token
-        client_id:
-          type: string
-          description: Client identifier
-          example: my-client-id
-    V1RefreshTokenRequestBody:
-      type: object
-      required:
-      - refreshToken
-      properties:
-        refreshToken:
-          type: string
-    V1LogoutRequestBody:
-      type: object
-      required:
-      - refreshToken
-      properties:
-        refreshToken:
-          type: string
-        isUniversalLogout:
-          type: boolean
-          default: false
     UserRefreshTokensResponse:
       type: object
       description: Paginated list of user's active refresh tokens
@@ -509,6 +388,127 @@ components:
           source: web
           created_at: '2022-09-29 14:20:00'
         total_count: 2
+    V2RefreshTokenRequestBody:
+      type: object
+      properties:
+        refresh_token:
+          type: string
+          description: Refresh token (can also be provided as cookie)
+          example: refresh_token_xyz789
+        client_id:
+          type: string
+          description: Client identifier
+          example: my-client-id
+    V2RefreshTokenResponse:
+      type: object
+      required:
+      - access_token
+      - token_type
+      - expires_in
+      properties:
+        access_token:
+          type: string
+          description: New access token
+          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        token_type:
+          type: string
+          description: Token type
+          enum:
+          - Bearer
+          example: Bearer
+        expires_in:
+          type: integer
+          description: Access token expiration time in seconds
+          example: 3600
+    V2LogoutRequestBody:
+      type: object
+      properties:
+        refresh_token:
+          type: string
+          description: Refresh token to invalidate (can also be provided as cookie)
+          example: refresh_token_xyz789
+        logout_type:
+          type: string
+          description: Type of logout
+          enum:
+          - token
+          - client
+          - tenant
+          default: token
+          example: token
+        client_id:
+          type: string
+          description: Client identifier
+          example: my-client-id
+    V1LogoutRequestBody:
+      type: object
+      required:
+      - refreshToken
+      properties:
+        refreshToken:
+          type: string
+        isUniversalLogout:
+          type: boolean
+          default: false
+    UserRefreshTokenItem:
+      type: object
+      description: A single active refresh token with device/location metadata
+      properties:
+        refresh_token:
+          type: string
+          description: The refresh token value
+        device_name:
+          type: string
+          description: Device name associated with the token
+        location:
+          type: string
+          description: Location when the token was created
+        ip:
+          type: string
+          description: IP address when the token was created
+        source:
+          type: string
+          description: Source (e.g. mobile, web)
+        created_at:
+          type: string
+          description: When the refresh token was created (format yyyy-MM-dd HH:mm:ss)
+          example: '2022-09-30 12:25:26'
+    V1RefreshTokenRequestBody:
+      type: object
+      required:
+      - refreshToken
+      properties:
+        refreshToken:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
+    RefreshToken:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: accesstoken
+          description: Short lived Bearer JWT token to access APIs.
+        tokenType:
+          type: string
+          example: Bearer
+          description: type of token. Only supports Bearer for now.
+        expiresIn:
+          type: integer
+          example: 3600
+          description: expiry of the access token in seconds
   parameters:
     TenantIdHeader:
       name: tenant-id

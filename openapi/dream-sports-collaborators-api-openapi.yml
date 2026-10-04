@@ -131,6 +131,12 @@ paths:
       x-operation-id-source: derived
 components:
   parameters:
+    TenantHeader:
+      name: tenant
+      in: header
+      schema:
+        type: string
+      description: Organization/tenant ID filter
     AppName:
       name: appName
       in: path
@@ -139,46 +145,7 @@ components:
         type: string
       description: Application name (or 'owner:appName' for disambiguation)
       example: MyApp-iOS
-    TenantHeader:
-      name: tenant
-      in: header
-      schema:
-        type: string
-      description: Organization/tenant ID filter
-  schemas:
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
-    CollaboratorMap:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/CollaboratorProperties'
-      example:
-        user@example.com:
-          permission: Owner
-          isCurrentAccount: true
-    CollaboratorProperties:
-      type: object
-      properties:
-        permission:
-          type: string
-          enum:
-          - Owner
-          - Collaborator
-        isCurrentAccount:
-          type: boolean
-          description: Whether this is the authenticated user
   responses:
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Bad request - invalid parameters
       content:
@@ -198,6 +165,39 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    CollaboratorMap:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/CollaboratorProperties'
+      example:
+        user@example.com:
+          permission: Owner
+          isCurrentAccount: true
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    CollaboratorProperties:
+      type: object
+      properties:
+        permission:
+          type: string
+          enum:
+          - Owner
+          - Collaborator
+        isCurrentAccount:
+          type: boolean
+          description: Whether this is the authenticated user
   securitySchemes:
     BearerAuth:
       type: http

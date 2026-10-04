@@ -174,56 +174,7 @@ paths:
       operationId: deleteAppsByAppNameDeploymentsByDeploymentName
       x-operation-id-source: derived
 components:
-  parameters:
-    AppName:
-      name: appName
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Application name (or 'owner:appName' for disambiguation)
-      example: MyApp-iOS
-    TenantHeader:
-      name: tenant
-      in: header
-      schema:
-        type: string
-      description: Organization/tenant ID filter
-    DeploymentName:
-      name: deploymentName
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Deployment environment name
-      example: Production
-  responses:
-    Conflict:
-      description: Conflict - resource already exists
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden - insufficient permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
     Deployment:
       type: object
       required:
@@ -238,6 +189,13 @@ components:
           example: deployment-key-abc123
         package:
           $ref: '#/components/schemas/Package'
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
     Package:
       allOf:
       - $ref: '#/components/schemas/PackageInfo'
@@ -309,6 +267,48 @@ components:
           type: string
           description: Generated release label
           example: v23
+  parameters:
+    TenantHeader:
+      name: tenant
+      in: header
+      schema:
+        type: string
+      description: Organization/tenant ID filter
+    AppName:
+      name: appName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Application name (or 'owner:appName' for disambiguation)
+      example: MyApp-iOS
+    DeploymentName:
+      name: deploymentName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Deployment environment name
+      example: Production
+  responses:
+    Conflict:
+      description: Conflict - resource already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     BearerAuth:
       type: http

@@ -75,14 +75,6 @@ paths:
       operationId: getWellKnownOpenidConfiguration
       x-operation-id-source: derived
 components:
-  parameters:
-    TenantIdHeader:
-      name: tenant-id
-      in: header
-      description: tenant-id of the client integrating with guardian
-      required: true
-      schema:
-        type: string
   schemas:
     ErrorResponse:
       type: object
@@ -223,3 +215,11 @@ components:
           - email_verified
           - phone_number
           - phone_number_verified
+  parameters:
+    TenantIdHeader:
+      name: tenant-id
+      in: header
+      description: tenant-id of the client integrating with guardian
+      required: true
+      schema:
+        type: string

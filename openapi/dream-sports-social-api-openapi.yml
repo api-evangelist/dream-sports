@@ -439,6 +439,91 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    V1AuthGoogleRequestBody:
+      type: object
+      properties:
+        idToken:
+          type: string
+        responseType:
+          type: string
+        flow:
+          type: string
+        metaInfo:
+          $ref: '#/components/schemas/MetaInfo'
+    V2TokenResponse:
+      type: object
+      description: Token response for v2 endpoints (uses snake_case field names)
+      properties:
+        access_token:
+          type: string
+          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+          description: Short lived Bearer JWT token to access APIs
+        refresh_token:
+          type: string
+          example: refresh_token_xyz789
+          description: Long lived token used to refresh access token
+        id_token:
+          type: string
+          example: eyJhbGciOiJSUzI1NiIsImtpZCI6IjE2NzAyNzg5...
+          description: OpenID Connect ID token
+        sso_token:
+          type: string
+          example: sso_token_abc123
+          description: Single Sign-On token for session management
+        token_type:
+          type: string
+          example: Bearer
+          description: Type of token. Only supports Bearer for now
+        expires_in:
+          type: integer
+          example: 3600
+          description: Expiry of the access token in seconds
+        is_new_user:
+          type: boolean
+          description: Indicates if the user is new
+          example: false
+    V2AuthGoogleRequestBody:
+      type: object
+      required:
+      - client_id
+      - id_token
+      - response_type
+      properties:
+        client_id:
+          type: string
+          description: Client identifier
+          example: my-client-id
+        id_token:
+          type: string
+          description: Google issued ID token
+          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        response_type:
+          type: string
+          description: Desired response type
+          enum:
+          - code
+          - token
+          example: token
+        scopes:
+          type: array
+          description: List of scopes to request
+          items:
+            type: string
+          example:
+          - openid
+          - email
+          - profile
+        flow:
+          type: string
+          description: Authentication flow type
+          enum:
+          - signinup
+          - signin
+          - signup
+          default: signinup
+          example: signinup
+        meta_info:
+          $ref: '#/components/schemas/MetaInfo'
     IdpConnectRequestBody:
       type: object
       description: Request body for connecting to external identity providers
@@ -494,244 +579,6 @@ components:
           default: signinup
           example: signinup
         metaInfo:
-          $ref: '#/components/schemas/MetaInfo'
-    V2AuthGoogleRequestBody:
-      type: object
-      required:
-      - client_id
-      - id_token
-      - response_type
-      properties:
-        client_id:
-          type: string
-          description: Client identifier
-          example: my-client-id
-        id_token:
-          type: string
-          description: Google issued ID token
-          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-        response_type:
-          type: string
-          description: Desired response type
-          enum:
-          - code
-          - token
-          example: token
-        scopes:
-          type: array
-          description: List of scopes to request
-          items:
-            type: string
-          example:
-          - openid
-          - email
-          - profile
-        flow:
-          type: string
-          description: Authentication flow type
-          enum:
-          - signinup
-          - signin
-          - signup
-          default: signinup
-          example: signinup
-        meta_info:
-          $ref: '#/components/schemas/MetaInfo'
-    TokenResponse:
-      type: object
-      properties:
-        accessToken:
-          type: string
-          example: accesstoken
-          description: Short lived Bearer JWT token to access APIs.
-        refreshToken:
-          type: string
-          example: refreshToken
-          description: Long Lived token used to refresh access token.
-        idToken:
-          type: string
-          example: idToken
-          description: OpenID Connect ID token
-        tokenType:
-          type: string
-          example: Bearer
-          description: type of token. Only supports Bearer for now.
-        expiresIn:
-          type: integer
-          example: 3600
-          description: expiry of the access token in seconds
-        isNewUser:
-          type: boolean
-          description: Indicates if the user is new
-          example: false
-    IdpConnectResponse:
-      type: object
-      description: Response from identity provider authentication
-      properties:
-        code:
-          type: string
-          description: Authorization code (present when responseType is 'code')
-          example: 4/0AX4XfWjY1Z2X3Y4Z5A6B7C8D9E0F1G2H3I4J5K6L7M8N9O0P1Q2R3S4T5U6V7W8X9Y0Z1
-        accessToken:
-          type: string
-          description: Access token (present when responseType is 'token')
-          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-        refreshToken:
-          type: string
-          description: Refresh token for getting new access tokens
-          example: 1//04xxxxxxxxxxxxx-refreshtoken
-        idToken:
-          type: string
-          description: OpenID Connect ID token
-          example: eyJhbGciOiJSUzI1NiIsImtpZCI6IjE2NzAyNzg5...
-        tokenType:
-          type: string
-          description: Type of the access token
-          example: Bearer
-        expiresIn:
-          type: integer
-          description: Access token expiration time in seconds
-          example: 3600
-        isNewUser:
-          type: boolean
-          description: Whether this is a newly created user
-          example: false
-        idpCredentials:
-          type: object
-          description: Identity provider specific credentials
-          properties:
-            accessToken:
-              type: string
-              description: Provider's access token
-              example: ya29.a0AfH6SMC...
-            refreshToken:
-              type: string
-              description: Provider's refresh token
-              example: 1//04xxxxxxxxxxxxx
-            idToken:
-              type: string
-              description: Provider's ID token
-              example: eyJhbGciOiJSUzI1NiIsImtpZCI6...
-    MetaInfo:
-      type: object
-      properties:
-        ip:
-          type: string
-        location:
-          type: string
-        device_name:
-          type: string
-        source:
-          type: string
-    V1AuthGoogleRequestBody:
-      type: object
-      properties:
-        idToken:
-          type: string
-        responseType:
-          type: string
-        flow:
-          type: string
-        metaInfo:
-          $ref: '#/components/schemas/MetaInfo'
-    V2TokenResponse:
-      type: object
-      description: Token response for v2 endpoints (uses snake_case field names)
-      properties:
-        access_token:
-          type: string
-          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-          description: Short lived Bearer JWT token to access APIs
-        refresh_token:
-          type: string
-          example: refresh_token_xyz789
-          description: Long lived token used to refresh access token
-        id_token:
-          type: string
-          example: eyJhbGciOiJSUzI1NiIsImtpZCI6IjE2NzAyNzg5...
-          description: OpenID Connect ID token
-        sso_token:
-          type: string
-          example: sso_token_abc123
-          description: Single Sign-On token for session management
-        token_type:
-          type: string
-          example: Bearer
-          description: Type of token. Only supports Bearer for now
-        expires_in:
-          type: integer
-          example: 3600
-          description: Expiry of the access token in seconds
-        is_new_user:
-          type: boolean
-          description: Indicates if the user is new
-          example: false
-    V1AuthFbRequestBody:
-      type: object
-      properties:
-        accessToken:
-          type: string
-        responseType:
-          type: string
-        flow:
-          type: string
-        metaInfo:
-          $ref: '#/components/schemas/MetaInfo'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code identifying the type of error
-              example: invalid_request
-            message:
-              type: string
-              description: Human-readable error message
-              example: Something went wrong.
-    V2AuthFbRequestBody:
-      type: object
-      required:
-      - client_id
-      - access_token
-      - response_type
-      properties:
-        client_id:
-          type: string
-          description: Client identifier
-          example: my-client-id
-        access_token:
-          type: string
-          description: Facebook access token
-          example: EAABwzLixnjYBO...
-        response_type:
-          type: string
-          description: Desired response type
-          enum:
-          - code
-          - token
-          example: token
-        scopes:
-          type: array
-          description: List of scopes to request
-          items:
-            type: string
-          example:
-          - openid
-          - email
-          - profile
-        flow:
-          type: string
-          description: Authentication flow type
-          enum:
-          - signinup
-          - signin
-          - signup
-          default: signinup
-          example: signinup
-        meta_info:
           $ref: '#/components/schemas/MetaInfo'
     V2IdpConnectRequestBody:
       type: object
@@ -803,6 +650,100 @@ components:
           example: signinup
         meta_info:
           $ref: '#/components/schemas/MetaInfo'
+    V2AuthFbRequestBody:
+      type: object
+      required:
+      - client_id
+      - access_token
+      - response_type
+      properties:
+        client_id:
+          type: string
+          description: Client identifier
+          example: my-client-id
+        access_token:
+          type: string
+          description: Facebook access token
+          example: EAABwzLixnjYBO...
+        response_type:
+          type: string
+          description: Desired response type
+          enum:
+          - code
+          - token
+          example: token
+        scopes:
+          type: array
+          description: List of scopes to request
+          items:
+            type: string
+          example:
+          - openid
+          - email
+          - profile
+        flow:
+          type: string
+          description: Authentication flow type
+          enum:
+          - signinup
+          - signin
+          - signup
+          default: signinup
+          example: signinup
+        meta_info:
+          $ref: '#/components/schemas/MetaInfo'
+    TokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: accesstoken
+          description: Short lived Bearer JWT token to access APIs.
+        refreshToken:
+          type: string
+          example: refreshToken
+          description: Long Lived token used to refresh access token.
+        idToken:
+          type: string
+          example: idToken
+          description: OpenID Connect ID token
+        tokenType:
+          type: string
+          example: Bearer
+          description: type of token. Only supports Bearer for now.
+        expiresIn:
+          type: integer
+          example: 3600
+          description: expiry of the access token in seconds
+        isNewUser:
+          type: boolean
+          description: Indicates if the user is new
+          example: false
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
+    V1AuthFbRequestBody:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        responseType:
+          type: string
+        flow:
+          type: string
+        metaInfo:
+          $ref: '#/components/schemas/MetaInfo'
     V2IdpConnectResponse:
       type: object
       description: Response from identity provider authentication (v2 - uses snake_case field names)
@@ -851,6 +792,65 @@ components:
               type: string
               description: Provider's ID token
               example: eyJhbGciOiJSUzI1NiIsImtpZCI6...
+    IdpConnectResponse:
+      type: object
+      description: Response from identity provider authentication
+      properties:
+        code:
+          type: string
+          description: Authorization code (present when responseType is 'code')
+          example: 4/0AX4XfWjY1Z2X3Y4Z5A6B7C8D9E0F1G2H3I4J5K6L7M8N9O0P1Q2R3S4T5U6V7W8X9Y0Z1
+        accessToken:
+          type: string
+          description: Access token (present when responseType is 'token')
+          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        refreshToken:
+          type: string
+          description: Refresh token for getting new access tokens
+          example: 1//04xxxxxxxxxxxxx-refreshtoken
+        idToken:
+          type: string
+          description: OpenID Connect ID token
+          example: eyJhbGciOiJSUzI1NiIsImtpZCI6IjE2NzAyNzg5...
+        tokenType:
+          type: string
+          description: Type of the access token
+          example: Bearer
+        expiresIn:
+          type: integer
+          description: Access token expiration time in seconds
+          example: 3600
+        isNewUser:
+          type: boolean
+          description: Whether this is a newly created user
+          example: false
+        idpCredentials:
+          type: object
+          description: Identity provider specific credentials
+          properties:
+            accessToken:
+              type: string
+              description: Provider's access token
+              example: ya29.a0AfH6SMC...
+            refreshToken:
+              type: string
+              description: Provider's refresh token
+              example: 1//04xxxxxxxxxxxxx
+            idToken:
+              type: string
+              description: Provider's ID token
+              example: eyJhbGciOiJSUzI1NiIsImtpZCI6...
+    MetaInfo:
+      type: object
+      properties:
+        ip:
+          type: string
+        location:
+          type: string
+        device_name:
+          type: string
+        source:
+          type: string
   parameters:
     TenantIdHeader:
       name: tenant-id

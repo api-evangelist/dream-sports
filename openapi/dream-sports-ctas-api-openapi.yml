@@ -286,60 +286,21 @@ paths:
           description: CTA not found
 components:
   schemas:
-    Frequency:
-      type: object
-      properties:
-        session:
-          $ref: '#/components/schemas/SessionFrequency'
-        window:
-          $ref: '#/components/schemas/WindowFrequency'
-        lifeSpan:
-          $ref: '#/components/schemas/LifespanFrequency'
-    CohortEligibility:
-      type: object
-      description: 'Cohort eligibility configuration for CTAs. IMPORTANT: User-cohorts system is not currently supported. Always use includes: ["all"] (single cohort) or includes: ["all"] (list), and keep excludes: [] empty.'
-      required:
-      - includes
-      - excludes
-      properties:
-        includes:
-          type: array
-          items:
-            type: string
-          description: List of cohort names to include. Must be ["all"] since user-cohorts system is not currently supported.
-          minItems: 1
-        excludes:
-          type: array
-          items:
-            type: string
-          description: List of cohort names to exclude. Must always be empty [] since user-cohorts system is not currently supported.
-    LifespanFrequency:
+    WindowFrequency:
       type: object
       required:
       - limit
+      - unit
+      - value
       properties:
         limit:
           type: integer
           format: int32
-    CTAUpdateRequest:
-      type: object
-      properties:
-        tags:
-          type: array
-          items:
-            type: string
-        description:
-          type: string
-        team:
-          type: string
-        startTime:
+        unit:
+          $ref: '#/components/schemas/WindowFrequencyUnit'
+        value:
           type: integer
-          format: int64
-        endTime:
-          type: integer
-          format: int64
-        rule:
-          $ref: '#/components/schemas/RuleRequest'
+          format: int32
     CTAListResponse:
       type: object
       properties:
@@ -361,70 +322,6 @@ components:
           format: int32
         statusWiseCount:
           $ref: '#/components/schemas/StatusWiseCount'
-    WindowFrequency:
-      type: object
-      required:
-      - limit
-      - unit
-      - value
-      properties:
-        limit:
-          type: integer
-          format: int32
-        unit:
-          $ref: '#/components/schemas/WindowFrequencyUnit'
-        value:
-          type: integer
-          format: int32
-    WindowFrequencyUnit:
-      type: string
-      enum:
-      - days
-      - hours
-      - minutes
-      - seconds
-    CTAStatus:
-      type: string
-      enum:
-      - DRAFT
-      - SCHEDULED
-      - LIVE
-      - PAUSED
-      - CONCLUDED
-      - TERMINATED
-    SessionFrequency:
-      type: object
-      required:
-      - limit
-      properties:
-        limit:
-          type: integer
-          format: int32
-    StateTransitionCondition:
-      type: object
-      required:
-      - transitionTo
-      - filters
-      properties:
-        transitionTo:
-          type: string
-        filters:
-          $ref: '#/components/schemas/Filters'
-    StatusWiseCount:
-      type: object
-      properties:
-        draft:
-          type: object
-        paused:
-          type: object
-        live:
-          type: object
-        scheduled:
-          type: object
-        concluded:
-          type: object
-        terminated:
-          type: object
     Filters:
       type: object
       required:
@@ -436,119 +333,14 @@ components:
         filter:
           type: array
           items: {}
-    GroupByConfig:
-      type: object
-      properties:
-        maxActiveStateMachineCount:
-          type: integer
-          format: int32
-        groupByKeys:
-          type: array
-          items:
-            type: string
-    CTARequest:
-      description: 'Request to create a new CTA (Call-to-Action). Note: Cohort eligibility must use ''all'' as the cohort value. Use includes: ["all"] for single cohort or includes: ["all"] for list, and always keep excludes: [] empty. User-cohorts system is not currently supported.'
+    SessionFrequency:
       type: object
       required:
-      - name
-      - team
-      - rule
+      - limit
       properties:
-        name:
-          type: string
-          maxLength: 100
-          description: Name of the CTA
-          examples:
-          - Testing1
-          - Welcome Bonus
-        tags:
-          type: array
-          items:
-            type: string
-          description: Tags associated with the CTA for categorization
-          examples:
-          - growth
-          - notifications
-        description:
-          type: string
-          maxLength: 500
-          description: Detailed description of the CTA
-          examples:
-          - Bottom sheet to prompt enabling notifications when lineups are out
-        team:
-          type: string
-          description: Team that owns this CTA
-          examples:
-          - marketing
-        startTime:
-          type: integer
-          format: int64
-          description: Start time in epoch milliseconds. If null, CTA starts immediately when activated.
-          examples:
-          - 1609459200000
-        endTime:
-          type: integer
-          format: int64
-          description: End time in epoch milliseconds. If null, CTA has no end time.
-          examples:
-          - 1640995200000
-        rule:
-          description: 'Rule configuration for the CTA including cohort eligibility, state transitions, actions, and frequency controls. IMPORTANT: cohortEligibility.includes must be ["all"] and excludes must be []. User-cohorts system is not currently supported.'
-          type: object
-          $ref: '#/components/schemas/RuleRequest'
-    Rule:
-      type: object
-      required:
-      - cohortEligibility
-      - stateToAction
-      - stateTransition
-      - priority
-      - actions
-      - frequency
-      properties:
-        cohortEligibility:
-          $ref: '#/components/schemas/CohortEligibility'
-        stateToAction:
-          type: object
-          additionalProperties:
-            type: string
-          minProperties: 1
-        resetStates:
-          type: array
-          items:
-            type: string
-        resetCTAonFirstLaunch:
-          type: boolean
-        contextParams:
-          type: array
-          items:
-            type: string
-        stateTransition:
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties:
-              type: array
-              items:
-                $ref: '#/components/schemas/StateTransitionCondition'
-        groupByConfig:
-          $ref: '#/components/schemas/GroupByConfig'
-        priority:
+        limit:
           type: integer
           format: int32
-        stateMachineTTL:
-          type: integer
-          format: int64
-        ctaValidTill:
-          type: integer
-          format: int64
-        actions:
-          type: array
-          items:
-            type: object
-            additionalProperties: {}
-        frequency:
-          $ref: '#/components/schemas/Frequency'
     CTA:
       type: object
       required:
@@ -647,3 +439,211 @@ components:
             additionalProperties: {}
         frequency:
           $ref: '#/components/schemas/Frequency'
+    Rule:
+      type: object
+      required:
+      - cohortEligibility
+      - stateToAction
+      - stateTransition
+      - priority
+      - actions
+      - frequency
+      properties:
+        cohortEligibility:
+          $ref: '#/components/schemas/CohortEligibility'
+        stateToAction:
+          type: object
+          additionalProperties:
+            type: string
+          minProperties: 1
+        resetStates:
+          type: array
+          items:
+            type: string
+        resetCTAonFirstLaunch:
+          type: boolean
+        contextParams:
+          type: array
+          items:
+            type: string
+        stateTransition:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                $ref: '#/components/schemas/StateTransitionCondition'
+        groupByConfig:
+          $ref: '#/components/schemas/GroupByConfig'
+        priority:
+          type: integer
+          format: int32
+        stateMachineTTL:
+          type: integer
+          format: int64
+        ctaValidTill:
+          type: integer
+          format: int64
+        actions:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+        frequency:
+          $ref: '#/components/schemas/Frequency'
+    StateTransitionCondition:
+      type: object
+      required:
+      - transitionTo
+      - filters
+      properties:
+        transitionTo:
+          type: string
+        filters:
+          $ref: '#/components/schemas/Filters'
+    WindowFrequencyUnit:
+      type: string
+      enum:
+      - days
+      - hours
+      - minutes
+      - seconds
+    CTAUpdateRequest:
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        team:
+          type: string
+        startTime:
+          type: integer
+          format: int64
+        endTime:
+          type: integer
+          format: int64
+        rule:
+          $ref: '#/components/schemas/RuleRequest'
+    GroupByConfig:
+      type: object
+      properties:
+        maxActiveStateMachineCount:
+          type: integer
+          format: int32
+        groupByKeys:
+          type: array
+          items:
+            type: string
+    LifespanFrequency:
+      type: object
+      required:
+      - limit
+      properties:
+        limit:
+          type: integer
+          format: int32
+    StatusWiseCount:
+      type: object
+      properties:
+        draft:
+          type: object
+        paused:
+          type: object
+        live:
+          type: object
+        scheduled:
+          type: object
+        concluded:
+          type: object
+        terminated:
+          type: object
+    Frequency:
+      type: object
+      properties:
+        session:
+          $ref: '#/components/schemas/SessionFrequency'
+        window:
+          $ref: '#/components/schemas/WindowFrequency'
+        lifeSpan:
+          $ref: '#/components/schemas/LifespanFrequency'
+    CTARequest:
+      description: 'Request to create a new CTA (Call-to-Action). Note: Cohort eligibility must use ''all'' as the cohort value. Use includes: ["all"] for single cohort or includes: ["all"] for list, and always keep excludes: [] empty. User-cohorts system is not currently supported.'
+      type: object
+      required:
+      - name
+      - team
+      - rule
+      properties:
+        name:
+          type: string
+          maxLength: 100
+          description: Name of the CTA
+          examples:
+          - Testing1
+          - Welcome Bonus
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags associated with the CTA for categorization
+          examples:
+          - growth
+          - notifications
+        description:
+          type: string
+          maxLength: 500
+          description: Detailed description of the CTA
+          examples:
+          - Bottom sheet to prompt enabling notifications when lineups are out
+        team:
+          type: string
+          description: Team that owns this CTA
+          examples:
+          - marketing
+        startTime:
+          type: integer
+          format: int64
+          description: Start time in epoch milliseconds. If null, CTA starts immediately when activated.
+          examples:
+          - 1609459200000
+        endTime:
+          type: integer
+          format: int64
+          description: End time in epoch milliseconds. If null, CTA has no end time.
+          examples:
+          - 1640995200000
+        rule:
+          description: 'Rule configuration for the CTA including cohort eligibility, state transitions, actions, and frequency controls. IMPORTANT: cohortEligibility.includes must be ["all"] and excludes must be []. User-cohorts system is not currently supported.'
+          type: object
+          $ref: '#/components/schemas/RuleRequest'
+    CTAStatus:
+      type: string
+      enum:
+      - DRAFT
+      - SCHEDULED
+      - LIVE
+      - PAUSED
+      - CONCLUDED
+      - TERMINATED
+    CohortEligibility:
+      type: object
+      description: 'Cohort eligibility configuration for CTAs. IMPORTANT: User-cohorts system is not currently supported. Always use includes: ["all"] (single cohort) or includes: ["all"] (list), and keep excludes: [] empty.'
+      required:
+      - includes
+      - excludes
+      properties:
+        includes:
+          type: array
+          items:
+            type: string
+          description: List of cohort names to include. Must be ["all"] since user-cohorts system is not currently supported.
+          minItems: 1
+        excludes:
+          type: array
+          items:
+            type: string
+          description: List of cohort names to exclude. Must always be empty [] since user-cohorts system is not currently supported.

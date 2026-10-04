@@ -107,6 +107,18 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
     TestJourneyRequest:
       type: object
       description: Request to create a test journey for validating journey behaviour before going live
@@ -125,18 +137,6 @@ components:
           type: object
         statusCode:
           type: integer
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            cause:
-              type: string
-            code:
-              type: string
   parameters:
     UserId:
       name: USER-ID

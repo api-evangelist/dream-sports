@@ -204,6 +204,15 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        statusCode:
+          type: integer
     BehaviourTagRequest:
       type: object
       required:
@@ -250,15 +259,6 @@ components:
           type: array
           items:
             type: string
-    ApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        data:
-          type: object
-        statusCode:
-          type: integer
     ErrorResponse:
       type: object
       properties:

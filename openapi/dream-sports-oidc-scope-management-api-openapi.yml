@@ -485,6 +485,44 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ScopeResponse:
+      type: object
+      description: Scope information
+      required:
+      - name
+      - is_oidc
+      properties:
+        name:
+          type: string
+          description: Unique name of the scope
+          example: read:profile
+        display_name:
+          type: string
+          description: Human-readable display name
+          example: Read Profile
+        description:
+          type: string
+          description: Detailed description of the scope
+          example: Allows reading user profile information
+        icon_url:
+          type: string
+          format: uri
+          description: URL to the scope's icon
+          example: https://example.com/icons/profile.png
+        is_oidc:
+          type: boolean
+          description: Whether this is an OpenID Connect standard scope
+          example: true
+        claims:
+          type: array
+          description: List of claims associated with this scope
+          items:
+            type: string
+            example: name
+          example:
+          - name
+          - email
+          - profile
     UpdateScopeRequest:
       type: object
       description: 'Request payload for updating an existing scope. All fields are optional for partial updates.
@@ -525,6 +563,31 @@ components:
           type: boolean
           description: Whether this is an OpenID Connect standard scope
           example: false
+    ScopeListResponse:
+      type: object
+      description: Paginated list of scopes
+      required:
+      - scopes
+      properties:
+        scopes:
+          type: array
+          description: Array of scope objects
+          items:
+            $ref: '#/components/schemas/ScopeResponse'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
     CreateScopeRequest:
       type: object
       description: Request payload for creating a new scope
@@ -567,69 +630,6 @@ components:
           type: boolean
           description: Whether this is an OpenID Connect standard scope
           example: true
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code identifying the type of error
-              example: invalid_request
-            message:
-              type: string
-              description: Human-readable error message
-              example: Something went wrong.
-    ScopeResponse:
-      type: object
-      description: Scope information
-      required:
-      - name
-      - is_oidc
-      properties:
-        name:
-          type: string
-          description: Unique name of the scope
-          example: read:profile
-        display_name:
-          type: string
-          description: Human-readable display name
-          example: Read Profile
-        description:
-          type: string
-          description: Detailed description of the scope
-          example: Allows reading user profile information
-        icon_url:
-          type: string
-          format: uri
-          description: URL to the scope's icon
-          example: https://example.com/icons/profile.png
-        is_oidc:
-          type: boolean
-          description: Whether this is an OpenID Connect standard scope
-          example: true
-        claims:
-          type: array
-          description: List of claims associated with this scope
-          items:
-            type: string
-            example: name
-          example:
-          - name
-          - email
-          - profile
-    ScopeListResponse:
-      type: object
-      description: Paginated list of scopes
-      required:
-      - scopes
-      properties:
-        scopes:
-          type: array
-          description: Array of scope objects
-          items:
-            $ref: '#/components/schemas/ScopeResponse'
   parameters:
     TenantIdHeader:
       name: tenant-id

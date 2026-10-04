@@ -194,44 +194,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ConsoleUserIdApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: true
-        data:
-          $ref: '#/components/schemas/ConsoleUserIdData'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            cause:
-              type: string
-            code:
-              type: string
-    ConsoleUserIdData:
-      type: object
-      properties:
-        id:
-          type: string
-    ConsoleUserOnboardRequest:
-      type: object
-      required:
-      - email
-      properties:
-        email:
-          type: string
-          format: email
-        projectIds:
-          type: array
-          items:
-            type: string
-          description: Optional; must be a subset of the tenant's projects when non-empty.
     AdminConsoleUserUpdateRequest:
       type: object
       properties:
@@ -252,6 +214,44 @@ components:
             When omitted, existing project IDs are unchanged.
 
             '
+    ConsoleUserIdApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/ConsoleUserIdData'
+    ConsoleUserIdData:
+      type: object
+      properties:
+        id:
+          type: string
+    ConsoleUserOnboardRequest:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          format: email
+        projectIds:
+          type: array
+          items:
+            type: string
+          description: Optional; must be a subset of the tenant's projects when non-empty.
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
   securitySchemes:
     TenantIdHeader:
       type: apiKey

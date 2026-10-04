@@ -206,6 +206,20 @@ paths:
       operationId: postV01PublicCodepushReportStatusDownload
       x-operation-id-source: derived
 components:
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/Error'
+            - type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
   schemas:
     UpdateCheckResponse:
       allOf:
@@ -240,33 +254,6 @@ components:
           type: string
         code:
           type: string
-    PackageInfo:
-      type: object
-      properties:
-        appVersion:
-          type: string
-          description: Semver or semver range
-          example: 1.0.0
-        description:
-          type: string
-          example: Bug fixes and performance improvements
-        isDisabled:
-          type: boolean
-          default: false
-        isMandatory:
-          type: boolean
-          default: false
-          description: Whether update is mandatory
-        rollout:
-          type: integer
-          minimum: 1
-          maximum: 100
-          description: Percentage of users to receive update
-          example: 50
-        label:
-          type: string
-          description: Generated release label
-          example: v23
     DeploymentStatusReport:
       type: object
       required:
@@ -311,20 +298,33 @@ components:
         clientUniqueId:
           type: string
           description: Unique device identifier (can use snake_case client_unique_id)
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/components/schemas/Error'
-            - type: array
-              items:
-                type: object
-                properties:
-                  message:
-                    type: string
+    PackageInfo:
+      type: object
+      properties:
+        appVersion:
+          type: string
+          description: Semver or semver range
+          example: 1.0.0
+        description:
+          type: string
+          example: Bug fixes and performance improvements
+        isDisabled:
+          type: boolean
+          default: false
+        isMandatory:
+          type: boolean
+          default: false
+          description: Whether update is mandatory
+        rollout:
+          type: integer
+          minimum: 1
+          maximum: 100
+          description: Percentage of users to receive update
+          example: 50
+        label:
+          type: string
+          description: Generated release label
+          example: v23
   securitySchemes:
     BearerAuth:
       type: http

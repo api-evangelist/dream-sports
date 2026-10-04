@@ -232,15 +232,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        data:
-          type: object
-        statusCode:
-          type: integer
     ErrorResponse:
       type: object
       properties:
@@ -253,6 +244,15 @@ components:
               type: string
             code:
               type: string
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        statusCode:
+          type: integer
   securitySchemes:
     TenantIdHeader:
       type: apiKey

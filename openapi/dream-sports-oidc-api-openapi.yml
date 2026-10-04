@@ -783,157 +783,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    OidcTokenResponse:
-      type: object
-      description: OAuth 2.0 token response
-      required:
-      - access_token
-      - token_type
-      - expires_in
-      properties:
-        access_token:
-          type: string
-          description: OAuth 2.0 access token
-          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-        token_type:
-          type: string
-          description: Token type
-          enum:
-          - Bearer
-          example: Bearer
-        expires_in:
-          type: integer
-          description: Access token expiration time in seconds
-          example: 3600
-        refresh_token:
-          type: string
-          description: OAuth 2.0 refresh token
-          example: refresh_token_xyz789
-        id_token:
-          type: string
-          description: OpenID Connect ID token
-          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-        scope:
-          type: string
-          description: Space-separated list of granted scopes
-          example: openid email profile
-      example:
-        access_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-        token_type: Bearer
-        expires_in: 3600
-        refresh_token: refresh_token_xyz789
-        id_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-        scope: openid email profile
-    UserInfoResponse:
-      type: object
-      description: OpenID Connect UserInfo response
-      required:
-      - sub
-      properties:
-        sub:
-          type: string
-          description: Subject identifier
-          example: user123
-        name:
-          type: string
-          description: Full name
-          example: John Doe
-        given_name:
-          type: string
-          description: Given name
-          example: John
-        family_name:
-          type: string
-          description: Family name
-          example: Doe
-        email:
-          type: string
-          format: email
-          description: Email address
-          example: john.doe@example.com
-        email_verified:
-          type: boolean
-          description: Whether email is verified
-          example: true
-        phone_number:
-          type: string
-          description: Phone number
-          example: '+1234567890'
-        phone_number_verified:
-          type: boolean
-          description: Whether phone number is verified
-          example: false
-        picture:
-          type: string
-          format: uri
-          description: Profile picture URL
-          example: https://example.com/avatar.jpg
-        locale:
-          type: string
-          description: Locale
-          example: en-US
-        updated_at:
-          type: integer
-          description: Last update timestamp
-          example: 1640995200
-      example:
-        sub: user123
-        name: John Doe
-        given_name: John
-        family_name: Doe
-        email: john.doe@example.com
-        email_verified: true
-        phone_number: '+1234567890'
-        phone_number_verified: false
-        picture: https://example.com/avatar.jpg
-        locale: en-US
-        updated_at: 1640995200
-    ConsentAcceptRequestBody:
-      type: object
-      description: Request body for accepting consent challenge
-      required:
-      - consent_challenge
-      - consented_scopes
-      - refresh_token
-      properties:
-        consent_challenge:
-          type: string
-          description: Consent challenge received from the consent page
-          example: consent_challenge_xyz789
-        consented_scopes:
-          type: array
-          description: List of scopes the user has consented to
-          items:
-            type: string
-          example:
-          - openid
-          - email
-          - profile
-        refresh_token:
-          type: string
-          description: Valid refresh token for the user
-          example: refresh_token_xyz789
-      example:
-        consent_challenge: consent_challenge_xyz789
-        consented_scopes:
-        - openid
-        - email
-        - profile
-        refresh_token: refresh_token_xyz789
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code identifying the type of error
-              example: invalid_request
-            message:
-              type: string
-              description: Human-readable error message
-              example: Something went wrong.
     LoginAcceptRequestBody:
       type: object
       description: Request body for accepting login challenge
@@ -1001,6 +850,47 @@ components:
         redirect_uri: https://client.example.com/callback
         client_id: my_client_id
         client_secret: my_client_secret
+    OidcTokenResponse:
+      type: object
+      description: OAuth 2.0 token response
+      required:
+      - access_token
+      - token_type
+      - expires_in
+      properties:
+        access_token:
+          type: string
+          description: OAuth 2.0 access token
+          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        token_type:
+          type: string
+          description: Token type
+          enum:
+          - Bearer
+          example: Bearer
+        expires_in:
+          type: integer
+          description: Access token expiration time in seconds
+          example: 3600
+        refresh_token:
+          type: string
+          description: OAuth 2.0 refresh token
+          example: refresh_token_xyz789
+        id_token:
+          type: string
+          description: OpenID Connect ID token
+          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        scope:
+          type: string
+          description: Space-separated list of granted scopes
+          example: openid email profile
+      example:
+        access_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        token_type: Bearer
+        expires_in: 3600
+        refresh_token: refresh_token_xyz789
+        id_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+        scope: openid email profile
     UserConsentResponse:
       type: object
       description: User consent information for OAuth 2.0 client
@@ -1078,6 +968,116 @@ components:
         - openid
         - email
         subject: user123
+    ConsentAcceptRequestBody:
+      type: object
+      description: Request body for accepting consent challenge
+      required:
+      - consent_challenge
+      - consented_scopes
+      - refresh_token
+      properties:
+        consent_challenge:
+          type: string
+          description: Consent challenge received from the consent page
+          example: consent_challenge_xyz789
+        consented_scopes:
+          type: array
+          description: List of scopes the user has consented to
+          items:
+            type: string
+          example:
+          - openid
+          - email
+          - profile
+        refresh_token:
+          type: string
+          description: Valid refresh token for the user
+          example: refresh_token_xyz789
+      example:
+        consent_challenge: consent_challenge_xyz789
+        consented_scopes:
+        - openid
+        - email
+        - profile
+        refresh_token: refresh_token_xyz789
+    UserInfoResponse:
+      type: object
+      description: OpenID Connect UserInfo response
+      required:
+      - sub
+      properties:
+        sub:
+          type: string
+          description: Subject identifier
+          example: user123
+        name:
+          type: string
+          description: Full name
+          example: John Doe
+        given_name:
+          type: string
+          description: Given name
+          example: John
+        family_name:
+          type: string
+          description: Family name
+          example: Doe
+        email:
+          type: string
+          format: email
+          description: Email address
+          example: john.doe@example.com
+        email_verified:
+          type: boolean
+          description: Whether email is verified
+          example: true
+        phone_number:
+          type: string
+          description: Phone number
+          example: '+1234567890'
+        phone_number_verified:
+          type: boolean
+          description: Whether phone number is verified
+          example: false
+        picture:
+          type: string
+          format: uri
+          description: Profile picture URL
+          example: https://example.com/avatar.jpg
+        locale:
+          type: string
+          description: Locale
+          example: en-US
+        updated_at:
+          type: integer
+          description: Last update timestamp
+          example: 1640995200
+      example:
+        sub: user123
+        name: John Doe
+        given_name: John
+        family_name: Doe
+        email: john.doe@example.com
+        email_verified: true
+        phone_number: '+1234567890'
+        phone_number_verified: false
+        picture: https://example.com/avatar.jpg
+        locale: en-US
+        updated_at: 1640995200
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
   parameters:
     TenantIdHeader:
       name: tenant-id

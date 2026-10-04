@@ -464,6 +464,18 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    TestStatus:
+      type: string
+      enum:
+      - Passed
+      - Failed
+      - Blocked
+      - Untested
+      - Retest
+      - Archived
+      - Skipped
+      - InProgress
+      description: Test execution status
     Run:
       type: object
       properties:
@@ -489,18 +501,6 @@ components:
           - Active
           - Locked
           description: Run status
-    TestStatus:
-      type: string
-      enum:
-      - Passed
-      - Failed
-      - Blocked
-      - Untested
-      - Retest
-      - Archived
-      - Skipped
-      - InProgress
-      description: Test execution status
   securitySchemes:
     cookieAuth:
       type: apiKey

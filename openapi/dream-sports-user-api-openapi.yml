@@ -248,8 +248,6 @@ components:
             message:
               type: string
               example: Something went wrong.
-    EmptyUserResponse:
-      type: object
     User:
       type: object
       properties:
@@ -268,6 +266,33 @@ components:
         lastName:
           type: string
           example: Doe
+    EmptyUserResponse:
+      type: object
+    ProviderData:
+      type: object
+      properties:
+        name:
+          type: string
+          example: google
+        providerUserId:
+          type: string
+          example: '1234'
+        data:
+          type: object
+        credentials:
+          type: object
+    AuthenticateUserRequest:
+      required:
+      - password
+      - username
+      type: object
+      properties:
+        username:
+          type: string
+          example: JohnTheMan
+        password:
+          type: string
+          example: wordpass@1234
     CreateUserRequest:
       type: object
       properties:
@@ -297,28 +322,3 @@ components:
           example: Doe
         provider:
           $ref: '#/components/schemas/ProviderData'
-    AuthenticateUserRequest:
-      required:
-      - password
-      - username
-      type: object
-      properties:
-        username:
-          type: string
-          example: JohnTheMan
-        password:
-          type: string
-          example: wordpass@1234
-    ProviderData:
-      type: object
-      properties:
-        name:
-          type: string
-          example: google
-        providerUserId:
-          type: string
-          example: '1234'
-        data:
-          type: object
-        credentials:
-          type: object

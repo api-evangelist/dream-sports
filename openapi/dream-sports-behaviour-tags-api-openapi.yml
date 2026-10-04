@@ -281,61 +281,6 @@ paths:
           description: Behaviour Tag not found
 components:
   schemas:
-    LifespanFrequency:
-      type: object
-      required:
-      - limit
-      properties:
-        limit:
-          type: integer
-          format: int32
-    BehaviourTag:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        createdAt:
-          type: integer
-          format: int64
-        createdBy:
-          type: string
-        lastUpdatedAt:
-          type: integer
-          format: int64
-        lastUpdatedBy:
-          type: string
-        exposureRule:
-          $ref: '#/components/schemas/ExposureRule'
-        ctaRelation:
-          $ref: '#/components/schemas/CTARelation'
-        linkedCtas:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-        tenantId:
-          type: string
-    ExposureRule:
-      type: object
-      properties:
-        session:
-          $ref: '#/components/schemas/SessionFrequency'
-        window:
-          $ref: '#/components/schemas/WindowFrequency'
-        lifespan:
-          $ref: '#/components/schemas/LifespanFrequency'
-    CtaRelationRule:
-      type: object
-      properties:
-        rule:
-          $ref: '#/components/schemas/CtaRelationRuleTypes'
-        ctaList:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
     WindowFrequency:
       type: object
       required:
@@ -358,20 +303,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BehaviourTag'
-    CTARelation:
-      type: object
-      properties:
-        shownCta:
-          $ref: '#/components/schemas/CtaRelationRule'
-        hideCta:
-          $ref: '#/components/schemas/CtaRelationRule'
-    WindowFrequencyUnit:
-      type: string
-      enum:
-      - days
-      - hours
-      - minutes
-      - seconds
     BehaviourTagPutRequest:
       description: Request to update an existing Behaviour Tag. All fields are optional - only provided fields will be updated.
       type: object
@@ -411,6 +342,89 @@ components:
           description: Updated set of CTA IDs linked to this behaviour tag
           examples:
           - []
+    SessionFrequency:
+      type: object
+      required:
+      - limit
+      properties:
+        limit:
+          type: integer
+          format: int32
+    CtaRelationRule:
+      type: object
+      properties:
+        rule:
+          $ref: '#/components/schemas/CtaRelationRuleTypes'
+        ctaList:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+    LifespanFrequency:
+      type: object
+      required:
+      - limit
+      properties:
+        limit:
+          type: integer
+          format: int32
+    CtaRelationRuleTypes:
+      type: string
+      enum:
+      - ANY
+      - LIST
+      - REST
+    BehaviourTag:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
+        createdBy:
+          type: string
+        lastUpdatedAt:
+          type: integer
+          format: int64
+        lastUpdatedBy:
+          type: string
+        exposureRule:
+          $ref: '#/components/schemas/ExposureRule'
+        ctaRelation:
+          $ref: '#/components/schemas/CTARelation'
+        linkedCtas:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        tenantId:
+          type: string
+    WindowFrequencyUnit:
+      type: string
+      enum:
+      - days
+      - hours
+      - minutes
+      - seconds
+    CTARelation:
+      type: object
+      properties:
+        shownCta:
+          $ref: '#/components/schemas/CtaRelationRule'
+        hideCta:
+          $ref: '#/components/schemas/CtaRelationRule'
+    ExposureRule:
+      type: object
+      properties:
+        session:
+          $ref: '#/components/schemas/SessionFrequency'
+        window:
+          $ref: '#/components/schemas/WindowFrequency'
+        lifespan:
+          $ref: '#/components/schemas/LifespanFrequency'
     BehaviourTagCreateRequest:
       description: Request to create a new Behaviour Tag
       type: object
@@ -463,17 +477,3 @@ components:
           description: Set of CTA IDs linked to this behaviour tag
           examples:
           - ''
-    SessionFrequency:
-      type: object
-      required:
-      - limit
-      properties:
-        limit:
-          type: integer
-          format: int32
-    CtaRelationRuleTypes:
-      type: string
-      enum:
-      - ANY
-      - LIST
-      - REST

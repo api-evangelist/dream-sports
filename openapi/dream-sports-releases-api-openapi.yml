@@ -220,6 +220,12 @@ paths:
       x-operation-id-source: derived
 components:
   parameters:
+    TenantHeader:
+      name: tenant
+      in: header
+      schema:
+        type: string
+      description: Organization/tenant ID filter
     AppName:
       name: appName
       in: path
@@ -228,12 +234,6 @@ components:
         type: string
       description: Application name (or 'owner:appName' for disambiguation)
       example: MyApp-iOS
-    TenantHeader:
-      name: tenant
-      in: header
-      schema:
-        type: string
-      description: Organization/tenant ID filter
     DeploymentName:
       name: deploymentName
       in: path
@@ -242,6 +242,38 @@ components:
         type: string
       description: Deployment environment name
       example: Production
+  responses:
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request - invalid parameters
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/Error'
+            - type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -250,33 +282,6 @@ components:
           type: string
         code:
           type: string
-    PackageInfo:
-      type: object
-      properties:
-        appVersion:
-          type: string
-          description: Semver or semver range
-          example: 1.0.0
-        description:
-          type: string
-          example: Bug fixes and performance improvements
-        isDisabled:
-          type: boolean
-          default: false
-        isMandatory:
-          type: boolean
-          default: false
-          description: Whether update is mandatory
-        rollout:
-          type: integer
-          minimum: 1
-          maximum: 100
-          description: Percentage of users to receive update
-          example: 50
-        label:
-          type: string
-          description: Generated release label
-          example: v23
     Package:
       allOf:
       - $ref: '#/components/schemas/PackageInfo'
@@ -321,38 +326,33 @@ components:
                   type: string
                 size:
                   type: integer
-  responses:
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request - invalid parameters
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/components/schemas/Error'
-            - type: array
-              items:
-                type: object
-                properties:
-                  message:
-                    type: string
-    Forbidden:
-      description: Forbidden - insufficient permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    PackageInfo:
+      type: object
+      properties:
+        appVersion:
+          type: string
+          description: Semver or semver range
+          example: 1.0.0
+        description:
+          type: string
+          example: Bug fixes and performance improvements
+        isDisabled:
+          type: boolean
+          default: false
+        isMandatory:
+          type: boolean
+          default: false
+          description: Whether update is mandatory
+        rollout:
+          type: integer
+          minimum: 1
+          maximum: 100
+          description: Percentage of users to receive update
+          example: 50
+        label:
+          type: string
+          description: Generated release label
+          example: v23
   securitySchemes:
     BearerAuth:
       type: http

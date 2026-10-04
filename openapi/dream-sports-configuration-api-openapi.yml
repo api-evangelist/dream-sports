@@ -351,6 +351,50 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    TestCoveredBy:
+      type: object
+      properties:
+        testCoveredById:
+          type: integer
+        testCoveredByName:
+          type: string
+    Squad:
+      type: object
+      properties:
+        squadId:
+          type: integer
+          description: Unique squad identifier
+        squadName:
+          type: string
+          description: Squad name
+        projectId:
+          type: integer
+          description: Project ID
+    Label:
+      type: object
+      properties:
+        labelId:
+          type: integer
+          description: Unique label identifier
+        labelName:
+          type: string
+          description: Label name
+        projectId:
+          type: integer
+          description: Project ID
+    Priority:
+      type: object
+      properties:
+        priorityId:
+          type: integer
+        priorityName:
+          type: string
+          enum:
+          - Critical
+          - High
+          - Medium
+          - Low
+          - Trivial
     Platform:
       type: object
       properties:
@@ -382,26 +426,6 @@ components:
           type: integer
         automationStatusName:
           type: string
-    Priority:
-      type: object
-      properties:
-        priorityId:
-          type: integer
-        priorityName:
-          type: string
-          enum:
-          - Critical
-          - High
-          - Medium
-          - Low
-          - Trivial
-    TestCoveredBy:
-      type: object
-      properties:
-        testCoveredById:
-          type: integer
-        testCoveredByName:
-          type: string
     Type:
       type: object
       properties:
@@ -409,30 +433,6 @@ components:
           type: integer
         typeName:
           type: string
-    Squad:
-      type: object
-      properties:
-        squadId:
-          type: integer
-          description: Unique squad identifier
-        squadName:
-          type: string
-          description: Squad name
-        projectId:
-          type: integer
-          description: Project ID
-    Label:
-      type: object
-      properties:
-        labelId:
-          type: integer
-          description: Unique label identifier
-        labelName:
-          type: string
-          description: Label name
-        projectId:
-          type: integer
-          description: Project ID
   securitySchemes:
     cookieAuth:
       type: apiKey

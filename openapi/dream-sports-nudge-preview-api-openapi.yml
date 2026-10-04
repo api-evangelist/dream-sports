@@ -104,15 +104,18 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ApiResponse:
+    ErrorResponse:
       type: object
       properties:
-        success:
-          type: boolean
-        data:
+        error:
           type: object
-        statusCode:
-          type: integer
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
     NudgePreview:
       type: object
       required:
@@ -132,18 +135,15 @@ components:
           type: integer
           format: int32
           description: Time-to-live in seconds for the preview record (default 3600)
-    ErrorResponse:
+    ApiResponse:
       type: object
       properties:
-        error:
+        success:
+          type: boolean
+        data:
           type: object
-          properties:
-            message:
-              type: string
-            cause:
-              type: string
-            code:
-              type: string
+        statusCode:
+          type: integer
   securitySchemes:
     TenantIdHeader:
       type: apiKey

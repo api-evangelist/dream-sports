@@ -243,6 +243,30 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Project:
+      type: object
+      properties:
+        projectId:
+          type: integer
+          description: Unique project identifier
+        projectName:
+          type: string
+          description: Name of the project
+        projectDescription:
+          type:
+          - string
+          - 'null'
+          description: Project description
+        createdOn:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        createdBy:
+          type: string
+          description: User who created the project
+        orgId:
+          type: integer
+          description: Organization ID
     SuccessResponse:
       type: object
       properties:
@@ -277,30 +301,6 @@ components:
       required:
       - error
       - status
-    Project:
-      type: object
-      properties:
-        projectId:
-          type: integer
-          description: Unique project identifier
-        projectName:
-          type: string
-          description: Name of the project
-        projectDescription:
-          type:
-          - string
-          - 'null'
-          description: Project description
-        createdOn:
-          type: string
-          format: date-time
-          description: Creation timestamp
-        createdBy:
-          type: string
-          description: User who created the project
-        orgId:
-          type: integer
-          description: Organization ID
   securitySchemes:
     cookieAuth:
       type: apiKey

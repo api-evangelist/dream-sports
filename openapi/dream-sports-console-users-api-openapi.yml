@@ -474,14 +474,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ConsoleUserIdApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: true
-        data:
-          $ref: '#/components/schemas/ConsoleUserIdData'
     ConsoleUserRecord:
       type: object
       properties:
@@ -518,6 +510,59 @@ components:
           - string
           - 'null'
           format: date-time
+    ConsoleUserRecordApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/ConsoleUserRecord'
+    ConsoleUserPagination:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+        recordCount:
+          type:
+          - integer
+          - 'null'
+          description: Total matching records. Present only when id/email filters are used.
+        nextPageToken:
+          type:
+          - string
+          - 'null'
+          description: Cursor for fetching the next page. Null when there are no more results.
+    ConsoleUserListData:
+      type: object
+      properties:
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsoleUserRecord'
+        pagination:
+          $ref: '#/components/schemas/ConsoleUserPagination'
+    ConsoleUserListApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/ConsoleUserListData'
+    ConsoleUserIdApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/ConsoleUserIdData'
+    ConsoleUserIdData:
+      type: object
+      properties:
+        id:
+          type: string
     ErrorResponse:
       type: object
       properties:
@@ -530,6 +575,18 @@ components:
               type: string
             code:
               type: string
+    ConsoleUserUpdateRequest:
+      type: object
+      description: Profile fields only (no projectIds). Use admin update to change project IDs.
+      properties:
+        displayName:
+          type: string
+        photoUrl:
+          type: string
+        emailVerified:
+          type: boolean
+        disabled:
+          type: boolean
     ConsoleUserCreateRequest:
       type: object
       required:
@@ -546,63 +603,6 @@ components:
           type: boolean
         disabled:
           type: boolean
-    ConsoleUserListData:
-      type: object
-      properties:
-        records:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConsoleUserRecord'
-        pagination:
-          $ref: '#/components/schemas/ConsoleUserPagination'
-    ConsoleUserUpdateRequest:
-      type: object
-      description: Profile fields only (no projectIds). Use admin update to change project IDs.
-      properties:
-        displayName:
-          type: string
-        photoUrl:
-          type: string
-        emailVerified:
-          type: boolean
-        disabled:
-          type: boolean
-    ConsoleUserListApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: true
-        data:
-          $ref: '#/components/schemas/ConsoleUserListData'
-    ConsoleUserRecordApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: true
-        data:
-          $ref: '#/components/schemas/ConsoleUserRecord'
-    ConsoleUserIdData:
-      type: object
-      properties:
-        id:
-          type: string
-    ConsoleUserPagination:
-      type: object
-      properties:
-        pageSize:
-          type: integer
-        recordCount:
-          type:
-          - integer
-          - 'null'
-          description: Total matching records. Present only when id/email filters are used.
-        nextPageToken:
-          type:
-          - string
-          - 'null'
-          description: Cursor for fetching the next page. Null when there are no more results.
   securitySchemes:
     TenantIdHeader:
       type: apiKey
