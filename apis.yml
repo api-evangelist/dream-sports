@@ -1261,6 +1261,8 @@ apis:
   humanURL: https://guardianhq.io/docs/
   baseURL: https://auth.dream11.com/
   tags:
+  - OpenID Connect
+  tags_raw:
   - OIDC
   properties:
   - type: OpenAPI
@@ -2195,6 +2197,8 @@ apis:
   humanURL: https://github.com/dream-horizon-org/odin-mcp
   baseURL: https://auth.dream11.com/
   tags:
+  - OpenAPI
+  tags_raw:
   - Open API
   properties:
   - type: OpenAPI
