@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-v1-guest-login-request-body-schema.json",
+  "title": "V1GuestLoginRequestBody",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-guest-authentication-api-openapi.yml#/components/schemas/V1GuestLoginRequestBody",
+  "type": "object",
+  "required": [
+    "guest_identifier",
+    "client_id",
+    "scopes"
+  ],
+  "properties": {
+    "guest_identifier": {
+      "type": "string",
+      "description": "Device or app-instance derived ID."
+    },
+    "client_id": {
+      "type": "string",
+      "description": "Client ID of the requesting application."
+    },
+    "scopes": {
+      "type": "array",
+      "description": "List of access scopes being requested.",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

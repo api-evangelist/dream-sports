@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-scope-list-response-schema.json",
+  "title": "ScopeListResponse",
+  "description": "Paginated list of scopes",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-oidc-scope-management-api-openapi.yml#/components/schemas/ScopeListResponse",
+  "type": "object",
+  "required": [
+    "scopes"
+  ],
+  "properties": {
+    "scopes": {
+      "type": "array",
+      "description": "Array of scope objects",
+      "items": {
+        "$ref": "#/$defs/ScopeResponse"
+      }
+    }
+  },
+  "$defs": {
+    "ScopeResponse": {
+      "type": "object",
+      "description": "Scope information",
+      "required": [
+        "name",
+        "is_oidc"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unique name of the scope"
+        },
+        "display_name": {
+          "type": "string",
+          "description": "Human-readable display name"
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the scope"
+        },
+        "icon_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to the scope's icon"
+        },
+        "is_oidc": {
+          "type": "boolean",
+          "description": "Whether this is an OpenID Connect standard scope"
+        },
+        "claims": {
+          "type": "array",
+          "description": "List of claims associated with this scope",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

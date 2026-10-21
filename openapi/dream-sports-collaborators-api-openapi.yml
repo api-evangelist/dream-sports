@@ -145,6 +145,33 @@ components:
         type: string
       description: Application name (or 'owner:appName' for disambiguation)
       example: MyApp-iOS
+  schemas:
+    CollaboratorProperties:
+      type: object
+      properties:
+        permission:
+          type: string
+          enum:
+          - Owner
+          - Collaborator
+        isCurrentAccount:
+          type: boolean
+          description: Whether this is the authenticated user
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    CollaboratorMap:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/CollaboratorProperties'
+      example:
+        user@example.com:
+          permission: Owner
+          isCurrentAccount: true
   responses:
     BadRequest:
       description: Bad request - invalid parameters
@@ -171,33 +198,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  schemas:
-    CollaboratorMap:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/CollaboratorProperties'
-      example:
-        user@example.com:
-          permission: Owner
-          isCurrentAccount: true
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
-    CollaboratorProperties:
-      type: object
-      properties:
-        permission:
-          type: string
-          enum:
-          - Owner
-          - Collaborator
-        isCurrentAccount:
-          type: boolean
-          description: Whether this is the authenticated user
   securitySchemes:
     BearerAuth:
       type: http

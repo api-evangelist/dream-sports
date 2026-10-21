@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-user-consent-response-schema.json",
+  "title": "UserConsentResponse",
+  "description": "User consent information for OAuth 2.0 client",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-oidc-api-openapi.yml#/components/schemas/UserConsentResponse",
+  "type": "object",
+  "required": [
+    "client",
+    "requested_scopes",
+    "consented_scopes",
+    "subject"
+  ],
+  "properties": {
+    "client": {
+      "type": "object",
+      "description": "Client application information (filtered for security)",
+      "required": [
+        "client_id",
+        "client_name"
+      ],
+      "properties": {
+        "clientId": {
+          "type": "string",
+          "description": "Unique identifier for the client application"
+        },
+        "clientName": {
+          "type": "string",
+          "description": "Human-readable name of the client application"
+        },
+        "clientUri": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the client application's home page"
+        },
+        "logoUri": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the client application's logo image"
+        },
+        "policyUri": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the client application's privacy policy"
+        }
+      }
+    },
+    "requested_scopes": {
+      "type": "array",
+      "description": "List of OAuth 2.0 scopes being requested by the client",
+      "items": {
+        "type": "string"
+      }
+    },
+    "consented_scopes": {
+      "type": "array",
+      "description": "List of OAuth 2.0 scopes the user has already consented to",
+      "items": {
+        "type": "string"
+      }
+    },
+    "subject": {
+      "type": "string",
+      "description": "User identifier (subject) associated with the consent"
+    }
+  }
+}

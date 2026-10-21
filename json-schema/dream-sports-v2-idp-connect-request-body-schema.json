@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-v2-idp-connect-request-body-schema.json",
+  "title": "V2IdpConnectRequestBody",
+  "description": "Request body for connecting to external identity providers (v2)",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-social-api-openapi.yml#/components/schemas/V2IdpConnectRequestBody",
+  "type": "object",
+  "required": [
+    "client_id",
+    "id_provider",
+    "identifier",
+    "identifier_type",
+    "response_type"
+  ],
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "description": "Client identifier"
+    },
+    "id_provider": {
+      "type": "string",
+      "description": "Identity provider name (configured provider identifier)"
+    },
+    "identifier": {
+      "type": "string",
+      "description": "Provider-specific identifier for authentication:\n- For authorization code flow: the authorization code\n- For ID token flow: the ID token\n"
+    },
+    "identifier_type": {
+      "type": "string",
+      "description": "Type of identifier being provided",
+      "enum": [
+        "code",
+        "id_token"
+      ]
+    },
+    "response_type": {
+      "type": "string",
+      "description": "Desired response type for the authentication flow",
+      "enum": [
+        "code",
+        "token"
+      ]
+    },
+    "nonce": {
+      "type": "string",
+      "description": "Optional nonce value for OIDC flows"
+    },
+    "code_verifier": {
+      "type": "string",
+      "description": "PKCE code verifier for authorization code flow"
+    },
+    "scopes": {
+      "type": "array",
+      "description": "List of scopes to request",
+      "items": {
+        "type": "string"
+      }
+    },
+    "flow": {
+      "type": "string",
+      "description": "Authentication flow type",
+      "enum": [
+        "signinup",
+        "signin",
+        "signup"
+      ],
+      "default": "signinup"
+    },
+    "meta_info": {
+      "$ref": "#/$defs/MetaInfo"
+    }
+  },
+  "$defs": {
+    "MetaInfo": {
+      "type": "object",
+      "properties": {
+        "ip": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "device_name": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

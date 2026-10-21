@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-create-client-scope-request-body-schema.json",
+  "title": "CreateClientScopeRequestBody",
+  "description": "Request body for adding scopes to a client",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-oidc-client-scope-management-api-openapi.yml#/components/schemas/CreateClientScopeRequestBody",
+  "type": "object",
+  "required": [
+    "scopes"
+  ],
+  "properties": {
+    "scopes": {
+      "type": "array",
+      "description": "List of scope names to add to the client",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

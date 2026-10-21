@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-token-response-schema.json",
+  "title": "TokenResponse",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-device-bound-authentication-api-openapi.yml#/components/schemas/TokenResponse",
+  "type": "object",
+  "properties": {
+    "accessToken": {
+      "type": "string",
+      "description": "Short lived Bearer JWT token to access APIs."
+    },
+    "refreshToken": {
+      "type": "string",
+      "description": "Long Lived token used to refresh access token."
+    },
+    "idToken": {
+      "type": "string",
+      "description": "OpenID Connect ID token"
+    },
+    "tokenType": {
+      "type": "string",
+      "description": "type of token. Only supports Bearer for now."
+    },
+    "expiresIn": {
+      "type": "integer",
+      "description": "expiry of the access token in seconds"
+    },
+    "isNewUser": {
+      "type": "boolean",
+      "description": "Indicates if the user is new"
+    }
+  }
+}

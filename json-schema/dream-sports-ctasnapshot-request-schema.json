@@ -1,0 +1,225 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-ctasnapshot-request-schema.json",
+  "title": "CTASnapshotRequest",
+  "description": "Request containing current state snapshot from client including CTAs, active state machines, and behaviour tags. This is sent by the client to synchronize state with the server.",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-sdk-api-openapi.yml#/components/schemas/CTASnapshotRequest",
+  "type": "object",
+  "properties": {
+    "ctas": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/StateMachineSnapshot"
+      },
+      "description": "List of CTA state machine snapshots. Each snapshot contains: ctaId, activeStateMachines (map of state machine IDs to state data), resetAt (list of reset timestamps), and actionDoneAt (list of action completion timestamps)."
+    },
+    "behaviourTags": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BehaviourTagSnapshot"
+      },
+      "description": "List of behaviour tag snapshots. Each snapshot contains: behaviourTagName, exposureRule (session/window/lifespan limits), and ctaRelation (shownCta/hideCta rules with activeCtas list)."
+    }
+  },
+  "$defs": {
+    "BehaviourExposureRule": {
+      "type": "object",
+      "properties": {
+        "session": {
+          "$ref": "#/$defs/SessionFrequency"
+        },
+        "lifespan": {
+          "$ref": "#/$defs/LifespanFrequency"
+        },
+        "window": {
+          "$ref": "#/$defs/WindowFrequency"
+        },
+        "ctasResetAt": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CTAReset"
+          }
+        }
+      }
+    },
+    "BehaviourTagSnapshot": {
+      "type": "object",
+      "properties": {
+        "behaviourTagName": {
+          "type": "string"
+        },
+        "exposureRule": {
+          "$ref": "#/$defs/BehaviourExposureRule"
+        },
+        "ctaRelation": {
+          "$ref": "#/$defs/CTARelationSnapshot"
+        }
+      }
+    },
+    "CTARelationSnapshot": {
+      "type": "object",
+      "properties": {
+        "shownCta": {
+          "$ref": "#/$defs/CtaRelationRule"
+        },
+        "hideCta": {
+          "$ref": "#/$defs/CtaRelationRule"
+        },
+        "activeCtas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "CTAReset": {
+      "type": "object",
+      "properties": {
+        "ctaId": {
+          "type": "string"
+        },
+        "resetAt": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "CtaRelationRule": {
+      "type": "object",
+      "properties": {
+        "rule": {
+          "$ref": "#/$defs/CtaRelationRuleTypes"
+        },
+        "ctaList": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "CtaRelationRuleTypes": {
+      "type": "string",
+      "enum": [
+        "ANY",
+        "LIST",
+        "REST"
+      ]
+    },
+    "LifespanFrequency": {
+      "type": "object",
+      "required": [
+        "limit"
+      ],
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "SessionFrequency": {
+      "type": "object",
+      "required": [
+        "limit"
+      ],
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "StateMachine": {
+      "type": "object",
+      "required": [
+        "currentState",
+        "lastTransitionAt",
+        "createdAt"
+      ],
+      "properties": {
+        "currentState": {
+          "type": "string"
+        },
+        "lastTransitionAt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "context": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "createdAt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "reset": {
+          "type": "boolean"
+        }
+      }
+    },
+    "StateMachineSnapshot": {
+      "type": "object",
+      "properties": {
+        "ctaId": {
+          "type": "string"
+        },
+        "activeStateMachines": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/StateMachine"
+          }
+        },
+        "resetAt": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "actionDoneAt": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "WindowFrequency": {
+      "type": "object",
+      "required": [
+        "limit",
+        "unit",
+        "value"
+      ],
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "unit": {
+          "$ref": "#/$defs/WindowFrequencyUnit"
+        },
+        "value": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "WindowFrequencyUnit": {
+      "type": "string",
+      "enum": [
+        "days",
+        "hours",
+        "minutes",
+        "seconds"
+      ]
+    }
+  }
+}

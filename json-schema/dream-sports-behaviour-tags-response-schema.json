@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-behaviour-tags-response-schema.json",
+  "title": "BehaviourTagsResponse",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-behaviour-tags-api-openapi.yml#/components/schemas/BehaviourTagsResponse",
+  "type": "object",
+  "properties": {
+    "behaviourTags": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BehaviourTag"
+      }
+    }
+  },
+  "$defs": {
+    "BehaviourTag": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "lastUpdatedAt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "lastUpdatedBy": {
+          "type": "string"
+        },
+        "exposureRule": {
+          "$ref": "#/$defs/ExposureRule"
+        },
+        "ctaRelation": {
+          "$ref": "#/$defs/CTARelation"
+        },
+        "linkedCtas": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "tenantId": {
+          "type": "string"
+        }
+      }
+    },
+    "CTARelation": {
+      "type": "object",
+      "properties": {
+        "shownCta": {
+          "$ref": "#/$defs/CtaRelationRule"
+        },
+        "hideCta": {
+          "$ref": "#/$defs/CtaRelationRule"
+        }
+      }
+    },
+    "CtaRelationRule": {
+      "type": "object",
+      "properties": {
+        "rule": {
+          "$ref": "#/$defs/CtaRelationRuleTypes"
+        },
+        "ctaList": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "CtaRelationRuleTypes": {
+      "type": "string",
+      "enum": [
+        "ANY",
+        "LIST",
+        "REST"
+      ]
+    },
+    "ExposureRule": {
+      "type": "object",
+      "properties": {
+        "session": {
+          "$ref": "#/$defs/SessionFrequency"
+        },
+        "window": {
+          "$ref": "#/$defs/WindowFrequency"
+        },
+        "lifespan": {
+          "$ref": "#/$defs/LifespanFrequency"
+        }
+      }
+    },
+    "LifespanFrequency": {
+      "type": "object",
+      "required": [
+        "limit"
+      ],
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "SessionFrequency": {
+      "type": "object",
+      "required": [
+        "limit"
+      ],
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "WindowFrequency": {
+      "type": "object",
+      "required": [
+        "limit",
+        "unit",
+        "value"
+      ],
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "unit": {
+          "$ref": "#/$defs/WindowFrequencyUnit"
+        },
+        "value": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "WindowFrequencyUnit": {
+      "type": "string",
+      "enum": [
+        "days",
+        "hours",
+        "minutes",
+        "seconds"
+      ]
+    }
+  }
+}

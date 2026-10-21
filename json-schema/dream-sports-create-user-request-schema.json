@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-create-user-request-schema.json",
+  "title": "CreateUserRequest",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-user-api-openapi.yml#/components/schemas/CreateUserRequest",
+  "type": "object",
+  "properties": {
+    "phoneNumber": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "emailVerified": {
+      "type": "boolean"
+    },
+    "username": {
+      "type": "string"
+    },
+    "password": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "provider": {
+      "$ref": "#/$defs/ProviderData"
+    }
+  },
+  "$defs": {
+    "ProviderData": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "providerUserId": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object"
+        },
+        "credentials": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

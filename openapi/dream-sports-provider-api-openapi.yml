@@ -52,14 +52,28 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    AddProviderDetailsRequest:
+    errorResponse:
       type: object
       properties:
-        userId:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              example: Something went wrong.
+    ProviderData:
+      type: object
+      properties:
+        name:
           type: string
-          example: 1234
-        provider:
-          $ref: '#/components/schemas/ProviderData'
+          example: google
+        providerUserId:
+          type: string
+          example: '1234'
+        data:
+          type: object
+        credentials:
+          type: object
     User:
       type: object
       properties:
@@ -78,25 +92,11 @@ components:
         lastName:
           type: string
           example: Doe
-    ProviderData:
+    AddProviderDetailsRequest:
       type: object
       properties:
-        name:
+        userId:
           type: string
-          example: google
-        providerUserId:
-          type: string
-          example: '1234'
-        data:
-          type: object
-        credentials:
-          type: object
-    errorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              example: Something went wrong.
+          example: 1234
+        provider:
+          $ref: '#/components/schemas/ProviderData'

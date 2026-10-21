@@ -343,6 +343,15 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   parameters:
+    SdkOsApiLevel:
+      name: os-api-level
+      in: header
+      required: true
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+      example: 34
     SdkOs:
       name: os
       in: header
@@ -354,22 +363,14 @@ components:
         - ios
         - tvos
       example: android
-    SdkUserId:
-      name: user-id
-      in: header
-      required: true
-      schema:
-        type: integer
-        format: int64
-      example: 135162489
-    SdkVersion:
-      name: sdk-version
+    SdkAppBuild:
+      name: app-build
       in: header
       required: true
       schema:
         type: string
         pattern: ^[A-Za-z0-9._-]{1,64}$
-      example: 1.5.0
+      example: 250200123
     SdkAppVersion:
       name: app-version
       in: header
@@ -379,14 +380,6 @@ components:
         pattern: ^[A-Za-z0-9._-]{1,64}$
       description: Conventional app version. CodePush suffix is allowed (e.g., 25.2.0.v1).
       example: 25.2.0
-    SdkPackage:
-      name: package
-      in: header
-      required: true
-      schema:
-        type: string
-        pattern: ^[A-Za-z0-9._-]{3,128}$
-      example: com.dream11.app
     SdkOsVersion:
       name: os-version
       in: header
@@ -395,14 +388,41 @@ components:
         type: string
         pattern: ^[A-Za-z0-9._-]{1,32}$
       example: '14'
-    SdkAppBuild:
-      name: app-build
+    SdkUserId:
+      name: user-id
+      in: header
+      required: true
+      schema:
+        type: integer
+        format: int64
+      example: 135162489
+    SdkPackage:
+      name: package
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^[A-Za-z0-9._-]{3,128}$
+      example: com.dream11.app
+    SdkVersion:
+      name: sdk-version
       in: header
       required: true
       schema:
         type: string
         pattern: ^[A-Za-z0-9._-]{1,64}$
-      example: 250200123
+      example: 1.5.0
+    SdkFramework:
+      name: framework
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+        - native
+        - react-native
+        - flutter
+      example: react-native
     SdkPlatform:
       name: platform
       in: header
@@ -415,27 +435,61 @@ components:
         - ios
         - tvos
       example: android-mobile
-    SdkFramework:
-      name: framework
-      in: header
-      required: true
-      schema:
-        type: string
-        enum:
-        - native
-        - react-native
-        - flutter
-      example: react-native
-    SdkOsApiLevel:
-      name: os-api-level
-      in: header
-      required: true
-      schema:
-        type: integer
-        format: int32
-        minimum: 0
-      example: 34
   schemas:
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        statusCode:
+          type: integer
+    SdkUpsertPreferencesResponse:
+      type: object
+      properties:
+        updated:
+          type: integer
+        preferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreferenceItem'
+    JourneySnapshotRequest:
+      type: object
+      properties:
+        ctas:
+          type: array
+          items:
+            type: object
+        behaviourTags:
+          type: array
+          items:
+            type: object
+    PreferenceItem:
+      type: object
+      required:
+      - channel
+      - subcategory
+      - value
+      properties:
+        channel:
+          type: string
+        subcategory:
+          type: string
+        value:
+          type: boolean
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
     SdkUserProfileLoginRequest:
       type: object
       required:
@@ -471,19 +525,13 @@ components:
         custom:
           type: object
           additionalProperties: true
-    PreferenceItem:
+    SdkUpsertPreferencesApiResponse:
       type: object
-      required:
-      - channel
-      - subcategory
-      - value
       properties:
-        channel:
-          type: string
-        subcategory:
-          type: string
-        value:
+        success:
           type: boolean
+        data:
+          $ref: '#/components/schemas/SdkUpsertPreferencesResponse'
     SdkTokenRegisterRequest:
       type: object
       required:
@@ -511,34 +559,6 @@ components:
           type: string
         appVersion:
           type: string
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            cause:
-              type: string
-            code:
-              type: string
-    ApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        data:
-          type: object
-        statusCode:
-          type: integer
-    SdkUpsertPreferencesApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        data:
-          $ref: '#/components/schemas/SdkUpsertPreferencesResponse'
     SdkUpsertPreferencesRequest:
       type: object
       required:
@@ -550,26 +570,6 @@ components:
         items:
           type: array
           minItems: 1
-          items:
-            $ref: '#/components/schemas/PreferenceItem'
-    JourneySnapshotRequest:
-      type: object
-      properties:
-        ctas:
-          type: array
-          items:
-            type: object
-        behaviourTags:
-          type: array
-          items:
-            type: object
-    SdkUpsertPreferencesResponse:
-      type: object
-      properties:
-        updated:
-          type: integer
-        preferences:
-          type: array
           items:
             $ref: '#/components/schemas/PreferenceItem'
   securitySchemes:

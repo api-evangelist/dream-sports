@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-download-report-schema.json",
+  "title": "DownloadReport",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-acquisition-api-openapi.yml#/components/schemas/DownloadReport",
+  "type": "object",
+  "required": [
+    "deploymentKey",
+    "label"
+  ],
+  "properties": {
+    "deploymentKey": {
+      "type": "string",
+      "description": "Deployment key (can use snake_case deployment_key)"
+    },
+    "label": {
+      "type": "string",
+      "description": "Release label"
+    },
+    "clientUniqueId": {
+      "type": "string",
+      "description": "Unique device identifier (can use snake_case client_unique_id)"
+    }
+  }
+}

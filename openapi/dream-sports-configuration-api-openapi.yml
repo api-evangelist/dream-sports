@@ -1,7 +1,36 @@
 openapi: 3.2.0
 info:
   title: Checkmate Test Management Configuration API
-  description: Comprehensive API documentation for Checkmate - a modern test case management system built with Remix, MySQL, and Drizzle ORM.
+  description: 'Comprehensive API documentation for Checkmate - a modern test case management system built with Remix, MySQL, and Drizzle ORM.
+
+
+    ## Features
+
+    - Project and Test Management
+
+    - Test Run Execution
+
+    - Role-Based Access Control (RBAC)
+
+    - Google OAuth Authentication
+
+    - Test Status Tracking and History
+
+
+    ## Authentication
+
+    All endpoints require authentication via session cookies. Users must be logged in through Google OAuth.
+
+
+    ## Authorization
+
+    Access to resources is controlled via Casbin RBAC with three role levels:
+
+    - **Admin**: Full access to all resources
+
+    - **User**: Can create, read, update resources
+
+    - **Reader**: Read-only access'
   version: 1.0.0
   contact:
     name: Checkmate API Support
@@ -358,30 +387,20 @@ components:
           type: integer
         testCoveredByName:
           type: string
-    Squad:
+    Type:
       type: object
       properties:
-        squadId:
+        typeId:
           type: integer
-          description: Unique squad identifier
-        squadName:
+        typeName:
           type: string
-          description: Squad name
-        projectId:
-          type: integer
-          description: Project ID
-    Label:
+    AutomationStatus:
       type: object
       properties:
-        labelId:
+        automationStatusId:
           type: integer
-          description: Unique label identifier
-        labelName:
+        automationStatusName:
           type: string
-          description: Label name
-        projectId:
-          type: integer
-          description: Project ID
     Priority:
       type: object
       properties:
@@ -395,13 +414,6 @@ components:
           - Medium
           - Low
           - Trivial
-    Platform:
-      type: object
-      properties:
-        platformId:
-          type: integer
-        platformName:
-          type: string
     Section:
       type: object
       properties:
@@ -419,20 +431,37 @@ components:
         projectId:
           type: integer
           description: Project ID
-    AutomationStatus:
+    Platform:
       type: object
       properties:
-        automationStatusId:
+        platformId:
           type: integer
-        automationStatusName:
+        platformName:
           type: string
-    Type:
+    Label:
       type: object
       properties:
-        typeId:
+        labelId:
           type: integer
-        typeName:
+          description: Unique label identifier
+        labelName:
           type: string
+          description: Label name
+        projectId:
+          type: integer
+          description: Project ID
+    Squad:
+      type: object
+      properties:
+        squadId:
+          type: integer
+          description: Unique squad identifier
+        squadName:
+          type: string
+          description: Squad name
+        projectId:
+          type: integer
+          description: Project ID
   securitySchemes:
     cookieAuth:
       type: apiKey

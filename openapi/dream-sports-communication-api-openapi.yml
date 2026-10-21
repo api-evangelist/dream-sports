@@ -126,6 +126,15 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    errorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              example: Something went wrong.
     SendMessageRequest:
       type: object
       required:
@@ -156,12 +165,3 @@ components:
           example:
             otp: '123456'
             name: John Doe
-    errorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              example: Something went wrong.

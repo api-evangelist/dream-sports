@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-access-key-schema.json",
+  "title": "AccessKey",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-access-keys-api-openapi.yml#/components/schemas/AccessKey",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Generated secure key (hidden in responses)"
+    },
+    "friendlyName": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "description": "Legacy field, same as friendlyName"
+    },
+    "createdTime": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "createdBy": {
+      "type": "string",
+      "description": "IP address or machine name"
+    },
+    "expires": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Expiration timestamp"
+    },
+    "isSession": {
+      "type": "boolean",
+      "description": "Whether this is a session token"
+    },
+    "scope": {
+      "type": "string",
+      "description": "Optional scope restriction"
+    }
+  }
+}

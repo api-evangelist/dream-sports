@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-app-creation-request-schema.json",
+  "title": "AppCreationRequest",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-apps-api-openapi.yml#/components/schemas/AppCreationRequest",
+  "allOf": [
+    {
+      "$ref": "#/$defs/App"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "manuallyProvisionDeployments": {
+          "type": "boolean",
+          "default": false,
+          "description": "If true, does not create default Production/Staging deployments"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "App": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "collaborators": {
+          "$ref": "#/$defs/CollaboratorMap"
+        },
+        "deployments": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "organisation": {
+          "type": "object",
+          "properties": {
+            "orgId": {
+              "type": "string"
+            },
+            "orgName": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "CollaboratorMap": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/CollaboratorProperties"
+      }
+    },
+    "CollaboratorProperties": {
+      "type": "object",
+      "properties": {
+        "permission": {
+          "type": "string",
+          "enum": [
+            "Owner",
+            "Collaborator"
+          ]
+        },
+        "isCurrentAccount": {
+          "type": "boolean",
+          "description": "Whether this is the authenticated user"
+        }
+      }
+    }
+  }
+}

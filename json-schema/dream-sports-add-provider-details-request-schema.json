@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-add-provider-details-request-schema.json",
+  "title": "AddProviderDetailsRequest",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-provider-api-openapi.yml#/components/schemas/AddProviderDetailsRequest",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string"
+    },
+    "provider": {
+      "$ref": "#/$defs/ProviderData"
+    }
+  },
+  "$defs": {
+    "ProviderData": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "providerUserId": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object"
+        },
+        "credentials": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

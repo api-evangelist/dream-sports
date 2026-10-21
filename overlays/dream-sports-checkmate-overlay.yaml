@@ -2,7 +2,7 @@ overlay: 1.0.0
 info:
   title: API Evangelist enhancements for Checkmate Test Management API
   version: 1.0.0
-extends: openapi/dream-sports-checkmate-openapi.yml
+extends: ../openapi/_original/dream-sports-checkmate-openapi.yml
 x-generated: '2026-08-04'
 x-method: generated
 x-source: openapi/ + apis.yml + repo artifacts (this overlay never mutates the harvested spec)

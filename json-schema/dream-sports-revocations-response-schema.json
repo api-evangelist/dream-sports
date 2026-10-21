@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-revocations-response-schema.json",
+  "title": "RevocationsResponse",
+  "description": "Response containing revoked tokens within a time range",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-token-management-api-openapi.yml#/components/schemas/RevocationsResponse",
+  "type": "object",
+  "required": [
+    "revocations",
+    "from",
+    "to",
+    "expiry"
+  ],
+  "properties": {
+    "revocations": {
+      "type": "array",
+      "description": "List of revoked token identifiers",
+      "items": {
+        "type": "string"
+      }
+    },
+    "from": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Start timestamp (epoch seconds) for the query range"
+    },
+    "to": {
+      "type": "integer",
+      "format": "int64",
+      "description": "End timestamp (epoch seconds) for the query range"
+    },
+    "expiry": {
+      "type": "integer",
+      "description": "Access token expiry duration in seconds"
+    }
+  }
+}

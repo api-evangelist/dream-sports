@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-run-schema.json",
+  "title": "Run",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-runs-api-openapi.yml#/components/schemas/Run",
+  "type": "object",
+  "properties": {
+    "runId": {
+      "type": "integer",
+      "description": "Unique run identifier"
+    },
+    "runName": {
+      "type": "string",
+      "description": "Name of the test run"
+    },
+    "projectId": {
+      "type": "integer",
+      "description": "Project ID"
+    },
+    "createdBy": {
+      "type": "string",
+      "description": "User who created the run"
+    },
+    "createdOn": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Creation timestamp"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Active",
+        "Locked"
+      ],
+      "description": "Run status"
+    }
+  }
+}

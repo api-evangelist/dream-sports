@@ -2,7 +2,7 @@ overlay: 1.0.0
 info:
   title: API Evangelist enhancements for Guardian Authentication & Authorization API
   version: 1.0.0
-extends: openapi/dream-sports-guardian-openapi.yml
+extends: ../openapi/_original/dream-sports-guardian-openapi.yml
 x-generated: '2026-08-04'
 x-method: generated
 x-source: openapi/ + apis.yml + repo artifacts (this overlay never mutates the harvested spec)

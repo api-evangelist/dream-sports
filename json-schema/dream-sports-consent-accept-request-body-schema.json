@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-consent-accept-request-body-schema.json",
+  "title": "ConsentAcceptRequestBody",
+  "description": "Request body for accepting consent challenge",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-oidc-api-openapi.yml#/components/schemas/ConsentAcceptRequestBody",
+  "type": "object",
+  "required": [
+    "consent_challenge",
+    "consented_scopes",
+    "refresh_token"
+  ],
+  "properties": {
+    "consent_challenge": {
+      "type": "string",
+      "description": "Consent challenge received from the consent page"
+    },
+    "consented_scopes": {
+      "type": "array",
+      "description": "List of scopes the user has consented to",
+      "items": {
+        "type": "string"
+      }
+    },
+    "refresh_token": {
+      "type": "string",
+      "description": "Valid refresh token for the user"
+    }
+  }
+}

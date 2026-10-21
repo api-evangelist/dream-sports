@@ -300,42 +300,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        data:
-          type: object
-        statusCode:
-          type: integer
-    JourneyRequest:
-      type: object
-      required:
-      - name
-      - team
-      - rule
-      properties:
-        name:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        description:
-          type: string
-        team:
-          type: string
-        startTime:
-          type: integer
-          format: int64
-          description: Future epoch timestamp in milliseconds
-        endTime:
-          type: integer
-          format: int64
-          description: Future epoch timestamp in milliseconds
-        rule:
-          $ref: '#/components/schemas/RuleRequest'
     RuleRequest:
       type: object
       required:
@@ -430,6 +394,42 @@ components:
         endTime:
           type: integer
           format: int64
+        rule:
+          $ref: '#/components/schemas/RuleRequest'
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        statusCode:
+          type: integer
+    JourneyRequest:
+      type: object
+      required:
+      - name
+      - team
+      - rule
+      properties:
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        team:
+          type: string
+        startTime:
+          type: integer
+          format: int64
+          description: Future epoch timestamp in milliseconds
+        endTime:
+          type: integer
+          format: int64
+          description: Future epoch timestamp in milliseconds
         rule:
           $ref: '#/components/schemas/RuleRequest'
   parameters:

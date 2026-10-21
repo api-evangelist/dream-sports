@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-v1-otp-send-response-schema.json",
+  "title": "V1OtpSendResponse",
+  "description": "Response after sending OTP with rate limiting information",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-passwordless-api-openapi.yml#/components/schemas/V1OtpSendResponse",
+  "type": "object",
+  "properties": {
+    "state": {
+      "type": "string",
+      "description": "Unique state identifier for this OTP session"
+    },
+    "tries": {
+      "type": "integer",
+      "description": "Number of verification attempts made so far",
+      "minimum": 0
+    },
+    "retriesLeft": {
+      "type": "integer",
+      "description": "Number of verification attempts remaining",
+      "minimum": 0
+    },
+    "resends": {
+      "type": "integer",
+      "description": "Number of resend attempts made so far",
+      "minimum": 0
+    },
+    "resendsLeft": {
+      "type": "integer",
+      "description": "Number of resend attempts remaining",
+      "minimum": 0
+    },
+    "resendAfter": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Seconds to wait before next resend is allowed",
+      "minimum": 0
+    }
+  }
+}

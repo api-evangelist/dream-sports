@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-nudge-preview-schema.json",
+  "title": "NudgePreview",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-nudge-preview-api-openapi.yml#/components/schemas/NudgePreview",
+  "type": "object",
+  "required": [
+    "id",
+    "template"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the nudge preview"
+    },
+    "template": {
+      "type": "string",
+      "description": "JSON string containing the nudge UI template configuration"
+    },
+    "projectId": {
+      "type": "string",
+      "description": "Project identifier (set by server)"
+    },
+    "ttl": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Time-to-live in seconds for the preview record (default 3600)"
+    }
+  }
+}

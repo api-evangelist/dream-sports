@@ -106,6 +106,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
+  parameters:
+    UserId:
+      name: USER-ID
+      in: header
+      required: true
+      schema:
+        type: string
+      example: admin
   schemas:
     ErrorResponse:
       type: object
@@ -137,14 +145,6 @@ components:
           type: object
         statusCode:
           type: integer
-  parameters:
-    UserId:
-      name: USER-ID
-      in: header
-      required: true
-      schema:
-        type: string
-      example: admin
   securitySchemes:
     TenantIdHeader:
       type: apiKey

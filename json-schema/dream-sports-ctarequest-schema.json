@@ -1,0 +1,270 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-ctarequest-schema.json",
+  "title": "CTARequest",
+  "description": "Request to create a new CTA (Call-to-Action). Note: Cohort eligibility must use 'all' as the cohort value. Use includes: [\"all\"] for single cohort or includes: [\"all\"] for list, and always keep excludes: [] empty. User-cohorts system is not currently supported.",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-ctas-api-openapi.yml#/components/schemas/CTARequest",
+  "type": "object",
+  "required": [
+    "name",
+    "team",
+    "rule"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 100,
+      "description": "Name of the CTA"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tags associated with the CTA for categorization"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 500,
+      "description": "Detailed description of the CTA"
+    },
+    "team": {
+      "type": "string",
+      "description": "Team that owns this CTA"
+    },
+    "startTime": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Start time in epoch milliseconds. If null, CTA starts immediately when activated."
+    },
+    "endTime": {
+      "type": "integer",
+      "format": "int64",
+      "description": "End time in epoch milliseconds. If null, CTA has no end time."
+    },
+    "rule": {
+      "description": "Rule configuration for the CTA including cohort eligibility, state transitions, actions, and frequency controls. IMPORTANT: cohortEligibility.includes must be [\"all\"] and excludes must be []. User-cohorts system is not currently supported.",
+      "type": "object",
+      "$ref": "#/$defs/RuleRequest"
+    }
+  },
+  "$defs": {
+    "CohortEligibility": {
+      "type": "object",
+      "description": "Cohort eligibility configuration for CTAs. IMPORTANT: User-cohorts system is not currently supported. Always use includes: [\"all\"] (single cohort) or includes: [\"all\"] (list), and keep excludes: [] empty.",
+      "required": [
+        "includes",
+        "excludes"
+      ],
+      "properties": {
+        "includes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of cohort names to include. Must be [\"all\"] since user-cohorts system is not currently supported.",
+          "minItems": 1
+        },
+        "excludes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of cohort names to exclude. Must always be empty [] since user-cohorts system is not currently supported."
+        }
+      }
+    },
+    "Filters": {
+      "type": "object",
+      "required": [
+        "operator",
+        "filter"
+      ],
+      "properties": {
+        "operator": {
+          "type": "string"
+        },
+        "filter": {
+          "type": "array",
+          "items": {}
+        }
+      }
+    },
+    "Frequency": {
+      "type": "object",
+      "properties": {
+        "session": {
+          "$ref": "#/$defs/SessionFrequency"
+        },
+        "window": {
+          "$ref": "#/$defs/WindowFrequency"
+        },
+        "lifeSpan": {
+          "$ref": "#/$defs/LifespanFrequency"
+        }
+      }
+    },
+    "GroupByConfig": {
+      "type": "object",
+      "properties": {
+        "maxActiveStateMachineCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "groupByKeys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "LifespanFrequency": {
+      "type": "object",
+      "required": [
+        "limit"
+      ],
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "RuleRequest": {
+      "type": "object",
+      "description": "Rule configuration for CTA including cohort eligibility, state transitions, actions, and frequency. Note: cohortEligibility must use includes: [\"all\"] and excludes: [].",
+      "required": [
+        "cohortEligibility",
+        "stateToAction",
+        "stateTransition",
+        "priority",
+        "stateMachineTTL",
+        "actions",
+        "frequency"
+      ],
+      "properties": {
+        "cohortEligibility": {
+          "description": "Cohort eligibility. Must use includes: [\"all\"] and excludes: [] since user-cohorts system is not currently supported.",
+          "type": "object",
+          "$ref": "#/$defs/CohortEligibility"
+        },
+        "stateToAction": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "minProperties": 1
+        },
+        "resetStates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "resetCTAonFirstLaunch": {
+          "type": "boolean"
+        },
+        "contextParams": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "stateTransition": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/StateTransitionCondition"
+              }
+            }
+          }
+        },
+        "groupByConfig": {
+          "$ref": "#/$defs/GroupByConfig"
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "stateMachineTTL": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        },
+        "frequency": {
+          "$ref": "#/$defs/Frequency"
+        }
+      }
+    },
+    "SessionFrequency": {
+      "type": "object",
+      "required": [
+        "limit"
+      ],
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "StateTransitionCondition": {
+      "type": "object",
+      "required": [
+        "transitionTo",
+        "filters"
+      ],
+      "properties": {
+        "transitionTo": {
+          "type": "string"
+        },
+        "filters": {
+          "$ref": "#/$defs/Filters"
+        }
+      }
+    },
+    "WindowFrequency": {
+      "type": "object",
+      "required": [
+        "limit",
+        "unit",
+        "value"
+      ],
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "unit": {
+          "$ref": "#/$defs/WindowFrequencyUnit"
+        },
+        "value": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "WindowFrequencyUnit": {
+      "type": "string",
+      "enum": [
+        "days",
+        "hours",
+        "minutes",
+        "seconds"
+      ]
+    }
+  }
+}

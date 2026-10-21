@@ -239,15 +239,20 @@ paths:
                 $ref: '#/components/schemas/errorResponse'
 components:
   schemas:
-    errorResponse:
+    EmptyUserResponse:
+      type: object
+    AuthenticateUserRequest:
+      required:
+      - password
+      - username
       type: object
       properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              example: Something went wrong.
+        username:
+          type: string
+          example: JohnTheMan
+        password:
+          type: string
+          example: wordpass@1234
     User:
       type: object
       properties:
@@ -266,8 +271,15 @@ components:
         lastName:
           type: string
           example: Doe
-    EmptyUserResponse:
+    errorResponse:
       type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              example: Something went wrong.
     ProviderData:
       type: object
       properties:
@@ -281,18 +293,6 @@ components:
           type: object
         credentials:
           type: object
-    AuthenticateUserRequest:
-      required:
-      - password
-      - username
-      type: object
-      properties:
-        username:
-          type: string
-          example: JohnTheMan
-        password:
-          type: string
-          example: wordpass@1234
     CreateUserRequest:
       type: object
       properties:

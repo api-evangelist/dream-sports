@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-account-create-schema.json",
+  "title": "AccountCreate",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-account-api-openapi.yml#/components/schemas/AccountCreate",
+  "type": "object",
+  "required": [
+    "email",
+    "name"
+  ],
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "name": {
+      "type": "string"
+    },
+    "gitHubId": {
+      "type": "string"
+    },
+    "microsoftId": {
+      "type": "string"
+    },
+    "azureAdId": {
+      "type": "string"
+    }
+  }
+}

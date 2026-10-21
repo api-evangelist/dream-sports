@@ -1,7 +1,36 @@
 openapi: 3.2.0
 info:
   title: Checkmate Test Management Projects API
-  description: Comprehensive API documentation for Checkmate - a modern test case management system built with Remix, MySQL, and Drizzle ORM.
+  description: 'Comprehensive API documentation for Checkmate - a modern test case management system built with Remix, MySQL, and Drizzle ORM.
+
+
+    ## Features
+
+    - Project and Test Management
+
+    - Test Run Execution
+
+    - Role-Based Access Control (RBAC)
+
+    - Google OAuth Authentication
+
+    - Test Status Tracking and History
+
+
+    ## Authentication
+
+    All endpoints require authentication via session cookies. Users must be logged in through Google OAuth.
+
+
+    ## Authorization
+
+    Access to resources is controlled via Casbin RBAC with three role levels:
+
+    - **Admin**: Full access to all resources
+
+    - **User**: Can create, read, update resources
+
+    - **Reader**: Read-only access'
   version: 1.0.0
   contact:
     name: Checkmate API Support
@@ -243,30 +272,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Project:
-      type: object
-      properties:
-        projectId:
-          type: integer
-          description: Unique project identifier
-        projectName:
-          type: string
-          description: Name of the project
-        projectDescription:
-          type:
-          - string
-          - 'null'
-          description: Project description
-        createdOn:
-          type: string
-          format: date-time
-          description: Creation timestamp
-        createdBy:
-          type: string
-          description: User who created the project
-        orgId:
-          type: integer
-          description: Organization ID
     SuccessResponse:
       type: object
       properties:
@@ -301,6 +306,30 @@ components:
       required:
       - error
       - status
+    Project:
+      type: object
+      properties:
+        projectId:
+          type: integer
+          description: Unique project identifier
+        projectName:
+          type: string
+          description: Name of the project
+        projectDescription:
+          type:
+          - string
+          - 'null'
+          description: Project description
+        createdOn:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        createdBy:
+          type: string
+          description: User who created the project
+        orgId:
+          type: integer
+          description: Organization ID
   securitySchemes:
     cookieAuth:
       type: apiKey

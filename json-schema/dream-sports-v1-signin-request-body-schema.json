@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-v1-signin-request-body-schema.json",
+  "title": "V1SigninRequestBody",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-password-api-openapi.yml#/components/schemas/V1SigninRequestBody",
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string"
+    },
+    "password": {
+      "type": "string"
+    },
+    "responseType": {
+      "type": "string"
+    },
+    "metaInfo": {
+      "$ref": "#/$defs/MetaInfo"
+    }
+  },
+  "$defs": {
+    "MetaInfo": {
+      "type": "object",
+      "properties": {
+        "ip": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "device_name": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

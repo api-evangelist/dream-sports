@@ -1,72 +1,60 @@
-generated: '2026-08-04'
-method: searched
-source: openapi/dream-sports-checkmate-openapi.yml, openapi/dream-sports-delivr-ota-openapi.yml,
-  openapi/dream-sports-dota-openapi.yml, openapi/dream-sports-raven-journey-openapi.yml
-docs: https://guardianhq.io/docs/
-upgrade_note: >-
-  The mechanical derivation found only the three securitySchemes below, because the two largest
-  Dream Sports auth surfaces declare none in-spec: the Guardian OpenAPI documents Authorization as a
-  plain header parameter rather than a securityScheme, and the live "Login with Dream11" OIDC service
-  is not described by any OpenAPI at all. Both are added here from the provider's own published
-  material — the Guardian docs and the live discovery document — which is what raises this file from
-  derived to searched.
+generated: '2026-10-20'
+method: derived
+source: openapi/dream-sports-access-keys-api-openapi.yml, openapi/dream-sports-account-api-openapi.yml,
+  openapi/dream-sports-acquisition-api-openapi.yml, openapi/dream-sports-admin-console-users-api-openapi.yml,
+  openapi/dream-sports-apps-api-openapi.yml, openapi/dream-sports-auth-api-openapi.yml, openapi/dream-sports-authentication-api-openapi.yml,
+  openapi/dream-sports-client-sdk-api-openapi.yml, openapi/dream-sports-collaborators-api-openapi.yml,
+  openapi/dream-sports-configuration-api-openapi.yml, openapi/dream-sports-console-users-api-openapi.yml,
+  openapi/dream-sports-deployments-api-openapi.yml ...
 summary:
   types:
   - apiKey
   - http
-  - openIdConnect
   api_key_in:
   - cookie
   - header
-  oauth2_flows:
-  - authorizationCode
 schemes:
-- name: Login with Dream11
-  type: openIdConnect
-  openIdConnectUrl: https://auth.dream11.com/.well-known/openid-configuration
-  issuer: https://auth.dream11.com
-  flows:
-  - flow: authorizationCode
-    authorizationUrl: https://auth.dream11.com/authorize
-    tokenUrl: https://auth.dream11.com/token
-    refresh: supported (refresh_token grant)
-    revocationUrl: https://auth.dream11.com/revokeToken
-  jwks_uri: https://auth.dream11.com/certs
-  id_token_alg: RS256
-  scopes: 7
-  description: >-
-    Dream11's production identity service — a single-tap, OTP-less login/registration mechanism that
-    lets a third-party app authenticate a user as their Dream11 account, with an in-built consent
-    flow controlling which profile claims are shared. Scopes and claims in
-    scopes/dream-sports-scopes.yml.
-  sources:
-  - well-known/dream-sports-openid-configuration.json
-  method: probed
-- name: Guardian Authorization header
+- name: BearerAuth
   type: http
   scheme: bearer
-  description: >-
-    Guardian's own endpoints take Authorization as a declared header parameter rather than an OpenAPI
-    securityScheme, so the derivation could not see it. The Guardian docs describe the full method
-    set: passwordless (OTP over SMS/email), username/password, social login (Google, Facebook),
-    generic OIDC provider connect, biometric challenge/complete, guest login, and session management
-    with refresh tokens and admin logout. Guardian can also act as an identity provider itself
-    (authorize / token / userinfo / certs / revoke) with PKCE.
-  tenancy_header: TENANT-ID
+  bearerFormat: AccessKey
+  description: Access key or session token obtained from OAuth authentication
   sources:
-  - openapi/dream-sports-guardian-openapi.yml
-  - https://guardianhq.io/docs/
-  method: searched
-- name: Odin platform bearer token
-  type: http
-  scheme: bearer
-  description: >-
-    odin-deployer, odin-scout and user-auth all take the same Authorization bearer value, passed as a
-    REST header and as gRPC metadata. Org-scoped routes additionally need X-Org-Id, which odin-mcp
-    fills from a tool argument or from the JWT orgid claim.
+  - openapi/dream-sports-access-keys-api-openapi.yml
+  - openapi/dream-sports-account-api-openapi.yml
+  - openapi/dream-sports-acquisition-api-openapi.yml
+  - openapi/dream-sports-apps-api-openapi.yml
+  - openapi/dream-sports-authentication-api-openapi.yml
+  - openapi/dream-sports-collaborators-api-openapi.yml
+  - openapi/dream-sports-configuration-api-openapi.yml
+  - openapi/dream-sports-deployments-api-openapi.yml
+  - openapi/dream-sports-health-api-openapi.yml
+  - openapi/dream-sports-metrics-api-openapi.yml
+  - openapi/dream-sports-organizations-api-openapi.yml
+  - openapi/dream-sports-projects-api-openapi.yml
+  - openapi/dream-sports-releases-api-openapi.yml
+  - openapi/dream-sports-reports-api-openapi.yml
+  - openapi/dream-sports-runs-api-openapi.yml
+  - openapi/dream-sports-sessions-api-openapi.yml
+  - openapi/dream-sports-tenants-api-openapi.yml
+  - openapi/dream-sports-tests-api-openapi.yml
+  - openapi/dream-sports-users-api-openapi.yml
+- name: TenantIdHeader
+  type: apiKey
+  in: header
+  parameter: TENANT-ID
   sources:
-  - https://github.com/dream-horizon-org/odin-mcp
-  method: searched
+  - openapi/dream-sports-admin-console-users-api-openapi.yml
+  - openapi/dream-sports-auth-api-openapi.yml
+  - openapi/dream-sports-client-sdk-api-openapi.yml
+  - openapi/dream-sports-console-users-api-openapi.yml
+  - openapi/dream-sports-events-catalog-api-openapi.yml
+  - openapi/dream-sports-health-api-openapi.yml
+  - openapi/dream-sports-journey-behaviour-api-openapi.yml
+  - openapi/dream-sports-journey-lifecycle-api-openapi.yml
+  - openapi/dream-sports-journey-test-api-openapi.yml
+  - openapi/dream-sports-journeys-api-openapi.yml
+  - openapi/dream-sports-nudge-preview-api-openapi.yml
 - name: cookieAuth
   type: apiKey
   in: cookie
@@ -83,29 +71,10 @@ schemes:
     - Browsers automatically include this cookie
     - cURL: Use `-b cookies.txt` or `-H "Cookie: user_session=value"`
   sources:
-  - openapi/dream-sports-checkmate-openapi.yml
-- name: bearerAuth
-  type: http
-  scheme: bearer
-  bearerFormat: Token
-  description: |-
-    API token authentication for programmatic access.
-
-    **How to get:**
-    1. Login via web interface
-    2. Call POST /api/v1/token/generate with your userId
-    3. Copy the returned token
-
-    **Usage:**
-    - Include in Authorization header: `Bearer your_token_here`
-    - Example: `Authorization: Bearer abc123xyz`
-  sources:
-  - openapi/dream-sports-checkmate-openapi.yml
-  - openapi/dream-sports-delivr-ota-openapi.yml
-  - openapi/dream-sports-dota-openapi.yml
-- name: TenantIdHeader
-  type: apiKey
-  in: header
-  parameter: TENANT-ID
-  sources:
-  - openapi/dream-sports-raven-journey-openapi.yml
+  - openapi/dream-sports-configuration-api-openapi.yml
+  - openapi/dream-sports-organizations-api-openapi.yml
+  - openapi/dream-sports-projects-api-openapi.yml
+  - openapi/dream-sports-reports-api-openapi.yml
+  - openapi/dream-sports-runs-api-openapi.yml
+  - openapi/dream-sports-tests-api-openapi.yml
+  - openapi/dream-sports-users-api-openapi.yml

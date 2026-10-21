@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-label-schema.json",
+  "title": "Label",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-configuration-api-openapi.yml#/components/schemas/Label",
+  "type": "object",
+  "properties": {
+    "labelId": {
+      "type": "integer",
+      "description": "Unique label identifier"
+    },
+    "labelName": {
+      "type": "string",
+      "description": "Label name"
+    },
+    "projectId": {
+      "type": "integer",
+      "description": "Project ID"
+    }
+  }
+}

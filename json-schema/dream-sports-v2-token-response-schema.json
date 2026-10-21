@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-v2-token-response-schema.json",
+  "title": "V2TokenResponse",
+  "description": "Token response for v2 endpoints (uses snake_case field names)",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-password-api-openapi.yml#/components/schemas/V2TokenResponse",
+  "type": "object",
+  "properties": {
+    "access_token": {
+      "type": "string",
+      "description": "Short lived Bearer JWT token to access APIs"
+    },
+    "refresh_token": {
+      "type": "string",
+      "description": "Long lived token used to refresh access token"
+    },
+    "id_token": {
+      "type": "string",
+      "description": "OpenID Connect ID token"
+    },
+    "sso_token": {
+      "type": "string",
+      "description": "Single Sign-On token for session management"
+    },
+    "token_type": {
+      "type": "string",
+      "description": "Type of token. Only supports Bearer for now"
+    },
+    "expires_in": {
+      "type": "integer",
+      "description": "Expiry of the access token in seconds"
+    },
+    "is_new_user": {
+      "type": "boolean",
+      "description": "Indicates if the user is new"
+    }
+  }
+}

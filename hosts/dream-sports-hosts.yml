@@ -1,0 +1,175 @@
+generated: '2026-10-20'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 14
+  own: 2
+  other_domain: 9
+  platform: 3
+  roles:
+  - api
+  - docs
+  - identity
+  - marketing
+  - other
+  - portal
+  - source
+  - support
+  - website
+hosts:
+- host: api.dreamhorizon.org
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: dreamhorizon.org
+  role: api
+  relation: other-domain
+- host: api.dreamsports.group
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: dreamsports.group
+  role: api
+  relation: own
+- host: api.guardianhq.io
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: guardianhq.io
+  role: api
+  relation: other-domain
+- host: api.your-production-domain.com
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: your-production-domain.com
+  role: api
+  relation: other-domain
+- host: auth.dream11.com
+  found_by:
+  - apis[]
+  - probed
+  - well-known
+  types: []
+  serves:
+  - api
+  registrable_domain: dream11.com
+  role: identity
+  relation: other-domain
+- host: blog.dream11engineering.com
+  found_by:
+  - pointer
+  - probed
+  - well-known
+  types:
+  - Blog
+  serves: []
+  registrable_domain: dream11engineering.com
+  role: marketing
+  relation: other-domain
+- host: discord.gg
+  found_by:
+  - pointer
+  - vendor-detect
+  types:
+  - Support
+  serves:
+  - community
+  vendor: discord
+  registrable_domain: discord.gg
+  role: support
+  relation: platform
+- host: dream-horizon-org.github.io
+  found_by:
+  - pointer
+  types:
+  - Roadmap
+  serves: []
+  registrable_domain: github.io
+  role: other
+  relation: platform
+- host: dreamhorizon.org
+  found_by:
+  - pointer
+  - probed
+  - docs-index
+  - well-known
+  - vendor-detect
+  types:
+  - DeveloperPortal
+  - Documentation
+  serves:
+  - docs
+  - cdn
+  - documentation
+  - hosting
+  vendor: fastly
+  registrable_domain: dreamhorizon.org
+  role: portal
+  relation: other-domain
+- host: github.com
+  found_by:
+  - pointer
+  - apis[]
+  types:
+  - IssueTracker
+  - GitHubOrganization
+  - Security
+  serves:
+  - docs
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: guardianhq.io
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - docs-index
+  - well-known
+  types:
+  - APIReference
+  - GettingStarted
+  serves:
+  - docs
+  registrable_domain: guardianhq.io
+  role: docs
+  relation: other-domain
+- host: mcp.guardianhq.io
+  found_by:
+  - probed
+  - well-known
+  types: []
+  serves: []
+  registrable_domain: guardianhq.io
+  role: other
+  relation: other-domain
+- host: www.dreamsports.group
+  found_by:
+  - pointer
+  - probed
+  - well-known
+  - vendor-detect
+  types:
+  - Website
+  - TermsOfService
+  - PrivacyPolicy
+  serves:
+  - cdn
+  vendor: cloudfront
+  registrable_domain: dreamsports.group
+  role: website
+  relation: own
+- host: your-production-domain.com
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: your-production-domain.com
+  role: other
+  relation: other-domain

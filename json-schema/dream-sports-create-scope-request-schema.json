@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-create-scope-request-schema.json",
+  "title": "CreateScopeRequest",
+  "description": "Request payload for creating a new scope",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-oidc-scope-management-api-openapi.yml#/components/schemas/CreateScopeRequest",
+  "type": "object",
+  "required": [
+    "name",
+    "is_oidc"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Unique name of the scope. For predefined OIDC scopes (openid, phone, email, address), \nspecific claim validation rules apply:\n- 'openid': Must contain only 'sub' claim\n- 'phone': Must contain 'phone_number' and/or 'phone_number_verified' claims (max 2)\n- 'email': Must contain 'email' and/or 'email_verified' claims (max 2)\n- 'address': Must contain only 'address' claim\n",
+      "minLength": 1,
+      "maxLength": 50
+    },
+    "display_name": {
+      "type": "string",
+      "description": "Human-readable display name",
+      "maxLength": 100
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the scope",
+      "maxLength": 500
+    },
+    "claims": {
+      "type": "array",
+      "description": "List of claims associated with this scope. For predefined OIDC scopes, \nspecific claims are required and validated:\n- openid: ['sub']\n- phone: ['phone_number', 'phone_number_verified'] (one or both)\n- email: ['email', 'email_verified'] (one or both)  \n- address: ['address']\n",
+      "items": {
+        "type": "string"
+      }
+    },
+    "icon_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to the scope's icon"
+    },
+    "is_oidc": {
+      "type": "boolean",
+      "description": "Whether this is an OpenID Connect standard scope"
+    }
+  }
+}

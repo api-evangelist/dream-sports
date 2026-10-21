@@ -1,0 +1,1179 @@
+{
+  "@context": {
+    "@vocab": "https://dreamsports.group/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "dream": "https://dreamsports.group/schema#",
+    "AccessKeyRequest": "dream:AccessKeyRequest",
+    "friendlyName": {
+      "@id": "dream:friendlyName",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "dream:description",
+      "@type": "xsd:string"
+    },
+    "ttl": {
+      "@id": "dream:ttl",
+      "@type": "xsd:integer"
+    },
+    "scope": {
+      "@id": "dream:scope",
+      "@type": "xsd:string"
+    },
+    "Error": "dream:Error",
+    "message": {
+      "@id": "dream:message",
+      "@type": "xsd:string"
+    },
+    "code": {
+      "@id": "dream:code",
+      "@type": "xsd:string"
+    },
+    "AccessKey": "dream:AccessKey",
+    "name": {
+      "@id": "dream:name",
+      "@type": "xsd:string"
+    },
+    "createdTime": {
+      "@id": "dream:createdTime",
+      "@type": "xsd:integer"
+    },
+    "createdBy": {
+      "@id": "dream:createdBy",
+      "@type": "xsd:string"
+    },
+    "expires": {
+      "@id": "dream:expires",
+      "@type": "xsd:integer"
+    },
+    "isSession": {
+      "@id": "dream:isSession",
+      "@type": "xsd:boolean"
+    },
+    "AccountCreate": "dream:AccountCreate",
+    "email": {
+      "@id": "dream:email",
+      "@type": "xsd:string"
+    },
+    "gitHubId": {
+      "@id": "dream:gitHubId",
+      "@type": "xsd:string"
+    },
+    "microsoftId": {
+      "@id": "dream:microsoftId",
+      "@type": "xsd:string"
+    },
+    "azureAdId": {
+      "@id": "dream:azureAdId",
+      "@type": "xsd:string"
+    },
+    "TermsStatus": "dream:TermsStatus",
+    "accountId": {
+      "@id": "dream:accountId",
+      "@type": "xsd:string"
+    },
+    "isOwner": {
+      "@id": "dream:isOwner",
+      "@type": "xsd:boolean"
+    },
+    "ownerAppCount": {
+      "@id": "dream:ownerAppCount",
+      "@type": "xsd:integer"
+    },
+    "termsAccepted": {
+      "@id": "dream:termsAccepted",
+      "@type": "xsd:boolean"
+    },
+    "termsVersion": {
+      "@id": "dream:termsVersion",
+      "@type": "xsd:string"
+    },
+    "acceptedTime": {
+      "@id": "dream:acceptedTime",
+      "@type": "xsd:integer"
+    },
+    "isCurrentVersion": {
+      "@id": "dream:isCurrentVersion",
+      "@type": "xsd:boolean"
+    },
+    "currentRequiredVersion": {
+      "@id": "dream:currentRequiredVersion",
+      "@type": "xsd:string"
+    },
+    "Account": "dream:Account",
+    "linkedProviders": {
+      "@id": "dream:linkedProviders",
+      "@container": "@list"
+    },
+    "AccountStorage": "dream:AccountStorage",
+    "id": {
+      "@id": "dream:id",
+      "@type": "xsd:string"
+    },
+    "TermsAcceptance": "dream:TermsAcceptance",
+    "DeploymentStatusReport": "dream:DeploymentStatusReport",
+    "deploymentKey": {
+      "@id": "dream:deploymentKey",
+      "@type": "xsd:string"
+    },
+    "appVersion": {
+      "@id": "dream:appVersion",
+      "@type": "xsd:string"
+    },
+    "clientUniqueId": {
+      "@id": "dream:clientUniqueId",
+      "@type": "xsd:string"
+    },
+    "label": {
+      "@id": "dream:label",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "dream:status",
+      "@type": "xsd:string"
+    },
+    "previousDeploymentKey": {
+      "@id": "dream:previousDeploymentKey",
+      "@type": "xsd:string"
+    },
+    "previousLabelOrAppVersion": {
+      "@id": "dream:previousLabelOrAppVersion",
+      "@type": "xsd:string"
+    },
+    "DownloadReport": "dream:DownloadReport",
+    "PackageInfo": "dream:PackageInfo",
+    "isDisabled": {
+      "@id": "dream:isDisabled",
+      "@type": "xsd:boolean"
+    },
+    "isMandatory": {
+      "@id": "dream:isMandatory",
+      "@type": "xsd:boolean"
+    },
+    "rollout": {
+      "@id": "dream:rollout",
+      "@type": "xsd:integer"
+    },
+    "ErrorResponse": "dream:ErrorResponse",
+    "error": {
+      "@id": "dream:error"
+    },
+    "V1AdminLogoutRequestBody": "dream:V1AdminLogoutRequestBody",
+    "userId": {
+      "@id": "dream:userId",
+      "@type": "xsd:string"
+    },
+    "AdminConsoleUserUpdateRequest": "dream:AdminConsoleUserUpdateRequest",
+    "displayName": {
+      "@id": "dream:displayName",
+      "@type": "xsd:string"
+    },
+    "photoUrl": {
+      "@id": "dream:photoUrl",
+      "@type": "xsd:string"
+    },
+    "emailVerified": {
+      "@id": "dream:emailVerified",
+      "@type": "xsd:boolean"
+    },
+    "disabled": {
+      "@id": "dream:disabled",
+      "@type": "xsd:boolean"
+    },
+    "projectIds": {
+      "@id": "dream:projectIds",
+      "@container": "@list"
+    },
+    "ConsoleUserIdApiResponse": "dream:ConsoleUserIdApiResponse",
+    "success": {
+      "@id": "dream:success",
+      "@type": "xsd:boolean"
+    },
+    "data": {
+      "@id": "dream:data",
+      "@type": "@id"
+    },
+    "ConsoleUserIdData": "dream:ConsoleUserIdData",
+    "ConsoleUserOnboardRequest": "dream:ConsoleUserOnboardRequest",
+    "CollaboratorProperties": "dream:CollaboratorProperties",
+    "permission": {
+      "@id": "dream:permission",
+      "@type": "xsd:string"
+    },
+    "isCurrentAccount": {
+      "@id": "dream:isCurrentAccount",
+      "@type": "xsd:boolean"
+    },
+    "App": "dream:App",
+    "collaborators": {
+      "@id": "dream:collaborators",
+      "@type": "@id"
+    },
+    "deployments": {
+      "@id": "dream:deployments",
+      "@container": "@list"
+    },
+    "organisation": {
+      "@id": "dream:organisation"
+    },
+    "AuthTokenApiResponse": "dream:AuthTokenApiResponse",
+    "AuthTokenData": "dream:AuthTokenData",
+    "access_token": {
+      "@id": "dream:access_token",
+      "@type": "xsd:string"
+    },
+    "refresh_token": {
+      "@id": "dream:refresh_token",
+      "@type": "xsd:string"
+    },
+    "expires_in": {
+      "@id": "dream:expires_in",
+      "@type": "xsd:integer"
+    },
+    "token_type": {
+      "@id": "dream:token_type",
+      "@type": "xsd:string"
+    },
+    "AuthLoginRequest": "dream:AuthLoginRequest",
+    "google_id_token": {
+      "@id": "dream:google_id_token",
+      "@type": "xsd:string"
+    },
+    "AuthRefreshRequest": "dream:AuthRefreshRequest",
+    "WindowFrequency": "dream:WindowFrequency",
+    "limit": {
+      "@id": "dream:limit",
+      "@type": "xsd:integer"
+    },
+    "unit": {
+      "@id": "dream:unit",
+      "@type": "@id"
+    },
+    "value": {
+      "@id": "dream:value",
+      "@type": "xsd:integer"
+    },
+    "BehaviourTagsResponse": "dream:BehaviourTagsResponse",
+    "behaviourTags": {
+      "@id": "dream:behaviourTags",
+      "@container": "@list"
+    },
+    "BehaviourTagPutRequest": "dream:BehaviourTagPutRequest",
+    "exposureRule": {
+      "@id": "dream:exposureRule",
+      "@type": "@id"
+    },
+    "ctaRelation": {
+      "@id": "dream:ctaRelation",
+      "@type": "@id"
+    },
+    "linkedCtas": {
+      "@id": "dream:linkedCtas",
+      "@container": "@list"
+    },
+    "SessionFrequency": "dream:SessionFrequency",
+    "CtaRelationRule": "dream:CtaRelationRule",
+    "rule": {
+      "@id": "dream:rule",
+      "@type": "@id"
+    },
+    "ctaList": {
+      "@id": "dream:ctaList",
+      "@container": "@list"
+    },
+    "LifespanFrequency": "dream:LifespanFrequency",
+    "CtaRelationRuleTypes": "dream:CtaRelationRuleTypes",
+    "BehaviourTag": "dream:BehaviourTag",
+    "createdAt": {
+      "@id": "dream:createdAt",
+      "@type": "xsd:integer"
+    },
+    "lastUpdatedAt": {
+      "@id": "dream:lastUpdatedAt",
+      "@type": "xsd:integer"
+    },
+    "lastUpdatedBy": {
+      "@id": "dream:lastUpdatedBy",
+      "@type": "xsd:string"
+    },
+    "tenantId": {
+      "@id": "dream:tenantId",
+      "@type": "xsd:string"
+    },
+    "WindowFrequencyUnit": "dream:WindowFrequencyUnit",
+    "CTARelation": "dream:CTARelation",
+    "shownCta": {
+      "@id": "dream:shownCta",
+      "@type": "@id"
+    },
+    "hideCta": {
+      "@id": "dream:hideCta",
+      "@type": "@id"
+    },
+    "ExposureRule": "dream:ExposureRule",
+    "session": {
+      "@id": "dream:session",
+      "@type": "@id"
+    },
+    "window": {
+      "@id": "dream:window",
+      "@type": "@id"
+    },
+    "lifespan": {
+      "@id": "dream:lifespan",
+      "@type": "@id"
+    },
+    "BehaviourTagCreateRequest": "dream:BehaviourTagCreateRequest",
+    "behaviourTagName": {
+      "@id": "dream:behaviourTagName",
+      "@type": "xsd:string"
+    },
+    "SdkUserProfileLoginRequest": "dream:SdkUserProfileLoginRequest",
+    "firstName": {
+      "@id": "dream:firstName",
+      "@type": "xsd:string"
+    },
+    "lastName": {
+      "@id": "dream:lastName",
+      "@type": "xsd:string"
+    },
+    "phone": {
+      "@id": "dream:phone",
+      "@type": "xsd:string"
+    },
+    "birthdate": {
+      "@id": "dream:birthdate",
+      "@type": "xsd:string"
+    },
+    "gender": {
+      "@id": "dream:gender",
+      "@type": "xsd:string"
+    },
+    "city": {
+      "@id": "dream:city",
+      "@type": "xsd:string"
+    },
+    "locality": {
+      "@id": "dream:locality",
+      "@type": "xsd:string"
+    },
+    "postalCode": {
+      "@id": "dream:postalCode",
+      "@type": "xsd:string"
+    },
+    "country": {
+      "@id": "dream:country",
+      "@type": "xsd:string"
+    },
+    "language": {
+      "@id": "dream:language",
+      "@type": "xsd:string"
+    },
+    "timezone": {
+      "@id": "dream:timezone",
+      "@type": "xsd:string"
+    },
+    "custom": {
+      "@id": "dream:custom"
+    },
+    "PreferenceItem": "dream:PreferenceItem",
+    "channel": {
+      "@id": "dream:channel",
+      "@type": "xsd:string"
+    },
+    "subcategory": {
+      "@id": "dream:subcategory",
+      "@type": "xsd:string"
+    },
+    "SdkTokenRegisterRequest": "dream:SdkTokenRegisterRequest",
+    "token": {
+      "@id": "dream:token",
+      "@type": "xsd:string"
+    },
+    "deviceId": {
+      "@id": "dream:deviceId",
+      "@type": "xsd:string"
+    },
+    "tokenType": {
+      "@id": "dream:tokenType",
+      "@type": "xsd:string"
+    },
+    "os": {
+      "@id": "dream:os",
+      "@type": "xsd:string"
+    },
+    "osVersion": {
+      "@id": "dream:osVersion",
+      "@type": "xsd:string"
+    },
+    "appPackageName": {
+      "@id": "dream:appPackageName",
+      "@type": "xsd:string"
+    },
+    "ApiResponse": "dream:ApiResponse",
+    "statusCode": {
+      "@id": "dream:statusCode",
+      "@type": "xsd:integer"
+    },
+    "SdkUpsertPreferencesApiResponse": "dream:SdkUpsertPreferencesApiResponse",
+    "SdkUpsertPreferencesRequest": "dream:SdkUpsertPreferencesRequest",
+    "items": {
+      "@id": "dream:items",
+      "@container": "@list"
+    },
+    "JourneySnapshotRequest": "dream:JourneySnapshotRequest",
+    "ctas": {
+      "@id": "dream:ctas",
+      "@container": "@list"
+    },
+    "SdkUpsertPreferencesResponse": "dream:SdkUpsertPreferencesResponse",
+    "updated": {
+      "@id": "dream:updated",
+      "@type": "xsd:integer"
+    },
+    "preferences": {
+      "@id": "dream:preferences",
+      "@container": "@list"
+    },
+    "SendMessageRequest": "dream:SendMessageRequest",
+    "to": {
+      "@id": "dream:to",
+      "@type": "xsd:string"
+    },
+    "templateName": {
+      "@id": "dream:templateName",
+      "@type": "xsd:string"
+    },
+    "templateParams": {
+      "@id": "dream:templateParams"
+    },
+    "errorResponse": "dream:errorResponse",
+    "TestCoveredBy": "dream:TestCoveredBy",
+    "testCoveredById": {
+      "@id": "dream:testCoveredById",
+      "@type": "xsd:integer"
+    },
+    "testCoveredByName": {
+      "@id": "dream:testCoveredByName",
+      "@type": "xsd:string"
+    },
+    "Squad": "dream:Squad",
+    "squadId": {
+      "@id": "dream:squadId",
+      "@type": "xsd:integer"
+    },
+    "squadName": {
+      "@id": "dream:squadName",
+      "@type": "xsd:string"
+    },
+    "projectId": {
+      "@id": "dream:projectId",
+      "@type": "xsd:integer"
+    },
+    "Label": "dream:Label",
+    "labelId": {
+      "@id": "dream:labelId",
+      "@type": "xsd:integer"
+    },
+    "labelName": {
+      "@id": "dream:labelName",
+      "@type": "xsd:string"
+    },
+    "Priority": "dream:Priority",
+    "priorityId": {
+      "@id": "dream:priorityId",
+      "@type": "xsd:integer"
+    },
+    "priorityName": {
+      "@id": "dream:priorityName",
+      "@type": "xsd:string"
+    },
+    "Platform": "dream:Platform",
+    "platformId": {
+      "@id": "dream:platformId",
+      "@type": "xsd:integer"
+    },
+    "platformName": {
+      "@id": "dream:platformName",
+      "@type": "xsd:string"
+    },
+    "Section": "dream:Section",
+    "sectionId": {
+      "@id": "dream:sectionId",
+      "@type": "xsd:integer"
+    },
+    "sectionName": {
+      "@id": "dream:sectionName",
+      "@type": "xsd:string"
+    },
+    "parentId": {
+      "@id": "dream:parentId",
+      "@type": "xsd:integer"
+    },
+    "AutomationStatus": "dream:AutomationStatus",
+    "automationStatusId": {
+      "@id": "dream:automationStatusId",
+      "@type": "xsd:integer"
+    },
+    "automationStatusName": {
+      "@id": "dream:automationStatusName",
+      "@type": "xsd:string"
+    },
+    "Type": "dream:Type",
+    "typeId": {
+      "@id": "dream:typeId",
+      "@type": "xsd:integer"
+    },
+    "typeName": {
+      "@id": "dream:typeName",
+      "@type": "xsd:string"
+    },
+    "ConsoleUserRecord": "dream:ConsoleUserRecord",
+    "lastLoginAt": {
+      "@id": "dream:lastLoginAt",
+      "@type": "xsd:dateTime"
+    },
+    "lastRefreshAt": {
+      "@id": "dream:lastRefreshAt",
+      "@type": "xsd:dateTime"
+    },
+    "ConsoleUserRecordApiResponse": "dream:ConsoleUserRecordApiResponse",
+    "ConsoleUserPagination": "dream:ConsoleUserPagination",
+    "pageSize": {
+      "@id": "dream:pageSize",
+      "@type": "xsd:integer"
+    },
+    "recordCount": {
+      "@id": "dream:recordCount",
+      "@type": "xsd:integer"
+    },
+    "nextPageToken": {
+      "@id": "dream:nextPageToken",
+      "@type": "xsd:string"
+    },
+    "ConsoleUserListData": "dream:ConsoleUserListData",
+    "records": {
+      "@id": "dream:records",
+      "@container": "@list"
+    },
+    "pagination": {
+      "@id": "dream:pagination",
+      "@type": "@id"
+    },
+    "ConsoleUserListApiResponse": "dream:ConsoleUserListApiResponse",
+    "ConsoleUserUpdateRequest": "dream:ConsoleUserUpdateRequest",
+    "ConsoleUserCreateRequest": "dream:ConsoleUserCreateRequest",
+    "CTAListResponse": "dream:CTAListResponse",
+    "totalEntries": {
+      "@id": "dream:totalEntries",
+      "@type": "xsd:integer"
+    },
+    "totalPages": {
+      "@id": "dream:totalPages",
+      "@type": "xsd:integer"
+    },
+    "pageNumber": {
+      "@id": "dream:pageNumber",
+      "@type": "xsd:integer"
+    },
+    "statusWiseCount": {
+      "@id": "dream:statusWiseCount",
+      "@type": "@id"
+    },
+    "Filters": "dream:Filters",
+    "operator": {
+      "@id": "dream:operator",
+      "@type": "xsd:string"
+    },
+    "filter": {
+      "@id": "dream:filter",
+      "@container": "@list"
+    },
+    "CTA": "dream:CTA",
+    "ctaStatus": {
+      "@id": "dream:ctaStatus",
+      "@type": "@id"
+    },
+    "tags": {
+      "@id": "dream:tags",
+      "@container": "@list"
+    },
+    "team": {
+      "@id": "dream:team",
+      "@type": "xsd:string"
+    },
+    "startTime": {
+      "@id": "dream:startTime",
+      "@type": "xsd:integer"
+    },
+    "endTime": {
+      "@id": "dream:endTime",
+      "@type": "xsd:integer"
+    },
+    "RuleRequest": "dream:RuleRequest",
+    "cohortEligibility": {
+      "@id": "dream:cohortEligibility",
+      "@type": "@id"
+    },
+    "stateToAction": {
+      "@id": "dream:stateToAction"
+    },
+    "resetStates": {
+      "@id": "dream:resetStates",
+      "@container": "@list"
+    },
+    "resetCTAonFirstLaunch": {
+      "@id": "dream:resetCTAonFirstLaunch",
+      "@type": "xsd:boolean"
+    },
+    "contextParams": {
+      "@id": "dream:contextParams",
+      "@container": "@list"
+    },
+    "stateTransition": {
+      "@id": "dream:stateTransition"
+    },
+    "groupByConfig": {
+      "@id": "dream:groupByConfig",
+      "@type": "@id"
+    },
+    "priority": {
+      "@id": "dream:priority",
+      "@type": "xsd:integer"
+    },
+    "stateMachineTTL": {
+      "@id": "dream:stateMachineTTL",
+      "@type": "xsd:integer"
+    },
+    "actions": {
+      "@id": "dream:actions",
+      "@container": "@list"
+    },
+    "frequency": {
+      "@id": "dream:frequency",
+      "@type": "@id"
+    },
+    "Rule": "dream:Rule",
+    "ctaValidTill": {
+      "@id": "dream:ctaValidTill",
+      "@type": "xsd:integer"
+    },
+    "StateTransitionCondition": "dream:StateTransitionCondition",
+    "transitionTo": {
+      "@id": "dream:transitionTo",
+      "@type": "xsd:string"
+    },
+    "filters": {
+      "@id": "dream:filters",
+      "@type": "@id"
+    },
+    "CTAUpdateRequest": "dream:CTAUpdateRequest",
+    "GroupByConfig": "dream:GroupByConfig",
+    "maxActiveStateMachineCount": {
+      "@id": "dream:maxActiveStateMachineCount",
+      "@type": "xsd:integer"
+    },
+    "groupByKeys": {
+      "@id": "dream:groupByKeys",
+      "@container": "@list"
+    },
+    "StatusWiseCount": "dream:StatusWiseCount",
+    "draft": {
+      "@id": "dream:draft"
+    },
+    "paused": {
+      "@id": "dream:paused"
+    },
+    "live": {
+      "@id": "dream:live"
+    },
+    "scheduled": {
+      "@id": "dream:scheduled"
+    },
+    "concluded": {
+      "@id": "dream:concluded"
+    },
+    "terminated": {
+      "@id": "dream:terminated"
+    },
+    "Frequency": "dream:Frequency",
+    "lifeSpan": {
+      "@id": "dream:lifeSpan",
+      "@type": "@id"
+    },
+    "CTARequest": "dream:CTARequest",
+    "CTAStatus": "dream:CTAStatus",
+    "CohortEligibility": "dream:CohortEligibility",
+    "includes": {
+      "@id": "dream:includes",
+      "@container": "@list"
+    },
+    "excludes": {
+      "@id": "dream:excludes",
+      "@container": "@list"
+    },
+    "Deployment": "dream:Deployment",
+    "key": {
+      "@id": "dream:key",
+      "@type": "xsd:string"
+    },
+    "package": {
+      "@id": "dream:package",
+      "@type": "@id"
+    },
+    "BiometricChallengeRequest": "dream:BiometricChallengeRequest",
+    "client_id": {
+      "@id": "dream:client_id",
+      "@type": "xsd:string"
+    },
+    "device_metadata": {
+      "@id": "dream:device_metadata",
+      "@type": "@id"
+    },
+    "BiometricChallengeResponse": "dream:BiometricChallengeResponse",
+    "state": {
+      "@id": "dream:state",
+      "@type": "xsd:string"
+    },
+    "challenge": {
+      "@id": "dream:challenge",
+      "@type": "xsd:string"
+    },
+    "TokenResponse": "dream:TokenResponse",
+    "accessToken": {
+      "@id": "dream:accessToken",
+      "@type": "xsd:string"
+    },
+    "refreshToken": {
+      "@id": "dream:refreshToken",
+      "@type": "xsd:string"
+    },
+    "idToken": {
+      "@id": "dream:idToken",
+      "@type": "xsd:string"
+    },
+    "expiresIn": {
+      "@id": "dream:expiresIn",
+      "@type": "xsd:integer"
+    },
+    "isNewUser": {
+      "@id": "dream:isNewUser",
+      "@type": "xsd:boolean"
+    },
+    "DeviceMetadata": "dream:DeviceMetadata",
+    "platform": {
+      "@id": "dream:platform",
+      "@type": "xsd:string"
+    },
+    "device_id": {
+      "@id": "dream:device_id",
+      "@type": "xsd:string"
+    },
+    "device_model": {
+      "@id": "dream:device_model",
+      "@type": "xsd:string"
+    },
+    "os_version": {
+      "@id": "dream:os_version",
+      "@type": "xsd:string"
+    },
+    "app_version": {
+      "@id": "dream:app_version",
+      "@type": "xsd:string"
+    },
+    "device_name": {
+      "@id": "dream:device_name",
+      "@type": "xsd:string"
+    },
+    "BiometricCompleteRequest": "dream:BiometricCompleteRequest",
+    "credential_id": {
+      "@id": "dream:credential_id",
+      "@type": "xsd:string"
+    },
+    "signature": {
+      "@id": "dream:signature",
+      "@type": "xsd:string"
+    },
+    "BiometricLoginErrorResponse": "dream:BiometricLoginErrorResponse",
+    "EventInput": "dream:EventInput",
+    "eventName": {
+      "@id": "dream:eventName",
+      "@type": "xsd:string"
+    },
+    "properties": {
+      "@id": "dream:properties",
+      "@container": "@list"
+    },
+    "EventPropertyInput": "dream:EventPropertyInput",
+    "propertyName": {
+      "@id": "dream:propertyName",
+      "@type": "xsd:string"
+    },
+    "type": {
+      "@id": "dream:type",
+      "@type": "xsd:string"
+    },
+    "expectedValue": {
+      "@id": "dream:expectedValue",
+      "@type": "xsd:string"
+    },
+    "EventsUpsertRequest": "dream:EventsUpsertRequest",
+    "events": {
+      "@id": "dream:events",
+      "@container": "@list"
+    },
+    "EventPatchRequest": "dream:EventPatchRequest",
+    "FilterResponse": "dream:FilterResponse",
+    "names": {
+      "@id": "dream:names",
+      "@container": "@list"
+    },
+    "teams": {
+      "@id": "dream:teams",
+      "@container": "@list"
+    },
+    "GuestLoginResponse": "dream:GuestLoginResponse",
+    "V1GuestLoginRequestBody": "dream:V1GuestLoginRequestBody",
+    "guest_identifier": {
+      "@id": "dream:guest_identifier",
+      "@type": "xsd:string"
+    },
+    "scopes": {
+      "@id": "dream:scopes",
+      "@container": "@list"
+    },
+    "BehaviourTagRequest": "dream:BehaviourTagRequest",
+    "BehaviourTagUpdateRequest": "dream:BehaviourTagUpdateRequest",
+    "TestJourneyRequest": "dream:TestJourneyRequest",
+    "userIds": {
+      "@id": "dream:userIds",
+      "@container": "@list"
+    },
+    "JourneyRequest": "dream:JourneyRequest",
+    "JourneyUpdateRequest": "dream:JourneyUpdateRequest",
+    "UpdateMetrics": "dream:UpdateMetrics",
+    "active": {
+      "@id": "dream:active",
+      "@type": "xsd:integer"
+    },
+    "downloaded": {
+      "@id": "dream:downloaded",
+      "@type": "xsd:integer"
+    },
+    "failed": {
+      "@id": "dream:failed",
+      "@type": "xsd:integer"
+    },
+    "installed": {
+      "@id": "dream:installed",
+      "@type": "xsd:integer"
+    },
+    "NudgePreview": "dream:NudgePreview",
+    "template": {
+      "@id": "dream:template",
+      "@type": "xsd:string"
+    },
+    "LoginAcceptRequestBody": "dream:LoginAcceptRequestBody",
+    "login_challenge": {
+      "@id": "dream:login_challenge",
+      "@type": "xsd:string"
+    },
+    "TokenRequestBody": "dream:TokenRequestBody",
+    "grant_type": {
+      "@id": "dream:grant_type",
+      "@type": "xsd:string"
+    },
+    "redirect_uri": {
+      "@id": "dream:redirect_uri",
+      "@type": "@id"
+    },
+    "client_secret": {
+      "@id": "dream:client_secret",
+      "@type": "xsd:string"
+    },
+    "code_verifier": {
+      "@id": "dream:code_verifier",
+      "@type": "xsd:string"
+    },
+    "OidcTokenResponse": "dream:OidcTokenResponse",
+    "id_token": {
+      "@id": "dream:id_token",
+      "@type": "xsd:string"
+    },
+    "UserConsentResponse": "dream:UserConsentResponse",
+    "client": {
+      "@id": "dream:client"
+    },
+    "requested_scopes": {
+      "@id": "dream:requested_scopes",
+      "@container": "@list"
+    },
+    "consented_scopes": {
+      "@id": "dream:consented_scopes",
+      "@container": "@list"
+    },
+    "subject": {
+      "@id": "dream:subject",
+      "@type": "xsd:string"
+    },
+    "ConsentAcceptRequestBody": "dream:ConsentAcceptRequestBody",
+    "consent_challenge": {
+      "@id": "dream:consent_challenge",
+      "@type": "xsd:string"
+    },
+    "UserInfoResponse": "dream:UserInfoResponse",
+    "sub": {
+      "@id": "dream:sub",
+      "@type": "xsd:string"
+    },
+    "given_name": {
+      "@id": "dream:given_name",
+      "@type": "xsd:string"
+    },
+    "family_name": {
+      "@id": "dream:family_name",
+      "@type": "xsd:string"
+    },
+    "email_verified": {
+      "@id": "dream:email_verified",
+      "@type": "xsd:boolean"
+    },
+    "phone_number": {
+      "@id": "dream:phone_number",
+      "@type": "xsd:string"
+    },
+    "phone_number_verified": {
+      "@id": "dream:phone_number_verified",
+      "@type": "xsd:boolean"
+    },
+    "picture": {
+      "@id": "dream:picture",
+      "@type": "@id"
+    },
+    "locale": {
+      "@id": "dream:locale",
+      "@type": "xsd:string"
+    },
+    "updated_at": {
+      "@id": "dream:updated_at",
+      "@type": "xsd:integer"
+    },
+    "UpdateClientRequestBody": "dream:UpdateClientRequestBody",
+    "client_name": {
+      "@id": "dream:client_name",
+      "@type": "xsd:string"
+    },
+    "client_uri": {
+      "@id": "dream:client_uri",
+      "@type": "@id"
+    },
+    "contacts": {
+      "@id": "dream:contacts",
+      "@container": "@list"
+    },
+    "grant_types": {
+      "@id": "dream:grant_types",
+      "@container": "@list"
+    },
+    "logo_uri": {
+      "@id": "dream:logo_uri",
+      "@type": "@id"
+    },
+    "policy_uri": {
+      "@id": "dream:policy_uri",
+      "@type": "@id"
+    },
+    "redirect_uris": {
+      "@id": "dream:redirect_uris",
+      "@container": "@list"
+    },
+    "response_types": {
+      "@id": "dream:response_types",
+      "@container": "@list"
+    },
+    "skip_consent": {
+      "@id": "dream:skip_consent",
+      "@type": "xsd:boolean"
+    },
+    "ClientResponse": "dream:ClientResponse",
+    "ClientListResponse": "dream:ClientListResponse",
+    "clients": {
+      "@id": "dream:clients",
+      "@container": "@list"
+    },
+    "page": {
+      "@id": "dream:page",
+      "@type": "xsd:integer"
+    },
+    "page_size": {
+      "@id": "dream:page_size",
+      "@type": "xsd:integer"
+    },
+    "ClientSecretResponse": "dream:ClientSecretResponse",
+    "CreateClientRequestBody": "dream:CreateClientRequestBody",
+    "CreateClientScopeRequestBody": "dream:CreateClientScopeRequestBody",
+    "ClientScopeResponse": "dream:ClientScopeResponse",
+    "OIDCDiscoveryResponse": "dream:OIDCDiscoveryResponse",
+    "issuer": {
+      "@id": "dream:issuer",
+      "@type": "@id"
+    },
+    "authorization_endpoint": {
+      "@id": "dream:authorization_endpoint",
+      "@type": "@id"
+    },
+    "token_endpoint": {
+      "@id": "dream:token_endpoint",
+      "@type": "@id"
+    },
+    "userinfo_endpoint": {
+      "@id": "dream:userinfo_endpoint",
+      "@type": "@id"
+    },
+    "revocation_endpoint": {
+      "@id": "dream:revocation_endpoint",
+      "@type": "@id"
+    },
+    "jwks_uri": {
+      "@id": "dream:jwks_uri",
+      "@type": "@id"
+    },
+    "response_types_supported": {
+      "@id": "dream:response_types_supported",
+      "@container": "@list"
+    },
+    "subject_types_supported": {
+      "@id": "dream:subject_types_supported",
+      "@container": "@list"
+    },
+    "id_token_signing_alg_values_supported": {
+      "@id": "dream:id_token_signing_alg_values_supported",
+      "@container": "@list"
+    },
+    "grant_types_supported": {
+      "@id": "dream:grant_types_supported",
+      "@container": "@list"
+    },
+    "scopes_supported": {
+      "@id": "dream:scopes_supported",
+      "@container": "@list"
+    },
+    "token_endpoint_auth_methods_supported": {
+      "@id": "dream:token_endpoint_auth_methods_supported",
+      "@container": "@list"
+    },
+    "claims_supported": {
+      "@id": "dream:claims_supported",
+      "@container": "@list"
+    },
+    "ScopeResponse": "dream:ScopeResponse",
+    "display_name": {
+      "@id": "dream:display_name",
+      "@type": "xsd:string"
+    },
+    "icon_url": {
+      "@id": "dream:icon_url",
+      "@type": "@id"
+    },
+    "is_oidc": {
+      "@id": "dream:is_oidc",
+      "@type": "xsd:boolean"
+    },
+    "claims": {
+      "@id": "dream:claims",
+      "@container": "@list"
+    },
+    "UpdateScopeRequest": "dream:UpdateScopeRequest",
+    "ScopeListResponse": "dream:ScopeListResponse",
+    "CreateScopeRequest": "dream:CreateScopeRequest",
+    "Organization": "dream:Organization",
+    "orgId": {
+      "@id": "dream:orgId",
+      "@type": "xsd:integer"
+    },
+    "orgName": {
+      "@id": "dream:orgName",
+      "@type": "xsd:string"
+    },
+    "createdOn": {
+      "@id": "dream:createdOn",
+      "@type": "xsd:dateTime"
+    },
+    "V1SigninRequestBody": "dream:V1SigninRequestBody",
+    "username": {
+      "@id": "dream:username",
+      "@type": "xsd:string"
+    },
+    "password": {
+      "@id": "dream:password",
+      "@type": "xsd:string"
+    },
+    "responseType": {
+      "@id": "dream:responseType",
+      "@type": "xsd:string"
+    },
+    "metaInfo": {
+      "@id": "dream:metaInfo",
+      "@type": "@id"
+    },
+    "V2TokenResponse": "dream:V2TokenResponse",
+    "sso_token": {
+      "@id": "dream:sso_token",
+      "@type": "xsd:string"
+    },
+    "is_new_user": {
+      "@id": "dream:is_new_user",
+      "@type": "xsd:boolean"
+    },
+    "V2SignInUpRequestBody": "dream:V2SignInUpRequestBody",
+    "pin": {
+      "@id": "dream:pin",
+      "@type": "xsd:string"
+    },
+    "response_type": {
+      "@id": "dream:response_type",
+      "@type": "xsd:string"
+    },
+    "meta_info": {
+      "@id": "dream:meta_info",
+      "@type": "@id"
+    },
+    "V1SignupRequestBody": "dream:V1SignupRequestBody",
+    "MetaInfo": "dream:MetaInfo",
+    "ip": {
+      "@id": "dream:ip",
+      "@type": "xsd:string"
+    },
+    "location": {
+      "@id": "dream:location",
+      "@type": "xsd:string"
+    },
+    "source": {
+      "@id": "dream:source",
+      "@type": "xsd:string"
+    },
+    "V1OtpSendRequestBody": "dream:V1OtpSendRequestBody",
+    "contact": {
+      "@id": "dream:contact",
+      "@type": "@id"
+    },
+    "V2PasswordlessInitRequestBody": "dream:V2PasswordlessInitRequestBody",
+    "flow": {
+      "@id": "dream:flow",
+      "@type": "xsd:string"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Dream Sports API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Dream Sports's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-20) from openapi/dream-sports-access-keys-api-openapi.yml, openapi/dream-sports-account-api-openapi.yml, openapi/dream-sports-acquisition-api-openapi.yml.",
+  "dcterms:created": "2026-10-20",
+  "dcterms:source": [
+    "openapi/dream-sports-access-keys-api-openapi.yml",
+    "openapi/dream-sports-account-api-openapi.yml",
+    "openapi/dream-sports-acquisition-api-openapi.yml",
+    "openapi/dream-sports-admin-api-openapi.yml",
+    "openapi/dream-sports-admin-console-users-api-openapi.yml"
+  ]
+}

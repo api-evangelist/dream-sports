@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-journey-snapshot-request-schema.json",
+  "title": "JourneySnapshotRequest",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-client-sdk-api-openapi.yml#/components/schemas/JourneySnapshotRequest",
+  "type": "object",
+  "properties": {
+    "ctas": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "behaviourTags": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

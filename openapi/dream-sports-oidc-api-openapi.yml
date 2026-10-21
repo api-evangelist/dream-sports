@@ -801,6 +801,97 @@ components:
       example:
         login_challenge: login_challenge_abc123
         refresh_token: refresh_token_xyz789
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
+    UserConsentResponse:
+      type: object
+      description: User consent information for OAuth 2.0 client
+      required:
+      - client
+      - requested_scopes
+      - consented_scopes
+      - subject
+      properties:
+        client:
+          type: object
+          description: Client application information (filtered for security)
+          required:
+          - client_id
+          - client_name
+          properties:
+            clientId:
+              type: string
+              description: Unique identifier for the client application
+              example: my-client-app
+            clientName:
+              type: string
+              description: Human-readable name of the client application
+              example: My Application
+            clientUri:
+              type: string
+              format: uri
+              description: URL of the client application's home page
+              example: https://myapp.example.com
+            logoUri:
+              type: string
+              format: uri
+              description: URL of the client application's logo image
+              example: https://myapp.example.com/logo.png
+            policyUri:
+              type: string
+              format: uri
+              description: URL of the client application's privacy policy
+              example: https://myapp.example.com/privacy
+        requested_scopes:
+          type: array
+          description: List of OAuth 2.0 scopes being requested by the client
+          items:
+            type: string
+          example:
+          - openid
+          - email
+          - profile
+          - phone
+        consented_scopes:
+          type: array
+          description: List of OAuth 2.0 scopes the user has already consented to
+          items:
+            type: string
+          example:
+          - openid
+          - email
+        subject:
+          type: string
+          description: User identifier (subject) associated with the consent
+          example: user123
+      example:
+        client:
+          client_id: my-client-app
+          client_name: My Application
+          client_uri: https://myapp.example.com
+          logo_uri: https://myapp.example.com/logo.png
+          policy_uri: https://myapp.example.com/privacy
+        requested_scopes:
+        - openid
+        - email
+        - profile
+        - phone
+        consented_scopes:
+        - openid
+        - email
+        subject: user123
     TokenRequestBody:
       type: object
       description: Request body for OAuth 2.0 token endpoint
@@ -891,83 +982,6 @@ components:
         refresh_token: refresh_token_xyz789
         id_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
         scope: openid email profile
-    UserConsentResponse:
-      type: object
-      description: User consent information for OAuth 2.0 client
-      required:
-      - client
-      - requested_scopes
-      - consented_scopes
-      - subject
-      properties:
-        client:
-          type: object
-          description: Client application information (filtered for security)
-          required:
-          - client_id
-          - client_name
-          properties:
-            clientId:
-              type: string
-              description: Unique identifier for the client application
-              example: my-client-app
-            clientName:
-              type: string
-              description: Human-readable name of the client application
-              example: My Application
-            clientUri:
-              type: string
-              format: uri
-              description: URL of the client application's home page
-              example: https://myapp.example.com
-            logoUri:
-              type: string
-              format: uri
-              description: URL of the client application's logo image
-              example: https://myapp.example.com/logo.png
-            policyUri:
-              type: string
-              format: uri
-              description: URL of the client application's privacy policy
-              example: https://myapp.example.com/privacy
-        requested_scopes:
-          type: array
-          description: List of OAuth 2.0 scopes being requested by the client
-          items:
-            type: string
-          example:
-          - openid
-          - email
-          - profile
-          - phone
-        consented_scopes:
-          type: array
-          description: List of OAuth 2.0 scopes the user has already consented to
-          items:
-            type: string
-          example:
-          - openid
-          - email
-        subject:
-          type: string
-          description: User identifier (subject) associated with the consent
-          example: user123
-      example:
-        client:
-          client_id: my-client-app
-          client_name: My Application
-          client_uri: https://myapp.example.com
-          logo_uri: https://myapp.example.com/logo.png
-          policy_uri: https://myapp.example.com/privacy
-        requested_scopes:
-        - openid
-        - email
-        - profile
-        - phone
-        consented_scopes:
-        - openid
-        - email
-        subject: user123
     ConsentAcceptRequestBody:
       type: object
       description: Request body for accepting consent challenge
@@ -1064,20 +1078,6 @@ components:
         picture: https://example.com/avatar.jpg
         locale: en-US
         updated_at: 1640995200
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code identifying the type of error
-              example: invalid_request
-            message:
-              type: string
-              description: Human-readable error message
-              example: Something went wrong.
   parameters:
     TenantIdHeader:
       name: tenant-id

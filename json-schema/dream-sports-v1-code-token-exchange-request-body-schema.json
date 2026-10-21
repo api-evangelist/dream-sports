@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-v1-code-token-exchange-request-body-schema.json",
+  "title": "V1CodeTokenExchangeRequestBody",
+  "description": "Request body for exchanging authorization code for tokens",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-token-exchange-api-openapi.yml#/components/schemas/V1CodeTokenExchangeRequestBody",
+  "type": "object",
+  "required": [
+    "code"
+  ],
+  "properties": {
+    "code": {
+      "type": "string",
+      "description": "Authorization code received from authorization endpoint",
+      "minLength": 1
+    }
+  }
+}

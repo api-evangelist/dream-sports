@@ -242,39 +242,34 @@ components:
         type: string
       description: Deployment environment name
       example: Production
-  responses:
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request - invalid parameters
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/components/schemas/Error'
-            - type: array
-              items:
-                type: object
-                properties:
-                  message:
-                    type: string
-    Forbidden:
-      description: Forbidden - insufficient permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    PackageInfo:
+      type: object
+      properties:
+        appVersion:
+          type: string
+          description: Semver or semver range
+          example: 1.0.0
+        description:
+          type: string
+          example: Bug fixes and performance improvements
+        isDisabled:
+          type: boolean
+          default: false
+        isMandatory:
+          type: boolean
+          default: false
+          description: Whether update is mandatory
+        rollout:
+          type: integer
+          minimum: 1
+          maximum: 100
+          description: Percentage of users to receive update
+          example: 50
+        label:
+          type: string
+          description: Generated release label
+          example: v23
     Error:
       type: object
       properties:
@@ -326,33 +321,38 @@ components:
                   type: string
                 size:
                   type: integer
-    PackageInfo:
-      type: object
-      properties:
-        appVersion:
-          type: string
-          description: Semver or semver range
-          example: 1.0.0
-        description:
-          type: string
-          example: Bug fixes and performance improvements
-        isDisabled:
-          type: boolean
-          default: false
-        isMandatory:
-          type: boolean
-          default: false
-          description: Whether update is mandatory
-        rollout:
-          type: integer
-          minimum: 1
-          maximum: 100
-          description: Percentage of users to receive update
-          example: 50
-        label:
-          type: string
-          description: Generated release label
-          example: v23
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/Error'
+            - type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     BearerAuth:
       type: http

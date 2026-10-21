@@ -1,29 +1,27 @@
 ---
-name: Launch an in-app journey with Raven
-description: >-
-  Create, review and take live a Raven in-app messaging journey (CTA) against a tenant, then pause or
-  terminate it. Use this when an agent needs to ship or control an in-app nudge campaign on the Dream
-  Sports Raven platform.
+name: launch-an-in-app-journey
+description: Create, review and take live a Raven in-app messaging journey (CTA) against a tenant, then pause or terminate it. Use this when an agent needs to ship or control an in-app nudge campaign on the Dream Sports Raven platform.
 api: openapi/dream-sports-raven-journey-openapi.yml
 generated: '2026-08-04'
 method: generated
 source: openapi/dream-sports-raven-journey-openapi.yml (every operationId below is verbatim from the spec)
 operations:
-  - healthCheck
-  - googleLogin
-  - refreshToken
-  - getFilters
-  - listJourneys
-  - createJourney
-  - getJourney
-  - updateJourney
-  - scheduleJourney
-  - activateJourney
-  - pauseJourney
-  - concludeJourney
-  - terminateJourney
-  - createTestJourney
-  - removeTestJourney
+- healthCheck
+- googleLogin
+- refreshToken
+- getFilters
+- listJourneys
+- createJourney
+- getJourney
+- updateJourney
+- scheduleJourney
+- activateJourney
+- pauseJourney
+- concludeJourney
+- terminateJourney
+- createTestJourney
+- removeTestJourney
+title: Launch an in-app journey with Raven
 ---
 
 # Launch an in-app journey with Raven

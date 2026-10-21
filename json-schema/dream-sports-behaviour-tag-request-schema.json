@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-behaviour-tag-request-schema.json",
+  "title": "BehaviourTagRequest",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-journey-behaviour-api-openapi.yml#/components/schemas/BehaviourTagRequest",
+  "type": "object",
+  "required": [
+    "behaviourTagName"
+  ],
+  "properties": {
+    "behaviourTagName": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "exposureRule": {
+      "type": "object",
+      "properties": {
+        "session": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer"
+            }
+          }
+        },
+        "window": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "value": {
+              "type": "integer"
+            }
+          }
+        },
+        "lifespan": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "linkedCtas": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

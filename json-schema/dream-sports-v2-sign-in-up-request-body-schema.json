@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-v2-sign-in-up-request-body-schema.json",
+  "title": "V2SignInUpRequestBody",
+  "description": "Exactly one of username, email, or phone_number is required.\nExactly one of password or pin is required.\n",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-password-api-openapi.yml#/components/schemas/V2SignInUpRequestBody",
+  "type": "object",
+  "required": [
+    "client_id",
+    "response_type"
+  ],
+  "properties": {
+    "username": {
+      "type": "string",
+      "description": "User identifier (username)"
+    },
+    "email": {
+      "type": "string",
+      "description": "User identifier (email)"
+    },
+    "phone_number": {
+      "type": "string",
+      "description": "User identifier (phone number)"
+    },
+    "password": {
+      "type": "string",
+      "description": "Password for authentication (use with password flow)"
+    },
+    "pin": {
+      "type": "string",
+      "description": "PIN for authentication (use with PIN flow)"
+    },
+    "response_type": {
+      "type": "string",
+      "description": "Desired response type",
+      "enum": [
+        "code",
+        "token"
+      ]
+    },
+    "client_id": {
+      "type": "string",
+      "description": "Client identifier"
+    },
+    "scopes": {
+      "type": "array",
+      "description": "List of scopes to request",
+      "items": {
+        "type": "string"
+      }
+    },
+    "meta_info": {
+      "$ref": "#/$defs/MetaInfo"
+    }
+  },
+  "$defs": {
+    "MetaInfo": {
+      "type": "object",
+      "properties": {
+        "ip": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "device_name": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

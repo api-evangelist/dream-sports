@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-v2-refresh-token-response-schema.json",
+  "title": "V2RefreshTokenResponse",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-session-management-api-openapi.yml#/components/schemas/V2RefreshTokenResponse",
+  "type": "object",
+  "required": [
+    "access_token",
+    "token_type",
+    "expires_in"
+  ],
+  "properties": {
+    "access_token": {
+      "type": "string",
+      "description": "New access token"
+    },
+    "token_type": {
+      "type": "string",
+      "description": "Token type",
+      "enum": [
+        "Bearer"
+      ]
+    },
+    "expires_in": {
+      "type": "integer",
+      "description": "Access token expiration time in seconds"
+    }
+  }
+}

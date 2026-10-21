@@ -1,0 +1,428 @@
+generated: '2026-10-20'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/dream-sports-access-keys-api-openapi.yml
+- openapi/dream-sports-account-api-openapi.yml
+- openapi/dream-sports-acquisition-api-openapi.yml
+- openapi/dream-sports-admin-api-openapi.yml
+- openapi/dream-sports-admin-console-users-api-openapi.yml
+vocabulary:
+  name: Dream Sports Domain Vocabulary
+  description: 'Terms declared by Dream Sports''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-20'
+  terms:
+  - term: Admin - Console Users
+    definition: Admin-only console user operations — user onboarding and updates that include project IDs (stored in Firebase custom claims).
+      Requires appropriate admin authorization at the gateway.
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-admin-console-users-api-openapi.yml
+  - term: Auth
+    definition: Authentication operations — Google login and token refresh
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-auth-api-openapi.yml
+  - term: Behaviour Tags
+    definition: APIs for managing Behaviour Tags. Behaviour Tags define user segments and their exposure rules for CTAs. They control which CTAs
+      are shown or hidden to specific user groups based on session limits, time windows, and CTA relationships.
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-behaviour-tags-api-openapi.yml
+  - term: Client SDK
+    definition: Client SDK operations — endpoints consumed by the SDK for active journeys and state machine snapshots
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-client-sdk-api-openapi.yml
+  - term: Configuration
+    definition: System configuration endpoints (labels, priorities, platforms, etc.)
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-configuration-api-openapi.yml
+  - term: Console Users
+    definition: Console user management via Firebase Admin SDK
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-console-users-api-openapi.yml
+  - term: CTA Status
+    definition: 'APIs for managing CTA lifecycle status transitions. CTAs move through states: DRAFT → SCHEDULED → LIVE → PAUSED → CONCLUDED/TERMINATED.'
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-cta-status-api-openapi.yml
+  - term: CTAs
+    definition: APIs for managing Call-to-Actions (CTAs). Includes CRUD operations for creating, updating, retrieving, and listing CTAs with filtering
+      and pagination support.
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-ctas-api-openapi.yml
+  - term: Events
+    definition: APIs for managing Events. Events define the structure and properties of user actions that can trigger CTAs. Events include event
+      names and their associated properties with types, expected values, and mandatory flags.
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-events-api-openapi.yml
+  - term: Events Catalog
+    definition: Event schema management — create, update, and manage event definitions and their properties
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-events-catalog-api-openapi.yml
+  - term: Filters
+    definition: APIs for retrieving filter values used in the admin UI. Provides available options for tags, teams, statuses, behaviour tags,
+      and creators.
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-filters-api-openapi.yml
+  - term: Journey Behaviour
+    definition: Journey behaviour tag management — define and manage behaviour tags linked to journeys
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-journey-behaviour-api-openapi.yml
+  - term: Journey Lifecycle
+    definition: 'Journey lifecycle status transitions. Journeys move through states: DRAFT -> SCHEDULED -> LIVE -> PAUSED -> CONCLUDED/TERMINATED.
+      Each status transition has its own dedicated endpoint.'
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-journey-lifecycle-api-openapi.yml
+  - term: Journey Test
+    definition: Test journey operations — create and remove test journeys for validating behaviour before going live
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-journey-test-api-openapi.yml
+  - term: Journeys
+    definition: Journey management operations — create, read, update, and delete journeys
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-journeys-api-openapi.yml
+  - term: Nudge Preview
+    definition: Nudge preview management — create, update, and retrieve nudge preview templates with TTL configuration
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-nudge-preview-api-openapi.yml
+  - term: Nudge Previews
+    definition: APIs for managing Nudge Previews. Nudge Previews are used to preview nudge templates before they are used in CTAs. The preview
+      includes the nudge template and TTL (time-to-live) configuration.
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-nudge-previews-api-openapi.yml
+  - term: Organizations
+    definition: Organization management endpoints
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-organizations-api-openapi.yml
+  - term: Projects
+    definition: Project management endpoints
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-projects-api-openapi.yml
+  - term: Reports
+    definition: Reporting and download endpoints
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-reports-api-openapi.yml
+  - term: Runs
+    definition: Test run management endpoints
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-runs-api-openapi.yml
+  - term: SDK
+    definition: APIs for SDK clients to interact with Thunder. These endpoints handle app launch, state machine synchronization, and nudge preview
+      retrieval for mobile and web clients.
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-sdk-api-openapi.yml
+  - term: Tests
+    definition: Test case management endpoints
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-tests-api-openapi.yml
+  - term: Users
+    definition: User management endpoints
+    tags:
+    - Resource Group
+    source: openapi/dream-sports-users-api-openapi.yml
+  - term: AccessKeyRequest
+    definition: 'Object declared by the contract with fields: friendlyName, description, ttl, scope.'
+    tags:
+    - Object
+    source: openapi/dream-sports-access-keys-api-openapi.yml#/components/schemas/AccessKeyRequest
+  - term: Error
+    definition: 'Object declared by the contract with fields: message, code.'
+    tags:
+    - Object
+    source: openapi/dream-sports-access-keys-api-openapi.yml#/components/schemas/Error
+  - term: AccessKey
+    definition: 'Object declared by the contract with fields: name, friendlyName, description, createdTime, createdBy, expires, isSession, scope.'
+    tags:
+    - Object
+    source: openapi/dream-sports-access-keys-api-openapi.yml#/components/schemas/AccessKey
+  - term: AccountCreate
+    definition: 'Object declared by the contract with fields: email, name, gitHubId, microsoftId, azureAdId.'
+    tags:
+    - Object
+    source: openapi/dream-sports-account-api-openapi.yml#/components/schemas/AccountCreate
+  - term: TermsStatus
+    definition: 'Object declared by the contract with fields: accountId, isOwner, ownerAppCount, termsAccepted, termsVersion, acceptedTime, isCurrentVersion,
+      currentRequiredVersion.'
+    tags:
+    - Object
+    source: openapi/dream-sports-account-api-openapi.yml#/components/schemas/TermsStatus
+  - term: Account
+    definition: 'Object declared by the contract with fields: email, name, linkedProviders.'
+    tags:
+    - Object
+    source: openapi/dream-sports-account-api-openapi.yml#/components/schemas/Account
+  - term: AccountStorage
+    definition: 'Object declared by the contract with fields: id, email, name, gitHubId, microsoftId, azureAdId, createdTime.'
+    tags:
+    - Object
+    source: openapi/dream-sports-account-api-openapi.yml#/components/schemas/AccountStorage
+  - term: TermsAcceptance
+    definition: 'Object declared by the contract with fields: id, accountId, email, termsVersion, acceptedTime.'
+    tags:
+    - Object
+    source: openapi/dream-sports-account-api-openapi.yml#/components/schemas/TermsAcceptance
+  - term: DeploymentStatusReport
+    definition: 'Object declared by the contract with fields: deploymentKey, appVersion, clientUniqueId, label, status, previousDeploymentKey,
+      previousLabelOrAppVersion.'
+    tags:
+    - Object
+    source: openapi/dream-sports-acquisition-api-openapi.yml#/components/schemas/DeploymentStatusReport
+  - term: DownloadReport
+    definition: 'Object declared by the contract with fields: deploymentKey, label, clientUniqueId.'
+    tags:
+    - Object
+    source: openapi/dream-sports-acquisition-api-openapi.yml#/components/schemas/DownloadReport
+  - term: PackageInfo
+    definition: 'Object declared by the contract with fields: appVersion, description, isDisabled, isMandatory, rollout, label.'
+    tags:
+    - Object
+    source: openapi/dream-sports-acquisition-api-openapi.yml#/components/schemas/PackageInfo
+  - term: ErrorResponse
+    definition: 'Object declared by the contract with fields: error.'
+    tags:
+    - Object
+    source: openapi/dream-sports-admin-api-openapi.yml#/components/schemas/ErrorResponse
+  - term: V1AdminLogoutRequestBody
+    definition: Request body for admin logout operation
+    tags:
+    - Object
+    source: openapi/dream-sports-admin-api-openapi.yml#/components/schemas/V1AdminLogoutRequestBody
+  - term: AdminConsoleUserUpdateRequest
+    definition: 'Object declared by the contract with fields: displayName, photoUrl, emailVerified, disabled, projectIds.'
+    tags:
+    - Object
+    source: openapi/dream-sports-admin-console-users-api-openapi.yml#/components/schemas/AdminConsoleUserUpdateRequest
+  - term: ConsoleUserIdApiResponse
+    definition: 'Object declared by the contract with fields: success, data.'
+    tags:
+    - Object
+    source: openapi/dream-sports-admin-console-users-api-openapi.yml#/components/schemas/ConsoleUserIdApiResponse
+  - term: ConsoleUserIdData
+    definition: 'Object declared by the contract with fields: id.'
+    tags:
+    - Object
+    source: openapi/dream-sports-admin-console-users-api-openapi.yml#/components/schemas/ConsoleUserIdData
+  - term: ConsoleUserOnboardRequest
+    definition: 'Object declared by the contract with fields: email, projectIds.'
+    tags:
+    - Object
+    source: openapi/dream-sports-admin-console-users-api-openapi.yml#/components/schemas/ConsoleUserOnboardRequest
+  - term: CollaboratorProperties
+    definition: 'Object declared by the contract with fields: permission, isCurrentAccount.'
+    tags:
+    - Object
+    source: openapi/dream-sports-apps-api-openapi.yml#/components/schemas/CollaboratorProperties
+  - term: App
+    definition: 'Object declared by the contract with fields: name, collaborators, deployments, organisation.'
+    tags:
+    - Object
+    source: openapi/dream-sports-apps-api-openapi.yml#/components/schemas/App
+  - term: AuthTokenApiResponse
+    definition: 'Object declared by the contract with fields: success, data.'
+    tags:
+    - Object
+    source: openapi/dream-sports-auth-api-openapi.yml#/components/schemas/AuthTokenApiResponse
+  - term: AuthTokenData
+    definition: 'Object declared by the contract with fields: access_token, refresh_token, expires_in, token_type.'
+    tags:
+    - Object
+    source: openapi/dream-sports-auth-api-openapi.yml#/components/schemas/AuthTokenData
+  - term: AuthLoginRequest
+    definition: 'Object declared by the contract with fields: google_id_token.'
+    tags:
+    - Object
+    source: openapi/dream-sports-auth-api-openapi.yml#/components/schemas/AuthLoginRequest
+  - term: AuthRefreshRequest
+    definition: 'Object declared by the contract with fields: refresh_token.'
+    tags:
+    - Object
+    source: openapi/dream-sports-auth-api-openapi.yml#/components/schemas/AuthRefreshRequest
+  - term: WindowFrequency
+    definition: 'Object declared by the contract with fields: limit, unit, value.'
+    tags:
+    - Object
+    source: openapi/dream-sports-behaviour-tags-api-openapi.yml#/components/schemas/WindowFrequency
+  - term: BehaviourTagsResponse
+    definition: 'Object declared by the contract with fields: behaviourTags.'
+    tags:
+    - Object
+    source: openapi/dream-sports-behaviour-tags-api-openapi.yml#/components/schemas/BehaviourTagsResponse
+  - term: BehaviourTagPutRequest
+    definition: Request to update an existing Behaviour Tag. All fields are optional - only provided fields will be updated.
+    tags:
+    - Object
+    source: openapi/dream-sports-behaviour-tags-api-openapi.yml#/components/schemas/BehaviourTagPutRequest
+  - term: SessionFrequency
+    definition: 'Object declared by the contract with fields: limit.'
+    tags:
+    - Object
+    source: openapi/dream-sports-behaviour-tags-api-openapi.yml#/components/schemas/SessionFrequency
+  - term: CtaRelationRule
+    definition: 'Object declared by the contract with fields: rule, ctaList.'
+    tags:
+    - Object
+    source: openapi/dream-sports-behaviour-tags-api-openapi.yml#/components/schemas/CtaRelationRule
+  - term: LifespanFrequency
+    definition: 'Object declared by the contract with fields: limit.'
+    tags:
+    - Object
+    source: openapi/dream-sports-behaviour-tags-api-openapi.yml#/components/schemas/LifespanFrequency
+  - term: CtaRelationRuleTypes
+    definition: 'Enumeration declared by the contract with values: ANY, LIST, REST.'
+    tags:
+    - Enumeration
+    source: openapi/dream-sports-behaviour-tags-api-openapi.yml#/components/schemas/CtaRelationRuleTypes
+  - term: BehaviourTag
+    definition: 'Object declared by the contract with fields: name, description, createdAt, createdBy, lastUpdatedAt, lastUpdatedBy, exposureRule,
+      ctaRelation, linkedCtas, tenantId.'
+    tags:
+    - Object
+    source: openapi/dream-sports-behaviour-tags-api-openapi.yml#/components/schemas/BehaviourTag
+  - term: WindowFrequencyUnit
+    definition: 'Enumeration declared by the contract with values: days, hours, minutes, seconds.'
+    tags:
+    - Enumeration
+    source: openapi/dream-sports-behaviour-tags-api-openapi.yml#/components/schemas/WindowFrequencyUnit
+  - term: CTARelation
+    definition: 'Object declared by the contract with fields: shownCta, hideCta.'
+    tags:
+    - Object
+    source: openapi/dream-sports-behaviour-tags-api-openapi.yml#/components/schemas/CTARelation
+  - term: ExposureRule
+    definition: 'Object declared by the contract with fields: session, window, lifespan.'
+    tags:
+    - Object
+    source: openapi/dream-sports-behaviour-tags-api-openapi.yml#/components/schemas/ExposureRule
+  - term: BehaviourTagCreateRequest
+    definition: Request to create a new Behaviour Tag
+    tags:
+    - Object
+    source: openapi/dream-sports-behaviour-tags-api-openapi.yml#/components/schemas/BehaviourTagCreateRequest
+  - term: SdkUserProfileLoginRequest
+    definition: 'Object declared by the contract with fields: userId, firstName, lastName, email, phone, birthdate, gender, city, locality, postalCode,
+      country, language. (2 more)'
+    tags:
+    - Object
+    source: openapi/dream-sports-client-sdk-api-openapi.yml#/components/schemas/SdkUserProfileLoginRequest
+  - term: PreferenceItem
+    definition: 'Object declared by the contract with fields: channel, subcategory, value.'
+    tags:
+    - Object
+    source: openapi/dream-sports-client-sdk-api-openapi.yml#/components/schemas/PreferenceItem
+  - term: SdkTokenRegisterRequest
+    definition: 'Object declared by the contract with fields: userId, token, deviceId, tokenType, os, osVersion, appPackageName, appVersion.'
+    tags:
+    - Object
+    source: openapi/dream-sports-client-sdk-api-openapi.yml#/components/schemas/SdkTokenRegisterRequest
+  - term: ApiResponse
+    definition: 'Object declared by the contract with fields: success, data, statusCode.'
+    tags:
+    - Object
+    source: openapi/dream-sports-client-sdk-api-openapi.yml#/components/schemas/ApiResponse
+  - term: SdkUpsertPreferencesApiResponse
+    definition: 'Object declared by the contract with fields: success, data.'
+    tags:
+    - Object
+    source: openapi/dream-sports-client-sdk-api-openapi.yml#/components/schemas/SdkUpsertPreferencesApiResponse
+  - term: SdkUpsertPreferencesRequest
+    definition: 'Object declared by the contract with fields: userId, items.'
+    tags:
+    - Object
+    source: openapi/dream-sports-client-sdk-api-openapi.yml#/components/schemas/SdkUpsertPreferencesRequest
+  - term: JourneySnapshotRequest
+    definition: 'Object declared by the contract with fields: ctas, behaviourTags.'
+    tags:
+    - Object
+    source: openapi/dream-sports-client-sdk-api-openapi.yml#/components/schemas/JourneySnapshotRequest
+  - term: SdkUpsertPreferencesResponse
+    definition: 'Object declared by the contract with fields: updated, preferences.'
+    tags:
+    - Object
+    source: openapi/dream-sports-client-sdk-api-openapi.yml#/components/schemas/SdkUpsertPreferencesResponse
+  - term: SendMessageRequest
+    definition: 'Object declared by the contract with fields: channel, to, templateName, templateParams.'
+    tags:
+    - Object
+    source: openapi/dream-sports-communication-api-openapi.yml#/components/schemas/SendMessageRequest
+  - term: errorResponse
+    definition: 'Object declared by the contract with fields: error.'
+    tags:
+    - Object
+    source: openapi/dream-sports-communication-api-openapi.yml#/components/schemas/errorResponse
+  - term: TestCoveredBy
+    definition: 'Object declared by the contract with fields: testCoveredById, testCoveredByName.'
+    tags:
+    - Object
+    source: openapi/dream-sports-configuration-api-openapi.yml#/components/schemas/TestCoveredBy
+  - term: Squad
+    definition: 'Object declared by the contract with fields: squadId, squadName, projectId.'
+    tags:
+    - Object
+    source: openapi/dream-sports-configuration-api-openapi.yml#/components/schemas/Squad
+  - term: Label
+    definition: 'Object declared by the contract with fields: labelId, labelName, projectId.'
+    tags:
+    - Object
+    source: openapi/dream-sports-configuration-api-openapi.yml#/components/schemas/Label
+  - term: Priority
+    definition: 'Object declared by the contract with fields: priorityId, priorityName.'
+    tags:
+    - Object
+    source: openapi/dream-sports-configuration-api-openapi.yml#/components/schemas/Priority
+  - term: Platform
+    definition: 'Object declared by the contract with fields: platformId, platformName.'
+    tags:
+    - Object
+    source: openapi/dream-sports-configuration-api-openapi.yml#/components/schemas/Platform
+  - term: Section
+    definition: 'Object declared by the contract with fields: sectionId, sectionName, parentId, projectId.'
+    tags:
+    - Object
+    source: openapi/dream-sports-configuration-api-openapi.yml#/components/schemas/Section
+  - term: AutomationStatus
+    definition: 'Object declared by the contract with fields: automationStatusId, automationStatusName.'
+    tags:
+    - Object
+    source: openapi/dream-sports-configuration-api-openapi.yml#/components/schemas/AutomationStatus
+  - term: Type
+    definition: 'Object declared by the contract with fields: typeId, typeName.'
+    tags:
+    - Object
+    source: openapi/dream-sports-configuration-api-openapi.yml#/components/schemas/Type
+  - term: ConsoleUserRecord
+    definition: 'Object declared by the contract with fields: id, email, displayName, photoUrl, emailVerified, disabled, projectIds, createdAt,
+      lastLoginAt, lastRefreshAt.'
+    tags:
+    - Object
+    source: openapi/dream-sports-console-users-api-openapi.yml#/components/schemas/ConsoleUserRecord
+  - term: ConsoleUserRecordApiResponse
+    definition: 'Object declared by the contract with fields: success, data.'
+    tags:
+    - Object
+    source: openapi/dream-sports-console-users-api-openapi.yml#/components/schemas/ConsoleUserRecordApiResponse
+  - term: ConsoleUserPagination
+    definition: 'Object declared by the contract with fields: pageSize, recordCount, nextPageToken.'
+    tags:
+    - Object
+    source: openapi/dream-sports-console-users-api-openapi.yml#/components/schemas/ConsoleUserPagination

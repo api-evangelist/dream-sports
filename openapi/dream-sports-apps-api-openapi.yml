@@ -204,54 +204,7 @@ components:
         type: string
       description: Application name (or 'owner:appName' for disambiguation)
       example: MyApp-iOS
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/components/schemas/Error'
-            - type: array
-              items:
-                type: object
-                properties:
-                  message:
-                    type: string
-    Conflict:
-      description: Conflict - resource already exists
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden - insufficient permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    CollaboratorMap:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/CollaboratorProperties'
-      example:
-        user@example.com:
-          permission: Owner
-          isCurrentAccount: true
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
     CollaboratorProperties:
       type: object
       properties:
@@ -263,6 +216,13 @@ components:
         isCurrentAccount:
           type: boolean
           description: Whether this is the authenticated user
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
     AppCreationRequest:
       allOf:
       - $ref: '#/components/schemas/App'
@@ -272,6 +232,14 @@ components:
             type: boolean
             default: false
             description: If true, does not create default Production/Staging deployments
+    CollaboratorMap:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/CollaboratorProperties'
+      example:
+        user@example.com:
+          permission: Owner
+          isCurrentAccount: true
     App:
       type: object
       required:
@@ -296,6 +264,38 @@ components:
               type: string
             orgName:
               type: string
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/Error'
+            - type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflict - resource already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     BearerAuth:
       type: http

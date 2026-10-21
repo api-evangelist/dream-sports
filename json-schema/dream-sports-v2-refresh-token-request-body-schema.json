@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-v2-refresh-token-request-body-schema.json",
+  "title": "V2RefreshTokenRequestBody",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-session-management-api-openapi.yml#/components/schemas/V2RefreshTokenRequestBody",
+  "type": "object",
+  "properties": {
+    "refresh_token": {
+      "type": "string",
+      "description": "Refresh token (can also be provided as cookie)"
+    },
+    "client_id": {
+      "type": "string",
+      "description": "Client identifier"
+    }
+  }
+}

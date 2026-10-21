@@ -1,38 +1,36 @@
 ---
-name: Manage Raven Thunder CTAs, behaviour tags and the event catalog
-description: >-
-  Register events, define behaviour tags, and manage the lifecycle of CTAs on the Raven Thunder admin
-  API — the serving side of Dream Sports' in-app messaging stack. Use this when an agent maintains the
-  targeting vocabulary or drives CTA status, rather than authoring a full journey.
+name: manage-thunder-ctas-and-events
+description: Register events, define behaviour tags, and manage the lifecycle of CTAs on the Raven Thunder admin API — the serving side of Dream Sports' in-app messaging stack. Use this when an agent maintains the targeting vocabulary or drives CTA status, rather than authoring a full journey.
 api: openapi/dream-sports-thunder-admin-openapi.yml
 generated: '2026-08-04'
 method: generated
 source: openapi/dream-sports-thunder-admin-openapi.yml and openapi/dream-sports-thunder-api-openapi.yml
 operations:
-  - getAllEventNames
-  - getAllEvents
-  - getEvent
-  - upsertEvents
-  - patchEvent
-  - deleteEvent
-  - listBehaviourTags
-  - getBehaviourTag
-  - createBehaviourTag
-  - updateBehaviourTag
-  - getFilters
-  - listCTAs
-  - getCTA
-  - createCTA
-  - updateCTA
-  - scheduleCTA
-  - activateCTA
-  - pauseCTA
-  - concludeCTA
-  - terminateCTA
-  - getNudgePreview
-  - createOrUpdateNudgePreview
-  - appLaunch
-  - mergeSnapshotDelta
+- getAllEventNames
+- getAllEvents
+- getEvent
+- upsertEvents
+- patchEvent
+- deleteEvent
+- listBehaviourTags
+- getBehaviourTag
+- createBehaviourTag
+- updateBehaviourTag
+- getFilters
+- listCTAs
+- getCTA
+- createCTA
+- updateCTA
+- scheduleCTA
+- activateCTA
+- pauseCTA
+- concludeCTA
+- terminateCTA
+- getNudgePreview
+- createOrUpdateNudgePreview
+- appLaunch
+- mergeSnapshotDelta
+title: Manage Raven Thunder CTAs, behaviour tags and the event catalog
 ---
 
 # Manage Raven Thunder CTAs, behaviour tags and the event catalog

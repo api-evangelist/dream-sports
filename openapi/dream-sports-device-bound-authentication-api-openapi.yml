@@ -281,6 +281,21 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    BiometricChallengeResponse:
+      type: object
+      properties:
+        state:
+          type: string
+          description: Single-use state token for register/login operations. Must be used within expires_in seconds.
+          example: biometric_challenge_a1b2c3d4e5f6
+        challenge:
+          type: string
+          description: Base64-encoded challenge (32-byte nonce)
+          example: xJ8k2nM9pQ3vT7wY1cF6hL4mN8qR5sV0zX3bG7jK9tW2yP6uA4dH1eI5oU8rE3c=
+        expires_in:
+          type: integer
+          description: Challenge expiry time in seconds (default 300 = 5 minutes)
+          example: 300
     BiometricChallengeRequest:
       type: object
       required:
@@ -299,77 +314,6 @@ components:
         device_metadata:
           $ref: '#/components/schemas/DeviceMetadata'
           description: Device metadata including device_id (required)
-    BiometricChallengeResponse:
-      type: object
-      properties:
-        state:
-          type: string
-          description: Single-use state token for register/login operations. Must be used within expires_in seconds.
-          example: biometric_challenge_a1b2c3d4e5f6
-        challenge:
-          type: string
-          description: Base64-encoded challenge (32-byte nonce)
-          example: xJ8k2nM9pQ3vT7wY1cF6hL4mN8qR5sV0zX3bG7jK9tW2yP6uA4dH1eI5oU8rE3c=
-        expires_in:
-          type: integer
-          description: Challenge expiry time in seconds (default 300 = 5 minutes)
-          example: 300
-    TokenResponse:
-      type: object
-      properties:
-        accessToken:
-          type: string
-          example: accesstoken
-          description: Short lived Bearer JWT token to access APIs.
-        refreshToken:
-          type: string
-          example: refreshToken
-          description: Long Lived token used to refresh access token.
-        idToken:
-          type: string
-          example: idToken
-          description: OpenID Connect ID token
-        tokenType:
-          type: string
-          example: Bearer
-          description: type of token. Only supports Bearer for now.
-        expiresIn:
-          type: integer
-          example: 3600
-          description: expiry of the access token in seconds
-        isNewUser:
-          type: boolean
-          description: Indicates if the user is new
-          example: false
-    DeviceMetadata:
-      type: object
-      required:
-      - device_id
-      properties:
-        platform:
-          type: string
-          description: Device platform (e.g., iOS, Android)
-          example: iOS
-        device_id:
-          type: string
-          description: Unique identifier for the device
-          example: device-abc123xyz
-        device_model:
-          type: string
-          description: Device model name
-          example: iPhone 14 Pro
-        os_version:
-          type: string
-          description: Operating system version
-          example: iOS 17.0
-        app_version:
-          type: string
-          description: Application version
-          example: 1.2.3
-        device_name:
-          type: string
-          description: User-friendly device name
-          example: John's iPhone
     ErrorResponse:
       type: object
       properties:
@@ -423,6 +367,33 @@ components:
         device_metadata:
           $ref: '#/components/schemas/DeviceMetadata'
           description: Device metadata including device_id, platform, and other device information (required)
+    TokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: accesstoken
+          description: Short lived Bearer JWT token to access APIs.
+        refreshToken:
+          type: string
+          example: refreshToken
+          description: Long Lived token used to refresh access token.
+        idToken:
+          type: string
+          example: idToken
+          description: OpenID Connect ID token
+        tokenType:
+          type: string
+          example: Bearer
+          description: type of token. Only supports Bearer for now.
+        expiresIn:
+          type: integer
+          example: 3600
+          description: expiry of the access token in seconds
+        isNewUser:
+          type: boolean
+          description: Indicates if the user is new
+          example: false
     BiometricLoginErrorResponse:
       type: object
       properties:
@@ -444,6 +415,35 @@ components:
           - credential_not_found
           - invalid_state
           example: invalid_signature
+    DeviceMetadata:
+      type: object
+      required:
+      - device_id
+      properties:
+        platform:
+          type: string
+          description: Device platform (e.g., iOS, Android)
+          example: iOS
+        device_id:
+          type: string
+          description: Unique identifier for the device
+          example: device-abc123xyz
+        device_model:
+          type: string
+          description: Device model name
+          example: iPhone 14 Pro
+        os_version:
+          type: string
+          description: Operating system version
+          example: iOS 17.0
+        app_version:
+          type: string
+          description: Application version
+          example: 1.2.3
+        device_name:
+          type: string
+          description: User-friendly device name
+          example: John's iPhone
   parameters:
     TenantIdHeader:
       name: tenant-id

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-sdk-user-profile-login-request-schema.json",
+  "title": "SdkUserProfileLoginRequest",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-client-sdk-api-openapi.yml#/components/schemas/SdkUserProfileLoginRequest",
+  "type": "object",
+  "required": [
+    "userId"
+  ],
+  "properties": {
+    "userId": {
+      "type": "string"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "birthdate": {
+      "type": "string"
+    },
+    "gender": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "locality": {
+      "type": "string"
+    },
+    "postalCode": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    },
+    "timezone": {
+      "type": "string"
+    },
+    "custom": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

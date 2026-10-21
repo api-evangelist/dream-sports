@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-behaviour-tag-update-request-schema.json",
+  "title": "BehaviourTagUpdateRequest",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-journey-behaviour-api-openapi.yml#/components/schemas/BehaviourTagUpdateRequest",
+  "type": "object",
+  "properties": {
+    "description": {
+      "type": "string"
+    },
+    "exposureRule": {
+      "type": "object"
+    },
+    "linkedCtas": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

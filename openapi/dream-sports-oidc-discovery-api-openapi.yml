@@ -76,20 +76,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code identifying the type of error
-              example: invalid_request
-            message:
-              type: string
-              description: Human-readable error message
-              example: Something went wrong.
     OIDCDiscoveryResponse:
       type: object
       description: OpenID Connect Discovery Configuration Response
@@ -215,6 +201,20 @@ components:
           - email_verified
           - phone_number
           - phone_number_verified
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
   parameters:
     TenantIdHeader:
       name: tenant-id

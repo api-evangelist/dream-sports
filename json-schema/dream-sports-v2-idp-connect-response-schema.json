@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-v2-idp-connect-response-schema.json",
+  "title": "V2IdpConnectResponse",
+  "description": "Response from identity provider authentication (v2 - uses snake_case field names)",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-social-api-openapi.yml#/components/schemas/V2IdpConnectResponse",
+  "type": "object",
+  "properties": {
+    "code": {
+      "type": "string",
+      "description": "Authorization code (present when response_type is 'code')"
+    },
+    "access_token": {
+      "type": "string",
+      "description": "Access token (present when response_type is 'token')"
+    },
+    "refresh_token": {
+      "type": "string",
+      "description": "Refresh token for getting new access tokens"
+    },
+    "id_token": {
+      "type": "string",
+      "description": "OpenID Connect ID token"
+    },
+    "token_type": {
+      "type": "string",
+      "description": "Type of the access token"
+    },
+    "expires_in": {
+      "type": "integer",
+      "description": "Access token expiration time in seconds"
+    },
+    "is_new_user": {
+      "type": "boolean",
+      "description": "Whether this is a newly created user"
+    },
+    "idp_credentials": {
+      "type": "object",
+      "description": "Identity provider specific credentials",
+      "properties": {
+        "access_token": {
+          "type": "string",
+          "description": "Provider's access token"
+        },
+        "refresh_token": {
+          "type": "string",
+          "description": "Provider's refresh token"
+        },
+        "id_token": {
+          "type": "string",
+          "description": "Provider's ID token"
+        }
+      }
+    }
+  }
+}

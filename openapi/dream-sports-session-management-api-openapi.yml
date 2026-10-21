@@ -356,7 +356,44 @@ paths:
       operationId: getV2UserRefreshTokens
       x-operation-id-source: derived
 components:
+  parameters:
+    TenantIdHeader:
+      name: tenant-id
+      in: header
+      description: tenant-id of the client integrating with guardian
+      required: true
+      schema:
+        type: string
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code identifying the type of error
+              example: invalid_request
+            message:
+              type: string
+              description: Human-readable error message
+              example: Something went wrong.
+    RefreshToken:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: accesstoken
+          description: Short lived Bearer JWT token to access APIs.
+        tokenType:
+          type: string
+          example: Bearer
+          description: type of token. Only supports Bearer for now.
+        expiresIn:
+          type: integer
+          example: 3600
+          description: expiry of the access token in seconds
     UserRefreshTokensResponse:
       type: object
       description: Paginated list of user's active refresh tokens
@@ -388,13 +425,22 @@ components:
           source: web
           created_at: '2022-09-29 14:20:00'
         total_count: 2
-    V2RefreshTokenRequestBody:
+    V2LogoutRequestBody:
       type: object
       properties:
         refresh_token:
           type: string
-          description: Refresh token (can also be provided as cookie)
+          description: Refresh token to invalidate (can also be provided as cookie)
           example: refresh_token_xyz789
+        logout_type:
+          type: string
+          description: Type of logout
+          enum:
+          - token
+          - client
+          - tenant
+          default: token
+          example: token
         client_id:
           type: string
           description: Client identifier
@@ -420,36 +466,6 @@ components:
           type: integer
           description: Access token expiration time in seconds
           example: 3600
-    V2LogoutRequestBody:
-      type: object
-      properties:
-        refresh_token:
-          type: string
-          description: Refresh token to invalidate (can also be provided as cookie)
-          example: refresh_token_xyz789
-        logout_type:
-          type: string
-          description: Type of logout
-          enum:
-          - token
-          - client
-          - tenant
-          default: token
-          example: token
-        client_id:
-          type: string
-          description: Client identifier
-          example: my-client-id
-    V1LogoutRequestBody:
-      type: object
-      required:
-      - refreshToken
-      properties:
-        refreshToken:
-          type: string
-        isUniversalLogout:
-          type: boolean
-          default: false
     UserRefreshTokenItem:
       type: object
       description: A single active refresh token with device/location metadata
@@ -480,40 +496,24 @@ components:
       properties:
         refreshToken:
           type: string
-    ErrorResponse:
+    V2RefreshTokenRequestBody:
       type: object
       properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code identifying the type of error
-              example: invalid_request
-            message:
-              type: string
-              description: Human-readable error message
-              example: Something went wrong.
-    RefreshToken:
+        refresh_token:
+          type: string
+          description: Refresh token (can also be provided as cookie)
+          example: refresh_token_xyz789
+        client_id:
+          type: string
+          description: Client identifier
+          example: my-client-id
+    V1LogoutRequestBody:
       type: object
+      required:
+      - refreshToken
       properties:
-        accessToken:
+        refreshToken:
           type: string
-          example: accesstoken
-          description: Short lived Bearer JWT token to access APIs.
-        tokenType:
-          type: string
-          example: Bearer
-          description: type of token. Only supports Bearer for now.
-        expiresIn:
-          type: integer
-          example: 3600
-          description: expiry of the access token in seconds
-  parameters:
-    TenantIdHeader:
-      name: tenant-id
-      in: header
-      description: tenant-id of the client integrating with guardian
-      required: true
-      schema:
-        type: string
+        isUniversalLogout:
+          type: boolean
+          default: false

@@ -174,21 +174,57 @@ paths:
       operationId: deleteAppsByAppNameDeploymentsByDeploymentName
       x-operation-id-source: derived
 components:
+  parameters:
+    TenantHeader:
+      name: tenant
+      in: header
+      schema:
+        type: string
+      description: Organization/tenant ID filter
+    AppName:
+      name: appName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Application name (or 'owner:appName' for disambiguation)
+      example: MyApp-iOS
+    DeploymentName:
+      name: deploymentName
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Deployment environment name
+      example: Production
   schemas:
-    Deployment:
+    PackageInfo:
       type: object
-      required:
-      - name
       properties:
-        name:
+        appVersion:
           type: string
-          example: Production
-        key:
+          description: Semver or semver range
+          example: 1.0.0
+        description:
           type: string
-          description: Deployment key used by clients
-          example: deployment-key-abc123
-        package:
-          $ref: '#/components/schemas/Package'
+          example: Bug fixes and performance improvements
+        isDisabled:
+          type: boolean
+          default: false
+        isMandatory:
+          type: boolean
+          default: false
+          description: Whether update is mandatory
+        rollout:
+          type: integer
+          minimum: 1
+          maximum: 100
+          description: Percentage of users to receive update
+          example: 50
+        label:
+          type: string
+          description: Generated release label
+          example: v23
     Error:
       type: object
       properties:
@@ -240,65 +276,29 @@ components:
                   type: string
                 size:
                   type: integer
-    PackageInfo:
+    Deployment:
       type: object
+      required:
+      - name
       properties:
-        appVersion:
+        name:
           type: string
-          description: Semver or semver range
-          example: 1.0.0
-        description:
+          example: Production
+        key:
           type: string
-          example: Bug fixes and performance improvements
-        isDisabled:
-          type: boolean
-          default: false
-        isMandatory:
-          type: boolean
-          default: false
-          description: Whether update is mandatory
-        rollout:
-          type: integer
-          minimum: 1
-          maximum: 100
-          description: Percentage of users to receive update
-          example: 50
-        label:
-          type: string
-          description: Generated release label
-          example: v23
-  parameters:
-    TenantHeader:
-      name: tenant
-      in: header
-      schema:
-        type: string
-      description: Organization/tenant ID filter
-    AppName:
-      name: appName
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Application name (or 'owner:appName' for disambiguation)
-      example: MyApp-iOS
-    DeploymentName:
-      name: deploymentName
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Deployment environment name
-      example: Production
+          description: Deployment key used by clients
+          example: deployment-key-abc123
+        package:
+          $ref: '#/components/schemas/Package'
   responses:
-    Conflict:
-      description: Conflict - resource already exists
+    Forbidden:
+      description: Forbidden - insufficient permissions
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden - insufficient permissions
+    Conflict:
+      description: Conflict - resource already exists
       content:
         application/json:
           schema:

@@ -1,41 +1,39 @@
 ---
-name: Deploy and operate services on Odin through the MCP server
-description: >-
-  Use Dream Sports' first-party odin-mcp server to list, describe, deploy and operate services and
-  environments on Odin, its internal developer platform. Use this when an agent has been given access
-  to an Odin installation and needs to act on it safely.
+name: operate-odin-via-mcp
+description: Use Dream Sports' first-party odin-mcp server to list, describe, deploy and operate services and environments on Odin, its internal developer platform. Use this when an agent has been given access to an Odin installation and needs to act on it safely.
 api: mcp/dream-sports-mcp.yml
 generated: '2026-08-04'
 method: generated
-source: >-
-  https://github.com/dream-horizon-org/odin-mcp (README tool tables) and the protobuf service
-  definitions in grpc/dream-sports-odin-*.proto
-operations:
-  - deployer_health
-  - deployer_grpc_health
-  - deployer_component_catalogue
-  - deployer_component_operations
-  - deployer_operation_schemas_list
-  - deployer_operation_schema_get
-  - deployer_grpc_list_environment
-  - deployer_grpc_describe_environment
-  - deployer_grpc_status_environment
-  - deployer_grpc_list_services
-  - deployer_grpc_describe_service
-  - deployer_grpc_list_service_versions
-  - deployer_grpc_operate_component_diff
-  - deployer_grpc_deploy_service
-  - deployer_grpc_operate_service
-  - deployer_operate_component
-  - deployer_operate_status
-  - deployer_grpc_release_service
-  - deployer_grpc_check_service_release_name_unique
-  - deployer_grpc_export_service
-  - scout_accounts_list
-  - scout_account_details_get
-  - user_auth_orgs_list
-  - user_auth_teams_list
-  - user_auth_team_members_list
+source: https://github.com/dream-horizon-org/odin-mcp (README tool tables) and the protobuf service definitions in grpc/dream-sports-odin-*.proto
+title: Deploy and operate services on Odin through the MCP server
+mcp_tools:
+- deployer_health
+- deployer_grpc_health
+- deployer_component_catalogue
+- deployer_component_operations
+- deployer_operation_schemas_list
+- deployer_operation_schema_get
+- deployer_grpc_list_environment
+- deployer_grpc_describe_environment
+- deployer_grpc_status_environment
+- deployer_grpc_list_services
+- deployer_grpc_describe_service
+- deployer_grpc_list_service_versions
+- deployer_grpc_operate_component_diff
+- deployer_grpc_deploy_service
+- deployer_grpc_operate_service
+- deployer_operate_component
+- deployer_operate_status
+- deployer_grpc_release_service
+- deployer_grpc_check_service_release_name_unique
+- deployer_grpc_export_service
+- scout_accounts_list
+- scout_account_details_get
+- user_auth_orgs_list
+- user_auth_teams_list
+- user_auth_team_members_list
+operations: []
+operations_note: Odin is a gRPC/MCP surface with no OpenAPI; mcp_tools are odin-mcp tool names.
 ---
 
 # Deploy and operate services on Odin through the MCP server

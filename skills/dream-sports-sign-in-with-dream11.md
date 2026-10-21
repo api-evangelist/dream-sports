@@ -1,19 +1,24 @@
 ---
-name: Sign a user in with "Login with Dream11" (OpenID Connect)
-description: >-
-  Run the OpenID Connect authorization-code flow against Dream11's production identity service to
-  authenticate a user as their Dream11 account and read consented profile claims. Use this when
-  integrating Dream11 sign-in, or when reasoning about which claims an app is entitled to.
+name: sign-in-with-dream11
+description: Run the OpenID Connect authorization-code flow against Dream11's production identity service to authenticate a user as their Dream11 account and read consented profile claims. Use this when integrating Dream11 sign-in, or when reasoning about which claims an app is entitled to.
 api: https://auth.dream11.com/.well-known/openid-configuration
 generated: '2026-08-04'
 method: generated
 source: well-known/dream-sports-openid-configuration.json (live, HTTP 200) + https://guardianhq.io/docs/
+title: Sign a user in with "Login with Dream11" (OpenID Connect)
+endpoints:
+- GET /authorize
+- POST /token
+- GET /userinfo
+- GET /certs
+- POST /revokeToken
 operations:
-  - GET /authorize
-  - POST /token
-  - GET /userinfo
-  - GET /certs
-  - POST /revokeToken
+- getAuthorize
+- postToken
+- getUserinfo
+- getV1Certs
+- postTokenRevoke
+operations_note: auth.dream11.com publishes OIDC discovery only, no OpenAPI; operations name the equivalent OIDC operations in the Guardian spec (Dream Horizon identity server), endpoints lists the auth.dream11.com paths.
 ---
 
 # Sign a user in with "Login with Dream11"

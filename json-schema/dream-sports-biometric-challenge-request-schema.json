@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-biometric-challenge-request-schema.json",
+  "title": "BiometricChallengeRequest",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-device-bound-authentication-api-openapi.yml#/components/schemas/BiometricChallengeRequest",
+  "type": "object",
+  "required": [
+    "refresh_token",
+    "client_id",
+    "device_metadata"
+  ],
+  "properties": {
+    "refresh_token": {
+      "type": "string",
+      "description": "Refresh token for authentication context"
+    },
+    "client_id": {
+      "type": "string",
+      "description": "Client application identifier"
+    },
+    "device_metadata": {
+      "$ref": "#/$defs/DeviceMetadata",
+      "description": "Device metadata including device_id (required)"
+    }
+  },
+  "$defs": {
+    "DeviceMetadata": {
+      "type": "object",
+      "required": [
+        "device_id"
+      ],
+      "properties": {
+        "platform": {
+          "type": "string",
+          "description": "Device platform (e.g., iOS, Android)"
+        },
+        "device_id": {
+          "type": "string",
+          "description": "Unique identifier for the device"
+        },
+        "device_model": {
+          "type": "string",
+          "description": "Device model name"
+        },
+        "os_version": {
+          "type": "string",
+          "description": "Operating system version"
+        },
+        "app_version": {
+          "type": "string",
+          "description": "Application version"
+        },
+        "device_name": {
+          "type": "string",
+          "description": "User-friendly device name"
+        }
+      }
+    }
+  }
+}

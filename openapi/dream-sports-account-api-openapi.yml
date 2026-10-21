@@ -150,27 +150,6 @@ paths:
       operationId: getAccountByaccessKeyName
       x-operation-id-source: derived
 components:
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/components/schemas/Error'
-            - type: array
-              items:
-                type: object
-                properties:
-                  message:
-                    type: string
-    Unauthorized:
-      description: Unauthorized - invalid or expired authentication
-      content:
-        text/plain:
-          schema:
-            type: string
-            example: The session or access key being used is invalid, please run "code-push-standalone login" again.
   schemas:
     AccountCreate:
       type: object
@@ -220,6 +199,20 @@ components:
           type: string
         code:
           type: string
+    TermsAcceptance:
+      type: object
+      properties:
+        id:
+          type: string
+        accountId:
+          type: string
+        email:
+          type: string
+        termsVersion:
+          type: string
+        acceptedTime:
+          type: integer
+          format: int64
     Account:
       type: object
       properties:
@@ -257,20 +250,27 @@ components:
         createdTime:
           type: integer
           format: int64
-    TermsAcceptance:
-      type: object
-      properties:
-        id:
-          type: string
-        accountId:
-          type: string
-        email:
-          type: string
-        termsVersion:
-          type: string
-        acceptedTime:
-          type: integer
-          format: int64
+  responses:
+    Unauthorized:
+      description: Unauthorized - invalid or expired authentication
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: The session or access key being used is invalid, please run "code-push-standalone login" again.
+    BadRequest:
+      description: Bad request - invalid parameters
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/Error'
+            - type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
   securitySchemes:
     BearerAuth:
       type: http

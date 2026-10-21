@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-events-upsert-request-schema.json",
+  "title": "EventsUpsertRequest",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-events-api-openapi.yml#/components/schemas/EventsUpsertRequest",
+  "type": "object",
+  "required": [
+    "events"
+  ],
+  "properties": {
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/EventInput"
+      },
+      "minItems": 1
+    }
+  },
+  "$defs": {
+    "EventInput": {
+      "type": "object",
+      "required": [
+        "eventName",
+        "properties"
+      ],
+      "properties": {
+        "eventName": {
+          "type": "string"
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EventPropertyInput"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "EventPropertyInput": {
+      "type": "object",
+      "required": [
+        "propertyName",
+        "type",
+        "isMandatory"
+      ],
+      "properties": {
+        "propertyName": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "expectedValue": {
+          "type": "string"
+        },
+        "isMandatory": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -63,14 +63,14 @@ paths:
       operationId: deleteTenantsByTenantId
       x-operation-id-source: derived
 components:
-  responses:
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
     Organization:
       type: object
       properties:
@@ -85,13 +85,13 @@ components:
           format: int64
         role:
           type: string
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     BearerAuth:
       type: http

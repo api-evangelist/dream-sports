@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-terms-acceptance-schema.json",
+  "title": "TermsAcceptance",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-account-api-openapi.yml#/components/schemas/TermsAcceptance",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "accountId": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "termsVersion": {
+      "type": "string"
+    },
+    "acceptedTime": {
+      "type": "integer",
+      "format": "int64"
+    }
+  }
+}

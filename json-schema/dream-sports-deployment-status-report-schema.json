@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-deployment-status-report-schema.json",
+  "title": "DeploymentStatusReport",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-acquisition-api-openapi.yml#/components/schemas/DeploymentStatusReport",
+  "type": "object",
+  "required": [
+    "deploymentKey",
+    "appVersion"
+  ],
+  "properties": {
+    "deploymentKey": {
+      "type": "string",
+      "description": "Deployment key (can use snake_case deployment_key)"
+    },
+    "appVersion": {
+      "type": "string",
+      "description": "App version (can use snake_case app_version)"
+    },
+    "clientUniqueId": {
+      "type": "string",
+      "description": "Unique device identifier (can use snake_case client_unique_id)"
+    },
+    "label": {
+      "type": "string",
+      "description": "Release label"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "DeploymentSucceeded",
+        "DeploymentFailed"
+      ]
+    },
+    "previousDeploymentKey": {
+      "type": "string",
+      "description": "Previous deployment key (can use snake_case previous_deployment_key)"
+    },
+    "previousLabelOrAppVersion": {
+      "type": "string",
+      "description": "Previous label or version (can use snake_case previous_label_or_app_version)"
+    }
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-test-schema.json",
+  "title": "Test",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-tests-api-openapi.yml#/components/schemas/Test",
+  "type": "object",
+  "properties": {
+    "testId": {
+      "type": "integer",
+      "description": "Unique test identifier"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 750,
+      "description": "Test case title"
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Test case description"
+    },
+    "sectionId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Section ID"
+    },
+    "projectId": {
+      "type": "integer",
+      "description": "Project ID"
+    },
+    "squadId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Squad ID"
+    },
+    "preConditions": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Test preconditions"
+    },
+    "steps": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Test execution steps"
+    },
+    "expectedResult": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Expected test result"
+    },
+    "priorityId": {
+      "type": "integer",
+      "description": "Priority ID (required)"
+    },
+    "typeId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Test type ID"
+    },
+    "automationStatusId": {
+      "type": "integer",
+      "description": "Automation status ID (required)"
+    },
+    "testCoveredById": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Test coverage type ID"
+    },
+    "platformId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Platform ID"
+    },
+    "labelIds": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "Array of label IDs"
+    },
+    "jiraTicket": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Associated Jira ticket"
+    },
+    "defects": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Known defects"
+    },
+    "automationId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Automation test ID"
+    },
+    "additionalGroups": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Additional test groups"
+    }
+  }
+}

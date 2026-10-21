@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-console-user-update-request-schema.json",
+  "title": "ConsoleUserUpdateRequest",
+  "description": "Profile fields only (no projectIds). Use admin update to change project IDs.",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-console-users-api-openapi.yml#/components/schemas/ConsoleUserUpdateRequest",
+  "type": "object",
+  "properties": {
+    "displayName": {
+      "type": "string"
+    },
+    "photoUrl": {
+      "type": "string"
+    },
+    "emailVerified": {
+      "type": "boolean"
+    },
+    "disabled": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-squad-schema.json",
+  "title": "Squad",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-configuration-api-openapi.yml#/components/schemas/Squad",
+  "type": "object",
+  "properties": {
+    "squadId": {
+      "type": "integer",
+      "description": "Unique squad identifier"
+    },
+    "squadName": {
+      "type": "string",
+      "description": "Squad name"
+    },
+    "projectId": {
+      "type": "integer",
+      "description": "Project ID"
+    }
+  }
+}

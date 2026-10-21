@@ -1,0 +1,359 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-ctaresponse-schema.json",
+  "title": "CTAResponse",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-sdk-api-openapi.yml#/components/schemas/CTAResponse",
+  "type": "object",
+  "properties": {
+    "ctas": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/UserCTAAndStateMachineResponse"
+      }
+    },
+    "behaviourTags": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BehaviourTagSnapshot"
+      }
+    }
+  },
+  "$defs": {
+    "BehaviourExposureRule": {
+      "type": "object",
+      "properties": {
+        "session": {
+          "$ref": "#/$defs/SessionFrequency"
+        },
+        "lifespan": {
+          "$ref": "#/$defs/LifespanFrequency"
+        },
+        "window": {
+          "$ref": "#/$defs/WindowFrequency"
+        },
+        "ctasResetAt": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CTAReset"
+          }
+        }
+      }
+    },
+    "BehaviourTagSnapshot": {
+      "type": "object",
+      "properties": {
+        "behaviourTagName": {
+          "type": "string"
+        },
+        "exposureRule": {
+          "$ref": "#/$defs/BehaviourExposureRule"
+        },
+        "ctaRelation": {
+          "$ref": "#/$defs/CTARelationSnapshot"
+        }
+      }
+    },
+    "CTARelationSnapshot": {
+      "type": "object",
+      "properties": {
+        "shownCta": {
+          "$ref": "#/$defs/CtaRelationRule"
+        },
+        "hideCta": {
+          "$ref": "#/$defs/CtaRelationRule"
+        },
+        "activeCtas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "CTAReset": {
+      "type": "object",
+      "properties": {
+        "ctaId": {
+          "type": "string"
+        },
+        "resetAt": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "CtaRelationRule": {
+      "type": "object",
+      "properties": {
+        "rule": {
+          "$ref": "#/$defs/CtaRelationRuleTypes"
+        },
+        "ctaList": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "CtaRelationRuleTypes": {
+      "type": "string",
+      "enum": [
+        "ANY",
+        "LIST",
+        "REST"
+      ]
+    },
+    "Filters": {
+      "type": "object",
+      "required": [
+        "operator",
+        "filter"
+      ],
+      "properties": {
+        "operator": {
+          "type": "string"
+        },
+        "filter": {
+          "type": "array",
+          "items": {}
+        }
+      }
+    },
+    "Frequency": {
+      "type": "object",
+      "properties": {
+        "session": {
+          "$ref": "#/$defs/SessionFrequency"
+        },
+        "window": {
+          "$ref": "#/$defs/WindowFrequency"
+        },
+        "lifeSpan": {
+          "$ref": "#/$defs/LifespanFrequency"
+        }
+      }
+    },
+    "GroupByConfig": {
+      "type": "object",
+      "properties": {
+        "maxActiveStateMachineCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "groupByKeys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "LifespanFrequency": {
+      "type": "object",
+      "required": [
+        "limit"
+      ],
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "RuleResponse": {
+      "type": "object",
+      "required": [
+        "stateToAction",
+        "stateTransition",
+        "priority",
+        "actions",
+        "frequency"
+      ],
+      "properties": {
+        "stateToAction": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "minProperties": 1
+        },
+        "resetStates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "resetCTAonFirstLaunch": {
+          "type": "boolean"
+        },
+        "contextParams": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "stateTransition": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/StateTransitionCondition"
+              }
+            }
+          }
+        },
+        "groupByConfig": {
+          "$ref": "#/$defs/GroupByConfig"
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "stateMachineTTL": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "ctaValidTill": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        },
+        "frequency": {
+          "$ref": "#/$defs/Frequency"
+        }
+      }
+    },
+    "SessionFrequency": {
+      "type": "object",
+      "required": [
+        "limit"
+      ],
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "StateMachine": {
+      "type": "object",
+      "required": [
+        "currentState",
+        "lastTransitionAt",
+        "createdAt"
+      ],
+      "properties": {
+        "currentState": {
+          "type": "string"
+        },
+        "lastTransitionAt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "context": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "createdAt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "reset": {
+          "type": "boolean"
+        }
+      }
+    },
+    "StateTransitionCondition": {
+      "type": "object",
+      "required": [
+        "transitionTo",
+        "filters"
+      ],
+      "properties": {
+        "transitionTo": {
+          "type": "string"
+        },
+        "filters": {
+          "$ref": "#/$defs/Filters"
+        }
+      }
+    },
+    "UserCTAAndStateMachineResponse": {
+      "type": "object",
+      "properties": {
+        "ctaId": {
+          "type": "string"
+        },
+        "rule": {
+          "$ref": "#/$defs/RuleResponse"
+        },
+        "activeStateMachines": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/StateMachine"
+          }
+        },
+        "resetAt": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "actionDoneAt": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "behaviourTagName": {
+          "type": "string"
+        }
+      }
+    },
+    "WindowFrequency": {
+      "type": "object",
+      "required": [
+        "limit",
+        "unit",
+        "value"
+      ],
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "unit": {
+          "$ref": "#/$defs/WindowFrequencyUnit"
+        },
+        "value": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "WindowFrequencyUnit": {
+      "type": "string",
+      "enum": [
+        "days",
+        "hours",
+        "minutes",
+        "seconds"
+      ]
+    }
+  }
+}

@@ -206,21 +206,56 @@ paths:
       operationId: postV01PublicCodepushReportStatusDownload
       x-operation-id-source: derived
 components:
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/components/schemas/Error'
-            - type: array
-              items:
-                type: object
-                properties:
-                  message:
-                    type: string
   schemas:
+    PackageInfo:
+      type: object
+      properties:
+        appVersion:
+          type: string
+          description: Semver or semver range
+          example: 1.0.0
+        description:
+          type: string
+          example: Bug fixes and performance improvements
+        isDisabled:
+          type: boolean
+          default: false
+        isMandatory:
+          type: boolean
+          default: false
+          description: Whether update is mandatory
+        rollout:
+          type: integer
+          minimum: 1
+          maximum: 100
+          description: Percentage of users to receive update
+          example: 50
+        label:
+          type: string
+          description: Generated release label
+          example: v23
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    DownloadReport:
+      type: object
+      required:
+      - deploymentKey
+      - label
+      properties:
+        deploymentKey:
+          type: string
+          description: Deployment key (can use snake_case deployment_key)
+        label:
+          type: string
+          description: Release label
+        clientUniqueId:
+          type: string
+          description: Unique device identifier (can use snake_case client_unique_id)
     UpdateCheckResponse:
       allOf:
       - $ref: '#/components/schemas/PackageInfo'
@@ -247,13 +282,6 @@ components:
           target_binary_range:
             type: string
             description: Target binary version range
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
     DeploymentStatusReport:
       type: object
       required:
@@ -283,48 +311,20 @@ components:
         previousLabelOrAppVersion:
           type: string
           description: Previous label or version (can use snake_case previous_label_or_app_version)
-    DownloadReport:
-      type: object
-      required:
-      - deploymentKey
-      - label
-      properties:
-        deploymentKey:
-          type: string
-          description: Deployment key (can use snake_case deployment_key)
-        label:
-          type: string
-          description: Release label
-        clientUniqueId:
-          type: string
-          description: Unique device identifier (can use snake_case client_unique_id)
-    PackageInfo:
-      type: object
-      properties:
-        appVersion:
-          type: string
-          description: Semver or semver range
-          example: 1.0.0
-        description:
-          type: string
-          example: Bug fixes and performance improvements
-        isDisabled:
-          type: boolean
-          default: false
-        isMandatory:
-          type: boolean
-          default: false
-          description: Whether update is mandatory
-        rollout:
-          type: integer
-          minimum: 1
-          maximum: 100
-          description: Percentage of users to receive update
-          example: 50
-        label:
-          type: string
-          description: Generated release label
-          example: v23
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/Error'
+            - type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
   securitySchemes:
     BearerAuth:
       type: http

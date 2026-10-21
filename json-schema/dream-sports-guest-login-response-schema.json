@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-guest-login-response-schema.json",
+  "title": "GuestLoginResponse",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-guest-authentication-api-openapi.yml#/components/schemas/GuestLoginResponse",
+  "type": "object",
+  "properties": {
+    "access_token": {
+      "type": "string",
+      "description": "Access token"
+    },
+    "token_type": {
+      "type": "string",
+      "description": "Type of token issued"
+    },
+    "expires_in": {
+      "type": "integer",
+      "description": "Expiry of access token in seconds"
+    }
+  }
+}

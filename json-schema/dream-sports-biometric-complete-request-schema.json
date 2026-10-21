@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-biometric-complete-request-schema.json",
+  "title": "BiometricCompleteRequest",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-device-bound-authentication-api-openapi.yml#/components/schemas/BiometricCompleteRequest",
+  "type": "object",
+  "required": [
+    "refresh_token",
+    "state",
+    "client_id",
+    "credential_id",
+    "device_metadata",
+    "signature"
+  ],
+  "properties": {
+    "refresh_token": {
+      "type": "string",
+      "description": "Refresh token for authentication context"
+    },
+    "state": {
+      "type": "string",
+      "description": "Single-use state token from /v2/biometric/challenge endpoint"
+    },
+    "client_id": {
+      "type": "string",
+      "description": "Client application identifier"
+    },
+    "credential_id": {
+      "type": "string",
+      "description": "Unique identifier for the credential"
+    },
+    "signature": {
+      "type": "string",
+      "description": "Base64-encoded DER signature (required for authentication).\n- **iOS**: Output of `SecKeyCreateSignature` with `.ecdsaSignatureMessageX962SHA256`\n- **Android**: Output of `Signature.getInstance(\"SHA256withECDSA\")`\n"
+    },
+    "device_metadata": {
+      "$ref": "#/$defs/DeviceMetadata",
+      "description": "Device metadata including device_id, platform, and other device information (required)"
+    }
+  },
+  "$defs": {
+    "DeviceMetadata": {
+      "type": "object",
+      "required": [
+        "device_id"
+      ],
+      "properties": {
+        "platform": {
+          "type": "string",
+          "description": "Device platform (e.g., iOS, Android)"
+        },
+        "device_id": {
+          "type": "string",
+          "description": "Unique identifier for the device"
+        },
+        "device_model": {
+          "type": "string",
+          "description": "Device model name"
+        },
+        "os_version": {
+          "type": "string",
+          "description": "Operating system version"
+        },
+        "app_version": {
+          "type": "string",
+          "description": "Application version"
+        },
+        "device_name": {
+          "type": "string",
+          "description": "User-friendly device name"
+        }
+      }
+    }
+  }
+}

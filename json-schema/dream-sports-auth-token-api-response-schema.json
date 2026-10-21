@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-auth-token-api-response-schema.json",
+  "title": "AuthTokenApiResponse",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-auth-api-openapi.yml#/components/schemas/AuthTokenApiResponse",
+  "type": "object",
+  "properties": {
+    "success": {
+      "type": "boolean"
+    },
+    "data": {
+      "$ref": "#/$defs/AuthTokenData"
+    }
+  },
+  "$defs": {
+    "AuthTokenData": {
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string",
+          "description": "Raw Firebase ID token (JWT)"
+        },
+        "refresh_token": {
+          "type": "string",
+          "description": "Raw Firebase refresh token"
+        },
+        "expires_in": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "token_type": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

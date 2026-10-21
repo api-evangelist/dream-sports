@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-user-refresh-tokens-response-schema.json",
+  "title": "UserRefreshTokensResponse",
+  "description": "Paginated list of user's active refresh tokens",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-session-management-api-openapi.yml#/components/schemas/UserRefreshTokensResponse",
+  "type": "object",
+  "required": [
+    "refresh_tokens",
+    "total_count"
+  ],
+  "properties": {
+    "refresh_tokens": {
+      "type": "array",
+      "description": "List of active refresh tokens for the current page",
+      "items": {
+        "$ref": "#/$defs/UserRefreshTokenItem"
+      }
+    },
+    "total_count": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total number of active refresh tokens (across all pages)"
+    }
+  },
+  "$defs": {
+    "UserRefreshTokenItem": {
+      "type": "object",
+      "description": "A single active refresh token with device/location metadata",
+      "properties": {
+        "refresh_token": {
+          "type": "string",
+          "description": "The refresh token value"
+        },
+        "device_name": {
+          "type": "string",
+          "description": "Device name associated with the token"
+        },
+        "location": {
+          "type": "string",
+          "description": "Location when the token was created"
+        },
+        "ip": {
+          "type": "string",
+          "description": "IP address when the token was created"
+        },
+        "source": {
+          "type": "string",
+          "description": "Source (e.g. mobile, web)"
+        },
+        "created_at": {
+          "type": "string",
+          "description": "When the refresh token was created (format yyyy-MM-dd HH:mm:ss)"
+        }
+      }
+    }
+  }
+}

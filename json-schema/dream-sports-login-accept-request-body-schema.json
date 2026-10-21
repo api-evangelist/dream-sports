@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-login-accept-request-body-schema.json",
+  "title": "LoginAcceptRequestBody",
+  "description": "Request body for accepting login challenge",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-oidc-api-openapi.yml#/components/schemas/LoginAcceptRequestBody",
+  "type": "object",
+  "required": [
+    "login_challenge",
+    "refresh_token"
+  ],
+  "properties": {
+    "login_challenge": {
+      "type": "string",
+      "description": "Login challenge received from the login page"
+    },
+    "refresh_token": {
+      "type": "string",
+      "description": "Valid refresh token for the user"
+    }
+  }
+}

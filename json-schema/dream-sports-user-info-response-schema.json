@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dream-sports/main/json-schema/dream-sports-user-info-response-schema.json",
+  "title": "UserInfoResponse",
+  "description": "OpenID Connect UserInfo response",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dream-sports-oidc-api-openapi.yml#/components/schemas/UserInfoResponse",
+  "type": "object",
+  "required": [
+    "sub"
+  ],
+  "properties": {
+    "sub": {
+      "type": "string",
+      "description": "Subject identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Full name"
+    },
+    "given_name": {
+      "type": "string",
+      "description": "Given name"
+    },
+    "family_name": {
+      "type": "string",
+      "description": "Family name"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address"
+    },
+    "email_verified": {
+      "type": "boolean",
+      "description": "Whether email is verified"
+    },
+    "phone_number": {
+      "type": "string",
+      "description": "Phone number"
+    },
+    "phone_number_verified": {
+      "type": "boolean",
+      "description": "Whether phone number is verified"
+    },
+    "picture": {
+      "type": "string",
+      "format": "uri",
+      "description": "Profile picture URL"
+    },
+    "locale": {
+      "type": "string",
+      "description": "Locale"
+    },
+    "updated_at": {
+      "type": "integer",
+      "description": "Last update timestamp"
+    }
+  }
+}

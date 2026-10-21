@@ -214,6 +214,18 @@ components:
             When omitted, existing project IDs are unchanged.
 
             '
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            cause:
+              type: string
+            code:
+              type: string
     ConsoleUserIdApiResponse:
       type: object
       properties:
@@ -222,11 +234,6 @@ components:
           example: true
         data:
           $ref: '#/components/schemas/ConsoleUserIdData'
-    ConsoleUserIdData:
-      type: object
-      properties:
-        id:
-          type: string
     ConsoleUserOnboardRequest:
       type: object
       required:
@@ -240,18 +247,11 @@ components:
           items:
             type: string
           description: Optional; must be a subset of the tenant's projects when non-empty.
-    ErrorResponse:
+    ConsoleUserIdData:
       type: object
       properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            cause:
-              type: string
-            code:
-              type: string
+        id:
+          type: string
   securitySchemes:
     TenantIdHeader:
       type: apiKey
