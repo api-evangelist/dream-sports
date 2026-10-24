@@ -10,7 +10,7 @@ artifacts:
     method: derived
     evidence: declared in the artifact
   authentication/dream-sports-authentication.yml:
-    method: searched
+    method: derived
     evidence: declared in the artifact
   capabilities/dream-sports-capability-edges.yml:
     method: unknown
@@ -393,127 +393,376 @@ artifacts:
   grpc/dream-sports-odin-od-tier.proto:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-24T161608.yml:
+  hosts/dream-sports-hosts.yml:
+    method: derived
+    evidence: declared in the artifact
+  integrations/_index.yml:
     method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T125852.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T133943.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T143147.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T154045.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-26T215308.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T094438.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T103455.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T123021.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T132314.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T140727.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-28T221322.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T213958.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T230545.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T203505.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T220315.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-31T223420.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T063623.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T210448.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T222808.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T224043.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T161828.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T174231.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T062714.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T212454.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T224856.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T055819.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T144739.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T195450.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T211839.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T011047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T224210.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T200636.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T213054.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T214843.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T232836.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T204815.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T222408.yml:
+    evidence: carries an API Evangelist house phrase
+  integrations/dream-sports-integration-edges.yml:
+    method: unknown
+    evidence: no authorship recorded
+  json-ld/dream-sports-context.jsonld:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-access-key-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-access-key-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-account-create-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-account-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-account-storage-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-add-provider-details-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-admin-console-user-update-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-api-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-app-creation-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-app-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-auth-login-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-auth-refresh-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-auth-token-api-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-authenticate-user-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-automation-status-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-behaviour-tag-create-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-behaviour-tag-put-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-behaviour-tag-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-behaviour-tag-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-behaviour-tag-update-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-behaviour-tags-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-biometric-challenge-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-biometric-challenge-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-biometric-complete-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-client-list-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-client-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-client-scope-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-client-secret-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-collaborator-map-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-consent-accept-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-console-user-create-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-console-user-id-api-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-console-user-list-api-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-console-user-onboard-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-console-user-record-api-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-console-user-update-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-create-client-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-create-client-scope-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-create-scope-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-create-user-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-cta-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-ctalist-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-ctarequest-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-ctaresponse-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-ctasnapshot-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-ctaupdate-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-deployment-metrics-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-deployment-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-deployment-status-report-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-download-report-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-empty-user-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-event-input-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-event-patch-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-events-upsert-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-filter-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-guest-login-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-idp-connect-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-idp-connect-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-journey-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-journey-snapshot-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-json-object-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-json-web-key-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-label-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-login-accept-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-nudge-preview-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-oidc-token-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-oidcdiscovery-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-organization-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-package-info-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-package-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-priority-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-project-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-refresh-token-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-revocations-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-run-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-scope-list-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-scope-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-sdk-token-register-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-sdk-upsert-preferences-api-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-sdk-upsert-preferences-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-sdk-user-profile-login-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-section-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-send-message-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-squad-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-success-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-terms-acceptance-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-terms-status-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-test-covered-by-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-test-journey-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-test-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-test-status-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-token-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-token-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-update-check-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-update-client-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-update-scope-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-user-consent-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-user-info-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-user-refresh-tokens-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-user-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-v1-admin-logout-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-v1-block-user-flow-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-v1-code-token-exchange-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-v1-guest-login-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-v1-logout-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-v1-otp-send-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-v1-otp-send-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-v1-signin-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-v1-signup-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-v2-auth-google-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-v2-idp-connect-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-v2-idp-connect-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-v2-logout-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-v2-passwordless-init-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-v2-passwordless-init-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-v2-refresh-token-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-v2-refresh-token-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-v2-sign-in-up-request-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dream-sports-v2-token-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  kin/checks-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-12T062655.yml:
@@ -597,12 +846,24 @@ artifacts:
   kin/score-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T210408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T232841.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T000835.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T024842.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-11T110117.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/dream-sports-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
-  llms/dream-sports-llms.txt:
-    method: searched
-    evidence: 'derive-llms-provenance.py: harvested'
   mcp/dream-sports-mcp.yml:
     method: searched
     evidence: declared in the artifact
@@ -822,31 +1083,34 @@ artifacts:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   overlays/dream-sports-checkmate-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/dream-sports-delivr-ota-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/dream-sports-dota-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/dream-sports-guardian-integrations-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/dream-sports-guardian-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/dream-sports-raven-journey-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/dream-sports-thunder-admin-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/dream-sports-thunder-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   packages/dream-sports-packages.yml:
     method: searched
+    evidence: declared in the artifact
+  rules/dream-sports-rules.yml:
+    method: generated
     evidence: declared in the artifact
   scopes/dream-sports-scopes.yml:
     method: unknown
@@ -871,6 +1135,12 @@ artifacts:
     evidence: declared in the artifact
   skills/dream-sports-sign-in-with-dream11.md:
     method: generated
+    evidence: declared in the artifact
+  vendors/dream-sports-vendors.yml:
+    method: unknown
+    evidence: no authorship recorded
+  vocabulary/dream-sports-vocabulary.yml:
+    method: derived
     evidence: declared in the artifact
   well-known/dream-sports-openid-configuration.json:
     method: unknown
